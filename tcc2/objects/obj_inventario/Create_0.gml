@@ -1,4 +1,5 @@
 randomize();
+global.debug = false;
 
 comp_linhas = 4;
 inventario = array_create(SLOTS_INVENTARIO, -1);
