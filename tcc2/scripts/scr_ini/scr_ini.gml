@@ -1,3 +1,5 @@
+
+
 function DragBlock(_nome)
 {
 	var _block = noone;
