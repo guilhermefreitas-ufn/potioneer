@@ -30,14 +30,14 @@ mouse_over = function()
 			x-_margem_1,
 			y-_margem_1,
 			x-_margem_1 + (_margem_1 * 2) * (_slot_tam + _margem_2),
-			y-_margem_1 + (_margem_1 * 2) + (((SLOTS_INVENTARIO-1) div comp_linhas)+1)*(_slot_tam + _margem_2)
+			y-_margem_1 + (_margem_1 * 2) + (((SLOTS_INVENTARIO-1) div colunas)+1)*(_slot_tam + _margem_2)
 		))
 		{
 			//checando o mouse em cada slot
 			for(var i = 0; i < SLOTS_INVENTARIO; i++)
 			{
-				var _xx = x + (i mod comp_linhas) * (_slot_tam + _margem_2) + 2;
-				var _yy = y + (i div comp_linhas) * (_slot_tam + _margem_2) + 2;
+				var _xx = x + (i mod colunas) * (_slot_tam + _margem_2) + 2;
+				var _yy = y + (i div colunas) * (_slot_tam + _margem_2) + 2;
 				
 				if(point_in_rectangle(_mx, _my, _xx, _yy, _xx + _slot_tam, _yy+_slot_tam))
 				{

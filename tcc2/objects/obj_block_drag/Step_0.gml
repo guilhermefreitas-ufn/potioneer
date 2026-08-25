@@ -1,5 +1,5 @@
 
-set = RealBlock(nome);
+set = RealIng(nome);
 
 if(!place_meeting(x,y,obj_block_real))
 {

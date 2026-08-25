@@ -1,9 +1,9 @@
-randomize();
-global.debug = false;
 
-comp_linhas = 4;
-inventario = array_create(SLOTS_INVENTARIO, -1);
+colunas = 4; //numero de colunas
+//usando macro para número de slots
+inventario = array_create(SLOTS_INVENTARIO, -1); //deixando os slots vazios (-1) 
 
-inventario[0] = 0;
-inventario[1] = 0;
-inventario[2] = 1;
+//preenchendo inventario manualmente
+inventario[0] = 0; //item 0 = estrela
+inventario[1] = 0; //item 0 = estrela
+inventario[2] = 1; //item 1 = lagrima

@@ -1,0 +1,118 @@
+function SpriteIng(_numero)
+{
+	var _sprite = noone;
+	
+	switch(_numero)
+	{
+		case 0:		{ _sprite = spr_ing_estrela;	break; }
+		case 1:		{ _sprite = spr_ing_lagrima;	break; }
+		case 2:		{ _sprite = spr_vermelho;		break; }
+		case 3:		{ _sprite = spr_amarelo;		break; }
+		case 4:		{ _sprite = spr_azul;			break; }
+		case 5:		{ _sprite = spr_branco;			break; }
+		case 6:		{ _sprite = spr_verde;			break; }
+		
+		case 7:		{ _sprite = spr_magenta;		break; }
+		case 8:		{ _sprite = spr_ciano;			break; }
+		case 9:		{ _sprite = spr_placeholder_32; break; }
+		case 10:	{ _sprite = spr_placeholder_32; break; }
+		case 11:	{ _sprite = spr_placeholder_32; break; }
+		case 12:	{ _sprite = spr_placeholder_32; break; }
+		case 13:	{ _sprite = spr_placeholder_32; break; }
+		case 14:	{ _sprite = spr_placeholder_32; break; }
+		case 15:	{ _sprite = spr_placeholder_32; break; }
+	}
+	
+	return _sprite;
+}
+
+function NomeNumIng(_nome)
+{
+	var _numero = -1;
+	
+	switch(_nome)
+	{
+		case "if":			{ _numero = 0; break; }
+		case "greater":		{ _numero = 1; break; }
+		case "life":		{ _numero = 2; break; }
+		case "decreases":	{ _numero = 3; break; }
+		case "enemy":		{ _numero = 4; break; }
+		case "int":			{ _numero = 5; break; }
+		case "while":		{ _numero = 6; break; }
+	}
+	
+	return _numero;
+}
+
+function NomeNumIng(_numero)
+{
+	var _nome = "";
+	
+	switch(_nome)
+	{
+		case 0:	{ _numero = "if";			break; }
+		case 1:	{ _numero = "greater";		break; }
+		case 2:	{ _numero = "life";			break; }
+		case 3:	{ _numero = "decreases";	break; }
+		case 4:	{ _numero = "enemy";		break; }
+		case 5:	{ _numero = "int";			break; }
+		case 6:	{ _numero = "while";		break; }
+	}
+	
+	return _numero;
+}
+
+function DragIng(_nome)
+{
+	var _block = noone;
+	
+	switch(_nome)
+	{
+		case "if":			{ _block = obj_block_drag; break; }
+		case "greater":		{ _block = obj_block_drag; break; }
+		case "life":		{ _block = obj_block_drag; break; }
+		case "decreases":	{ _block = obj_block_drag; break; }
+		case "enemy":		{ _block = obj_block_drag; break; }
+		case "int":			{ _block = obj_block_drag; break; }
+		case "while":		{ _block = obj_block_drag; break; }
+	}
+	
+	return _block;
+}
+
+function RealIng(_nome)
+{
+	var _block = noone;
+	
+	switch(_nome)
+	{
+		case "if":			{ _block = obj_block_real; break; }
+		case "greater":		{ _block = obj_block_real; break; }
+		case "life":		{ _block = obj_block_real; break; }
+		case "decreases":	{ _block = obj_block_real; break; }
+		case "enemy":		{ _block = obj_block_real; break; }
+		case "int":			{ _block = obj_block_real; break; }
+		case "while":		{ _block = obj_block_real; break; }
+	}
+	
+	return _block;
+}
+
+//antigo
+function SprIng(_nome)
+{
+	var _sprite = noone;
+	
+	switch(_nome)
+	{
+		case "if":			{ _sprite = 0; break; }
+		case "greater":		{ _sprite = 1; break; }
+		case "life":		{ _sprite = 2; break; }
+		case "decreases":	{ _sprite = 3; break; }
+		case "enemy":		{ _sprite = 4; break; }
+		case "int":			{ _sprite = 5; break; }
+		case "while":		{ _sprite = 6; break; }
+	}
+	
+	return _sprite;
+}
