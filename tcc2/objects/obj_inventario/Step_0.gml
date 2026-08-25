@@ -1,5 +1,5 @@
 //debug
-if(global.debug)
+if(global.debug && !caldeirao)
 {
 	//pegando teclas
 	var _backspace = keyboard_check_pressed(vk_backspace);

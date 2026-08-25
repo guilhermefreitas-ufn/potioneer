@@ -44,7 +44,7 @@ function NomeNumIng(_nome)
 	return _numero;
 }
 
-function NomeNumIng(_numero)
+function NumNomeIng(_numero)
 {
 	var _nome = "";
 	
