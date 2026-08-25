@@ -71,3 +71,11 @@ function AdicionaInventario(_obj_raiz, _tipo_item)
 		return false;
 	}
 }
+
+function TrocaInventario(_obj_origem, _slot_origem, _obj_destino, _slot_destino)
+{
+	var _item_origem = _obj_origem.inventario[_slot_origem];
+	
+	_obj_origem.inventario[_slot_origem] = _obj_destino.inventario[_slot_destino];
+	_obj_destino.inventario[_slot_destino] = _item_origem;
+}

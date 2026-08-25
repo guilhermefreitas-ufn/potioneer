@@ -16,15 +16,21 @@ draw_sprite_stretched(
 //desenhando os slots e os itens
 for(var i = 0; i < SLOTS_INVENTARIO; i++)
 {
-	var _xx = x + (i mod comp_linhas) * (_slot_tam + _margem_2 + 2);
-	var _yy = y + (i div comp_linhas) * (_slot_tam + _margem_2 + 2);
+	var _xx = x + (i mod comp_linhas) * (_slot_tam + _margem_2) + 2;
+	var _yy = y + (i div comp_linhas) * (_slot_tam + _margem_2) + 2;
+	
+	var _hover = (obj_mouse.inventario_hover == id) && (obj_mouse.slot_hover == i);
 	
 	//desenhando os slots
-	draw_sprite(spr_slot_ph, 0, _xx, _yy);
+	draw_sprite(spr_slot_ph, +_hover, _xx, _yy);
 	
 	//desenhando os itens
 	if(inventario[i] != -1)
 	{
+		var _alpha = 1;
+		if(obj_mouse.inventario_drag == id) && (obj_mouse.slot_drag == i) { _alpha = .5; }
+		draw_set_alpha(_alpha);
 		draw_sprite(SpriteItens(inventario[i]), 0, _xx, _yy);
+		draw_set_alpha(1);
 	}
 }

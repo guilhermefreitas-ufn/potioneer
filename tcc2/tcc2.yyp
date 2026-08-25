@@ -28,6 +28,7 @@
     {"id":{"name":"obj_block_drag","path":"objects/obj_block_drag/obj_block_drag.yy",},},
     {"id":{"name":"obj_block_real","path":"objects/obj_block_real/obj_block_real.yy",},},
     {"id":{"name":"obj_inventario","path":"objects/obj_inventario/obj_inventario.yy",},},
+    {"id":{"name":"obj_mouse","path":"objects/obj_mouse/obj_mouse.yy",},},
     {"id":{"name":"obj_text_controler","path":"objects/obj_text_controler/obj_text_controler.yy",},},
     {"id":{"name":"rm_inventario","path":"rooms/rm_inventario/rm_inventario.yy",},},
     {"id":{"name":"rm_teste","path":"rooms/rm_teste/rm_teste.yy",},},
