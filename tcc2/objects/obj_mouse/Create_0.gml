@@ -7,39 +7,85 @@ item_drag = -1;
 
 mouse_over = function()
 {
-	//iniciando variaveis
-	var _slot_tam = sprite_get_width(spr_slot_ph);
+	var _slot_tam = sprite_get_width(spr_slot_bolsa_ph);
 	var _margem_1 = 6;
-	var _margem_2 = 4; //espaço entre slots
-
-	//limpando variaveis hover
-	slot_hover = -1;
-	inventario_hover= - 1;
+	var _margem_2 = 4;
 	
-	//coordenadas do mouse
+	// limpando hover
+	slot_hover = -1;
+	inventario_hover = -1;
+	
 	var _mx = mouse_x;
 	var _my = mouse_y;
 	
-	//checando se tem hover em slot do inventario
-	with(obj_inventario)
+	with(obj_inventario_pai)
 	{
-		if(point_in_rectangle
-		(
+		// ==========================================
+		// DEFININDO QUANTOS SLOTS DEVEM SER USADOS
+		// ==========================================
+		
+		var _slots = SLOTS_INVENTARIO;
+		
+		if(caldeirao)
+		{
+			_slots = slots_ativos;
+		}
+		
+		
+		// quantidade de colunas e linhas
+		var _colunas_ativas = min(colunas, _slots);
+		var _linhas_ativas = ((_slots - 1) div colunas) + 1;
+		
+		
+		// tamanho da área
+		var _largura =
+			(2 * _margem_1) +
+			_colunas_ativas * (_slot_tam + _margem_2);
+		
+		var _altura =
+			(2 * _margem_1) +
+			_linhas_ativas * (_slot_tam + _margem_2);
+		
+		
+		// ==========================================
+		// VERIFICANDO MOUSE SOBRE O INVENTÁRIO
+		// ==========================================
+		
+		if(point_in_rectangle(
 			_mx,
 			_my,
-			x-_margem_1,
-			y-_margem_1,
-			x-_margem_1 + (_margem_1 * 2) * (_slot_tam + _margem_2),
-			y-_margem_1 + (_margem_1 * 2) + (((SLOTS_INVENTARIO-1) div colunas)+1)*(_slot_tam + _margem_2)
+			x - _margem_1,
+			y - _margem_1,
+			x - _margem_1 + _largura,
+			y - _margem_1 + _altura
 		))
 		{
-			//checando o mouse em cada slot
-			for(var i = 0; i < SLOTS_INVENTARIO; i++)
+			// ==========================================
+			// VERIFICANDO CADA SLOT
+			// ==========================================
+			
+			for(var i = 0; i < _slots; i++)
 			{
-				var _xx = x + (i mod colunas) * (_slot_tam + _margem_2) + 2;
-				var _yy = y + (i div colunas) * (_slot_tam + _margem_2) + 2;
+				var _xx =
+					x +
+					(i mod colunas) *
+					(_slot_tam + _margem_2) +
+					2;
 				
-				if(point_in_rectangle(_mx, _my, _xx, _yy, _xx + _slot_tam, _yy+_slot_tam))
+				var _yy =
+					y +
+					(i div colunas) *
+					(_slot_tam + _margem_2) +
+					2;
+				
+				if(point_in_rectangle(
+					_mx,
+					_my,
+					_xx,
+					_yy,
+					_xx + _slot_tam,
+					_yy + _slot_tam
+				))
 				{
 					other.slot_hover = i;
 					other.inventario_hover = id;
@@ -70,14 +116,22 @@ estado_drag = function()
 	
 	if(!mouse_check_button(mb_left))
 	{
-		//trocando com o slot que estou em cima
+		// soltou o item sobre algum slot
 		if(slot_hover != -1)
 		{
-			TrocaInventario(inventario_drag, slot_drag, inventario_hover, slot_hover);
+			TrocaInventario(
+				inventario_drag,
+				slot_drag,
+				inventario_hover,
+				slot_hover,
+				inventario_drag.caldeirao,
+				inventario_hover.caldeirao
+			);
 		}
 		
-		//retornando pro estado livre
+		// retornando para o estado livre
 		estado = estado_livre;
+		
 		item_drag = -1;
 		inventario_drag = -1;
 		slot_drag = -1;

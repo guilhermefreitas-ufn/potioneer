@@ -1,3 +1,5 @@
+
+
 function SpriteIng(_numero)
 {
 	var _sprite = noone;
@@ -6,14 +8,14 @@ function SpriteIng(_numero)
 	{
 		case 0:		{ _sprite = spr_ing_estrela;	break; }
 		case 1:		{ _sprite = spr_ing_lagrima;	break; }
-		case 2:		{ _sprite = spr_vermelho;		break; }
-		case 3:		{ _sprite = spr_amarelo;		break; }
-		case 4:		{ _sprite = spr_azul;			break; }
-		case 5:		{ _sprite = spr_branco;			break; }
-		case 6:		{ _sprite = spr_verde;			break; }
+		case 2:		{ _sprite = spr_ing_fogo;		break; }
+		case 3:		{ _sprite = spr_ing_folha;		break; }
+		case 4:		{ _sprite = spr_ing_lua;		break; }
+		case 5:		{ _sprite = spr_ing_osso;		break; }
+		case 6:		{ _sprite = spr_ing_sol;		break; }
 		
-		case 7:		{ _sprite = spr_magenta;		break; }
-		case 8:		{ _sprite = spr_ciano;			break; }
+		case 7:		{ _sprite = spr_placeholder_32	break; }
+		case 8:		{ _sprite = spr_placeholder_32	break; }
 		case 9:		{ _sprite = spr_placeholder_32; break; }
 		case 10:	{ _sprite = spr_placeholder_32; break; }
 		case 11:	{ _sprite = spr_placeholder_32; break; }
