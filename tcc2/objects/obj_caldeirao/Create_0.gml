@@ -6,10 +6,9 @@ inventario = array_create(SLOTS_INVENTARIO, -1); //deixando os slots vazios (-1)
 
 slots_ativos = 1; //Quantidade de slots atualmente visíveis
 
-caldeirao = true;
+caldeirao = true; //é caldeirão?
 
 //preenchendo inventario manualmente
-
 //inventario[0] = 0; //item 0 = estrela
 //inventario[1] = 0; //item 0 = estrela
 //inventario[2] = 1; //item 1 = lagrima

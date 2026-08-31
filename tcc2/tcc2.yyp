@@ -11,6 +11,7 @@
   "defaultScriptType":1,
   "Folders":[
     {"$GMFolder":"","%Name":"Objects","folderPath":"folders/Objects.yy","name":"Objects","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Ing Antigos","folderPath":"folders/Objects/Ing Antigos.yy","name":"Ing Antigos","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Rooms","folderPath":"folders/Rooms.yy","name":"Rooms","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Scripts","folderPath":"folders/Scripts.yy","name":"Scripts","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Sprites","folderPath":"folders/Sprites.yy","name":"Sprites","resourceType":"GMFolder","resourceVersion":"2.0",},
@@ -30,9 +31,9 @@
     {"id":{"name":"obj_bolsa","path":"objects/obj_bolsa/obj_bolsa.yy",},},
     {"id":{"name":"obj_caldeirao","path":"objects/obj_caldeirao/obj_caldeirao.yy",},},
     {"id":{"name":"obj_gerenciador","path":"objects/obj_gerenciador/obj_gerenciador.yy",},},
+    {"id":{"name":"obj_interpretador","path":"objects/obj_interpretador/obj_interpretador.yy",},},
     {"id":{"name":"obj_inventario_pai","path":"objects/obj_inventario_pai/obj_inventario_pai.yy",},},
     {"id":{"name":"obj_mouse","path":"objects/obj_mouse/obj_mouse.yy",},},
-    {"id":{"name":"obj_text_controler","path":"objects/obj_text_controler/obj_text_controler.yy",},},
     {"id":{"name":"rm_ini","path":"rooms/rm_ini/rm_ini.yy",},},
     {"id":{"name":"rm_inventario","path":"rooms/rm_inventario/rm_inventario.yy",},},
     {"id":{"name":"rm_teste","path":"rooms/rm_teste/rm_teste.yy",},},

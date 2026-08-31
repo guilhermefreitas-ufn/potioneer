@@ -13,8 +13,8 @@
   "name":"obj_block_drag",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Ing Antigos",
+    "path":"folders/Objects/Ing Antigos.yy",
   },
   "parentObjectId":null,
   "persistent":false,

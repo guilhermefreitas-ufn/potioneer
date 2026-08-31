@@ -1,5 +1,7 @@
 
-set = RealIng(nome);
+//set = RealIng(nome);
+var _ing = IngredientePorNome(nome);
+set = _ing.obj_real;
 
 if(!place_meeting(x,y,obj_block_real))
 {

@@ -1,6 +1,6 @@
 #macro SLOTS_INVENTARIO 15
 
-function ProcuraInventario(_obj_raiz, _tipo_item, _caldeirao)
+function ProcuraInventario(_obj_raiz, _tipo_item, _caldeirao=caldeirao)
 {
 	var _quantidade = SLOTS_INVENTARIO;
 	
@@ -20,7 +20,7 @@ function ProcuraInventario(_obj_raiz, _tipo_item, _caldeirao)
 	return -1;
 }
 
-function RemoveInventario(_obj_raiz, _tipo_item, _caldeirao)
+function RemoveInventario(_obj_raiz, _tipo_item, _caldeirao=caldeirao)
 {
 	var _slot = ProcuraInventario(_obj_raiz, _tipo_item, _caldeirao);
 	
@@ -31,7 +31,7 @@ function RemoveInventario(_obj_raiz, _tipo_item, _caldeirao)
 			inventario[_slot] = -1;
 		}
 		
-		// Somente o inventário novo precisa reorganizar
+		//caldeirao
 		if(_caldeirao)
 		{
 			AtualizaSlotsInventario(_obj_raiz);
@@ -45,11 +45,9 @@ function RemoveInventario(_obj_raiz, _tipo_item, _caldeirao)
 	}
 }
 
-function AdicionaInventario(_obj_raiz, _tipo_item, _caldeirao)
+function AdicionaInventario(_obj_raiz, _tipo_item, _caldeirao=caldeirao)
 {
-	// ==========================================
-	// INVENTÁRIO ORIGINAL
-	// ==========================================
+	//bolsa
 	if(!_caldeirao)
 	{
 		var _slot = ProcuraInventario(_obj_raiz, -1, false);
@@ -69,15 +67,12 @@ function AdicionaInventario(_obj_raiz, _tipo_item, _caldeirao)
 		}
 	}
 	
-	
-	// ==========================================
-	// INVENTÁRIO NOVO / CALDEIRÃO
-	// ==========================================
+	//caldeirao
 	else
 	{
 		var _slot = -1;
 		
-		// procurando slot vazio somente entre os ativos
+		//procurando slot vazio somente entre os ativos
 		for(var i = 0; i < _obj_raiz.slots_ativos; i++)
 		{
 			if(_obj_raiz.inventario[i] == -1)
@@ -94,8 +89,7 @@ function AdicionaInventario(_obj_raiz, _tipo_item, _caldeirao)
 		
 		_obj_raiz.inventario[_slot] = _tipo_item;
 		
-		// se preencheu o último slot ativo,
-		// libera o próximo
+		//se preencheu o último slot ativo, libera o próximo
 		if(_slot == _obj_raiz.slots_ativos - 1)
 		{
 			if(_obj_raiz.slots_ativos < SLOTS_INVENTARIO)
@@ -120,25 +114,18 @@ function TrocaInventario(
 	var _item_origem = _obj_origem.inventario[_slot_origem];
 	var _item_destino = _obj_destino.inventario[_slot_destino];
 	
-	// Fazendo a troca
+	//Fazendo a troca
 	_obj_origem.inventario[_slot_origem] = _item_destino;
 	_obj_destino.inventario[_slot_destino] = _item_origem;
 	
 	
-	// ==========================================
-	// ATUALIZAÇÃO DO INVENTÁRIO DE ORIGEM
-	// ==========================================
-	
+	//ATUALIZAÇÃO DO INVENTÁRIO DE ORIGEM
 	if(_caldeirao_origem)
 	{
 		AtualizaSlotsInventario(_obj_origem);
 	}
 	
-	
-	// ==========================================
-	// ATUALIZAÇÃO DO INVENTÁRIO DE DESTINO
-	// ==========================================
-	
+	//ATUALIZAÇÃO DO INVENTÁRIO DE DESTINO
 	if(_caldeirao_destino)
 	{
 		AtualizaSlotsInventario(_obj_destino);
@@ -149,7 +136,7 @@ function AtualizaSlotsInventario(_obj_raiz)
 {
 	var _ultimo_slot = -1;
 	
-	// Procurando o último slot que possui item
+	//Procurando o último slot que possui item
 	for(var i = 0; i < SLOTS_INVENTARIO; i++)
 	{
 		if(_obj_raiz.inventario[i] != -1)
@@ -158,9 +145,9 @@ function AtualizaSlotsInventario(_obj_raiz)
 		}
 	}
 	
-	// Sempre deve existir pelo menos 1 slot
+	//Sempre deve existir pelo menos 1 slot
 	_obj_raiz.slots_ativos = max(1, _ultimo_slot + 2);
 	
-	// Nunca ultrapassar o máximo
+	//Nunca ultrapassar o máximo
 	_obj_raiz.slots_ativos = min(_obj_raiz.slots_ativos, SLOTS_INVENTARIO);
 }

@@ -1,3 +1,3 @@
 pai = noone;
 nome = "";
-show_debug_message("real foi criado");
+if(global.debug) { show_debug_message("real foi criado"); }

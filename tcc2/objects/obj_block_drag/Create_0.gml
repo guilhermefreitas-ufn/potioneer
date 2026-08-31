@@ -1,7 +1,9 @@
 pai = noone;
 posso_criar = false;
 nome = "";
-set = RealIng(nome);
+//set = RealIng(nome);
+var _ing = IngredientePorNome(nome);
+set = _ing.obj_real;
 
 
-show_debug_message("dragged foi criado");
+if(global.debug) { show_debug_message("dragged foi criado"); }

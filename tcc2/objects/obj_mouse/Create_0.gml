@@ -8,8 +8,8 @@ item_drag = -1;
 mouse_over = function()
 {
 	var _slot_tam = sprite_get_width(spr_slot_bolsa_ph);
-	var _margem_1 = 6;
-	var _margem_2 = 4;
+	var _espaco_borda = 6;
+	var _entre_slots = 4;
 	
 	// limpando hover
 	slot_hover = -1;
@@ -39,12 +39,12 @@ mouse_over = function()
 		
 		// tamanho da área
 		var _largura =
-			(2 * _margem_1) +
-			_colunas_ativas * (_slot_tam + _margem_2);
+			(2 * _espaco_borda) +
+			_colunas_ativas * (_slot_tam + _entre_slots);
 		
 		var _altura =
-			(2 * _margem_1) +
-			_linhas_ativas * (_slot_tam + _margem_2);
+			(2 * _espaco_borda) +
+			_linhas_ativas * (_slot_tam + _entre_slots);
 		
 		
 		// ==========================================
@@ -54,10 +54,10 @@ mouse_over = function()
 		if(point_in_rectangle(
 			_mx,
 			_my,
-			x - _margem_1,
-			y - _margem_1,
-			x - _margem_1 + _largura,
-			y - _margem_1 + _altura
+			x - _espaco_borda,
+			y - _espaco_borda,
+			x - _espaco_borda + _largura,
+			y - _espaco_borda + _altura
 		))
 		{
 			// ==========================================
@@ -69,13 +69,13 @@ mouse_over = function()
 				var _xx =
 					x +
 					(i mod colunas) *
-					(_slot_tam + _margem_2) +
+					(_slot_tam + _entre_slots) +
 					2;
 				
 				var _yy =
 					y +
 					(i div colunas) *
-					(_slot_tam + _margem_2) +
+					(_slot_tam + _entre_slots) +
 					2;
 				
 				if(point_in_rectangle(
