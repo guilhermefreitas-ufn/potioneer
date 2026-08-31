@@ -20,10 +20,7 @@ mouse_over = function()
 	
 	with(obj_inventario_pai)
 	{
-		// ==========================================
-		// DEFININDO QUANTOS SLOTS DEVEM SER USADOS
-		// ==========================================
-		
+		//DEFININDO QUANTOS SLOTS DEVEM SER USADOS
 		var _slots = SLOTS_INVENTARIO;
 		
 		if(caldeirao)
@@ -31,26 +28,16 @@ mouse_over = function()
 			_slots = slots_ativos;
 		}
 		
-		
-		// quantidade de colunas e linhas
+		//quantidade de colunas e linhas
 		var _colunas_ativas = min(colunas, _slots);
 		var _linhas_ativas = ((_slots - 1) div colunas) + 1;
 		
+		//tamanho da área
+		var _largura = (2 * _espaco_borda) + _colunas_ativas * (_slot_tam + _entre_slots);
 		
-		// tamanho da área
-		var _largura =
-			(2 * _espaco_borda) +
-			_colunas_ativas * (_slot_tam + _entre_slots);
+		var _altura = (2 * _espaco_borda) + _linhas_ativas * (_slot_tam + _entre_slots);
 		
-		var _altura =
-			(2 * _espaco_borda) +
-			_linhas_ativas * (_slot_tam + _entre_slots);
-		
-		
-		// ==========================================
-		// VERIFICANDO MOUSE SOBRE O INVENTÁRIO
-		// ==========================================
-		
+		//VERIFICANDO MOUSE SOBRE O INVENTÁRIO
 		if(point_in_rectangle(
 			_mx,
 			_my,
@@ -60,23 +47,12 @@ mouse_over = function()
 			y - _espaco_borda + _altura
 		))
 		{
-			// ==========================================
-			// VERIFICANDO CADA SLOT
-			// ==========================================
-			
+			//VERIFICANDO CADA SLOT
 			for(var i = 0; i < _slots; i++)
 			{
-				var _xx =
-					x +
-					(i mod colunas) *
-					(_slot_tam + _entre_slots) +
-					2;
+				var _xx = x + (i mod colunas) * (_slot_tam + _entre_slots) + 2;
 				
-				var _yy =
-					y +
-					(i div colunas) *
-					(_slot_tam + _entre_slots) +
-					2;
+				var _yy = y + (i div colunas) * (_slot_tam + _entre_slots) + 2;
 				
 				if(point_in_rectangle(
 					_mx,

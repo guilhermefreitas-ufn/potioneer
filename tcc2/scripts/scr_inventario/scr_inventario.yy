@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_inventory",
+  "%Name":"scr_inventario",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_inventory",
+  "name":"scr_inventario",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",

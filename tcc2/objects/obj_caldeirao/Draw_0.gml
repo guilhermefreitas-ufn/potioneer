@@ -49,7 +49,7 @@ for(var i = 0; i < slots_ativos; i++)
 }
 
 //escrevendo as infos do item depois para ficarem por cima
-for(var i = 0; i < SLOTS_INVENTARIO; i++)
+for(var i = 0; i < slots_ativos; i++)
 {
 	var _xx = x + (i mod colunas) * (_slot_tam + _entre_slots) + 2;
 	var _yy = y + (i div colunas) * (_slot_tam + _entre_slots) + 2;

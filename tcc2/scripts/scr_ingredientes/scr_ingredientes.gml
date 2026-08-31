@@ -1,13 +1,50 @@
-function CriarIngrediente(_numero, _nome, _sprite, _obj_drag = obj_block_drag, _obj_real = obj_block_real)
+enum TipoIngrediente
+{
+	CONDICIONAL,
+	VARIAVEL,
+	OPERADOR_COMPARACAO,
+	OPERADOR_EFEITO,
+	PRIMITIVO,
+	ALVO
+}
+
+enum TipoExpressao
+{
+	VARIAVEL,
+	VALOR
+}
+
+function CriarIngrediente(_numero, _nome, _sprite, _tipo)
 {
 	return
 	{
 		numero: _numero,
 		nome: _nome,
 		sprite: _sprite,
-		obj_drag: _obj_drag,
-		obj_real: _obj_real
+		tipo: _tipo
 	};
+}
+
+function IngredientePorNumero(_numero)
+{
+	if (_numero < 0 || _numero >= array_length(global.Ingredientes))
+	{
+		return undefined;
+	}
+	
+	return global.Ingredientes[_numero];
+}
+
+function IngredienteEhTipo(_numero, _tipo)
+{
+	var _ing = IngredientePorNumero(_numero);
+	
+	if (is_undefined(_ing))
+	{
+		return false;
+	}
+	
+	return _ing.tipo == _tipo;
 }
 
 function IngredientePorNome(_nome)
