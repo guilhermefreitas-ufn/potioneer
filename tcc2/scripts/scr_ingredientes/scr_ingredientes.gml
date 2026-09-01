@@ -8,12 +8,6 @@ enum TipoIngrediente
 	ALVO
 }
 
-enum TipoExpressao
-{
-	VARIAVEL,
-	VALOR
-}
-
 function CriarIngrediente(_numero, _nome, _sprite, _tipo)
 {
 	return
@@ -27,37 +21,40 @@ function CriarIngrediente(_numero, _nome, _sprite, _tipo)
 
 function IngredientePorNumero(_numero)
 {
-	if (_numero < 0 || _numero >= array_length(global.Ingredientes))
+	for (var i = 0; i < array_length(global.Ingredientes); i++)
 	{
-		return undefined;
-	}
-	
-	return global.Ingredientes[_numero];
-}
-
-function IngredienteEhTipo(_numero, _tipo)
-{
-	var _ing = IngredientePorNumero(_numero);
-	
-	if (is_undefined(_ing))
-	{
-		return false;
-	}
-	
-	return _ing.tipo == _tipo;
-}
-
-function IngredientePorNome(_nome)
-{
-	for(var i = 0; i < array_length(global.Ingredientes); i++)
-	{
-		if (global.Ingredientes[i].nome == _nome)
+		if(global.Ingredientes[i].numero == _numero)
 		{
 			return global.Ingredientes[i];
 		}
 	}
 	
 	return undefined;
+}
+
+function IngredientePorNome(_nome)
+{
+	for(var i = 0; i < array_length(global.Ingredientes); i++)
+	{
+		if(global.Ingredientes[i].nome == _nome)
+		{
+			return global.Ingredientes[i];
+		}
+	}
+	
+	return undefined;
+}
+
+function IngredienteEhTipo(_numero, _tipo)
+{
+	var _ing = IngredientePorNumero(_numero);
+	
+	if(is_undefined(_ing))
+	{
+		return false;
+	}
+	
+	return _ing.tipo == _tipo;
 }
 
 //=========================================================

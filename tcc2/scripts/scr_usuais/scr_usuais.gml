@@ -153,11 +153,11 @@ function draw_pie(x1, y1, x2, y2, x3, y3, x4, y4, outline, precision)
 	ym = (y1+y2)/2;
 	xr = abs(x2-x1)/2;
 	yr = abs(y2-y1)/2;
-	if (xr > 0) r = yr/xr; else r = 0;
+	if(xr > 0) r = yr/xr; else r = 0;
 	
 	a1 = point_direction(0,0,(x3-xm)*r,y3-ym);
 	a2 = point_direction(0,0,(x4-xm)*r,y4-ym);
-	if (a2 < a1) a2 += 360;
+	if(a2 < a1) a2 += 360;
 	
 	if(outline) { draw_primitive_begin(pr_linestrip); }
 	else { draw_primitive_begin(pr_trianglefan); }

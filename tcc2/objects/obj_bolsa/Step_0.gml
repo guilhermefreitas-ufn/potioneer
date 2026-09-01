@@ -14,7 +14,7 @@ if(global.debug)
 	if(_enter && !caldeirao)
 	{
 		//adicionando itens 0 e 1 no inventario
-		AdicionaInventario(id,irandom(6));
+		AdicionaInventario(id,irandom(13));
 	}
 	if(_1)
 	{

@@ -17,4 +17,5 @@ switch(room)
 	case rm_teste:		{ _nova_room = rm_inventario; break; }
 }
 
-if(_r) { room_goto(_nova_room); }
+//if(_r) { room_goto(_nova_room); }
+if(_r) { game_restart(); }

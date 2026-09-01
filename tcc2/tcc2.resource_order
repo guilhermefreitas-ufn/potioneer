@@ -7,6 +7,7 @@
     {"name":"Sprites","order":4,"path":"folders/Sprites.yy",},
   ],
   "ResourceOrderSettings":[
+    {"name":"Note1","order":5,"path":"notes/Note1/Note1.yy",},
     {"name":"obj_block_drag","order":1,"path":"objects/obj_block_drag/obj_block_drag.yy",},
     {"name":"obj_block_real","order":2,"path":"objects/obj_block_real/obj_block_real.yy",},
     {"name":"obj_bolsa","order":4,"path":"objects/obj_bolsa/obj_bolsa.yy",},

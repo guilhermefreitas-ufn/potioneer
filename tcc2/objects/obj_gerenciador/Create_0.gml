@@ -1,7 +1,10 @@
+//aleatorizando
 randomize();
+
+//debug
 global.debug = true;
 
-//Ingredientes
+//Cadastro de Ingredientes
 global.Ingredientes =
 [
 	CriarIngrediente(0, "if",       spr_placeholder_32,	TipoIngrediente.CONDICIONAL),
