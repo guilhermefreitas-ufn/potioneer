@@ -1,7 +1,7 @@
 {
   "$GMNotes":"v1",
-  "%Name":"Note1",
-  "name":"Note1",
+  "%Name":"Fluxo Caldeirao Algoritmo",
+  "name":"Fluxo Caldeirao Algoritmo",
   "parent":{
     "name":"tcc2",
     "path":"tcc2.yyp",
