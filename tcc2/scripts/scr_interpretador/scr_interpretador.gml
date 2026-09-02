@@ -462,7 +462,7 @@ function AnalisaSintaxe(_tokens)
 	};
 	
 	//ALGORITMO VAZIO
-	if (array_length(_tokens) == 0)
+	if(array_length(_tokens) == 0)
 	{
 		_resultado.erro = "O caldeirão está vazio.";
 		return _resultado;
@@ -473,7 +473,7 @@ function AnalisaSintaxe(_tokens)
 	//CONDICIONAL
 	var _primeiro = _tokens[_indice];
 	
-	if (_primeiro.ingrediente.tipo != TipoIngrediente.CONDICIONAL)
+	if(_primeiro.ingrediente.tipo != TipoIngrediente.CONDICIONAL)
 	{
 		_resultado.erro =
 			"Um algoritmo deve começar com uma condicional.";
@@ -490,7 +490,7 @@ function AnalisaSintaxe(_tokens)
 	//CONDIÇÃO
 	var _condicao = AnalisaCondicao(_tokens, _indice);
 	
-	if (!_condicao.sucesso)
+	if(!_condicao.sucesso)
 	{
 		_resultado.erro = _condicao.erro;
 		_resultado.slot_erro = _condicao.slot_erro;
@@ -503,7 +503,7 @@ function AnalisaSintaxe(_tokens)
 	//EFEITO
 	var _efeito = AnalisaEfeito(_tokens, _indice);
 	
-	if (!_efeito.sucesso)
+	if(!_efeito.sucesso)
 	{
 		_resultado.erro = _efeito.erro;
 		_resultado.slot_erro = _efeito.slot_erro;
@@ -514,7 +514,7 @@ function AnalisaSintaxe(_tokens)
 	_indice = _efeito.proximo_indice;
 	
 	//NÃO PODEM SOBRAR TOKENS
-	if (_indice < array_length(_tokens))
+	if(_indice < array_length(_tokens))
 	{
 		var _extra = _tokens[_indice];
 		
@@ -558,16 +558,16 @@ function InterpretarCaldeirao(_caldeirao)
 		slot_erro: -1
 	};
 	
-	// 1. LER
+	//1. LER
 	_resultado.tokens = LerCaldeirao(_caldeirao);
 	
-	// 2. SENTENÇA
+	//2. SENTENÇA
 	_resultado.sentenca = MontaSentenca(_resultado.tokens);
 	
-	// 3. SINTAXE
+	//3. SINTAXE
 	var _sintaxe = AnalisaSintaxe(_resultado.tokens);
 	
-	if (!_sintaxe.valido)
+	if(!_sintaxe.valido)
 	{
 		_resultado.erro_sintaxe =
 			_sintaxe.erro;
@@ -581,10 +581,10 @@ function InterpretarCaldeirao(_caldeirao)
 	_resultado.sintaxe_valida = true;
 	_resultado.algoritmo = _sintaxe.algoritmo;
 	
-	// 4. SEMÂNTICA
+	//4. SEMÂNTICA
 	var _semantica = AnalisaSemantica(_resultado.algoritmo);
 	
-	if (!_semantica.valido)
+	if(!_semantica.valido)
 	{
 		_resultado.erro_semantica =
 			_semantica.erro;

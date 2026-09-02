@@ -11,7 +11,7 @@ mouse_over = function()
 	var _espaco_borda = 6;
 	var _entre_slots = 4;
 	
-	// limpando hover
+	//limpando hover
 	slot_hover = -1;
 	inventario_hover = -1;
 	
@@ -92,7 +92,7 @@ estado_drag = function()
 	
 	if(!mouse_check_button(mb_left))
 	{
-		// soltou o item sobre algum slot
+		//soltou o item sobre algum slot
 		if(slot_hover != -1)
 		{
 			TrocaInventario(
@@ -105,7 +105,7 @@ estado_drag = function()
 			);
 		}
 		
-		// retornando para o estado livre
+		//retornando para o estado livre
 		estado = estado_livre;
 		
 		item_drag = -1;

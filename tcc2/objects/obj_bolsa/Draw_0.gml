@@ -52,7 +52,25 @@ for(var i = 0; i < SLOTS_INVENTARIO; i++)
 		var _margem = 0;
 		
 		define_align();
+		draw_set_font(fnt_placeholder_media);
+		//NOME
 		draw_text_outline(_xx + _meio_x_sprite, _yy + (_meio_y_sprite * 2) + _margem, global.Ingredientes[inventario[i]].nome,c_white,c_black,1,.33,.33,0,-1,-1);
+		//QUANTIDADE
+		draw_text_outline(
+			_xx + _slot_tam - 4,
+			_yy + _slot_tam - 4,
+			string(quantidades[i]),
+			c_white,
+			c_black,
+			1,
+			.5,
+			.5,
+			0,
+			-1,
+			-1
+		);
 		reseta_draw();
 	}
+	
+	
 }

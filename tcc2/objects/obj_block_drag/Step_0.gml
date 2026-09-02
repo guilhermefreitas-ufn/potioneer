@@ -18,11 +18,11 @@ var grid = 64;
 var spr_w = sprite_width;
 var spr_h = sprite_height;
 
-// Alinhamento padrão: canto inferior esquerdo na célula
+//Alinhamento padrão: canto inferior esquerdo na célula
 x = (mouse_x div grid) * grid;
 y = ((mouse_y + spr_h) div grid) * grid;
 
-// Se o sprite NÃO for múltiplo de 32, centraliza dentro da célula
+//Se o sprite NÃO for múltiplo de 32, centraliza dentro da célula
 if(spr_w mod grid != 0 || spr_h mod grid != 0) {
     x += (grid - spr_w) / 2;
     y -= (grid - spr_h) / 2;

@@ -1,6 +1,6 @@
 #macro SLOTS_INVENTARIO 15
 
-function ProcuraInventario(_obj_raiz, _tipo_item, _caldeirao=caldeirao)
+function ProcuraInventario(_obj_raiz, _tipo_item, _caldeirao = caldeirao)
 {
 	var _quantidade = SLOTS_INVENTARIO;
 	
@@ -20,59 +20,106 @@ function ProcuraInventario(_obj_raiz, _tipo_item, _caldeirao=caldeirao)
 	return -1;
 }
 
-function RemoveInventario(_obj_raiz, _tipo_item, _caldeirao=caldeirao)
+function RemoveInventario(_obj_raiz, _tipo_item, _caldeirao = caldeirao)
 {
-	var _slot = ProcuraInventario(_obj_raiz, _tipo_item, _caldeirao);
+	var _slot = ProcuraInventario(
+		_obj_raiz,
+		_tipo_item,
+		_caldeirao
+	);
 	
-	if(_slot != -1)
+	if(_slot == -1)
 	{
-		with(_obj_raiz)
-		{
-			inventario[_slot] = -1;
-		}
+		return false;
+	}
+	
+	
+	// ==========================================
+	// BOLSA
+	// ==========================================
+	
+	if(!_caldeirao)
+	{
+		_obj_raiz.quantidades[_slot]--;
 		
-		//caldeirao
-		if(_caldeirao)
+		// acabou a pilha
+		if(_obj_raiz.quantidades[_slot] <= 0)
 		{
-			AtualizaSlotsInventario(_obj_raiz);
+			_obj_raiz.inventario[_slot] = -1;
+			_obj_raiz.quantidades[_slot] = 0;
 		}
 		
 		return true;
 	}
+	
+	
+	// ==========================================
+	// CALDEIRÃO
+	// ==========================================
+	
 	else
 	{
-		return false;
+		_obj_raiz.inventario[_slot] = -1;
+		_obj_raiz.quantidades[_slot] = 0;
+		
+		AtualizaSlotsInventario(_obj_raiz);
+		
+		return true;
 	}
 }
 
-function AdicionaInventario(_obj_raiz, _tipo_item, _caldeirao=caldeirao)
+function AdicionaInventario(_obj_raiz, _tipo_item, _caldeirao = caldeirao)
 {
-	//bolsa
+	// ==========================================
+	// BOLSA
+	// ==========================================
+	
 	if(!_caldeirao)
 	{
-		var _slot = ProcuraInventario(_obj_raiz, -1, false);
+		// procurando se o ingrediente já existe
+		var _slot_existente = ProcuraInventario(
+			_obj_raiz,
+			_tipo_item,
+			false
+		);
 		
-		if(_slot != -1)
+		// já existe -> aumenta quantidade
+		if(_slot_existente != -1)
 		{
-			with(_obj_raiz)
-			{
-				inventario[_slot] = _tipo_item;
-			}
+			_obj_raiz.quantidades[_slot_existente]++;
 			
 			return true;
 		}
-		else
+		
+		
+		// não existe -> procurando slot vazio
+		var _slot = ProcuraInventario(
+			_obj_raiz,
+			-1,
+			false
+		);
+		
+		if(_slot != -1)
 		{
-			return false;
+			_obj_raiz.inventario[_slot] = _tipo_item;
+			_obj_raiz.quantidades[_slot] = 1;
+			
+			return true;
 		}
+		
+		return false;
 	}
 	
-	//caldeirao
+	
+	// ==========================================
+	// CALDEIRÃO
+	// ==========================================
+	
 	else
 	{
 		var _slot = -1;
 		
-		//procurando slot vazio somente entre os ativos
+		// procurando slot vazio somente entre os ativos
 		for(var i = 0; i < _obj_raiz.slots_ativos; i++)
 		{
 			if(_obj_raiz.inventario[i] == -1)
@@ -88,8 +135,9 @@ function AdicionaInventario(_obj_raiz, _tipo_item, _caldeirao=caldeirao)
 		}
 		
 		_obj_raiz.inventario[_slot] = _tipo_item;
+		_obj_raiz.quantidades[_slot] = 1;
 		
-		//se preencheu o último slot ativo, libera o próximo
+		// preenchendo o último slot ativo
 		if(_slot == _obj_raiz.slots_ativos - 1)
 		{
 			if(_obj_raiz.slots_ativos < SLOTS_INVENTARIO)
@@ -114,21 +162,146 @@ function TrocaInventario(
 	var _item_origem = _obj_origem.inventario[_slot_origem];
 	var _item_destino = _obj_destino.inventario[_slot_destino];
 	
-	//Fazendo a troca
-	_obj_origem.inventario[_slot_origem] = _item_destino;
-	_obj_destino.inventario[_slot_destino] = _item_origem;
 	
+	// ==========================================
+	// BOLSA -> BOLSA
+	// ==========================================
 	
-	//ATUALIZAÇÃO DO INVENTÁRIO DE ORIGEM
-	if(_caldeirao_origem)
+	if(!_caldeirao_origem && !_caldeirao_destino)
 	{
-		AtualizaSlotsInventario(_obj_origem);
+		// mesmo ingrediente -> junta as pilhas
+		if(_item_origem == _item_destino)
+		{
+			_obj_destino.quantidades[_slot_destino] +=
+				_obj_origem.quantidades[_slot_origem];
+			
+			_obj_origem.inventario[_slot_origem] = -1;
+			_obj_origem.quantidades[_slot_origem] = 0;
+		}
+		else
+		{
+			// ingredientes diferentes -> troca
+			var _quantidade_origem =
+				_obj_origem.quantidades[_slot_origem];
+			
+			var _quantidade_destino =
+				_obj_destino.quantidades[_slot_destino];
+			
+			
+			_obj_origem.inventario[_slot_origem] = _item_destino;
+			_obj_origem.quantidades[_slot_origem] = _quantidade_destino;
+			
+			_obj_destino.inventario[_slot_destino] = _item_origem;
+			_obj_destino.quantidades[_slot_destino] = _quantidade_origem;
+		}
+		
+		return;
 	}
 	
-	//ATUALIZAÇÃO DO INVENTÁRIO DE DESTINO
-	if(_caldeirao_destino)
+	
+	// ==========================================
+	// BOLSA -> CALDEIRÃO
+	// ==========================================
+	
+	if(!_caldeirao_origem && _caldeirao_destino)
 	{
-		AtualizaSlotsInventario(_obj_destino);
+		// só pode colocar se destino estiver vazio
+		if(_item_destino == -1)
+		{
+			_obj_destino.inventario[_slot_destino] = _item_origem;
+			_obj_destino.quantidades[_slot_destino] = 1;
+			
+			_obj_origem.quantidades[_slot_origem]--;
+			
+			if(_obj_origem.quantidades[_slot_origem] <= 0)
+			{
+				_obj_origem.inventario[_slot_origem] = -1;
+				_obj_origem.quantidades[_slot_origem] = 0;
+			}
+			
+			AtualizaSlotsInventario(_obj_destino);
+		}
+		
+		return;
+	}
+	
+	
+	// ==========================================
+	// CALDEIRÃO -> BOLSA
+	// ==========================================
+	
+	if(_caldeirao_origem && !_caldeirao_destino)
+	{
+		// Procurando se a bolsa já possui esse ingrediente
+		var _slot_bolsa = ProcuraInventario(
+			_obj_destino,
+			_item_origem,
+			false
+		);
+		
+		// ==========================================
+		// JÁ EXISTE UMA PILHA
+		// ==========================================
+		
+		if(_slot_bolsa != -1)
+		{
+			_obj_destino.quantidades[_slot_bolsa] += 1;
+			
+			_obj_origem.inventario[_slot_origem] = -1;
+			_obj_origem.quantidades[_slot_origem] = 0;
+			
+			AtualizaSlotsInventario(_obj_origem);
+			
+			return;
+		}
+		
+		
+		// ==========================================
+		// NÃO EXISTE -> USA O SLOT ONDE FOI SOLTO
+		// ==========================================
+		
+		if(_item_destino == -1)
+		{
+			_obj_destino.inventario[_slot_destino] = _item_origem;
+			_obj_destino.quantidades[_slot_destino] = 1;
+			
+			_obj_origem.inventario[_slot_origem] = -1;
+			_obj_origem.quantidades[_slot_origem] = 0;
+			
+			AtualizaSlotsInventario(_obj_origem);
+			
+			return;
+		}
+		
+		return;
+	}
+	
+	
+	// ==========================================
+	// CALDEIRÃO -> CALDEIRÃO
+	// ==========================================
+	
+	if(_caldeirao_origem && _caldeirao_destino)
+	{
+		var _quantidade_origem =
+			_obj_origem.quantidades[_slot_origem];
+		
+		var _quantidade_destino =
+			_obj_destino.quantidades[_slot_destino];
+		
+		
+		_obj_origem.inventario[_slot_origem] = _item_destino;
+		_obj_origem.quantidades[_slot_origem] = _quantidade_destino;
+		
+		_obj_destino.inventario[_slot_destino] = _item_origem;
+		_obj_destino.quantidades[_slot_destino] = _quantidade_origem;
+		
+		AtualizaSlotsInventario(_obj_origem);
+		
+		if(_obj_destino != _obj_origem)
+		{
+			AtualizaSlotsInventario(_obj_destino);
+		}
 	}
 }
 
