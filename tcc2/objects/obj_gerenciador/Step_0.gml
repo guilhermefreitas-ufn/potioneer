@@ -18,4 +18,6 @@ switch(room)
 }
 
 //if(_r) { room_goto(_nova_room); }
+
+//resetando o jogo
 if(_r) { game_restart(); }

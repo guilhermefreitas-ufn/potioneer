@@ -12,3 +12,13 @@ slots_ativos = SLOTS_INVENTARIO;
 
 //é caldeirão?
 caldeirao = false;
+
+//sprites
+meu_sprite = spr_bolsa_ph;
+sprite_meu_slot = spr_slot_bolsa_ph;
+
+//tamanhos
+slot_tam = sprite_get_width(sprite_meu_slot);
+espaco_borda = 6; //margem entre borda e slots
+entre_slots = 4; //margem entre slots
+

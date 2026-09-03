@@ -107,7 +107,7 @@ function LerVariavel(_tokens, _indice)
 		{
 			_resultado.erro =
 				"O alvo '" + _a.ingrediente.nome +
-				"' precisa de uma variável.";
+				"' precisa de uma variável: hp, atk ou spd.";
 			
 			_resultado.slot_erro = _a.slot;
 			

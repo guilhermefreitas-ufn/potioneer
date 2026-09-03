@@ -23,5 +23,4 @@ if(global.debug)
 
 		show_debug_message(string(object_index)+" "+_resultado);
 	}
-
 }

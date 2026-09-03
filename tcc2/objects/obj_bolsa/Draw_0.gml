@@ -1,28 +1,23 @@
-
-var _slot_tam = sprite_get_width(spr_slot_bolsa_ph);
-var _espaco_borda = 6; //margem entre borda e slots
-var _entre_slots = 4; //margem entre slots
-
 //desenhando o fundo do inventario
 draw_sprite_stretched(
-	spr_bolsa_ph,
+	meu_sprite,
 	0,
-	x-_espaco_borda,
-	y-_espaco_borda,
-	(2*_espaco_borda)+colunas*(_slot_tam + _entre_slots),
-	(2*_espaco_borda)+(((SLOTS_INVENTARIO-1) div colunas)+1)*(_slot_tam + _entre_slots)
+	x-espaco_borda,
+	y-espaco_borda,
+	(2*espaco_borda)+colunas*(slot_tam + entre_slots),
+	(2*espaco_borda)+(((SLOTS_INVENTARIO-1) div colunas)+1)*(slot_tam + entre_slots)
 );
 
 //desenhando os slots e os itens
 for(var i = 0; i < SLOTS_INVENTARIO; i++)
 {
-	var _xx = x + (i mod colunas) * (_slot_tam + _entre_slots) + 2;
-	var _yy = y + (i div colunas) * (_slot_tam + _entre_slots) + 2;
+	var _xx = x + (i mod colunas) * (slot_tam + entre_slots) + 2;
+	var _yy = y + (i div colunas) * (slot_tam + entre_slots) + 2;
 	
 	var _hover = (obj_mouse.inventario_hover == id) && (obj_mouse.slot_hover == i);
 	
 	//desenhando os slots
-	draw_sprite(spr_slot_bolsa_ph, _hover, _xx, _yy);
+	draw_sprite(sprite_meu_slot, _hover, _xx, _yy);
 	
 	//desenhando os itens
 	if(inventario[i] != -1)
@@ -39,8 +34,8 @@ for(var i = 0; i < SLOTS_INVENTARIO; i++)
 //escrevendo as infos do item depois para ficarem por cima
 for(var i = 0; i < SLOTS_INVENTARIO; i++)
 {
-	var _xx = x + (i mod colunas) * (_slot_tam + _entre_slots) + 2;
-	var _yy = y + (i div colunas) * (_slot_tam + _entre_slots) + 2;
+	var _xx = x + (i mod colunas) * (slot_tam + entre_slots) + 2;
+	var _yy = y + (i div colunas) * (slot_tam + entre_slots) + 2;
 	
 	var _hover = (obj_mouse.inventario_hover == id) && (obj_mouse.slot_hover == i);
 	
@@ -53,12 +48,26 @@ for(var i = 0; i < SLOTS_INVENTARIO; i++)
 		
 		define_align();
 		draw_set_font(fnt_placeholder_media);
+		
 		//NOME
-		draw_text_outline(_xx + _meio_x_sprite, _yy + (_meio_y_sprite * 2) + _margem, global.Ingredientes[inventario[i]].nome,c_white,c_black,1,.33,.33,0,-1,-1);
+		draw_text_outline(
+			_xx + _meio_x_sprite,
+			_yy + (_meio_y_sprite * 2) + _margem,
+			global.Ingredientes[inventario[i]].nome,
+			c_white,
+			c_black,
+			1,
+			.33,
+			.33,
+			0,
+			-1,
+			-1
+		);
+		
 		//QUANTIDADE
 		draw_text_outline(
-			_xx + _slot_tam - 4,
-			_yy + _slot_tam - 4,
+			_xx + slot_tam - 4,
+			_yy + slot_tam - 4,
 			string(quantidades[i]),
 			c_white,
 			c_black,
@@ -69,8 +78,7 @@ for(var i = 0; i < SLOTS_INVENTARIO; i++)
 			-1,
 			-1
 		);
+		
 		reseta_draw();
 	}
-	
-	
 }
