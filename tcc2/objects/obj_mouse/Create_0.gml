@@ -288,4 +288,13 @@ estado_drag = function()
 	estado = estado_livre;
 }
 
+MouseSobreItem = function()
+{
+	return (
+		inventario_hover != -1
+		&& slot_hover != -1
+		&& inventario_hover.inventario[slot_hover] != -1
+	);
+}
+
 estado = estado_livre;

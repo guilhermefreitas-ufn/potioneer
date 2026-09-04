@@ -13,8 +13,8 @@ var _nova_room = noone;
 
 switch(room)
 {
-	case rm_inventario: { _nova_room = rm_teste; break; }
-	case rm_teste:		{ _nova_room = rm_inventario; break; }
+	case rm_inventarios:{ _nova_room = rm_teste; break; }
+	case rm_teste:		{ _nova_room = rm_inventarios; break; }
 }
 
 //if(_r) { room_goto(_nova_room); }

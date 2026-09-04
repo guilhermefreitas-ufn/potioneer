@@ -1,4 +1,4 @@
-var _ing = IngredientePorNome(nome);
+var _ing = IngredientePorToken(nome);
 dragged = _ing.obj_drag;
 image_index = _ing.sprite;
 

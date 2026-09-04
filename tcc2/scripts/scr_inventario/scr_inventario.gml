@@ -33,11 +33,7 @@ function RemoveInventario(_obj_raiz, _tipo_item, _caldeirao = caldeirao)
 		return false;
 	}
 	
-	
-	
 	//BOLSA
-	
-	
 	if(!_caldeirao)
 	{
 		_obj_raiz.quantidades[_slot]--;
@@ -52,11 +48,7 @@ function RemoveInventario(_obj_raiz, _tipo_item, _caldeirao = caldeirao)
 		return true;
 	}
 	
-	
-	
 	//CALDEIRÃO
-	
-	
 	else
 	{
 		_obj_raiz.inventario[_slot] = -1;
@@ -70,10 +62,7 @@ function RemoveInventario(_obj_raiz, _tipo_item, _caldeirao = caldeirao)
 
 function AdicionaInventario(_obj_raiz, _tipo_item, _caldeirao = caldeirao)
 {
-	
 	//BOLSA
-	
-	
 	if(!_caldeirao)
 	{
 		//procurando se o ingrediente já existe
@@ -90,7 +79,6 @@ function AdicionaInventario(_obj_raiz, _tipo_item, _caldeirao = caldeirao)
 			
 			return true;
 		}
-		
 		
 		//não existe -> procurando slot vazio
 		var _slot = ProcuraInventario(
@@ -110,11 +98,7 @@ function AdicionaInventario(_obj_raiz, _tipo_item, _caldeirao = caldeirao)
 		return false;
 	}
 	
-	
-	
 	//CALDEIRÃO
-	
-	
 	else
 	{
 		var _slot = -1;
@@ -161,23 +145,15 @@ function TrocaInventario(
 {
 	
 	//MESMO SLOT
-	
-	
-	if(_obj_origem == _obj_destino
-	&& _slot_origem == _slot_destino)
+	if(_obj_origem == _obj_destino && _slot_origem == _slot_destino)
 	{
 		return;
 	}
 	
-	
 	var _item_origem = _obj_origem.inventario[_slot_origem];
 	var _item_destino = _obj_destino.inventario[_slot_destino];
 	
-	
-	
 	//BOLSA -> BOLSA
-	
-	
 	if(!_caldeirao_origem && !_caldeirao_destino)
 	{
 		//Mesmo ingrediente -> junta as pilhas
@@ -208,11 +184,7 @@ function TrocaInventario(
 		return;
 	}
 	
-	
-	
 	//BOLSA -> CALDEIRÃO
-	
-	
 	if(!_caldeirao_origem && _caldeirao_destino)
 	{
 		//Só pode colocar no slot se ele estiver vazio
@@ -236,17 +208,10 @@ function TrocaInventario(
 		return;
 	}
 	
-	
-	
 	//CALDEIRÃO -> BOLSA
-	
-	
 	if(_caldeirao_origem && !_caldeirao_destino)
 	{
-		//------------------------------------------
 		//1. JÁ EXISTE UMA PILHA DESSE ITEM
-		//------------------------------------------
-		
 		var _slot_bolsa = ProcuraInventario(
 			_obj_destino,
 			_item_origem,
@@ -265,11 +230,7 @@ function TrocaInventario(
 			return;
 		}
 		
-		
-		//------------------------------------------
 		//2. DESTINO ESTÁ VAZIO
-		//------------------------------------------
-		
 		if(_item_destino == -1)
 		{
 			_obj_destino.inventario[_slot_destino] = _item_origem;
@@ -283,19 +244,13 @@ function TrocaInventario(
 			return;
 		}
 		
-		
-		//------------------------------------------
 		//3. DESTINO OCUPADO
-		//------------------------------------------
-		
 		var _quantidade_destino =
 			_obj_destino.quantidades[_slot_destino];
 		
 		
 		
 		//3A. PILHA TEM MAIS DE 1
-		
-		
 		if(_quantidade_destino > 1)
 		{
 			//Primeiro slot vazio da bolsa
@@ -311,32 +266,24 @@ function TrocaInventario(
 				return;
 			}
 			
-			
 			//Move o item do caldeirão para o
 			//primeiro slot vazio da bolsa
 			_obj_destino.inventario[_slot_vazio] = _item_origem;
 			_obj_destino.quantidades[_slot_vazio] = 1;
 			
-			
 			//Retira UMA unidade da pilha da bolsa
 			_obj_destino.quantidades[_slot_destino]--;
-			
 			
 			//Coloca essa unidade no caldeirão
 			_obj_origem.inventario[_slot_origem] = _item_destino;
 			_obj_origem.quantidades[_slot_origem] = 1;
-			
 			
 			AtualizaSlotsInventario(_obj_origem);
 			
 			return;
 		}
 		
-		
-		
 		//3B. PILHA TEM EXATAMENTE 1
-		
-		
 		//Nesse caso podemos fazer a troca normal.
 		_obj_destino.inventario[_slot_destino] = _item_origem;
 		_obj_destino.quantidades[_slot_destino] = 1;
@@ -349,11 +296,7 @@ function TrocaInventario(
 		return;
 	}
 	
-	
-	
 	//CALDEIRÃO -> CALDEIRÃO
-	
-	
 	if(_caldeirao_origem && _caldeirao_destino)
 	{
 		var _quantidade_origem =
@@ -416,11 +359,7 @@ function TransfereInventario(
 		return false;
 	}
 	
-	
-	
 	//BOLSA -> CALDEIRÃO
-	
-	
 	if(!_caldeirao_origem && _caldeirao_destino)
 	{
 		//Tenta adicionar UMA unidade ao caldeirão.
@@ -449,11 +388,7 @@ function TransfereInventario(
 		return true;
 	}
 	
-	
-	
 	//CALDEIRÃO -> BOLSA
-	
-	
 	if(_caldeirao_origem && !_caldeirao_destino)
 	{
 		//A própria AdicionaInventario da bolsa

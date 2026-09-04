@@ -9,6 +9,7 @@ var _max_tam = RES_H - _margem;
 if(_texto != "") { _texto = "\" "+sentenca+" \""; }
 
 define_align();
+draw_set_colour(c_black);
 draw_set_font(fnt_placeholder_media);
 
 draw_text_ext(_x, _y - 2 * _margem,_texto,-1, _max_tam);
@@ -30,9 +31,8 @@ else if(!semantica_valida)
 if(_erro != "")
 {
 	define_align();
-	draw_set_colour(c_yellow);
 	draw_set_font(fnt_placeholder_media);
-	draw_text_ext(_x, _y  - _margem, _erro, -1, _max_tam);
+	draw_text_outline(_x, _y  - _margem, _erro, c_yellow, c_black, 1, 1, 1, 0, -1, _max_tam);
 	reseta_draw();
 }
 

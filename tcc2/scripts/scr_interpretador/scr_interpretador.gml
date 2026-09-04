@@ -58,7 +58,7 @@ function MontaSentenca(_tokens)
 			_texto += " ";
 		}
 		
-		_texto += _tokens[i].ingrediente.nome;
+		_texto += _tokens[i].ingrediente.elemento;
 	}
 	
 	return _texto;
@@ -106,8 +106,8 @@ function LerVariavel(_tokens, _indice)
 		if(_indice + 1 >= array_length(_tokens))
 		{
 			_resultado.erro =
-				"O alvo '" + _a.ingrediente.nome +
-				"' precisa de uma variável: hp, atk ou spd.";
+				"O alvo '" + _a.ingrediente.elemento +
+				"' precisa de uma variável: Saúde, Ataque ou Velocidade.";
 			
 			_resultado.slot_erro = _a.slot;
 			
@@ -119,7 +119,7 @@ function LerVariavel(_tokens, _indice)
 		if(_b.ingrediente.tipo != TipoIngrediente.VARIAVEL)
 		{
 			_resultado.erro =
-				"O alvo '" + _a.ingrediente.nome +
+				"O alvo '" + _a.ingrediente.elemento +
 				"' precisa ser seguido por uma variável.";
 			
 			_resultado.slot_erro = _b.slot;
@@ -147,8 +147,8 @@ function LerVariavel(_tokens, _indice)
 		if(_indice + 1 >= array_length(_tokens))
 		{
 			_resultado.erro =
-				"A variável '" + _a.ingrediente.nome +
-				"' precisa de um alvo: target, ally ou enemy.";
+				"A variável '" + _a.ingrediente.elemento +
+				"' precisa de um alvo: Aliado, Inimigo, Alvo.";
 			
 			_resultado.slot_erro = _a.slot;
 			
@@ -160,7 +160,7 @@ function LerVariavel(_tokens, _indice)
 		if(_b.ingrediente.tipo != TipoIngrediente.ALVO)
 		{
 			_resultado.erro =
-				"A variável '" + _a.ingrediente.nome +
+				"A variável '" + _a.ingrediente.elemento +
 				"' precisa de um alvo.";
 			
 			_resultado.slot_erro = _b.slot;
@@ -254,7 +254,7 @@ function LerValor(_tokens, _indice)
 	}
 	
 	_resultado.erro =
-		"'" + _token.ingrediente.nome +
+		"'" + _token.ingrediente.elemento +
 		"' não pode ser usado como valor.";
 	
 	_resultado.slot_erro = _token.slot;

@@ -66,9 +66,9 @@ for(var i = 0; i < SLOTS_INVENTARIO; i++)
 		
 		//QUANTIDADE
 		draw_text_outline(
-			_xx + slot_tam - 4,
-			_yy + slot_tam - 4,
-			string(quantidades[i]),
+			_xx - entre_slots,
+			_yy + slot_tam - espaco_borda,
+			string(quantidades[i])+"x",
 			c_white,
 			c_black,
 			1,
@@ -82,3 +82,4 @@ for(var i = 0; i < SLOTS_INVENTARIO; i++)
 		reseta_draw();
 	}
 }
+

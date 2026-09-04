@@ -7,19 +7,24 @@ global.debug = true;
 //Cadastro de Ingredientes
 global.Ingredientes =
 [
-	CriarIngrediente(0, "if",       spr_ing_cubo,		TipoIngrediente.CONDICIONAL),
-	CriarIngrediente(1, "int",		spr_ing_osso,		TipoIngrediente.PRIMITIVO),
-	CriarIngrediente(2, "hp",		spr_ing_chifre,		TipoIngrediente.VARIAVEL),
-	CriarIngrediente(3, "spd",		spr_ing_crina,		TipoIngrediente.VARIAVEL),
-	CriarIngrediente(4, "atk",		spr_ing_alma,		TipoIngrediente.VARIAVEL),
-	CriarIngrediente(5, "decreases",spr_ing_folha,		TipoIngrediente.OPERADOR_EFEITO),
-	CriarIngrediente(6, "increases",spr_ing_sol,		TipoIngrediente.OPERADOR_EFEITO),
-	CriarIngrediente(7, "becomes",	spr_ing_nadadeira,	TipoIngrediente.OPERADOR_EFEITO),
-	CriarIngrediente(8, "greater",  spr_ing_lagrima,	TipoIngrediente.OPERADOR_COMPARACAO),
-	CriarIngrediente(9, "lower",    spr_ing_fogo,		TipoIngrediente.OPERADOR_COMPARACAO),
-	CriarIngrediente(10, "equal",	spr_ing_olho,		TipoIngrediente.OPERADOR_COMPARACAO),
-	CriarIngrediente(11, "target",  spr_ing_mandragora,	TipoIngrediente.ALVO),
-	CriarIngrediente(12, "ally",    spr_ing_escama,		TipoIngrediente.ALVO),
-	CriarIngrediente(13, "enemy",   spr_ing_estrela,	TipoIngrediente.ALVO)
-	//,CriarIngrediente(14, "while", spr_ing_lua, TipoIngrediente.CONDICIONAL)
+	CriarIngrediente(0, "Cubo",		"Um objeto de formato impossível."		,spr_ing_cubo,		"se",			"if",		TipoIngrediente.CONDICIONAL),
+	CriarIngrediente(1, "Crina",	"Um punhado de crina na cor índigo."	,spr_ing_crina,		"valor inteiro","int",		TipoIngrediente.PRIMITIVO),
+	
+	CriarIngrediente(2, "Chifre",	"Um chifre longo e bem afiado."			,spr_ing_chifre,	"saúde",		"hp",		TipoIngrediente.VARIAVEL),
+	CriarIngrediente(3, "Osso",		"Um osso velho e esquecido."			,spr_ing_osso,		"velocidade",	"spd",		TipoIngrediente.VARIAVEL),
+	CriarIngrediente(4, "Fogo",		"Uma labareda de fogo eterno."			,spr_ing_fogo,		"ataque",		"atk",		TipoIngrediente.VARIAVEL),
+	
+	CriarIngrediente(5, "Folha",	"Uma folha de uma árvore desconhecida."	,spr_ing_folha,		"diminui em",	"decreases",TipoIngrediente.OPERADOR_EFEITO),
+	CriarIngrediente(6, "Sol",		"Um mini sol sustentado por magia."		,spr_ing_sol,		"aumenta em",	"increases",TipoIngrediente.OPERADOR_EFEITO),
+	CriarIngrediente(7, "Nadadeira","Uma nadadeira de monstro marinho."		,spr_ing_nadadeira,	"torna-se",		"becomes",	TipoIngrediente.OPERADOR_EFEITO),
+	
+	CriarIngrediente(8, "Lágrima",	"Uma lágrima de monstro do deserto."	,spr_ing_lagrima,	"é maior que",	"greater",	TipoIngrediente.OPERADOR_COMPARACAO),
+	CriarIngrediente(9, "Alma",		"Uma alma perdida e vagante."			,spr_ing_alma,		"é menor que",	"lower",	TipoIngrediente.OPERADOR_COMPARACAO),
+	CriarIngrediente(10,"Olho",		"Um olho de monstro hipnotizador."		,spr_ing_olho,		"é igual à",	"equal",	TipoIngrediente.OPERADOR_COMPARACAO),
+	
+	CriarIngrediente(11,"Planta",	"Uma raiz cuja forma imita humanoides."	,spr_ing_mandragora,"alvo",			"target",	TipoIngrediente.ALVO),
+	CriarIngrediente(12,"Escama",	"Uma escama de monstro blindado."		,spr_ing_escama,	"aliado",		"ally",		TipoIngrediente.ALVO),
+	CriarIngrediente(13,"Estrela",	"Uma estrela que caiu anos atrás."		,spr_ing_estrela,	"inimigo",		"enemy",	TipoIngrediente.ALVO)
+	
+	//,CriarIngrediente(14, "Lua", "Uma mini lua perfeitamente mordida.",spr_ing_lua,	"enquanto",		"while",	TipoIngrediente.CONDICIONAL)
 ];
