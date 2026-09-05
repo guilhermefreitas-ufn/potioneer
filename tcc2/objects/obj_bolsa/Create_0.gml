@@ -22,3 +22,10 @@ slot_tam = sprite_get_width(sprite_meu_slot);
 espaco_borda = 6; //margem entre borda e slots
 entre_slots = 4; //margem entre slots
 
+//texto
+fonte = fnt_placeholder_media;
+desc_cor = c_white;
+desc_x = 180;
+desc_y = 152;
+desc_margem_x = string_width("O");
+desc_margem_y = string_height("I");

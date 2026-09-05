@@ -21,3 +21,7 @@ sprite_meu_slot = spr_slot_caldeirao_ph;
 slot_tam = sprite_get_width(sprite_meu_slot);
 espaco_borda = slot_tam * 2;
 entre_slots = 4;
+
+//texto
+fonte = fnt_placeholder_media;
+cor_texto = c_white;

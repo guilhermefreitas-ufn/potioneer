@@ -60,13 +60,13 @@ for(var i = 0; i < slots_ativos; i++)
 		var _margem = 0;
 		
 		define_align();
-		draw_set_font(fnt_placeholder_media);
+		draw_set_font(fonte);
 		
 		draw_text_outline(
 		_xx + _meio_x_sprite,
 		_yy + (_meio_y_sprite * 2) + _margem,
 			global.Ingredientes[inventario[i]].nome,
-			c_white,
+			cor_texto,
 			c_black,
 			1,
 			.33,

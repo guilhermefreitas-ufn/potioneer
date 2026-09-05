@@ -47,14 +47,14 @@ for(var i = 0; i < SLOTS_INVENTARIO; i++)
 		var _margem = 0;
 		
 		define_align();
-		draw_set_font(fnt_placeholder_media);
+		draw_set_font(fonte);
 		
 		//NOME
 		draw_text_outline(
 			_xx + _meio_x_sprite,
 			_yy + (_meio_y_sprite * 2) + _margem,
 			global.Ingredientes[inventario[i]].nome,
-			c_white,
+			desc_cor,
 			c_black,
 			1,
 			.33,
@@ -69,7 +69,7 @@ for(var i = 0; i < SLOTS_INVENTARIO; i++)
 			_xx - entre_slots,
 			_yy + slot_tam - espaco_borda,
 			string(quantidades[i])+"x",
-			c_white,
+			desc_cor,
 			c_black,
 			1,
 			.5,
