@@ -2,19 +2,20 @@
 if(global.debug)
 {
 	//pegando teclas
-	var _backspace = keyboard_check_pressed(vk_backspace);
 	var _enter = keyboard_check_pressed(vk_enter);
 	var _1 = keyboard_check_pressed(vk_numpad1) || keyboard_check_pressed(ord("1"));
 
-	if(_backspace && !caldeirao)
+	if(_enter)
 	{
-		//removendo item 1 do inventario
-		RemoveInventario(id,1);
-	}
-	if(_enter && !caldeirao)
-	{
-		//adicionando itens 0 e 1 no inventario
-		AdicionaInventario(id,irandom(13));
+		//adicionando itens 0 e 13 no inventario
+		//AdicionaInventario(id,irandom(13));
+		for(var i = 0; i <= 13; i++)
+		{
+			for(var j = 0; j < 10; j++)
+			{
+				AdicionaInventario(id,i);
+			}
+		}
 	}
 	if(_1)
 	{

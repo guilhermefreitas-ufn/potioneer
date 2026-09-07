@@ -50,15 +50,96 @@ function LerCaldeirao(_caldeirao)
 function MontaSentenca(_tokens)
 {
 	var _texto = "";
+	var _qtd_tokens = array_length(_tokens);
 	
-	for (var i = 0; i < array_length(_tokens); i++)
+	//caldeirão vazio
+	if(_qtd_tokens == 0)
 	{
-		if(_texto != "")
+		return " ";
+	}
+	
+	//==================================================
+	// PRIMEIRO INGREDIENTE
+	//==================================================
+	var _primeiro = _tokens[0];
+	
+	//adicionando o elemento do primeiro ingrediente
+	_texto += _primeiro.ingrediente.elemento;
+	
+	//==================================================
+	// "ENTÃO" SÓ EXISTE SE HOUVER "if"
+	//==================================================
+	if(_primeiro.ingrediente.token != "if")
+	{
+		//não é if → simplesmente monta a sentença normalmente
+		for(var i = 1; i < _qtd_tokens; i++)
 		{
 			_texto += " ";
+			_texto += _tokens[i].ingrediente.elemento;
 		}
 		
-		_texto += _tokens[i].ingrediente.elemento;
+		return _texto;
+	}
+	
+	//==================================================
+	// PROCURANDO ONDE A CONDIÇÃO TERMINA
+	//==================================================
+	var _inicio_efeito = -1;
+	
+	if(_qtd_tokens > 1)
+	{
+		var _condicao = AnalisaCondicao(_tokens, 1);
+		
+		if(_condicao.sucesso)
+		{
+			_inicio_efeito = _condicao.proximo_indice;
+		}
+	}
+	
+	//==================================================
+	// ADICIONANDO OS INGREDIENTES
+	//==================================================
+	for(var i = 1; i < _qtd_tokens; i++)
+	{
+		//----------------------------------------------
+		// AINDA ESTAMOS NA CONDIÇÃO
+		//----------------------------------------------
+		if(_inicio_efeito == -1 || i < _inicio_efeito)
+		{
+			_texto += " ";
+			_texto += _tokens[i].ingrediente.elemento;
+		}
+		
+		//----------------------------------------------
+		// COMEÇO DO EFEITO
+		//----------------------------------------------
+		else
+		{
+			//adiciona "então" uma única vez
+			if(i == _inicio_efeito)
+			{
+				_texto += " então";
+			}
+			
+			_texto += " ";
+			_texto += _tokens[i].ingrediente.elemento;
+		}
+	}
+	
+	//==================================================
+	// CONDIÇÃO AINDA INCOMPLETA
+	//==================================================
+	if(_inicio_efeito == -1)
+	{
+		_texto += " então";
+	}
+	
+	//==================================================
+	// CONDIÇÃO COMPLETA, MAS SEM EFEITO
+	//==================================================
+	else if(_inicio_efeito == _qtd_tokens)
+	{
+		_texto += " então";
 	}
 	
 	return _texto;
@@ -106,8 +187,8 @@ function LerVariavel(_tokens, _indice)
 		if(_indice + 1 >= array_length(_tokens))
 		{
 			_resultado.erro =
-				"O alvo '" + _a.ingrediente.elemento +
-				"' precisa de uma variável: Saúde, Ataque ou Velocidade.";
+				"O alvo \"" + _a.ingrediente.elemento +
+				"\" precisa de uma variável: \"saúde\", \"ataque\" ou \"velocidade\".";
 			
 			_resultado.slot_erro = _a.slot;
 			
@@ -119,8 +200,8 @@ function LerVariavel(_tokens, _indice)
 		if(_b.ingrediente.tipo != TipoIngrediente.VARIAVEL)
 		{
 			_resultado.erro =
-				"O alvo '" + _a.ingrediente.elemento +
-				"' precisa ser seguido por uma variável.";
+				"O alvo \"" + _a.ingrediente.elemento +
+				"\" precisa ser seguido por uma variável.";
 			
 			_resultado.slot_erro = _b.slot;
 			
@@ -147,8 +228,8 @@ function LerVariavel(_tokens, _indice)
 		if(_indice + 1 >= array_length(_tokens))
 		{
 			_resultado.erro =
-				"A variável '" + _a.ingrediente.elemento +
-				"' precisa de um alvo: Aliado, Inimigo, Alvo.";
+				"A variável \"" + _a.ingrediente.elemento +
+				"\" precisa de um alvo: \"aliado\", \"inimigo\", \"alvo\".";
 			
 			_resultado.slot_erro = _a.slot;
 			
@@ -254,8 +335,8 @@ function LerValor(_tokens, _indice)
 	}
 	
 	_resultado.erro =
-		"'" + _token.ingrediente.elemento +
-		"' não pode ser usado como valor.";
+		"\"" + _token.ingrediente.elemento +
+		"\" não pode ser usado como valor.";
 	
 	_resultado.slot_erro = _token.slot;
 	
