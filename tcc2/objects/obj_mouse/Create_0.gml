@@ -58,11 +58,13 @@ mouse_over = function()
 	with(obj_inventario_pai)
 	{
 		//DEFININDO QUANTOS SLOTS DEVEM SER USADOS
-		var _slots = SLOTS_INVENTARIO;
+		var _slots = SLOTS_BOLSA;
+		var _margem_caldeirao = 0;
 		
 		if(caldeirao)
 		{
 			_slots = slots_ativos;
+			_margem_caldeirao = slot_tam /2;
 		}
 		
 		//quantidade de colunas e linhas
@@ -81,7 +83,7 @@ mouse_over = function()
 			x - espaco_borda,
 			y - espaco_borda,
 			x - espaco_borda + _largura,
-			y - espaco_borda + _altura
+			y - espaco_borda + _altura + _margem_caldeirao 
 		))
 		{
 			//VERIFICANDO CADA SLOT
@@ -89,7 +91,7 @@ mouse_over = function()
 			{
 				var _xx = x + (i mod colunas) * (slot_tam + entre_slots) + 2;
 				
-				var _yy = y + (i div colunas) * (slot_tam + entre_slots) + 2;
+				var _yy = y + (i div colunas) * (slot_tam + entre_slots) + 2 + _margem_caldeirao;
 				
 				if(point_in_rectangle(
 					_mx,

@@ -5,11 +5,11 @@ draw_sprite_stretched(
 	x-espaco_borda,
 	y-espaco_borda,
 	(2*espaco_borda)+colunas*(slot_tam + entre_slots),
-	(2*espaco_borda)+(((SLOTS_INVENTARIO-1) div colunas)+1)*(slot_tam + entre_slots)
+	(2*espaco_borda)+(((SLOTS_BOLSA-1) div colunas)+1)*(slot_tam + entre_slots)
 );
 
 //desenhando os slots e os itens
-for(var i = 0; i < SLOTS_INVENTARIO; i++)
+for(var i = 0; i < SLOTS_BOLSA; i++)
 {
 	var _xx = x + (i mod colunas) * (slot_tam + entre_slots) + 2;
 	var _yy = y + (i div colunas) * (slot_tam + entre_slots) + 2;
@@ -32,7 +32,7 @@ for(var i = 0; i < SLOTS_INVENTARIO; i++)
 }
 
 //escrevendo as infos do item depois para ficarem por cima
-for(var i = 0; i < SLOTS_INVENTARIO; i++)
+for(var i = 0; i < SLOTS_BOLSA; i++)
 {
 	var _xx = x + (i mod colunas) * (slot_tam + entre_slots) + 2;
 	var _yy = y + (i div colunas) * (slot_tam + entre_slots) + 2;

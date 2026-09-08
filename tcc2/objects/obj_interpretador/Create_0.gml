@@ -4,7 +4,7 @@ caldeirao = instance_find(obj_caldeirao, 0);
 
 tokens = [];
 sentenca = "";
-cor_sentenca = c_black;
+cor_sentenca = c_white;
 fonte = fnt_placeholder_media;
 
 algoritmo = undefined;
