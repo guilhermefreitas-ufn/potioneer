@@ -1,3 +1,5 @@
+#macro INGREDIENTE_INT 1
+
 enum TipoIngrediente
 {
 	CONDICIONAL,
@@ -84,124 +86,23 @@ function ApresentaDescricaoIngrediente(_token_ou_numero, _x=72, _y=48, _fonte=fn
 	reseta_draw();
 }
 
-//=========================================================
-//ANTIGO
-//=========================================================
-//function SpriteIng(_numero)
-//{
-//	var _sprite = noone;
+function ItensIguais(_obj_a, _slot_a, _obj_b, _slot_b)
+{
+	var _item_a = _obj_a.inventario[_slot_a];
+	var _item_b = _obj_b.inventario[_slot_b];
 	
-//	switch(_numero)
-//	{
-//		case 0:		{ _sprite = spr_ing_estrela;	break; }
-//		case 1:		{ _sprite = spr_ing_lagrima;	break; }
-//		case 2:		{ _sprite = spr_ing_fogo;		break; }
-//		case 3:		{ _sprite = spr_ing_folha;		break; }
-//		case 4:		{ _sprite = spr_ing_lua;		break; }
-//		case 5:		{ _sprite = spr_ing_osso;		break; }
-//		case 6:		{ _sprite = spr_ing_sol;		break; }
-		
-//		case 7:		{ _sprite = spr_placeholder_32	break; }
-//		case 8:		{ _sprite = spr_placeholder_32	break; }
-//		case 9:		{ _sprite = spr_placeholder_32; break; }
-//		case 10:	{ _sprite = spr_placeholder_32; break; }
-//		case 11:	{ _sprite = spr_placeholder_32; break; }
-//		case 12:	{ _sprite = spr_placeholder_32; break; }
-//		case 13:	{ _sprite = spr_placeholder_32; break; }
-//		case 14:	{ _sprite = spr_placeholder_32; break; }
-//		case 15:	{ _sprite = spr_placeholder_32; break; }
-//	}
+	// ingredientes diferentes
+	if(_item_a != _item_b)
+	{
+		return false;
+	}
 	
-//	return _sprite;
-//}
-
-//function NomeNumIng(_nome)
-//{
-//	var _numero = -1;
+	// se não for int, só o ingrediente importa
+	if(_item_a != INGREDIENTE_INT)
+	{
+		return true;
+	}
 	
-//	switch(_nome)
-//	{
-//		case "if":			{ _numero = 0; break; }
-//		case "greater":		{ _numero = 1; break; }
-//		case "life":		{ _numero = 2; break; }
-//		case "decreases":	{ _numero = 3; break; }
-//		case "enemy":		{ _numero = 4; break; }
-//		case "int":			{ _numero = 5; break; }
-//		case "while":		{ _numero = 6; break; }
-//	}
-	
-//	return _numero;
-//}
-
-//function NumNomeIng(_numero)
-//{
-//	var _nome = "";
-	
-//	switch(_nome)
-//	{
-//		case 0:	{ _numero = "if";			break; }
-//		case 1:	{ _numero = "greater";		break; }
-//		case 2:	{ _numero = "life";			break; }
-//		case 3:	{ _numero = "decreases";	break; }
-//		case 4:	{ _numero = "enemy";		break; }
-//		case 5:	{ _numero = "int";			break; }
-//		case 6:	{ _numero = "while";		break; }
-//	}
-	
-//	return _numero;
-//}
-
-//function DragIng(_nome)
-//{
-//	var _block = noone;
-	
-//	switch(_nome)
-//	{
-//		case "if":			{ _block = obj_block_drag; break; }
-//		case "greater":		{ _block = obj_block_drag; break; }
-//		case "life":		{ _block = obj_block_drag; break; }
-//		case "decreases":	{ _block = obj_block_drag; break; }
-//		case "enemy":		{ _block = obj_block_drag; break; }
-//		case "int":			{ _block = obj_block_drag; break; }
-//		case "while":		{ _block = obj_block_drag; break; }
-//	}
-	
-//	return _block;
-//}
-
-//function RealIng(_nome)
-//{
-//	var _block = noone;
-	
-//	switch(_nome)
-//	{
-//		case "if":			{ _block = obj_block_real; break; }
-//		case "greater":		{ _block = obj_block_real; break; }
-//		case "life":		{ _block = obj_block_real; break; }
-//		case "decreases":	{ _block = obj_block_real; break; }
-//		case "enemy":		{ _block = obj_block_real; break; }
-//		case "int":			{ _block = obj_block_real; break; }
-//		case "while":		{ _block = obj_block_real; break; }
-//	}
-	
-//	return _block;
-//}
-
-//antigo
-//function SprIng(_nome)
-//{
-//	var _sprite = noone;
-	
-//	switch(_nome)
-//	{
-//		case "if":			{ _sprite = 0; break; }
-//		case "greater":		{ _sprite = 1; break; }
-//		case "life":		{ _sprite = 2; break; }
-//		case "decreases":	{ _sprite = 3; break; }
-//		case "enemy":		{ _sprite = 4; break; }
-//		case "int":			{ _sprite = 5; break; }
-//		case "while":		{ _sprite = 6; break; }
-//	}
-	
-//	return _sprite;
-//}
+	// int precisa ter o mesmo valor
+	return _obj_a.valores[_slot_a] == _obj_b.valores[_slot_b];
+}

@@ -7,6 +7,9 @@ inventario = array_create(SLOTS_BOLSA, -1); //deixando os slots vazios (-1)
 //quantidade de cada item em cada slot
 quantidades = array_create(SLOTS_BOLSA, 0);
 
+//valores para ingredientes com valor
+valores = array_create(SLOTS_BOLSA, undefined);
+
 //bolsa sempre possui todos os slots
 slots_ativos = SLOTS_BOLSA;
 

@@ -57,27 +57,49 @@ for(var i = 0; i < slots_ativos; i++)
 }
 
 
-//ESCREVENDO AS INFOS DO ITEM
+ // ESCREVENDO AS INFOS DO ITEM
 for(var i = 0; i < slots_ativos; i++)
 {
-	var _xx = x + (i mod colunas) * (slot_tam + entre_slots) + 2;
-	var _yy = y + (i div colunas) * (slot_tam + entre_slots) + 2 + slot_tam / 2;
+	var _xx =
+		x + (i mod colunas) * (slot_tam + entre_slots) + 2;
 	
-	var _hover = (obj_mouse.inventario_hover == id) && (obj_mouse.slot_hover == i);
+	var _yy =
+		y + (i div colunas) * (slot_tam + entre_slots) + 2 + slot_tam / 2;
 	
 	if(inventario[i] != -1)
 	{
-		var _meio_x_sprite = sprite_get_width(global.Ingredientes[inventario[i]].sprite) / 2;
-		var _meio_y_sprite = sprite_get_height(global.Ingredientes[inventario[i]].sprite) / 2;
+		var _ingrediente = global.Ingredientes[inventario[i]];
+		
+		var _meio_x_sprite =
+			sprite_get_width(_ingrediente.sprite) / 2;
+		
+		var _meio_y_sprite =
+			sprite_get_height(_ingrediente.sprite) / 2;
+		
 		var _margem = 0;
+		
+		
+		// ==========================================
+		// NOME DO ITEM
+		// ==========================================
+		
+		var _nome = _ingrediente.nome;
+		
+		// INT mostra seu valor
+		if(inventario[i] == INGREDIENTE_INT)
+		{
+			_nome += " " + string(valores[i]);
+		}
+		
 		
 		define_align();
 		draw_set_font(fonte);
 		
+		
 		draw_text_outline(
 			_xx + _meio_x_sprite,
 			_yy + (_meio_y_sprite * 2) + _margem,
-			global.Ingredientes[inventario[i]].nome,
+			_nome,
 			cor_texto,
 			c_black,
 			1,

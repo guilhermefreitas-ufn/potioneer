@@ -5,10 +5,10 @@ if(global.debug)
 	var _backspace = keyboard_check_pressed(vk_backspace);
 	var _1 = keyboard_check_pressed(vk_numpad1) || keyboard_check_pressed(ord("1"));
 
-	if(_backspace)
-	{
-		LimpaCaldeirao();
-	}
+	//if(_backspace)
+	//{
+	//	LimpaCaldeirao();
+	//}
 	
 	if(_1)
 	{

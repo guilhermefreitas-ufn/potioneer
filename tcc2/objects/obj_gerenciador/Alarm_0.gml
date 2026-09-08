@@ -1,0 +1,1 @@
+AdicionaInventario(obj_bolsa, INGREDIENTE_INT, 4);

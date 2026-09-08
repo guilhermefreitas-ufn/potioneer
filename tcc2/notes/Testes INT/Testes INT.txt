@@ -1,0 +1,14 @@
+Teste 1 ✅
+int +4 + int +4 → junta
+int +4 + int -3 → separa
+
+Teste 2 ✅
+int +4 bolsa → caldeirão → continua +4
+
+Teste 3 ✅
+int +4 caldeirão → bolsa
+e já existe int +4 → junta
+
+Teste 4 ✅
+int +4 caldeirão → bolsa
+e só existe int -3 → cria nova pilha

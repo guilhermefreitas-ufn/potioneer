@@ -31,29 +31,46 @@ for(var i = 0; i < SLOTS_BOLSA; i++)
 	}
 }
 
-//escrevendo as infos do item depois para ficarem por cima
+// escrevendo as infos do item depois para ficarem por cima
 for(var i = 0; i < SLOTS_BOLSA; i++)
 {
 	var _xx = x + (i mod colunas) * (slot_tam + entre_slots) + 2;
 	var _yy = y + (i div colunas) * (slot_tam + entre_slots) + 2;
 	
-	var _hover = (obj_mouse.inventario_hover == id) && (obj_mouse.slot_hover == i);
-	
-	//escrevendo as infos do item
 	if(inventario[i] != -1)
 	{
-		var _meio_x_sprite = sprite_get_width(global.Ingredientes[inventario[i]].sprite) / 2;
-		var _meio_y_sprite = sprite_get_height(global.Ingredientes[inventario[i]].sprite) / 2;
+		var _ingrediente = global.Ingredientes[inventario[i]];
+		
+		var _meio_x_sprite =
+			sprite_get_width(_ingrediente.sprite) / 2;
+		
+		var _meio_y_sprite =
+			sprite_get_height(_ingrediente.sprite) / 2;
+		
 		var _margem = 0;
+		
+		
+		// ==========================================
+		// NOME DO ITEM
+		// ==========================================
+		
+		var _nome = _ingrediente.nome;
+		
+		// INT mostra seu valor
+		if(inventario[i] == INGREDIENTE_INT)
+		{
+			_nome += " " + string(valores[i]);
+		}
+		
 		
 		define_align();
 		draw_set_font(fonte);
 		
-		//NOME
+		
 		draw_text_outline(
 			_xx + _meio_x_sprite,
 			_yy + (_meio_y_sprite * 2) + _margem,
-			global.Ingredientes[inventario[i]].nome,
+			_nome,
 			desc_cor,
 			c_black,
 			1,
@@ -64,11 +81,15 @@ for(var i = 0; i < SLOTS_BOLSA; i++)
 			-1
 		);
 		
-		//QUANTIDADE
+		
+		// ==========================================
+		// QUANTIDADE
+		// ==========================================
+		
 		draw_text_outline(
 			_xx - entre_slots,
 			_yy + slot_tam - espaco_borda,
-			string(quantidades[i])+"x",
+			string(quantidades[i]) + "x",
 			desc_cor,
 			c_black,
 			1,

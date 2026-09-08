@@ -16,15 +16,14 @@ function LerCaldeirao(_caldeirao)
 {
 	var _tokens = [];
 	
-	//percorrendo o caldeirão
+	// percorrendo o caldeirão
 	for(var i = 0; i < _caldeirao.slots_ativos; i++)
 	{
 		var _numero = _caldeirao.inventario[i];
 		
-		//slot vazio
+		// slot vazio
 		if(_numero == -1)
 		{
-			//ignorar
 			continue;
 		}
 		
@@ -39,11 +38,25 @@ function LerCaldeirao(_caldeirao)
 		{
 			numero: _numero,
 			slot: i,
-			ingrediente: _ing
+			ingrediente: _ing,
+			valor: _caldeirao.valores[i]
 		});
 	}
 	
 	return _tokens;
+}
+
+//transformar um token em texto
+function TextoToken(_token)
+{
+	// INT -> usa o valor armazenado no token
+	if(_token.numero == INGREDIENTE_INT)
+	{
+		return string(_token.valor);
+	}
+	
+	// demais ingredientes -> usa o elemento
+	return _token.ingrediente.elemento;
 }
 
 //criando a "frase" da poção
@@ -52,38 +65,43 @@ function MontaSentenca(_tokens)
 	var _texto = "";
 	var _qtd_tokens = array_length(_tokens);
 	
-	//caldeirão vazio
+	// caldeirão vazio
 	if(_qtd_tokens == 0)
 	{
 		return " ";
 	}
 	
+	
 	//==================================================
 	// PRIMEIRO INGREDIENTE
 	//==================================================
+	
 	var _primeiro = _tokens[0];
 	
-	//adicionando o elemento do primeiro ingrediente
-	_texto += _primeiro.ingrediente.elemento;
+	_texto += TextoToken(_primeiro);
+	
 	
 	//==================================================
 	// "ENTÃO" SÓ EXISTE SE HOUVER "if"
 	//==================================================
+	
 	if(_primeiro.ingrediente.token != "if")
 	{
-		//não é if → simplesmente monta a sentença normalmente
+		// não é if -> simplesmente monta a sentença normalmente
 		for(var i = 1; i < _qtd_tokens; i++)
 		{
 			_texto += " ";
-			_texto += _tokens[i].ingrediente.elemento;
+			_texto += TextoToken(_tokens[i]);
 		}
 		
 		return _texto;
 	}
 	
+	
 	//==================================================
 	// PROCURANDO ONDE A CONDIÇÃO TERMINA
 	//==================================================
+	
 	var _inicio_efeito = -1;
 	
 	if(_qtd_tokens > 1)
@@ -96,47 +114,55 @@ function MontaSentenca(_tokens)
 		}
 	}
 	
+	
 	//==================================================
 	// ADICIONANDO OS INGREDIENTES
 	//==================================================
+	
 	for(var i = 1; i < _qtd_tokens; i++)
 	{
 		//----------------------------------------------
 		// AINDA ESTAMOS NA CONDIÇÃO
 		//----------------------------------------------
+		
 		if(_inicio_efeito == -1 || i < _inicio_efeito)
 		{
 			_texto += " ";
-			_texto += _tokens[i].ingrediente.elemento;
+			_texto += TextoToken(_tokens[i]);
 		}
 		
 		//----------------------------------------------
 		// COMEÇO DO EFEITO
 		//----------------------------------------------
+		
 		else
 		{
-			//adiciona "então" uma única vez
+			// adiciona "então" uma única vez
 			if(i == _inicio_efeito)
 			{
 				_texto += " então";
 			}
 			
 			_texto += " ";
-			_texto += _tokens[i].ingrediente.elemento;
+			_texto += TextoToken(_tokens[i]);
 		}
 	}
+	
 	
 	//==================================================
 	// CONDIÇÃO AINDA INCOMPLETA
 	//==================================================
+	
 	if(_inicio_efeito == -1)
 	{
 		_texto += " então";
 	}
 	
+	
 	//==================================================
 	// CONDIÇÃO COMPLETA, MAS SEM EFEITO
 	//==================================================
+	
 	else if(_inicio_efeito == _qtd_tokens)
 	{
 		_texto += " então";
@@ -269,7 +295,7 @@ function LerVariavel(_tokens, _indice)
 }
 
 //criar int
-function CriarExpressaoInt(_numero, _slot)
+function CriarExpressaoInt(_numero, _slot, _valor)
 {
 	return
 	{
@@ -277,7 +303,8 @@ function CriarExpressaoInt(_numero, _slot)
 		subtipo: TipoValor.INT,
 		
 		ingrediente: _numero,
-		slot: _slot
+		slot: _slot,
+		valor: _valor
 	};
 }
 
@@ -301,14 +328,19 @@ function LerValor(_tokens, _indice)
 	
 	var _token = _tokens[_indice];
 	
-	//INT
-	if(_token.ingrediente.tipo == TipoIngrediente.PRIMITIVO)
+	// INT
+	if(_token.numero == INGREDIENTE_INT)
 	{
 		_resultado.sucesso = true;
 		_resultado.proximo_indice = _indice + 1;
+	
 		_resultado.expressao =
-			CriarExpressaoInt(_token.numero, _token.slot);
-		
+			CriarExpressaoInt(
+				_token.numero,
+				_token.slot,
+				_token.valor
+			);
+	
 		return _resultado;
 	}
 	

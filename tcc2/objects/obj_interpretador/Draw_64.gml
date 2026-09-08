@@ -6,7 +6,7 @@ var _y = RES_H;
 var _max_tam = RES_H - _margem;
 
 //sentença
-if(_texto != "") { _texto = "\" "+sentenca+" \""; }
+if(_texto != " ") { _texto = "\" "+_texto+" \""; }
 
 define_align();
 //draw_set_colour(cor_sentenca);

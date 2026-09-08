@@ -7,6 +7,9 @@ inventario = array_create(SLOTS_CALDEIRAO, -1); //deixando os slots vazios (-1)
 //quantidade de cada item em cada slot
 quantidades = array_create(SLOTS_CALDEIRAO, 0);
 
+//valores para ingredientes com valor
+valores = array_create(SLOTS_CALDEIRAO, undefined);
+
 //Quantidade de slots atualmente visíveis
 slots_ativos = 1;
 

@@ -1,6 +1,9 @@
 if(obj_mouse.MouseSobreItem())
 {
-	var _item = obj_mouse.inventario_hover.inventario[obj_mouse.slot_hover];
+	var _inventario = obj_mouse.inventario_hover;
+	var _slot = obj_mouse.slot_hover;
+	
+	var _item = _inventario.inventario[_slot];
 	var _ing = global.Ingredientes[_item];
 	
 	define_align(0, 1);
@@ -11,21 +14,51 @@ if(obj_mouse.MouseSobreItem())
 	// POSIÇÃO DA BOLSA
 	//========================================
 	
-	var _inventario_esquerda = x - espaco_borda;
-	var _inventario_topo = y - espaco_borda;
+	var _inventario_esquerda =
+		x - espaco_borda;
+	
+	var _inventario_topo =
+		y - espaco_borda;
+	
+	
+	//========================================
+	// QUANTIDADE
+	//========================================
+	
+	var _quantidade =
+		_inventario.quantidades[_slot];
+	
+	
+	//========================================
+	// NOME DO ITEM
+	//========================================
+	
+	var _nome = _ing.nome;
+	
+	if(_item == INGREDIENTE_INT)
+	{
+		_nome += " " + string(
+			_inventario.valores[_slot]
+		);
+	}
+	
+	
+	var _texto_nome =
+		_nome + " (" + string(_quantidade) + ")";
+	
+	
+	//========================================
+	// ELEMENTO / TOKEN
+	//========================================
+	
+	var _texto_elemento =
+		"\"" + _ing.elemento + "\"" +
+		" (" + _ing.token + ")";
 	
 	
 	//========================================
 	// TAMANHO DA DESCRIÇÃO
 	//========================================
-	
-	var _quantidade = obj_mouse.inventario_hover.quantidades[obj_mouse.slot_hover];
-	
-	var _texto_nome =
-		_ing.nome + " (" + string(_quantidade) + ")";
-	
-	var _texto_elemento =
-		"\"" + _ing.elemento + "\"" + " (" + _ing.token + ")";
 	
 	var _desc_largura =
 		max(
@@ -35,7 +68,8 @@ if(obj_mouse.MouseSobreItem())
 		)
 		+ desc_margem_x * 2;
 	
-	var _desc_altura = desc_margem_y * 5;
+	var _desc_altura =
+		desc_margem_y * 5;
 	
 	
 	//========================================
@@ -45,8 +79,13 @@ if(obj_mouse.MouseSobreItem())
 	var _offset_x = 26;
 	var _offset_y = 80;
 	
-	var _desc_x = _inventario_esquerda + _offset_x;
-	var _desc_y = _inventario_topo - _desc_altura + _offset_y;
+	var _desc_x =
+		_inventario_esquerda + _offset_x;
+	
+	var _desc_y =
+		_inventario_topo -
+		_desc_altura +
+		_offset_y;
 	
 	
 	//========================================

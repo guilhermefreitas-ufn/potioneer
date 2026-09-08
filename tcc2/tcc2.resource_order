@@ -9,6 +9,7 @@
   ],
   "ResourceOrderSettings":[
     {"name":"Fluxo Caldeirao Algoritmo","order":5,"path":"notes/Fluxo Caldeirao Algoritmo/Fluxo Caldeirao Algoritmo.yy",},
+    {"name":"Testes INT","order":7,"path":"notes/Testes INT/Testes INT.yy",},
     {"name":"obj_block_drag","order":1,"path":"objects/obj_block_drag/obj_block_drag.yy",},
     {"name":"obj_block_real","order":2,"path":"objects/obj_block_real/obj_block_real.yy",},
     {"name":"obj_bolsa","order":4,"path":"objects/obj_bolsa/obj_bolsa.yy",},

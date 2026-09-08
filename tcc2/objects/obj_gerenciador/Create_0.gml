@@ -28,3 +28,29 @@ global.Ingredientes =
 	
 	//,CriarIngrediente(14, "Lua", "Uma mini lua perfeitamente mordida.",spr_ing_lua,	"enquanto",		"while",	TipoIngrediente.CONDICIONAL)
 ];
+
+//botões de debug
+// =====================================================
+// CONFIGURAÇÃO DOS BOTÕES
+// =====================================================
+fonte_texto =fnt_placeholder_media;
+
+botao_largura = 220;
+botao_altura = 45;
+
+botao_espaco = 10;
+
+botao_x = 30;
+botao_y = 30;
+
+// Textos dos botões
+botoes_texto = [
+	"RESETAR JOGO",
+	"1x INT +4 / 1x INT +4",
+	"1x INT +4 / 1x INT -3",
+	"ADD ITENS BOLSA",
+	"LIMPAR CALDEIRAO"
+];
+
+// Quantidade de botões
+botoes_qtd = array_length(botoes_texto);
