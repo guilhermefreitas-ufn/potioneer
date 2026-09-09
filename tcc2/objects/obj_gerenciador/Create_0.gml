@@ -29,6 +29,69 @@ global.Ingredientes =
 	//,CriarIngrediente(14, "Lua", "Uma mini lua perfeitamente mordida.",spr_ing_lua,	"enquanto",		"while",	TipoIngrediente.CONDICIONAL)
 ];
 
+//funções para testes
+function VerificaIngrediente(_numero = 1)
+{
+	if(instance_exists(obj_bolsa))
+	{
+		with(obj_bolsa)
+		{
+			var _item = global.Ingredientes[_numero].nome;
+			var _resultado = (ProcuraInventario(id,_numero) != -1) ? "tem "+_item : "não tem "+_item
+		
+			show_debug_message("Bolsa "+_resultado);
+		}
+	}
+	else
+	{
+		msg_erro("Bolsa");
+	}
+	if(instance_exists(obj_caldeirao))
+	{
+		with(obj_caldeirao)
+		{
+			var _item = global.Ingredientes[_numero].nome;
+			var _resultado = (ProcuraInventario(id,_numero) != -1) ? "tem "+_item : "não tem "+_item
+		
+			show_debug_message("Caldeirão "+_resultado);
+		}
+	}
+	else
+	{
+		msg_erro("Caldeirão");
+	}
+}
+
+function PreencheBolsa(_quantidade = 10)
+{
+	if(instance_exists(obj_bolsa))
+	{
+		with(obj_bolsa)
+		{
+			//adicionando itens 0 e 13 no inventario
+			//AdicionaInventario(id,irandom(13));
+			for(var i = 0; i <= 13; i++)
+			{
+				for(var j = 0; j < _quantidade; j++)
+				{
+					if(i == INGREDIENTE_INT)
+					{
+						AdicionaInventario(id, INGREDIENTE_INT, irandom_range(-9,9));
+					}
+					else
+					{
+						AdicionaInventario(id,i);
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		msg_erro("Bolsa");
+	}
+}
+
 //botões de debug
 // =====================================================
 // CONFIGURAÇÃO DOS BOTÕES

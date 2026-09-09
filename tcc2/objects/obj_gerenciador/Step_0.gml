@@ -23,38 +23,9 @@ if(_r) { game_restart(); }
 
 //verificando se existe o item 1 (lagrima) no inventario
 if(_1)
-	{
-		if(instance_exists(obj_bolsa))
-		{
-			with(obj_bolsa)
-			{
-				var _item = global.Ingredientes[1].nome;
-				var _resultado = (ProcuraInventario(id,1) != -1) ? "tem "+_item : "não tem "+_item
-			
-				show_debug_message("Bolsa "+_resultado);
-			}
-		}
-		else
-		{
-			msg_erro("Bolsa");
-		}
-		if(instance_exists(obj_caldeirao))
-		{
-			with(obj_caldeirao)
-			{
-				var _item = global.Ingredientes[1].nome;
-				var _resultado = (ProcuraInventario(id,1) != -1) ? "tem "+_item : "não tem "+_item
-			
-				show_debug_message("Caldeirão "+_resultado);
-			}
-		}
-		else
-		{
-			msg_erro("Caldeirão");
-		}
-	}
-
-
+{
+	VerificaIngrediente();
+}
 
 //testes de Int com valor
 if(_0)
@@ -89,25 +60,7 @@ if(_9)
 }
 if(_enter)
 {
-	if(instance_exists(obj_bolsa))
-	{
-		with(obj_bolsa)
-		{
-			//adicionando itens 0 e 13 no inventario
-			//AdicionaInventario(id,irandom(13));
-			for(var i = 0; i <= 13; i++)
-			{
-				for(var j = 0; j < 10; j++)
-				{
-					AdicionaInventario(id,i);
-				}
-			}
-		}
-	}
-	else
-	{
-		msg_erro("Bolsa");
-	}
+	PreencheBolsa();
 }
 if(_backspace)
 {
@@ -159,7 +112,6 @@ if(mouse_check_button_pressed(mb_left))
 					game_restart();
 				break;
 
-
 				// =========================================
 				// BOTÃO 1 - INT +4 + ALARME 0
 				// =========================================
@@ -175,7 +127,6 @@ if(mouse_check_button_pressed(mb_left))
 					alarm[0] = 60;
 				}
 				break;
-
 
 				// =========================================
 				// BOTÃO 2 - INT +4 + ALARME 1
@@ -193,23 +144,12 @@ if(mouse_check_button_pressed(mb_left))
 				}
 				break;
 
-
 				// =========================================
 				// BOTÃO 3 - ADICIONAR ITENS
 				// =========================================
 				case 3:
-					with(obj_bolsa)
-					{
-						for(var j = 0; j <= 13; j++)
-						{
-							for(var k = 0; k < 10; k++)
-							{
-								AdicionaInventario(id, j);
-							}
-						}
-					}
+					PreencheBolsa();
 				break;
-
 
 				// =========================================
 				// BOTÃO 4 - LIMPAR CALDEIRÃO
