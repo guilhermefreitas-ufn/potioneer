@@ -36,7 +36,7 @@ global.Ingredientes =
 fonte_texto =fnt_placeholder_media;
 
 botao_largura = 220;
-botao_altura = 45;
+botao_altura = 32;
 
 botao_espaco = 10;
 

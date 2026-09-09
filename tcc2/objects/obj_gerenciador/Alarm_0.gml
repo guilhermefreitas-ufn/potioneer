@@ -1,1 +1,1 @@
-AdicionaInventario(obj_bolsa, INGREDIENTE_INT, 4);
+AdicionaInventario(obj_bolsa, INGREDIENTE_INT, 4,false);

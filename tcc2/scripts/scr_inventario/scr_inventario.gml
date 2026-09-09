@@ -21,11 +21,7 @@ function ProcuraInventario(_obj_raiz, _tipo_item, _caldeirao = caldeirao)
 	return -1;
 }
 
-function RemoveInventario(
-	_obj_raiz,
-	_tipo_item,
-	_caldeirao = caldeirao
-)
+function RemoveInventario(_obj_raiz,_tipo_item,_caldeirao = caldeirao)
 {
 	var _slot = ProcuraInventario(
 		_obj_raiz,
@@ -73,12 +69,7 @@ function RemoveInventario(
 	}
 }
 
-function AdicionaInventario(
-	_obj_raiz,
-	_tipo_item,
-	_valor = undefined,
-	_caldeirao = caldeirao
-)
+function AdicionaInventario(_obj_raiz,_tipo_item,_valor = undefined,_caldeirao = caldeirao)
 {
 	// ==========================================
 	// BOLSA
@@ -178,14 +169,7 @@ function AdicionaInventario(
 	}
 }
 
-function TrocaInventario(
-	_obj_origem,
-	_slot_origem,
-	_obj_destino,
-	_slot_destino,
-	_caldeirao_origem,
-	_caldeirao_destino
-)
+function TrocaInventario(_obj_origem,_slot_origem,_obj_destino,_slot_destino,_caldeirao_origem,_caldeirao_destino)
 {
 	// ==========================================
 	// MESMO SLOT
@@ -287,45 +271,44 @@ function TrocaInventario(
 	// ==========================================
 	// BOLSA -> CALDEIRÃO
 	// ==========================================
-	
+
 	if(!_caldeirao_origem && _caldeirao_destino)
 	{
 		// ------------------------------------------
-		// DESTINO VAZIO
+		// 1. DESTINO VAZIO
 		// ------------------------------------------
-		
+	
 		if(_item_destino == -1)
 		{
 			_obj_destino.inventario[_slot_destino] =
 				_item_origem;
-			
+		
 			_obj_destino.quantidades[_slot_destino] = 1;
-			
+		
 			_obj_destino.valores[_slot_destino] =
 				_valor_origem;
-			
-			
+		
+		
 			// remove UMA unidade da bolsa
 			_obj_origem.quantidades[_slot_origem]--;
-			
-			
+		
 			if(_obj_origem.quantidades[_slot_origem] <= 0)
 			{
 				_obj_origem.inventario[_slot_origem] = -1;
 				_obj_origem.quantidades[_slot_origem] = 0;
 				_obj_origem.valores[_slot_origem] = undefined;
 			}
-			
+		
 			AtualizaSlotsInventario(_obj_destino);
-			
+		
 			return;
 		}
-		
-		
+	
+	
 		// ------------------------------------------
-		// MESMO ITEM / MESMO VALOR
+		// 2. MESMO ITEM / MESMO VALOR
 		// ------------------------------------------
-		
+	
 		if(ItensIguais(
 			_obj_origem,
 			_slot_origem,
@@ -335,103 +318,129 @@ function TrocaInventario(
 		{
 			return;
 		}
-		
-		
+	
+	
 		// ------------------------------------------
-		// DESTINO OCUPADO
+		// 3. O CALDEIRÃO ESTÁ OCUPADO
+		//
+		// O item do caldeirão precisa voltar
+		// para a bolsa.
 		// ------------------------------------------
-		
-		// Procurando na bolsa uma pilha compatível
-		// com o item que está no caldeirão.
-		var _slot_bolsa = -1;
-		
+	
+		var _item_retorno = _item_destino;
+		var _valor_retorno = _valor_destino;
+	
+	
+		// ------------------------------------------
+		// 4. PROCURANDO PILHA DO ITEM DE RETORNO
+		// ------------------------------------------
+	
+		var _slot_pilha = -1;
+	
 		for(var i = 0; i < SLOTS_BOLSA; i++)
 		{
+			// não considerar o próprio slot de origem
 			if(i == _slot_origem)
 			{
 				continue;
 			}
-			
+		
 			if(_obj_origem.inventario[i] == -1)
 			{
 				continue;
 			}
-			
-			// Precisamos comparar também o valor do INT
-			if(_obj_origem.inventario[i] == _item_destino)
+		
+			// ingrediente diferente
+			if(_obj_origem.inventario[i] != _item_retorno)
 			{
-				if(_item_destino != INGREDIENTE_INT
-				|| _obj_origem.valores[i] == _valor_destino)
-				{
-					_slot_bolsa = i;
-					break;
-				}
+				continue;
 			}
+		
+			// se for INT, precisa ter o mesmo valor
+			if(_item_retorno == INGREDIENTE_INT
+			&& _obj_origem.valores[i] != _valor_retorno)
+			{
+				continue;
+			}
+		
+			_slot_pilha = i;
+			break;
 		}
-		
-		
+	
+	
 		// ------------------------------------------
-		// ITEM DO CALDEIRÃO JÁ EXISTE NA BOLSA
+		// 5. SE NÃO EXISTE PILHA, PRECISAMOS
+		// DE UM SLOT VAZIO
 		// ------------------------------------------
-		
-		if(_slot_bolsa != -1)
+	
+		if(_slot_pilha == -1)
 		{
-			_obj_origem.quantidades[_slot_bolsa]++;
-		}
-		
-		// ------------------------------------------
-		// NÃO EXISTE -> PRIMEIRO SLOT VAZIO
-		// ------------------------------------------
-		
-		else
-		{
-			_slot_bolsa = ProcuraInventario(
+			_slot_pilha = ProcuraInventario(
 				_obj_origem,
 				-1,
 				false
 			);
-			
-			if(_slot_bolsa == -1)
+		
+			if(_slot_pilha == -1)
 			{
+				// Não temos como guardar o item
+				// que está no caldeirão.
 				return;
 			}
-			
-			_obj_origem.inventario[_slot_bolsa] =
-				_item_destino;
-			
-			_obj_origem.quantidades[_slot_bolsa] = 1;
-			
-			_obj_origem.valores[_slot_bolsa] =
-				_valor_destino;
+		
+			// criando nova pilha
+			_obj_origem.inventario[_slot_pilha] =
+				_item_retorno;
+		
+			_obj_origem.quantidades[_slot_pilha] = 1;
+		
+			_obj_origem.valores[_slot_pilha] =
+				_valor_retorno;
 		}
-		
-		
+	
 		// ------------------------------------------
-		// COLOCA O ITEM DA BOLSA NO CALDEIRÃO
+		// 6. JÁ EXISTE UMA PILHA
 		// ------------------------------------------
-		
+	
+		else
+		{
+			_obj_origem.quantidades[_slot_pilha]++;
+		}
+	
+	
+		// ------------------------------------------
+		// 7. ITEM DA BOLSA VAI PARA O CALDEIRÃO
+		// ------------------------------------------
+	
 		_obj_destino.inventario[_slot_destino] =
 			_item_origem;
-		
+	
 		_obj_destino.quantidades[_slot_destino] = 1;
-		
+	
 		_obj_destino.valores[_slot_destino] =
 			_valor_origem;
-		
-		
-		// remove UMA unidade da pilha da bolsa
+	
+	
+		// ------------------------------------------
+		// 8. REMOVE UMA UNIDADE DA BOLSA
+		// ------------------------------------------
+	
 		_obj_origem.quantidades[_slot_origem]--;
-		
-		
+	
 		if(_obj_origem.quantidades[_slot_origem] <= 0)
 		{
 			_obj_origem.inventario[_slot_origem] = -1;
 			_obj_origem.quantidades[_slot_origem] = 0;
 			_obj_origem.valores[_slot_origem] = undefined;
 		}
-		
+	
+	
+		// ------------------------------------------
+		// 9. ATUALIZA CALDEIRÃO
+		// ------------------------------------------
+	
 		AtualizaSlotsInventario(_obj_destino);
-		
+	
 		return;
 	}
 	
@@ -439,22 +448,97 @@ function TrocaInventario(
 	// ==========================================
 	// CALDEIRÃO -> BOLSA
 	// ==========================================
-	
+
 	if(_caldeirao_origem && !_caldeirao_destino)
 	{
-		// ------------------------------------------
-		// 1. PROCURANDO PILHA COMPATÍVEL
-		// ------------------------------------------
+		// ==========================================
+		// 1. DESTINO VAZIO
+		// ==========================================
+	
+		if(_item_destino == -1)
+		{
+			// procura pilha compatível do item
+			// que veio do caldeirão
+			var _slot_pilha = -1;
 		
-		var _slot_bolsa = -1;
+			for(var i = 0; i < SLOTS_BOLSA; i++)
+			{
+				if(_obj_destino.inventario[i] == -1)
+				{
+					continue;
+				}
+			
+				if(ItensIguais(
+					_obj_origem,
+					_slot_origem,
+					_obj_destino,
+					i
+				))
+				{
+					_slot_pilha = i;
+					break;
+				}
+			}
 		
+		
+			// já existe pilha -> soma 1
+			if(_slot_pilha != -1)
+			{
+				_obj_destino.quantidades[_slot_pilha]++;
+			}
+		
+			// não existe -> coloca no slot escolhido
+			else
+			{
+				_obj_destino.inventario[_slot_destino] =
+					_item_origem;
+			
+				_obj_destino.quantidades[_slot_destino] = 1;
+			
+				_obj_destino.valores[_slot_destino] =
+					_valor_origem;
+			}
+		
+		
+			// remove do caldeirão
+			_obj_origem.inventario[_slot_origem] = -1;
+			_obj_origem.quantidades[_slot_origem] = 0;
+			_obj_origem.valores[_slot_origem] = undefined;
+		
+			AtualizaSlotsInventario(_obj_origem);
+		
+			return;
+		}
+	
+	
+		// ==========================================
+		// 2. DESTINO OCUPADO
+		// ==========================================
+	
+		var _quantidade_destino =
+			_obj_destino.quantidades[_slot_destino];
+	
+	
+		// ------------------------------------------
+		// procurando uma pilha do item que veio
+		// do caldeirão
+		// ------------------------------------------
+	
+		var _slot_pilha = -1;
+	
 		for(var i = 0; i < SLOTS_BOLSA; i++)
 		{
+			// não considerar o próprio slot de destino
+			if(i == _slot_destino)
+			{
+				continue;
+			}
+		
 			if(_obj_destino.inventario[i] == -1)
 			{
 				continue;
 			}
-			
+		
 			if(ItensIguais(
 				_obj_origem,
 				_slot_origem,
@@ -462,137 +546,131 @@ function TrocaInventario(
 				i
 			))
 			{
-				_slot_bolsa = i;
+				_slot_pilha = i;
 				break;
 			}
 		}
-		
-		
-		// ------------------------------------------
-		// PILHA ENCONTRADA
-		// ------------------------------------------
-		
-		if(_slot_bolsa != -1)
+	
+	
+		// ==========================================
+		// 2A. JÁ EXISTE PILHA DO ITEM DO CALDEIRÃO
+		// ==========================================
+	
+		if(_slot_pilha != -1)
 		{
-			_obj_destino.quantidades[_slot_bolsa]++;
-			
-			_obj_origem.inventario[_slot_origem] = -1;
-			_obj_origem.quantidades[_slot_origem] = 0;
-			_obj_origem.valores[_slot_origem] = undefined;
-			
+			// adiciona 1 à pilha
+			_obj_destino.quantidades[_slot_pilha]++;
+		
+		
+			// tira 1 da pilha que estava no
+			// slot onde o jogador soltou
+			_obj_destino.quantidades[_slot_destino]--;
+		
+		
+			// item da bolsa vai para o caldeirão
+			_obj_origem.inventario[_slot_origem] =
+				_item_destino;
+		
+			_obj_origem.quantidades[_slot_origem] = 1;
+		
+			_obj_origem.valores[_slot_origem] =
+				_valor_destino;
+		
+		
+			// pilha acabou
+			if(_obj_destino.quantidades[_slot_destino] <= 0)
+			{
+				_obj_destino.inventario[_slot_destino] = -1;
+				_obj_destino.quantidades[_slot_destino] = 0;
+				_obj_destino.valores[_slot_destino] = undefined;
+			}
+		
 			AtualizaSlotsInventario(_obj_origem);
-			
+		
 			return;
 		}
-		
-		
+	
+	
+		// ==========================================
+		// 2B. NÃO EXISTE PILHA DO ITEM DO CALDEIRÃO
+		// ==========================================
+	
+	
 		// ------------------------------------------
-		// 2. DESTINO VAZIO
+		// PILHA DO DESTINO TEM MAIS DE 1
 		// ------------------------------------------
-		
-		if(_item_destino == -1)
-		{
-			_obj_destino.inventario[_slot_destino] =
-				_item_origem;
-			
-			_obj_destino.quantidades[_slot_destino] = 1;
-			
-			_obj_destino.valores[_slot_destino] =
-				_valor_origem;
-			
-			
-			_obj_origem.inventario[_slot_origem] = -1;
-			_obj_origem.quantidades[_slot_origem] = 0;
-			_obj_origem.valores[_slot_origem] = undefined;
-			
-			AtualizaSlotsInventario(_obj_origem);
-			
-			return;
-		}
-		
-		
-		// ------------------------------------------
-		// 3. DESTINO OCUPADO
-		// ------------------------------------------
-		
-		var _quantidade_destino =
-			_obj_destino.quantidades[_slot_destino];
-		
-		
-		// ------------------------------------------
-		// 3A. PILHA COM MAIS DE 1
-		// ------------------------------------------
-		
+	
 		if(_quantidade_destino > 1)
 		{
-			// Primeiro slot vazio da bolsa
+			// primeiro slot vazio da bolsa
 			var _slot_vazio = ProcuraInventario(
 				_obj_destino,
 				-1,
 				false
 			);
-			
+		
 			if(_slot_vazio == -1)
 			{
 				return;
 			}
-			
-			
-			// Item do caldeirão vai para o
+		
+		
+			// item do caldeirão vai para o
 			// primeiro slot vazio
 			_obj_destino.inventario[_slot_vazio] =
 				_item_origem;
-			
+		
 			_obj_destino.quantidades[_slot_vazio] = 1;
-			
+		
 			_obj_destino.valores[_slot_vazio] =
 				_valor_origem;
-			
-			
-			// tira UMA unidade da pilha do destino
+		
+		
+			// tira UMA unidade da pilha original
 			_obj_destino.quantidades[_slot_destino]--;
-			
-			
-			// item que estava na bolsa vai para o caldeirão
+		
+		
+			// item que estava na bolsa vai para
+			// o caldeirão
 			_obj_origem.inventario[_slot_origem] =
 				_item_destino;
-			
+		
 			_obj_origem.quantidades[_slot_origem] = 1;
-			
+		
 			_obj_origem.valores[_slot_origem] =
 				_valor_destino;
-			
-			
+		
+		
 			AtualizaSlotsInventario(_obj_origem);
-			
+		
 			return;
 		}
-		
-		
+	
+	
 		// ------------------------------------------
-		// 3B. PILHA TEM EXATAMENTE 1
+		// PILHA DO DESTINO TEM EXATAMENTE 1
 		// ------------------------------------------
-		
+	
 		_obj_destino.inventario[_slot_destino] =
 			_item_origem;
-		
+	
 		_obj_destino.quantidades[_slot_destino] = 1;
-		
+	
 		_obj_destino.valores[_slot_destino] =
 			_valor_origem;
-		
-		
+	
+	
 		_obj_origem.inventario[_slot_origem] =
 			_item_destino;
-		
+	
 		_obj_origem.quantidades[_slot_origem] = 1;
-		
+	
 		_obj_origem.valores[_slot_origem] =
 			_valor_destino;
-		
-		
+	
+	
 		AtualizaSlotsInventario(_obj_origem);
-		
+	
 		return;
 	}
 	
@@ -641,7 +719,6 @@ function TrocaInventario(
 	}
 }
 
-
 function AtualizaSlotsInventario(_obj_raiz)
 {
 	var _ultimo_slot = -1;
@@ -668,13 +745,7 @@ function AtualizaSlotsInventario(_obj_raiz)
 	);
 }
 
-function TransfereInventario(
-	_obj_origem,
-	_slot_origem,
-	_obj_destino,
-	_caldeirao_origem,
-	_caldeirao_destino
-)
+function TransfereInventario(_obj_origem,_slot_origem,_obj_destino,_caldeirao_origem,_caldeirao_destino)
 {
 	var _item = _obj_origem.inventario[_slot_origem];
 	var _valor = _obj_origem.valores[_slot_origem];

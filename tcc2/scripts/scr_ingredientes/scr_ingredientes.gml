@@ -91,18 +91,16 @@ function ItensIguais(_obj_a, _slot_a, _obj_b, _slot_b)
 	var _item_a = _obj_a.inventario[_slot_a];
 	var _item_b = _obj_b.inventario[_slot_b];
 	
-	// ingredientes diferentes
 	if(_item_a != _item_b)
 	{
 		return false;
 	}
 	
-	// se não for int, só o ingrediente importa
-	if(_item_a != INGREDIENTE_INT)
+	// apenas int precisa comparar valor
+	if(_item_a == INGREDIENTE_INT)
 	{
-		return true;
+		return _obj_a.valores[_slot_a] == _obj_b.valores[_slot_b];
 	}
 	
-	// int precisa ter o mesmo valor
-	return _obj_a.valores[_slot_a] == _obj_b.valores[_slot_b];
+	return true;
 }

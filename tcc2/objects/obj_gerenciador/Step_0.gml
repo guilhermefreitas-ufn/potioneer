@@ -1,9 +1,10 @@
 //iniciando variáveis
-var _b, _r, _0, _9, _8, _7;
+var _b, _r, _0, _9, _8, _7, _1;
 
 _b = keyboard_check_pressed(ord("B"));
 _r = keyboard_check_pressed(ord("R"));
 _0 = keyboard_check_pressed(vk_numpad0) || keyboard_check_pressed(ord("0"));
+_1 = keyboard_check_pressed(vk_numpad1) || keyboard_check_pressed(ord("1"));
 _9 = keyboard_check_pressed(vk_numpad9) || keyboard_check_pressed(ord("9"));
 _8 = keyboard_check_pressed(vk_numpad8) || keyboard_check_pressed(ord("8"));
 _7 = keyboard_check_pressed(vk_numpad7) || keyboard_check_pressed(ord("7"));
@@ -14,19 +15,46 @@ var _backspace = keyboard_check_pressed(vk_backspace);
 //debug
 if(_b) { global.debug = !global.debug; }
 
-//trocando de room
-var _nova_room = noone;
-
-switch(room)
-{
-	case rm_inventarios:{ _nova_room = rm_teste; break; }
-	case rm_teste:		{ _nova_room = rm_inventarios; break; }
-}
-
-//if(_r) { room_goto(_nova_room); }
-
 //resetando o jogo
 if(_r) { game_restart(); }
+
+//TESTANDO OS INVENTARIOS
+
+
+//verificando se existe o item 1 (lagrima) no inventario
+if(_1)
+	{
+		if(instance_exists(obj_bolsa))
+		{
+			with(obj_bolsa)
+			{
+				var _item = global.Ingredientes[1].nome;
+				var _resultado = (ProcuraInventario(id,1) != -1) ? "tem "+_item : "não tem "+_item
+			
+				show_debug_message("Bolsa "+_resultado);
+			}
+		}
+		else
+		{
+			msg_erro("Bolsa");
+		}
+		if(instance_exists(obj_caldeirao))
+		{
+			with(obj_caldeirao)
+			{
+				var _item = global.Ingredientes[1].nome;
+				var _resultado = (ProcuraInventario(id,1) != -1) ? "tem "+_item : "não tem "+_item
+			
+				show_debug_message("Caldeirão "+_resultado);
+			}
+		}
+		else
+		{
+			msg_erro("Caldeirão");
+		}
+	}
+
+
 
 //testes de Int com valor
 if(_0)
@@ -34,39 +62,68 @@ if(_0)
 	/*
 	int +4 + int +4 → junta
 	*/
-	AdicionaInventario(obj_bolsa, INGREDIENTE_INT, 4);
-	alarm[0] = 60;
+	if(instance_exists(obj_bolsa))
+	{
+		AdicionaInventario(obj_bolsa, INGREDIENTE_INT, 4);
+		alarm[0] = 60;
+	}
+	else
+	{
+		msg_erro("Bolsa");
+	}
 }
 if(_9)
 {
 	/*
 	int +4 + int -3 → separa
 	*/
-	
-	AdicionaInventario(obj_bolsa, INGREDIENTE_INT, 4);
-	alarm[1] = 60;
+	if(instance_exists(obj_bolsa))
+	{
+		AdicionaInventario(obj_bolsa, INGREDIENTE_INT, 4);
+		alarm[1] = 60;
+	}
+	else
+	{
+		msg_erro("Bolsa");
+	}
 }
 if(_enter)
 {
-	
-	with(obj_bolsa){
-		//adicionando itens 0 e 13 no inventario
-		//AdicionaInventario(id,irandom(13));
-		for(var i = 0; i <= 13; i++)
+	if(instance_exists(obj_bolsa))
+	{
+		with(obj_bolsa)
 		{
-			for(var j = 0; j < 10; j++)
+			//adicionando itens 0 e 13 no inventario
+			//AdicionaInventario(id,irandom(13));
+			for(var i = 0; i <= 13; i++)
 			{
-				AdicionaInventario(id,i);
+				for(var j = 0; j < 10; j++)
+				{
+					AdicionaInventario(id,i);
+				}
 			}
 		}
 	}
+	else
+	{
+		msg_erro("Bolsa");
+	}
 }
 if(_backspace)
+{
+	if(instance_exists(obj_bolsa) && instance_exists(obj_caldeirao))
 	{
 		LimpaCaldeirao();
 	}
-	
-	// =====================================================
+	else
+	{
+		show_debug_message("Caldeirão e/ou Bolsa não encontrados!");
+	}
+}
+
+if(!instance_exists(obj_caldeirao) || !instance_exists(obj_bolsa)) { exit; }
+
+// =====================================================
 // CLIQUE NOS BOTÕES
 // =====================================================
 

@@ -1,5 +1,6 @@
 if(global.debug)
 {
+	//debug
 	define_align(0,1);
 	draw_set_colour(c_blue);
 	draw_text(20, RES_H - 20, "debug");
@@ -11,7 +12,7 @@ if(global.debug)
 
 	var _mx = device_mouse_x_to_gui(0);
 	var _my = device_mouse_y_to_gui(0);
-
+	
 	for(var i = 0; i < botoes_qtd; i++)
 	{
 		var _bx = botao_x + i * (botao_largura + botao_espaco);
@@ -65,20 +66,23 @@ if(global.debug)
 		);
 
 
-		// =================================================
+		// =====================================================
 		// TEXTO
-		// =================================================
+		// =====================================================
 
+		draw_set_font(-1);
+		draw_set_halign(fa_left);
+		draw_set_valign(fa_top);
 		draw_set_color(c_white);
-		//draw_set_halign(fa_center);
+
 		var _texto = botoes_texto[i];
 
 		var _texto_largura = string_width(_texto);
-		var _texto_altura = string_height(_texto);
-		
+		var _offset_y = 6;
+
 		draw_text(
 			_bx + (botao_largura - _texto_largura) / 2,
-			_by + (botao_altura - _texto_altura) / 2,
+			_by + _offset_y,
 			_texto
 		);
 	}
