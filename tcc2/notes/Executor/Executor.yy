@@ -1,0 +1,11 @@
+{
+  "$GMNotes":"v1",
+  "%Name":"Executor",
+  "name":"Executor",
+  "parent":{
+    "name":"tcc2",
+    "path":"tcc2.yyp",
+  },
+  "resourceType":"GMNotes",
+  "resourceVersion":"2.0",
+}

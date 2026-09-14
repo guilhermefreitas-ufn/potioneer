@@ -29,6 +29,7 @@
   "name":"tcc2",
   "resources":[
     {"id":{"name":"fnt_placeholder_media","path":"fonts/fnt_placeholder_media/fnt_placeholder_media.yy",},},
+    {"id":{"name":"Executor","path":"notes/Executor/Executor.yy",},},
     {"id":{"name":"Fluxo Caldeirao Algoritmo","path":"notes/Fluxo Caldeirao Algoritmo/Fluxo Caldeirao Algoritmo.yy",},},
     {"id":{"name":"Lógica de Troca de Itens entre Inventários","path":"notes/Lógica de Troca de Itens entre Inventários/Lógica de Troca de Itens entre Inventários.yy",},},
     {"id":{"name":"Testes INT","path":"notes/Testes INT/Testes INT.yy",},},
