@@ -97,6 +97,7 @@ if(global.debug)
 if(room == rm_inventarios)
 {
 	draw_set_font(fonte_texto);
+	define_align();
 	
 	var _x = botao_masmorra_margem;
 	var _y = display_get_gui_height()

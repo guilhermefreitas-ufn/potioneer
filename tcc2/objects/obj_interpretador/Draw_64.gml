@@ -77,6 +77,7 @@ draw_rectangle(
 
 draw_set_colour(c_black);
 draw_set_font(fnt_placeholder_media);
+define_align();
 
 draw_text(
 	_x + botao_criar_largura / 2,

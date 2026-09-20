@@ -1,5 +1,8 @@
 var _1 = keyboard_check_pressed(vk_numpad1) || keyboard_check_pressed(ord("1"));
 var _2 = keyboard_check_pressed(vk_numpad2) || keyboard_check_pressed(ord("2"));
+var _3 = keyboard_check_pressed(vk_numpad2) || keyboard_check_pressed(ord("2"));
+var _4 = keyboard_check_pressed(vk_numpad2) || keyboard_check_pressed(ord("2"));
+var _5 = keyboard_check_pressed(vk_numpad2) || keyboard_check_pressed(ord("2"));
 
 //testando poções
 if(_1)
@@ -9,4 +12,16 @@ if(_1)
 if(_2)
 {
 	ExecutaPocaoTeste(2);
+}
+if(_3)
+{
+	ExecutaPocaoTeste(2);
+}
+if(_4)
+{
+	ExecutaPocaoTeste(4);
+}
+if(_5)
+{
+	ExecutaPocaoTeste(5);
 }
