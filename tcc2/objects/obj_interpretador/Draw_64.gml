@@ -37,3 +37,73 @@ if(_erro != "")
 	reseta_draw();
 }
 
+// ==========================================
+// BOTÃO
+// ==========================================
+
+_x = display_get_gui_width()
+	- botao_criar_largura
+	- botao_criar_margem;
+
+_y = display_get_gui_height()
+		- botao_criar_altura
+		- botao_criar_margem;
+
+var _mx = device_mouse_x_to_gui(0);
+var _my = device_mouse_y_to_gui(0);
+
+var _hover =
+	point_in_rectangle(
+		_mx,
+		_my,
+		_x,
+		_y,
+		_x + botao_criar_largura,
+		_y + botao_criar_altura
+	);
+
+
+
+draw_set_colour(_hover ? c_gray : c_white);
+
+
+draw_rectangle(
+	_x,
+	_y,
+	_x + botao_criar_largura,
+	_y + botao_criar_altura,
+	false
+);
+
+draw_set_colour(c_black);
+draw_set_font(fnt_placeholder_media);
+
+draw_text(
+	_x + botao_criar_largura / 2,
+	_y + botao_criar_altura / 2,
+	"CRIAR POÇÃO"
+);
+
+draw_set_colour(c_white);
+
+reseta_draw();
+
+
+// ==========================================
+// MENSAGEM
+// ==========================================
+
+if(mensagem_timer > 0)
+{
+	draw_set_colour(c_white);
+	
+	draw_text(
+		display_get_gui_width() / 2,
+		_y - 32,
+		mensagem
+	);
+	
+	draw_set_colour(c_white);
+}
+
+reseta_draw();

@@ -1,15 +1,18 @@
 //iniciando variáveis
-var _b, _r, _0, _9, _8, _7, _1;
+var _b, _r, _0, _9, _8, _7, _6, _5, _4, _3, _2, _1;
 
 _b = keyboard_check_pressed(ord("B"));
 _r = keyboard_check_pressed(ord("R"));
 _0 = keyboard_check_pressed(vk_numpad0) || keyboard_check_pressed(ord("0"));
 _1 = keyboard_check_pressed(vk_numpad1) || keyboard_check_pressed(ord("1"));
+_2 = keyboard_check_pressed(vk_numpad2) || keyboard_check_pressed(ord("2"));
 _9 = keyboard_check_pressed(vk_numpad9) || keyboard_check_pressed(ord("9"));
 _8 = keyboard_check_pressed(vk_numpad8) || keyboard_check_pressed(ord("8"));
 _7 = keyboard_check_pressed(vk_numpad7) || keyboard_check_pressed(ord("7"));
+_6 = keyboard_check_pressed(vk_numpad6) || keyboard_check_pressed(ord("6"));
 var _enter = keyboard_check_pressed(vk_enter);
 var _backspace = keyboard_check_pressed(vk_backspace);
+var _space = keyboard_check_pressed(vk_space);
 
 //usando teclas
 //debug
@@ -19,12 +22,10 @@ if(_b) { global.debug = !global.debug; }
 if(_r) { game_restart(); }
 
 //TESTANDO OS INVENTARIOS
-
-
 //verificando se existe o item 1 (lagrima) no inventario
-if(_1)
+if(_6)
 {
-	VerificaIngrediente();
+	VerificaIngrediente(6);
 }
 
 //testes de Int com valor
@@ -73,9 +74,15 @@ if(_backspace)
 		show_debug_message("Caldeirão e/ou Bolsa não encontrados!");
 	}
 }
+if(_space)
+{
+	if(room != rm_inventarios) { room_goto(rm_inventarios); }
+}
 
-if(!instance_exists(obj_caldeirao) || !instance_exists(obj_bolsa)) { exit; }
+//if(!instance_exists(obj_caldeirao) || !instance_exists(obj_bolsa)) { exit; }
 
+if(room == rm_inventarios)
+{
 // =====================================================
 // CLIQUE NOS BOTÕES
 // =====================================================
@@ -160,4 +167,34 @@ if(mouse_check_button_pressed(mb_left))
 			}
 		}
 	}
+}
+
+// =====================================================
+// CLIQUE NO BOTÃO "EXPLORAR MASMORRA"
+// =====================================================
+
+var _mx_masmorra = device_mouse_x_to_gui(0);
+	var _my_masmorra = device_mouse_y_to_gui(0);
+
+	var _x_masmorra = botao_masmorra_margem;
+
+	var _y_masmorra = display_get_gui_height()
+		- botao_masmorra_altura
+		- botao_masmorra_margem;
+
+	if(
+		mouse_check_button_pressed(mb_left)
+		&& point_in_rectangle(
+			_mx_masmorra,
+			_my_masmorra,
+			_x_masmorra,
+			_y_masmorra,
+			_x_masmorra + botao_masmorra_largura,
+			_y_masmorra + botao_masmorra_altura
+		)
+	)
+	{
+		VaiParaMasmorra(rm_masmorra);
+	}
+	
 }

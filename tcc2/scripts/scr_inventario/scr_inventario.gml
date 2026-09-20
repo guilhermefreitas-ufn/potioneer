@@ -840,12 +840,14 @@ function LimpaCaldeirao(_obj_caldeirao = noone, _obj_bolsa = noone)
 		_obj_bolsa = obj_bolsa;
 	}
 	
+	if(_obj_caldeirao == noone || _obj_bolsa == noone)
+	{
+		return;
+	}
 	
-	// percorrendo somente os slots do caldeirão
 	for(var i = 0; i < SLOTS_CALDEIRAO; i++)
 	{
 		var _item = _obj_caldeirao.inventario[i];
-		var _valor = _obj_caldeirao.valores[i];
 		
 		// slot vazio
 		if(_item == -1)
@@ -853,8 +855,10 @@ function LimpaCaldeirao(_obj_caldeirao = noone, _obj_bolsa = noone)
 			continue;
 		}
 		
+		// valor do ingrediente
+		var _valor = _obj_caldeirao.valores[i];
 		
-		// tentando devolver o ingrediente para a bolsa
+		// tentando devolver para a bolsa
 		var _adicionou = AdicionaInventario(
 			_obj_bolsa,
 			_item,
@@ -862,9 +866,7 @@ function LimpaCaldeirao(_obj_caldeirao = noone, _obj_bolsa = noone)
 			false
 		);
 		
-		
-		// só remove do caldeirão se conseguiu
-		// colocar na bolsa
+		// só remove se conseguiu devolver
 		if(_adicionou)
 		{
 			_obj_caldeirao.inventario[i] = -1;
@@ -873,7 +875,17 @@ function LimpaCaldeirao(_obj_caldeirao = noone, _obj_bolsa = noone)
 		}
 	}
 	
-	
-	// atualiza quantidade de slots ativos
 	AtualizaSlotsInventario(_obj_caldeirao);
+}
+
+function ConsomeCaldeirao(_caldeirao)
+{
+	for(var i = 0; i < SLOTS_CALDEIRAO; i++)
+	{
+		_caldeirao.inventario[i] = -1;
+		_caldeirao.quantidades[i] = 0;
+		_caldeirao.valores[i] = 0;
+	}
+	
+	AtualizaSlotsInventario(_caldeirao);
 }

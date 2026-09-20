@@ -6,6 +6,8 @@ if(global.debug)
 	draw_text(20, RES_H - 20, "debug");
 	reseta_draw();
 	
+	if(room == rm_inventarios)
+	{
 	// =====================================================
 	// DESENHANDO OS BOTÕES
 	// =====================================================
@@ -86,8 +88,52 @@ if(global.debug)
 			_texto
 		);
 	}
-
+	}
 
 	// resetando alinhamentos
+	reseta_draw();
+}
+
+if(room == rm_inventarios)
+{
+	draw_set_font(fonte_texto);
+	
+	var _x = botao_masmorra_margem;
+	var _y = display_get_gui_height()
+			- botao_masmorra_altura
+			- botao_masmorra_margem;
+
+	var _mx = device_mouse_x_to_gui(0);
+	var _my = device_mouse_y_to_gui(0);
+
+	var _hover =
+		point_in_rectangle(
+			_mx,
+			_my,
+			_x,
+			_y,
+			_x + botao_masmorra_largura,
+			_y + botao_masmorra_altura
+		);
+
+	draw_set_colour(_hover ? c_gray : c_white);
+	draw_rectangle(
+		_x,
+		_y,
+		_x + botao_masmorra_largura,
+		_y + botao_masmorra_altura,
+		false
+	);
+
+	draw_set_colour(c_black);
+
+	draw_text(
+		_x + botao_masmorra_largura / 2,
+		_y + botao_masmorra_altura / 2,
+		"EXPLORAR MASMORRA"
+	);
+
+	draw_set_colour(c_white);
+
 	reseta_draw();
 }

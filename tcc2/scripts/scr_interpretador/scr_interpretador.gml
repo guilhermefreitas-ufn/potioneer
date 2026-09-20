@@ -11,7 +11,6 @@ enum TipoValor
 	VARIAVEL
 }
 
-
 function LerCaldeirao(_caldeirao)
 {
 	var _tokens = [];

@@ -1,6 +1,12 @@
 //numero de colunas
 colunas = 6;
 
+//bolsa sempre possui todos os slots
+slots_ativos = SLOTS_BOLSA;
+
+#region dados jogador
+InicializaDadosJogador();
+
 //usando macro para número de slots
 inventario = array_create(SLOTS_BOLSA, -1); //deixando os slots vazios (-1) 
 
@@ -10,8 +16,8 @@ quantidades = array_create(SLOTS_BOLSA, 0);
 //valores para ingredientes com valor
 valores = array_create(SLOTS_BOLSA, undefined);
 
-//bolsa sempre possui todos os slots
-slots_ativos = SLOTS_BOLSA;
+CarregaBolsaGlobal(id);
+#endregion
 
 //é caldeirão?
 caldeirao = false;

@@ -1,8 +1,16 @@
 //aleatorizando
 randomize();
 
+//dados do jogador
+InicializaDadosJogador();
+
 //debug
 global.debug = true;
+
+//botao para explorar masmorras
+botao_masmorra_largura = 220;
+botao_masmorra_altura = 40;
+botao_masmorra_margem = 24;
 
 //Cadastro de Ingredientes
 global.Ingredientes =
@@ -90,6 +98,38 @@ function PreencheBolsa(_quantidade = 10)
 	{
 		msg_erro("Bolsa");
 	}
+}
+
+function VaiParaMasmorra(_rm_masmorra)
+{
+	if(!instance_exists(obj_bolsa))
+	{
+		msg_erro("Bolsa");
+		return;
+	}
+	
+	if(!instance_exists(obj_caldeirao))
+	{
+		msg_erro("Caldeirão");
+		return;
+	}
+	
+	var _bolsa = instance_find(obj_bolsa, 0);
+	var _caldeirao = instance_find(obj_caldeirao, 0);
+	
+	// devolve tudo que não foi usado
+	if(_caldeirao != noone && _bolsa != noone)
+	{
+		LimpaCaldeirao(
+			_caldeirao,
+			_bolsa
+		);
+		
+		// atualiza os dados persistentes
+		SincronizaBolsaGlobal(_bolsa);
+	}
+	
+	room_goto(_rm_masmorra);
 }
 
 //botões de debug
