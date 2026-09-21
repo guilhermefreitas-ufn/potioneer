@@ -11,6 +11,7 @@
     {"name":"Sprites","order":4,"path":"folders/Sprites.yy",},
   ],
   "ResourceOrderSettings":[
+    {"name":"fnt_placeholder_pequena","order":1,"path":"fonts/fnt_placeholder_pequena/fnt_placeholder_pequena.yy",},
     {"name":"Executor","order":9,"path":"notes/Executor/Executor.yy",},
     {"name":"Fluxo Caldeirao Algoritmo","order":5,"path":"notes/Fluxo Caldeirao Algoritmo/Fluxo Caldeirao Algoritmo.yy",},
     {"name":"Lógica de Troca de Itens entre Inventários","order":8,"path":"notes/Lógica de Troca de Itens entre Inventários/Lógica de Troca de Itens entre Inventários.yy",},

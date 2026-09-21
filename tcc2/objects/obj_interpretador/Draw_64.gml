@@ -38,7 +38,7 @@ if(_erro != "")
 }
 
 // ==========================================
-// BOTÃO
+// BOTÃO CRIAR POÇÃO
 // ==========================================
 
 _x = display_get_gui_width()
@@ -46,26 +46,34 @@ _x = display_get_gui_width()
 	- botao_criar_margem;
 
 _y = display_get_gui_height()
-		- botao_criar_altura
-		- botao_criar_margem;
+	- botao_criar_altura
+	- botao_criar_margem;
 
 var _mx = device_mouse_x_to_gui(0);
 var _my = device_mouse_y_to_gui(0);
 
-var _hover =
-	point_in_rectangle(
-		_mx,
-		_my,
-		_x,
-		_y,
-		_x + botao_criar_largura,
-		_y + botao_criar_altura
-	);
+var _hover = point_in_rectangle(
+	_mx,
+	_my,
+	_x,
+	_y,
+	_x + botao_criar_largura,
+	_y + botao_criar_altura
+);
 
 
+// ==========================================
+// FUNDO
+// ==========================================
 
-draw_set_colour(_hover ? c_gray : c_white);
-
+if(_hover)
+{
+	draw_set_color(c_ltgray);
+}
+else
+{
+	draw_set_color(c_dkgray);
+}
 
 draw_rectangle(
 	_x,
@@ -75,17 +83,40 @@ draw_rectangle(
 	false
 );
 
-draw_set_colour(c_black);
-draw_set_font(fnt_placeholder_media);
-define_align();
 
-draw_text(
-	_x + botao_criar_largura / 2,
-	_y + botao_criar_altura / 2,
-	"CRIAR POÇÃO"
+// ==========================================
+// BORDA
+// ==========================================
+
+draw_set_color(c_black);
+
+draw_rectangle(
+	_x,
+	_y,
+	_x + botao_criar_largura,
+	_y + botao_criar_altura,
+	true
 );
 
-draw_set_colour(c_white);
+
+// ==========================================
+// TEXTO
+// ==========================================
+
+draw_set_font(-1);
+define_align(0,0);
+draw_set_color(c_white);
+
+//var _texto = ;
+var _texto_largura = string_width("CRIAR POCAO");
+var _offset_y = 6;
+
+draw_text(
+	_x + (botao_criar_largura - _texto_largura) / 2,
+	_y + _offset_y,
+	"CRIAR POCAO"
+);
+
 
 reseta_draw();
 
@@ -96,15 +127,19 @@ reseta_draw();
 
 if(mensagem_timer > 0)
 {
-	draw_set_colour(c_white);
+	draw_set_font(fnt_placeholder_media);
+	define_align();
+	//draw_set_colour(c_white);
 	
-	draw_text(
+	draw_text_outline(
 		display_get_gui_width() / 2,
 		_y - 32,
-		mensagem
+		mensagem,
+		c_aqua,
+		c_black,
+		1
 	);
 	
-	draw_set_colour(c_white);
+	reseta_draw();
 }
 
-reseta_draw();

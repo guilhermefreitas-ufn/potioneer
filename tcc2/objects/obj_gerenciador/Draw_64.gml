@@ -1,9 +1,9 @@
 if(global.debug)
 {
 	//debug
-	define_align(0,1);
+	define_align();
 	draw_set_colour(c_blue);
-	draw_text(20, RES_H - 20, "debug");
+	draw_text(RES_W - 60, 40, "debug");
 	reseta_draw();
 	
 	if(room == rm_inventarios)
@@ -96,9 +96,14 @@ if(global.debug)
 
 if(room == rm_inventarios)
 {
-	draw_set_font(fonte_texto);
-	define_align();
-	
+	// =====================================================
+	// BOTÃO MASMORRA
+	// =====================================================
+
+	draw_set_font(-1);
+	draw_set_halign(fa_left);
+	draw_set_valign(fa_top);
+
 	var _x = botao_masmorra_margem;
 	var _y = display_get_gui_height()
 			- botao_masmorra_altura
@@ -107,17 +112,29 @@ if(room == rm_inventarios)
 	var _mx = device_mouse_x_to_gui(0);
 	var _my = device_mouse_y_to_gui(0);
 
-	var _hover =
-		point_in_rectangle(
-			_mx,
-			_my,
-			_x,
-			_y,
-			_x + botao_masmorra_largura,
-			_y + botao_masmorra_altura
-		);
+	var _hover = point_in_rectangle(
+		_mx,
+		_my,
+		_x,
+		_y,
+		_x + botao_masmorra_largura,
+		_y + botao_masmorra_altura
+	);
 
-	draw_set_colour(_hover ? c_gray : c_white);
+
+	// =====================================================
+	// FUNDO
+	// =====================================================
+
+	if(_hover)
+	{
+		draw_set_color(c_ltgray);
+	}
+	else
+	{
+		draw_set_color(c_dkgray);
+	}
+
 	draw_rectangle(
 		_x,
 		_y,
@@ -126,15 +143,38 @@ if(room == rm_inventarios)
 		false
 	);
 
-	draw_set_colour(c_black);
 
-	draw_text(
-		_x + botao_masmorra_largura / 2,
-		_y + botao_masmorra_altura / 2,
-		"EXPLORAR MASMORRA"
+	// =====================================================
+	// BORDA
+	// =====================================================
+
+	draw_set_color(c_black);
+
+	draw_rectangle(
+		_x,
+		_y,
+		_x + botao_masmorra_largura,
+		_y + botao_masmorra_altura,
+		true
 	);
 
-	draw_set_colour(c_white);
+
+	// =====================================================
+	// TEXTO
+	// =====================================================
+
+	draw_set_color(c_white);
+
+	var _texto = "EXPLORAR MASMORRA";
+	var _texto_largura = string_width(_texto);
+	var _offset_y = 6;
+
+	draw_text(
+		_x + (botao_masmorra_largura - _texto_largura) / 2,
+		_y + _offset_y,
+		_texto
+	);
+
 
 	reseta_draw();
 }
