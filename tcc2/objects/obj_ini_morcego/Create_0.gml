@@ -9,6 +9,6 @@ spd = 3;
 atk = 2;
 
 //testes
-sprite_index = spr_placeholder_32;
-image_speed = 0;
-image_index = 1;
+sprite_index = spr_morcego_ph;
+//image_speed = 0;
+//image_index = 1;
