@@ -3,7 +3,7 @@ event_inherited();
 
 if(hp <= 0)
 {
-	show_debug_message("Inimigo destruído!");
+	show_message("Inimigo destruído!");
 	instance_destroy();
 }
 

@@ -8,6 +8,11 @@ if(room == rm_masmorra)
 			raio_teste,
 			true
 		);
+		
+		define_align();
+		draw_set_font(fnt_placeholder_pequena);
+		draw_text(mouse_x, mouse_y, "Área da poção.")
+		reseta_draw();
 	}
 
 	draw_set_halign(fa_left);
