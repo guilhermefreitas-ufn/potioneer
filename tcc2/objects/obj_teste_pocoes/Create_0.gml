@@ -7,14 +7,13 @@ function ExecutaPocaoTeste(_numero)
 	
 	if(
 		_indice < 0
-		|| _indice >= SLOTS_POCOES
+		|| _indice >= SLOTS_HOTBAR_POCOES
 	)
 	{
 		return;
 	}
 	
-	var _pocao =
-		global.DadosJogador.pocoes[_indice];
+	var _pocao = global.DadosJogador.hotbar_pocoes[_indice];
 	
 	if(is_undefined(_pocao))
 	{

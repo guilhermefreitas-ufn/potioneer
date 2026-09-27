@@ -14,12 +14,20 @@ var _enter = keyboard_check_pressed(vk_enter);
 var _backspace = keyboard_check_pressed(vk_backspace);
 var _space = keyboard_check_pressed(vk_space);
 
+var _posso_clicar = false;
+
+if(!instance_exists(obj_interpretador)) { _posso_clicar = true; }
+if(instance_exists(obj_interpretador))
+{
+	if(!obj_interpretador.nomeando_pocao) { _posso_clicar = true; }
+}
+
 //usando teclas
 //debug
 if(_b) { global.debug = !global.debug; }
 
 //resetando o jogo
-if(_r) { game_restart(); }
+if(_r && _posso_clicar) { game_restart(); }
 
 //TESTANDO OS INVENTARIOS
 //verificando se existe o item 1 (lagrima) no inventario
@@ -36,8 +44,11 @@ if(_0)
 	*/
 	if(instance_exists(obj_bolsa))
 	{
-		AdicionaInventario(obj_bolsa, INGREDIENTE_INT, 4);
-		alarm[0] = 60;
+		with(obj_bolsa)
+		{
+			AdicionaInventario(obj_bolsa, INGREDIENTE_INT, 4);
+			alarm[0] = 60;
+		}
 	}
 	else
 	{
@@ -51,32 +62,39 @@ if(_9)
 	*/
 	if(instance_exists(obj_bolsa))
 	{
-		AdicionaInventario(obj_bolsa, INGREDIENTE_INT, 4);
-		alarm[1] = 60;
+		with(obj_bolsa)
+		{
+			AdicionaInventario(obj_bolsa, INGREDIENTE_INT, 4);
+			alarm[1] = 60;
+		}
 	}
 	else
 	{
 		msg_erro("Bolsa");
 	}
 }
-if(_enter)
+
+if(_posso_clicar)
 {
-	PreencheBolsa();
-}
-if(_backspace)
-{
-	if(instance_exists(obj_bolsa) && instance_exists(obj_caldeirao))
+	if(_enter)
 	{
-		LimpaCaldeirao();
+		PreencheBolsa();
 	}
-	else
+	if(_backspace)
 	{
-		show_debug_message("Caldeirão e/ou Bolsa não encontrados!");
+		if(instance_exists(obj_bolsa) && instance_exists(obj_caldeirao))
+		{
+			LimpaCaldeirao();
+		}
+		else
+		{
+			show_debug_message("Caldeirão e/ou Bolsa não encontrados!");
+		}
 	}
-}
-if(_space)
-{
-	if(room != rm_inventarios) { room_goto(rm_inventarios); }
+	if(_space)
+	{
+		if(room != rm_inventarios) { room_goto(rm_inventarios); }
+	}
 }
 
 //if(!instance_exists(obj_caldeirao) || !instance_exists(obj_bolsa)) { exit; }

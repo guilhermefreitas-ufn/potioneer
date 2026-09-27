@@ -143,3 +143,36 @@ if(mensagem_timer > 0)
 	reseta_draw();
 }
 
+//NOMEANDO POÇÃO
+
+if(nomeando_pocao)
+{
+	draw_set_colour(c_black);
+	draw_set_alpha(.75);
+	draw_rectangle(0,0,RES_W,RES_H,false);
+	reseta_draw();
+	
+	define_align();
+	draw_set_font(fnt_placeholder_media);
+	draw_set_colour(c_white);
+	
+	draw_text(
+		RES_W / 2,
+		RES_H / 2 - 30,
+		"Nome da poção:"
+	);
+	
+	draw_text(
+		RES_W / 2,
+		RES_H / 2 + 10,
+		nome_pocao + "_"
+	);
+	
+	draw_text(
+		RES_W / 2,
+		RES_H / 2 + 50,
+		"ENTER = confirmar    ESC = cancelar"
+	);
+	
+	reseta_draw();
+}

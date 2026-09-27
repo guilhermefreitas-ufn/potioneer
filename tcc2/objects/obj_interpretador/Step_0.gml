@@ -10,6 +10,85 @@ if(caldeirao == noone)
 	exit;
 }
 
+// ==========================================
+// DIGITAÇÃO DO NOME DA POÇÃO
+// ==========================================
+
+if(nomeando_pocao)
+{
+	keyboard_string = string_copy(
+		keyboard_string,
+		1,
+		nome_pocao_max
+	);
+	
+	nome_pocao = keyboard_string;
+	
+	
+	// ==========================================
+	// CONFIRMAR
+	// ==========================================
+	
+	if(keyboard_check_pressed(vk_enter))
+	{
+		var _nome = string_trim(nome_pocao);
+		
+		if(_nome != "")
+		{
+			// ==========================================
+			// VERIFICANDO NOME DUPLICADO
+			// ==========================================
+	
+			if(PocaoNomeExisteNoArmario(_nome))
+			{
+				mensagem = "Nome de poção já usado!";
+				mensagem_timer = mensagem_duracao;
+		
+				return;
+			}
+	
+	
+			// ==========================================
+			// CRIANDO A POÇÃO
+			// ==========================================
+	
+			AdicionaPocaoArmario(
+				_nome,
+				algoritmo,
+				sentenca
+			);
+	
+			ConsomeCaldeirao(caldeirao);
+	
+			nomeando_pocao = false;
+			nome_pocao = "";
+			keyboard_string = "";
+	
+			mensagem = "Poção criada com sucesso!";
+			mensagem_timer = mensagem_duracao;
+		}
+	}
+	
+	
+	// ==========================================
+	// CANCELAR
+	// ==========================================
+	
+	if(keyboard_check_pressed(vk_escape))
+	{
+		nomeando_pocao = false;
+		nome_pocao = "";
+		keyboard_string = "";
+	}
+	
+	
+	// ==========================================
+	// NÃO EXECUTAR O RESTANTE DO STEP
+	// ==========================================
+	
+	exit;
+}
+
 //atualizando a sentença (frase) em tempo real conforme as mudanças no caldeirão
 var _resultado = InterpretarCaldeirao(caldeirao);
 

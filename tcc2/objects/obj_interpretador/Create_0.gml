@@ -20,6 +20,15 @@ cor_erro = c_yellow;
 slot_erro = -1;
 
 // ==========================================
+// NOME DA POÇÃO
+// ==========================================
+
+nomeando_pocao = false;
+nome_pocao = "";
+
+nome_pocao_max = 40;
+
+// ==========================================
 // BOTÃO CRIAR POÇÃO
 // ==========================================
 
@@ -31,11 +40,23 @@ mensagem = "";
 mensagem_timer = 0;
 mensagem_duracao = 120;
 
+//FUNÇÕES LOCAIS
+
+IniciaNomePocao = function()
+{
+	nomeando_pocao = true;
+	
+	nome_pocao = "";
+	
+	keyboard_string = "";
+};
+
 CriarPocao = function()
 {
-	// ------------------------------------------
-	// VERIFICANDO SE O ALGORITMO É VÁLIDO
-	// ------------------------------------------
+	// ==========================================
+	// VERIFICANDO O ALGORITMO
+	// ==========================================
+	
 	if(!sintaxe_valida || !semantica_valida)
 	{
 		mensagem = "Poção inválida!";
@@ -43,30 +64,22 @@ CriarPocao = function()
 		return;
 	}
 	
-	// ------------------------------------------
-	// ADICIONANDO A POÇÃO
-	// ------------------------------------------
-	var _slot_pocao = AdicionaPocao(
-		algoritmo,
-		sentenca
-	);
 	
-	// Não há espaço para a poção
-	if(_slot_pocao == -1)
+	// ==========================================
+	// VERIFICANDO DUPLICATA
+	// ==========================================
+	
+	if(PocaoExisteNoArmario(algoritmo))
 	{
-		mensagem = "Não há espaço para outra poção.";
+		mensagem = "Poção já criada!";
 		mensagem_timer = mensagem_duracao;
 		return;
 	}
 	
-	// ------------------------------------------
-	// CONSUMINDO INGREDIENTES
-	// ------------------------------------------
-	ConsomeCaldeirao(caldeirao);
 	
-	// ------------------------------------------
-	// MENSAGEM
-	// ------------------------------------------
-	mensagem = "Poção criada com sucesso!";
-	mensagem_timer = mensagem_duracao;
+	// ==========================================
+	// PEDINDO O NOME
+	// ==========================================
+	
+	IniciaNomePocao();
 };

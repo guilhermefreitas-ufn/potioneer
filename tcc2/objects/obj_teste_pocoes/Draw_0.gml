@@ -30,9 +30,9 @@ if(room == rm_masmorra)
 	var _largura_texto = 128;
 	var _espaco = 4;
 
-	for(var i = 0; i < SLOTS_POCOES; i++)
+	for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 	{
-		var _pocao = global.DadosJogador.pocoes[i];
+		var _pocao =global.DadosJogador.hotbar_pocoes[i];
 		
 		var _texto;
 

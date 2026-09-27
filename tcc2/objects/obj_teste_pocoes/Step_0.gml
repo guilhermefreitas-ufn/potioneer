@@ -1,3 +1,5 @@
+if(room != rm_masmorra) { exit; }
+
 var _1 = keyboard_check_pressed(vk_numpad1) || keyboard_check_pressed(ord("1"));
 var _2 = keyboard_check_pressed(vk_numpad2) || keyboard_check_pressed(ord("2"));
 var _3 = keyboard_check_pressed(vk_numpad3) || keyboard_check_pressed(ord("3"));
