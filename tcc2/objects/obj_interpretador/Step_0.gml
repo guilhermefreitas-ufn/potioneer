@@ -1,61 +1,49 @@
-// procurando o caldeirão caso ainda não tenha sido encontrado
+//procurando o caldeirão caso ainda não tenha sido encontrado
 if(!instance_exists(caldeirao))
 {
 	caldeirao = instance_find(obj_caldeirao, 0);
 }
 
-// se não tem caldeirão na room, não executo nada
+//se não tem caldeirão na room, não executo nada
 if(caldeirao == noone)
 {
 	exit;
 }
 
-// ==========================================
-// DIGITAÇÃO DO NOME DA POÇÃO
-// ==========================================
-
+//DIGITAÇÃO DO NOME DA POÇÃO
 if(nomeando_pocao)
 {
-	keyboard_string = string_copy(
-		keyboard_string,
-		1,
-		nome_pocao_max
-	);
+	keyboard_string =
+		string_copy(
+			keyboard_string,
+			1,
+			nome_pocao_max
+		);
 	
 	nome_pocao = keyboard_string;
 	
-	
-	// ==========================================
-	// CONFIRMAR
-	// ==========================================
-	
+	//ENTER
 	if(keyboard_check_pressed(vk_enter))
 	{
-		var _nome = string_trim(nome_pocao);
+		var _nome =
+			string_trim(nome_pocao);
 		
 		if(_nome != "")
 		{
-			// ==========================================
-			// VERIFICANDO NOME DUPLICADO
-			// ==========================================
-	
-			if(PocaoNomeExisteNoArmario(_nome))
+			if(PocaoNomeExiste(_nome))
 			{
 				mensagem = "Nome de poção já usado!";
 				mensagem_timer = mensagem_duracao;
-		
 				return;
 			}
 	
 	
-			// ==========================================
-			// CRIANDO A POÇÃO
-			// ==========================================
-	
 			AdicionaPocaoArmario(
 				_nome,
 				algoritmo,
-				sentenca
+				sentenca,
+				cor_nova_pocao,
+				sprite_nova_pocao
 			);
 	
 			ConsomeCaldeirao(caldeirao);
@@ -69,22 +57,13 @@ if(nomeando_pocao)
 		}
 	}
 	
-	
-	// ==========================================
-	// CANCELAR
-	// ==========================================
-	
+	//ESC
 	if(keyboard_check_pressed(vk_escape))
 	{
 		nomeando_pocao = false;
 		nome_pocao = "";
 		keyboard_string = "";
 	}
-	
-	
-	// ==========================================
-	// NÃO EXECUTAR O RESTANTE DO STEP
-	// ==========================================
 	
 	exit;
 }
@@ -105,10 +84,8 @@ erro_semantica = _resultado.erro_semantica;
 
 slot_erro = _resultado.slot_erro;
 
-// ==========================================
-// MENSAGEM
-// ==========================================
 
+//MENSAGEM
 if(mensagem_timer > 0)
 {
 	mensagem_timer--;

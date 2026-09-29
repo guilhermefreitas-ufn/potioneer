@@ -19,18 +19,22 @@ cor_erro = c_yellow;
 
 slot_erro = -1;
 
-// ==========================================
-// NOME DA POÇÃO
-// ==========================================
+
+//NOME DA POÇÃO
+
 
 nomeando_pocao = false;
 nome_pocao = "";
 
 nome_pocao_max = 40;
 
-// ==========================================
-// BOTÃO CRIAR POÇÃO
-// ==========================================
+//preparado para a futura personalização
+cor_nova_pocao = c_white;
+sprite_nova_pocao = undefined;
+
+
+//BOTÃO CRIAR POÇÃO
+
 
 botao_criar_largura = 180;
 botao_criar_altura = 40;
@@ -49,13 +53,17 @@ IniciaNomePocao = function()
 	nome_pocao = "";
 	
 	keyboard_string = "";
+	
+	//valores padrão por enquanto
+	cor_nova_pocao = c_white;
+	sprite_nova_pocao = undefined;
 };
 
 CriarPocao = function()
 {
-	// ==========================================
-	// VERIFICANDO O ALGORITMO
-	// ==========================================
+	
+	//ALGORITMO INVÁLIDO
+	
 	
 	if(!sintaxe_valida || !semantica_valida)
 	{
@@ -65,11 +73,11 @@ CriarPocao = function()
 	}
 	
 	
-	// ==========================================
-	// VERIFICANDO DUPLICATA
-	// ==========================================
 	
-	if(PocaoExisteNoArmario(algoritmo))
+	//POÇÃO JÁ EXISTE
+	
+	
+	if(PocaoExiste(algoritmo))
 	{
 		mensagem = "Poção já criada!";
 		mensagem_timer = mensagem_duracao;
@@ -77,9 +85,9 @@ CriarPocao = function()
 	}
 	
 	
-	// ==========================================
-	// PEDINDO O NOME
-	// ==========================================
+	
+	//PEDINDO NOME
+	
 	
 	IniciaNomePocao();
 };

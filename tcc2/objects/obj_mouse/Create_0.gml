@@ -6,6 +6,18 @@ inventario_drag = -1;
 slot_drag = -1;
 item_drag = -1;
 
+
+//POÇÕES
+
+
+pocao_inventario_hover = noone;
+pocao_slot_hover = -1;
+
+pocao_inventario_drag = noone;
+pocao_slot_drag = -1;
+
+pocao_drag = undefined;
+
 //posição inicial do clique
 mouse_inicio_x = 0;
 mouse_inicio_y = 0;
@@ -106,6 +118,65 @@ mouse_over = function()
 					other.inventario_hover = id;
 				}
 			}
+		}
+	}
+	
+	
+	//ARMÁRIO / HOTBAR
+	
+
+	pocao_inventario_hover = noone;
+	pocao_slot_hover = -1;
+
+
+	
+	//ARMÁRIO
+	
+
+	if(instance_exists(obj_armario))
+	{
+		var _armario =
+			instance_find(obj_armario, 0);
+	
+		var _slot_armario =
+			_armario.SlotSobreMouse(
+				_mx,
+				_my
+			);
+	
+		if(_slot_armario != -1)
+		{
+			pocao_inventario_hover =
+				_armario;
+		
+			pocao_slot_hover =
+				_slot_armario;
+		}
+	}
+
+
+	
+	//HOTBAR
+	
+
+	if(instance_exists(obj_hotbar))
+	{
+		var _hotbar =
+			instance_find(obj_hotbar, 0);
+	
+		var _slot_hotbar =
+			_hotbar.SlotSobreMouse(
+				_mx,
+				_my
+			);
+	
+		if(_slot_hotbar != -1)
+		{
+			pocao_inventario_hover =
+				_hotbar;
+		
+			pocao_slot_hover =
+				_slot_hotbar;
 		}
 	}
 }
@@ -235,19 +306,187 @@ estado_click = function()
 	}
 }
 
+estado_click_pocao = function()
+{
+	mouse_over();
+	
+	
+	
+	//SOLTOU → FOI UM CLIQUE
+	
+	
+	if(mouse_check_button_released(mb_left))
+	{
+		var _armario =
+			instance_find(obj_armario, 0);
+		
+		var _hotbar =
+			instance_find(obj_hotbar, 0);
+		
+		
+		
+		//ARMÁRIO → HOTBAR
+		
+		
+		if(
+			pocao_inventario_drag == _armario
+		)
+		{
+			var _resultado =
+				AdicionaPocaoHotbarPorClique(
+					pocao_slot_drag
+				);
+			
+			
+			if(!_resultado)
+			{
+				show_debug_message(
+					"Hotbar cheia."
+				);
+			}
+		}
+		
+		
+		
+		//HOTBAR → ARMÁRIO
+		
+		
+		else if(
+			pocao_inventario_drag == _hotbar
+		)
+		{
+			DevolvePocaoHotbarPorClique(
+				pocao_slot_drag
+			);
+		}
+		
+		
+		
+		//RESET
+		
+		
+		pocao_inventario_drag = noone;
+		pocao_slot_drag = -1;
+		pocao_drag = undefined;
+		
+		estado = estado_livre;
+		
+		return;
+	}
+	
+	
+	
+	//VERIFICANDO SE VIROU DRAG
+	
+	
+	var _distancia =
+		point_distance(
+			mouse_inicio_x,
+			mouse_inicio_y,
+			mouse_x,
+			mouse_y
+		);
+	
+	
+	if(_distancia >= distancia_drag)
+	{
+		//salva a poção que está sendo arrastada
+		if(
+			pocao_inventario_drag
+			== instance_find(obj_armario, 0)
+		)
+		{
+			pocao_drag =
+				global.DadosJogador.armario_pocoes[
+					pocao_slot_drag
+				];
+		}
+		else
+		{
+			pocao_drag =
+				global.DadosJogador.hotbar_pocoes[
+					pocao_slot_drag
+				];
+		}
+		
+		estado = estado_drag_pocao;
+	}
+};
+
 estado_livre = function()
 {
 	mouse_over();
 	
-	if(mouse_check_button_pressed(mb_left) && slot_hover != -1 && inventario_hover.inventario[slot_hover] != -1)
+	if(
+		mouse_check_button_pressed(mb_left)
+		&& slot_hover != -1
+		&& inventario_hover.inventario[slot_hover] != -1
+	)
 	{
 		mouse_inicio_x = mouse_x;
 		mouse_inicio_y = mouse_y;
-		
+	
 		inventario_drag = inventario_hover;
 		slot_drag = slot_hover;
-		
+	
 		estado = estado_click;
+	
+		return;
+	}
+	
+	
+	//POÇÃO
+	
+
+	if(
+		mouse_check_button_pressed(mb_left)
+		&& pocao_slot_hover != -1
+		&& pocao_inventario_hover != noone
+	)
+	{
+		var _pocao;
+	
+	
+		//ARMÁRIO
+		if(
+			pocao_inventario_hover.object_index
+			== obj_armario
+		)
+		{
+			_pocao =
+				global.DadosJogador.armario_pocoes[
+					pocao_slot_hover
+				];
+		}
+	
+		//HOTBAR
+		else
+		{
+			_pocao =
+				global.DadosJogador.hotbar_pocoes[
+					pocao_slot_hover
+				];
+		}
+	
+	
+		if(!is_undefined(_pocao))
+		{
+			mouse_inicio_x = mouse_x;
+			mouse_inicio_y = mouse_y;
+		
+			pocao_inventario_drag =
+				pocao_inventario_hover;
+		
+			pocao_slot_drag =
+				pocao_slot_hover;
+		
+			pocao_drag =
+				_pocao;
+		
+			estado = estado_click_pocao;
+		
+			return;
+		}
 	}
 }
 
@@ -289,6 +528,156 @@ estado_drag = function()
 	
 	estado = estado_livre;
 }
+
+estado_drag_pocao = function()
+{
+	mouse_over();
+	
+	
+	//continua arrastando
+	if(mouse_check_button(mb_left))
+	{
+		return;
+	}
+	
+	
+	
+	//SOLTOU
+	
+	
+	if(mouse_check_button_released(mb_left))
+	{
+		var _armario =
+			instance_find(obj_armario, 0);
+		
+		var _hotbar =
+			instance_find(obj_hotbar, 0);
+		
+		
+		
+		//ORIGEM = ARMÁRIO
+		
+		
+		if(
+			pocao_inventario_drag
+			== _armario
+		)
+		{
+			//------------------------------
+			//ARMÁRIO → HOTBAR
+			//------------------------------
+			
+			if(
+				pocao_inventario_hover
+				== _hotbar
+			)
+			{
+				TransferePocaoArmarioParaHotbar(
+					pocao_slot_drag,
+					pocao_slot_hover
+				);
+			}
+			
+			
+			//------------------------------
+			//ARMÁRIO → ARMÁRIO
+			//------------------------------
+			
+			else if(
+				pocao_inventario_hover
+				== _armario
+			)
+			{
+				if(
+					pocao_slot_hover
+					!= pocao_slot_drag
+				)
+				{
+					TrocaPocaoArmario(
+						pocao_slot_drag,
+						pocao_slot_hover
+					);
+				}
+			}
+		}
+		
+		
+		
+		//ORIGEM = HOTBAR
+		
+		
+		else if(
+			pocao_inventario_drag
+			== _hotbar
+		)
+		{
+			//------------------------------
+			//HOTBAR → HOTBAR
+			//------------------------------
+			
+			if(
+				pocao_inventario_hover
+				== _hotbar
+			)
+			{
+				if(
+					pocao_slot_hover
+					!= pocao_slot_drag
+				)
+				{
+					TrocaPocaoHotbar(
+						pocao_slot_drag,
+						pocao_slot_hover
+					);
+				}
+			}
+			
+			
+			//------------------------------
+			//HOTBAR → ARMÁRIO
+			//------------------------------
+			
+			else if(
+				pocao_inventario_hover
+				== _armario
+			)
+			{
+				TransferePocaoHotbarParaArmario(
+					pocao_slot_drag,
+					pocao_slot_hover
+				);
+			}
+			
+			//------------------------------
+			//HOTBAR → ÁREA VAZIA DO ARMÁRIO
+			//------------------------------
+			
+			else if(
+				instance_exists(_armario)
+				&& _armario.AreaSobreMouse(
+					mouse_x,
+					mouse_y
+				)
+			)
+			{
+				TransferePocaoHotbarParaFimDoArmario(
+					pocao_slot_drag
+				);
+			}
+		}
+		
+		
+		
+		//RESET
+		
+		
+		pocao_inventario_drag = noone;
+		pocao_slot_drag = -1;
+		pocao_drag = undefined;
+		
+		estado = estado_livre;
+	}
+};
 
 MouseSobreItem = function()
 {

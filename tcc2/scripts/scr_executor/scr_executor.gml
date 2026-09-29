@@ -75,9 +75,9 @@ function ResolveValor(_expressao, _entidade)
 		return undefined;
 	}
 	
-	// ==========================================
-	// INT
-	// ==========================================
+	
+	//INT
+	
 	if(
 		_expressao.tipo == TipoExpressao.VALOR
 		&& _expressao.subtipo == TipoValor.INT
@@ -86,9 +86,9 @@ function ResolveValor(_expressao, _entidade)
 		return _expressao.valor;
 	}
 	
-	// ==========================================
-	// VARIÁVEL
-	// ==========================================
+	
+	//VARIÁVEL
+	
 	if(_expressao.tipo == TipoExpressao.VARIAVEL)
 	{
 		return ResolveVariavel(
@@ -138,9 +138,9 @@ function ExecutaCondicao(_condicao, _contexto)
 	};
 	
 	
-	// ==========================================
-	// TIPO DE CADA LADO
-	// ==========================================
+	
+	//TIPO DE CADA LADO
+	
 	
 	var _esquerda_variavel =
 		_condicao.esquerda.tipo == TipoExpressao.VARIAVEL;
@@ -149,9 +149,9 @@ function ExecutaCondicao(_condicao, _contexto)
 		_condicao.direita.tipo == TipoExpressao.VARIAVEL;
 	
 	
-	// ==========================================
-	// ENTIDADES DO LADO ESQUERDO
-	// ==========================================
+	
+	//ENTIDADES DO LADO ESQUERDO
+	
 	
 	var _esquerdas = [];
 	
@@ -180,14 +180,14 @@ function ExecutaCondicao(_condicao, _contexto)
 	}
 	else
 	{
-		// INT não depende de nenhuma entidade
+		//INT não depende de nenhuma entidade
 		_esquerdas = [noone];
 	}
 	
 	
-	// ==========================================
-	// ENTIDADES DO LADO DIREITO
-	// ==========================================
+	
+	//ENTIDADES DO LADO DIREITO
+	
 	
 	var _direitas = [];
 	
@@ -216,14 +216,14 @@ function ExecutaCondicao(_condicao, _contexto)
 	}
 	else
 	{
-		// INT não depende de nenhuma entidade
+		//INT não depende de nenhuma entidade
 		_direitas = [noone];
 	}
 	
 	
-	// ==========================================
-	// TESTANDO TODAS AS COMBINAÇÕES
-	// ==========================================
+	
+	//TESTANDO TODAS AS COMBINAÇÕES
+	
 	
 	for(var i = 0; i < array_length(_esquerdas); i++)
 	{
@@ -263,9 +263,9 @@ function ExecutaCondicao(_condicao, _contexto)
 				)
 			)
 			{
-				// ==========================================
-				// PRIMEIRO TRUE
-				// ==========================================
+				
+				//PRIMEIRO TRUE
+				
 				
 				_resultado.verdadeira = true;
 				
@@ -281,9 +281,9 @@ function ExecutaCondicao(_condicao, _contexto)
 	}
 	
 	
-	// ==========================================
-	// NENHUMA COMBINAÇÃO FOI VERDADEIRA
-	// ==========================================
+	
+	//NENHUMA COMBINAÇÃO FOI VERDADEIRA
+	
 	
 	_resultado.mensagem =
 		"A condição não foi satisfeita.";
@@ -314,9 +314,9 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 	
 	switch(_ing_variavel.token)
 	{
-		// ==========================================
-		// HP
-		// ==========================================
+		
+		//HP
+		
 		case "hp":
 		{
 			switch(_ing_operador.token)
@@ -340,9 +340,9 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 			return true;
 		}
 		
-		// ==========================================
-		// SPD
-		// ==========================================
+		
+		//SPD
+		
 		case "spd":
 		{
 			switch(_ing_operador.token)
@@ -366,9 +366,9 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 			return true;
 		}
 		
-		// ==========================================
-		// ATK
-		// ==========================================
+		
+		//ATK
+		
 		case "atk":
 		{
 			switch(_ing_operador.token)
@@ -405,9 +405,9 @@ function ExecutaEfeito(_efeito, _contexto)
 		mensagem: ""
 	};
 	
-	// ==========================================
-	// QUEM RECEBE O EFEITO?
-	// ==========================================
+	
+	//QUEM RECEBE O EFEITO?
+	
 	var _entidades = EntidadesDoAlvo(
 		_efeito.variavel.alvo,
 		_contexto
@@ -429,9 +429,9 @@ function ExecutaEfeito(_efeito, _contexto)
 		return _resultado;
 	}
 	
-	// ==========================================
-	// VALOR DO EFEITO
-	// ==========================================
+	
+	//VALOR DO EFEITO
+	
 	var _valor = ResolveValorEfeito(
 		_efeito.valor,
 		_contexto
@@ -445,9 +445,9 @@ function ExecutaEfeito(_efeito, _contexto)
 		return _resultado;
 	}
 	
-	// ==========================================
-	// APLICANDO UMA VEZ POR ENTIDADE
-	// ==========================================
+	
+	//APLICANDO UMA VEZ POR ENTIDADE
+	
 	for(var i = 0; i < array_length(_entidades); i++)
 	{
 		var _entidade = _entidades[i];
@@ -499,9 +499,9 @@ function ExecutaAlgoritmo(_algoritmo, _contexto)
 		mensagem: ""
 	};
 	
-	// ==========================================
-	// ALGORITMO INVÁLIDO
-	// ==========================================
+	
+	//ALGORITMO INVÁLIDO
+	
 	if(is_undefined(_algoritmo))
 	{
 		_resultado.mensagem =
@@ -510,9 +510,9 @@ function ExecutaAlgoritmo(_algoritmo, _contexto)
 		return _resultado;
 	}
 	
-	// ==========================================
-	// CONDIÇÃO
-	// ==========================================
+	
+	//CONDIÇÃO
+	
 	var _condicao = ExecutaCondicao(
 		_algoritmo.condicao,
 		_contexto
@@ -528,9 +528,9 @@ function ExecutaAlgoritmo(_algoritmo, _contexto)
 	
 	_resultado.condicao = true;
 	
-	// ==========================================
-	// EFEITO
-	// ==========================================
+	
+	//EFEITO
+	
 	var _efeito = ExecutaEfeito(
 		_algoritmo.efeito,
 		_contexto
@@ -560,9 +560,9 @@ function ResolveValorEfeito(_expressao, _contexto)
 		return undefined;
 	}
 	
-	// ==========================================
-	// INT
-	// ==========================================
+	
+	//INT
+	
 	if(
 		_expressao.tipo == TipoExpressao.VALOR
 		&& _expressao.subtipo == TipoValor.INT
@@ -571,9 +571,9 @@ function ResolveValorEfeito(_expressao, _contexto)
 		return _expressao.valor;
 	}
 	
-	// ==========================================
-	// VARIÁVEL
-	// ==========================================
+	
+	//VARIÁVEL
+	
 	if(_expressao.tipo == TipoExpressao.VARIAVEL)
 	{
 		var _entidades = EntidadesDoAlvo(
@@ -628,7 +628,7 @@ function CriaContextoAreaPocao(_x, _y, _raio)
 		_raio,
 		obj_entidade,
 		false,
-		true,
+		false,
 		_lista,
 		false
 	);
@@ -642,9 +642,9 @@ function CriaContextoAreaPocao(_x, _y, _raio)
 			_entidade
 		);
 		
-		// ==========================================
-		// ALIADOS
-		// ==========================================
+		
+		//ALIADOS
+		
 		
 		if(
 			_entidade.object_index == obj_aliado_pai
@@ -661,9 +661,9 @@ function CriaContextoAreaPocao(_x, _y, _raio)
 		}
 		
 		
-		// ==========================================
-		// INIMIGOS
-		// ==========================================
+		
+		//INIMIGOS
+		
 		
 		if(
 			_entidade.object_index == obj_inimigo_pai

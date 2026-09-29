@@ -13,8 +13,8 @@
   "name":"obj_bolsa",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Inventários",
+    "path":"folders/Objects/Inventários.yy",
   },
   "parentObjectId":{
     "name":"obj_inventario_pai",

@@ -31,7 +31,7 @@ for(var i = 0; i < SLOTS_BOLSA; i++)
 	}
 }
 
-// escrevendo as infos do item depois para ficarem por cima
+//escrevendo as infos do item depois para ficarem por cima
 for(var i = 0; i < SLOTS_BOLSA; i++)
 {
 	var _xx = x + (i mod colunas) * (slot_tam + entre_slots) + 2;
@@ -50,13 +50,13 @@ for(var i = 0; i < SLOTS_BOLSA; i++)
 		var _margem = 0;
 		
 		
-		// ==========================================
-		// NOME DO ITEM
-		// ==========================================
+		
+		//NOME DO ITEM
+		
 		
 		var _nome = _ingrediente.nome;
 		
-		// INT mostra seu valor
+		//INT mostra seu valor
 		if(inventario[i] == INGREDIENTE_INT)
 		{
 			_nome += " " + string(valores[i]);
@@ -82,9 +82,9 @@ for(var i = 0; i < SLOTS_BOLSA; i++)
 		);
 		
 		
-		// ==========================================
-		// QUANTIDADE
-		// ==========================================
+		
+		//QUANTIDADE
+		
 		
 		draw_text_outline(
 			_xx - entre_slots,

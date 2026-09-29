@@ -7,23 +7,8 @@ var _4 = keyboard_check_pressed(vk_numpad4) || keyboard_check_pressed(ord("4"));
 var _5 = keyboard_check_pressed(vk_numpad5) || keyboard_check_pressed(ord("5"));
 
 //testando poções
-if(_1)
-{
-	ExecutaPocaoTeste(1);
-}
-if(_2)
-{
-	ExecutaPocaoTeste(2);
-}
-if(_3)
-{
-	ExecutaPocaoTeste(3);
-}
-if(_4)
-{
-	ExecutaPocaoTeste(4);
-}
-if(_5)
-{
-	ExecutaPocaoTeste(5);
-}
+if(_1) { ExecutaPocao(1); }
+if(_2) { ExecutaPocao(2); }
+if(_3) { ExecutaPocao(3); }
+if(_4) { ExecutaPocao(4); }
+if(_5) { ExecutaPocao(5); }

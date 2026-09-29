@@ -10,9 +10,9 @@ if(obj_mouse.MouseSobreItem())
 	draw_set_font(fonte);
 	
 	
-	//========================================
-	// POSIÇÃO DA BOLSA
-	//========================================
+	//
+	//POSIÇÃO DA BOLSA
+	//
 	
 	var _inventario_esquerda =
 		x - espaco_borda;
@@ -21,17 +21,17 @@ if(obj_mouse.MouseSobreItem())
 		y - espaco_borda;
 	
 	
-	//========================================
-	// QUANTIDADE
-	//========================================
+	//
+	//QUANTIDADE
+	//
 	
 	var _quantidade =
 		_inventario.quantidades[_slot];
 	
 	
-	//========================================
-	// NOME DO ITEM
-	//========================================
+	//
+	//NOME DO ITEM
+	//
 	
 	var _nome = _ing.nome;
 	
@@ -47,18 +47,18 @@ if(obj_mouse.MouseSobreItem())
 		_nome + " (" + string(_quantidade) + ")";
 	
 	
-	//========================================
-	// ELEMENTO / TOKEN
-	//========================================
+	//
+	//ELEMENTO / TOKEN
+	//
 	
 	var _texto_elemento =
 		"\"" + _ing.elemento + "\"" +
 		" (" + _ing.token + ")";
 	
 	
-	//========================================
-	// TAMANHO DA DESCRIÇÃO
-	//========================================
+	//
+	//TAMANHO DA DESCRIÇÃO
+	//
 	
 	var _desc_largura =
 		max(
@@ -72,9 +72,9 @@ if(obj_mouse.MouseSobreItem())
 		desc_margem_y * 5;
 	
 	
-	//========================================
-	// POSIÇÃO DA DESCRIÇÃO
-	//========================================
+	//
+	//POSIÇÃO DA DESCRIÇÃO
+	//
 	
 	var _offset_x = 26;
 	var _offset_y = 80;
@@ -88,9 +88,9 @@ if(obj_mouse.MouseSobreItem())
 		_offset_y;
 	
 	
-	//========================================
-	// FUNDO
-	//========================================
+	//
+	//FUNDO
+	//
 	
 	draw_set_colour(c_black);
 	
@@ -103,9 +103,9 @@ if(obj_mouse.MouseSobreItem())
 	);
 	
 	
-	//========================================
-	// TEXTO
-	//========================================
+	//
+	//TEXTO
+	//
 	
 	draw_set_colour(desc_cor);
 	

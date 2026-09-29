@@ -15,12 +15,12 @@ function LerCaldeirao(_caldeirao)
 {
 	var _tokens = [];
 	
-	// percorrendo o caldeirão
+	//percorrendo o caldeirão
 	for(var i = 0; i < _caldeirao.slots_ativos; i++)
 	{
 		var _numero = _caldeirao.inventario[i];
 		
-		// slot vazio
+		//slot vazio
 		if(_numero == -1)
 		{
 			continue;
@@ -48,13 +48,13 @@ function LerCaldeirao(_caldeirao)
 //transformar um token em texto
 function TextoToken(_token)
 {
-	// INT -> usa o valor armazenado no token
+	//INT -> usa o valor armazenado no token
 	if(_token.numero == INGREDIENTE_INT)
 	{
 		return string(_token.valor);
 	}
 	
-	// demais ingredientes -> usa o elemento
+	//demais ingredientes -> usa o elemento
 	return _token.ingrediente.elemento;
 }
 
@@ -64,29 +64,21 @@ function MontaSentenca(_tokens)
 	var _texto = "";
 	var _qtd_tokens = array_length(_tokens);
 	
-	// caldeirão vazio
+	//caldeirão vazio
 	if(_qtd_tokens == 0)
 	{
 		return " ";
 	}
 	
-	
-	//==================================================
-	// PRIMEIRO INGREDIENTE
-	//==================================================
-	
+	//PRIMEIRO INGREDIENTE
 	var _primeiro = _tokens[0];
 	
 	_texto += TextoToken(_primeiro);
 	
-	
-	//==================================================
-	// "ENTÃO" SÓ EXISTE SE HOUVER "if"
-	//==================================================
-	
+	//"ENTÃO" SÓ EXISTE SE HOUVER "if"
 	if(_primeiro.ingrediente.token != "if")
 	{
-		// não é if -> simplesmente monta a sentença normalmente
+		//não é if -> simplesmente monta a sentença normalmente
 		for(var i = 1; i < _qtd_tokens; i++)
 		{
 			_texto += " ";
@@ -96,11 +88,7 @@ function MontaSentenca(_tokens)
 		return _texto;
 	}
 	
-	
-	//==================================================
-	// PROCURANDO ONDE A CONDIÇÃO TERMINA
-	//==================================================
-	
+	//PROCURANDO ONDE A CONDIÇÃO TERMINA
 	var _inicio_efeito = -1;
 	
 	if(_qtd_tokens > 1)
@@ -113,33 +101,24 @@ function MontaSentenca(_tokens)
 		}
 	}
 	
-	
-	//==================================================
-	// ADICIONANDO OS INGREDIENTES
-	//==================================================
-	
+	//ADICIONANDO OS INGREDIENTES
 	for(var i = 1; i < _qtd_tokens; i++)
 	{
-		//----------------------------------------------
-		// AINDA ESTAMOS NA CONDIÇÃO
-		//----------------------------------------------
 		
+		//AINDA ESTAMOS NA CONDIÇÃO
 		if(_inicio_efeito == -1 || i < _inicio_efeito)
 		{
 			_texto += " ";
 			_texto += TextoToken(_tokens[i]);
 		}
 		
-		//----------------------------------------------
-		// COMEÇO DO EFEITO
-		//----------------------------------------------
-		
+		//COMEÇO DO EFEITO
 		else
 		{
-			// adiciona "então" uma única vez
+			//adiciona "então" uma única vez
 			if(i == _inicio_efeito)
 			{
-				_texto += " então";
+				_texto += ", então";
 			}
 			
 			_texto += " ";
@@ -147,24 +126,16 @@ function MontaSentenca(_tokens)
 		}
 	}
 	
-	
-	//==================================================
-	// CONDIÇÃO AINDA INCOMPLETA
-	//==================================================
-	
+	//CONDIÇÃO AINDA INCOMPLETA
 	if(_inicio_efeito == -1)
 	{
-		_texto += " então";
+		_texto += ", então";
 	}
 	
-	
-	//==================================================
-	// CONDIÇÃO COMPLETA, MAS SEM EFEITO
-	//==================================================
-	
+	//CONDIÇÃO COMPLETA, MAS SEM EFEITO
 	else if(_inicio_efeito == _qtd_tokens)
 	{
-		_texto += " então";
+		_texto += ", então";
 	}
 	
 	return _texto;
@@ -327,7 +298,7 @@ function LerValor(_tokens, _indice)
 	
 	var _token = _tokens[_indice];
 	
-	// INT
+	//INT
 	if(_token.numero == INGREDIENTE_INT)
 	{
 		_resultado.sucesso = true;

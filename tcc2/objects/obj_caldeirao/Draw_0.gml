@@ -57,7 +57,7 @@ for(var i = 0; i < slots_ativos; i++)
 }
 
 
- // ESCREVENDO AS INFOS DO ITEM
+ //ESCREVENDO AS INFOS DO ITEM
 for(var i = 0; i < slots_ativos; i++)
 {
 	var _xx =
@@ -79,13 +79,13 @@ for(var i = 0; i < slots_ativos; i++)
 		var _margem = 0;
 		
 		
-		// ==========================================
-		// NOME DO ITEM
-		// ==========================================
+		
+		//NOME DO ITEM
+		
 		
 		var _nome = _ingrediente.nome;
 		
-		// INT mostra seu valor
+		//INT mostra seu valor
 		if(inventario[i] == INGREDIENTE_INT)
 		{
 			_nome += " " + string(valores[i]);

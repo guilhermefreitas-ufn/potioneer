@@ -1,7 +1,7 @@
-raio_teste = 96;
+raio_teste = 80;
 mostrar_area = true;
 
-function ExecutaPocaoTeste(_numero)
+function ExecutaPocao(_numero)
 {
 	var _indice = _numero - 1;
 	
@@ -13,16 +13,22 @@ function ExecutaPocaoTeste(_numero)
 		return;
 	}
 	
-	var _pocao = global.DadosJogador.hotbar_pocoes[_indice];
+	
+	var _pocao =
+		global.DadosJogador.hotbar_pocoes[
+			_indice
+		];
+	
 	
 	if(is_undefined(_pocao))
 	{
 		show_debug_message(
-			"Não existe uma poção nesse slot."
+			"Não existe uma poção nesse slot da hotbar."
 		);
 		
 		return;
 	}
+	
 	
 	var _contexto =
 		CriaContextoAreaPocao(
@@ -30,6 +36,7 @@ function ExecutaPocaoTeste(_numero)
 			mouse_y,
 			raio_teste
 		);
+	
 	
 	var _resultado =
 		ExecutaAlgoritmo(

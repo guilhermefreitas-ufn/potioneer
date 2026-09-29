@@ -96,7 +96,7 @@ function ItensIguais(_obj_a, _slot_a, _obj_b, _slot_b)
 		return false;
 	}
 	
-	// apenas int precisa comparar valor
+	//apenas int precisa comparar valor
 	if(_item_a == INGREDIENTE_INT)
 	{
 		return _obj_a.valores[_slot_a] == _obj_b.valores[_slot_b];
