@@ -1,6 +1,12 @@
 //Inherit the parent event
 event_inherited();
 
+if(hp <= 0)
+{
+	instance_destroy();
+	exit;
+}
+
 PegaControles();
 
 move_and_collide(velh, velv, all);
