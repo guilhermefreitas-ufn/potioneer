@@ -1,7 +1,5 @@
 
 //CONFIGURAÇÃO
-
-
 colunas = 5;
 
 slot_tam =
@@ -20,16 +18,10 @@ espaco_nome = 20;
 fonte =
 	fnt_placeholder_pequena;
 
-
 //SPRITES
-
-
 sprite_meu_slot = spr_slot_bolsa_ph;
 
-
 //POSIÇÃO DO SLOT
-
-
 PosicaoSlot = function(_slot)
 {
 	var _coluna =
@@ -56,11 +48,7 @@ PosicaoSlot = function(_slot)
 	];
 };
 
-
-
 //SLOT SOB O MOUSE
-
-
 SlotSobreMouse = function(_mx, _my)
 {
 	for(
@@ -88,11 +76,7 @@ SlotSobreMouse = function(_mx, _my)
 	return -1;
 };
 
-
-
 //ÁREA DO ARMÁRIO
-
-
 AreaSobreMouse = function(_mx, _my)
 {
 	var _linhas =

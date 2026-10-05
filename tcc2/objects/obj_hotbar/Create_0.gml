@@ -1,7 +1,5 @@
 
 //CONFIGURAÇÃO
-
-
 sprite_meu_slot = spr_slot_bolsa_ph;
 
 slot_tam =
@@ -15,11 +13,7 @@ espaco_nome = 20;
 
 fonte = fnt_placeholder_pequena;
 
-
-
 //POSIÇÃO DO SLOT
-
-
 PosicaoSlot = function(_slot)
 {
 	return
@@ -35,11 +29,7 @@ PosicaoSlot = function(_slot)
 	];
 };
 
-
-
 //SLOT SOB O MOUSE
-
-
 SlotSobreMouse = function(_mx, _my)
 {
 	for(

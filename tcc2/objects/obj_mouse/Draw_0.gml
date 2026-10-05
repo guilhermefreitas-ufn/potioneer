@@ -14,10 +14,7 @@ if(item_drag != -1)
 	draw_set_alpha(1);
 }
 
-
 //SPRITE DA POÇÃO SENDO ARRASTADA
-
-
 if(!is_undefined(pocao_drag))
 {
 	draw_set_alpha(0.5);

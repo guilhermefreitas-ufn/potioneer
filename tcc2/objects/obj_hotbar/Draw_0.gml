@@ -89,20 +89,6 @@ for(
 		);
 	}
 	
-	//HOVER
-	//if(_slot_hover == i)
-	//{
-	//	draw_set_colour(c_white);
-	//	
-	//	draw_rectangle(
-	//		_pos[0],
-	//		_pos[1],
-	//		_pos[0] + slot_tam,
-	//		_pos[1] + slot_tam,
-	//		true
-	//	);
-	//}
-	
 	//NÚMERO - TECLA
 	draw_set_font(fonte);
 	draw_set_halign(fa_center);

@@ -8,8 +8,6 @@ item_drag = -1;
 
 
 //POÇÕES
-
-
 pocao_inventario_hover = noone;
 pocao_slot_hover = -1;
 
@@ -46,8 +44,6 @@ click_anim_duracao = 8;
 //funções
 get_slot_pos = function(_obj_inventario, _slot)
 {
-	
-	
 	return [
 		_obj_inventario.x + (_slot mod _obj_inventario.colunas) * (slot_tam + entre_slots) + 2,
 		_obj_inventario.y + (_slot div _obj_inventario.colunas) * (slot_tam + entre_slots) + 2
@@ -56,10 +52,6 @@ get_slot_pos = function(_obj_inventario, _slot)
 
 mouse_over = function()
 {
-	//var _slot_tam = sprite_get_width(spr_slot_bolsa_ph);
-	//var _espaco_borda = 6;
-	//var _entre_slots = 4;
-	
 	//limpando hover
 	slot_hover = -1;
 	inventario_hover = -1;
@@ -121,18 +113,11 @@ mouse_over = function()
 		}
 	}
 	
-	
 	//ARMÁRIO / HOTBAR
-	
-
 	pocao_inventario_hover = noone;
 	pocao_slot_hover = -1;
-
-
 	
 	//ARMÁRIO
-	
-
 	if(instance_exists(obj_armario))
 	{
 		var _armario =
@@ -434,10 +419,7 @@ estado_livre = function()
 		return;
 	}
 	
-	
 	//POÇÃO
-	
-
 	if(
 		mouse_check_button_pressed(mb_left)
 		&& pocao_slot_hover != -1
@@ -445,43 +427,29 @@ estado_livre = function()
 	)
 	{
 		var _pocao;
-	
-	
+
 		//ARMÁRIO
-		if(
-			pocao_inventario_hover.object_index
-			== obj_armario
-		)
+		if(pocao_inventario_hover.object_index == obj_armario)
 		{
-			_pocao =
-				global.DadosJogador.armario_pocoes[
-					pocao_slot_hover
-				];
+			_pocao = global.DadosJogador.armario_pocoes[pocao_slot_hover];
 		}
 	
 		//HOTBAR
 		else
 		{
-			_pocao =
-				global.DadosJogador.hotbar_pocoes[
-					pocao_slot_hover
-				];
+			_pocao = global.DadosJogador.hotbar_pocoes[pocao_slot_hover];
 		}
-	
 	
 		if(!is_undefined(_pocao))
 		{
 			mouse_inicio_x = mouse_x;
 			mouse_inicio_y = mouse_y;
 		
-			pocao_inventario_drag =
-				pocao_inventario_hover;
+			pocao_inventario_drag = pocao_inventario_hover;
 		
-			pocao_slot_drag =
-				pocao_slot_hover;
+			pocao_slot_drag = pocao_slot_hover;
 		
-			pocao_drag =
-				_pocao;
+			pocao_drag = _pocao;
 		
 			estado = estado_click_pocao;
 		

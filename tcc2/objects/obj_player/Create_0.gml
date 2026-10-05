@@ -48,7 +48,7 @@ PegaControles = function()
 }
 
 //poções
-raio_teste = 80;
+raio_teste = 64;
 mostrar_area = true;
 
 function ExecutaPocao(_numero)
