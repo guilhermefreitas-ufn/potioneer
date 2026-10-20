@@ -124,7 +124,7 @@ function PocaoExiste(_algoritmo)
 }
 
 //ADICIONA POÇÃO AO ARMÁRIO
-function AdicionaPocaoArmario(_nome,_algoritmo,_sentenca,_cor = c_white,_sprite = undefined)
+function AdicionaPocaoArmario(_nome,_algoritmo,_sentenca,_cor = c_white,_sprite = spr_pocao)
 {
 	var _slot = -1;
 	

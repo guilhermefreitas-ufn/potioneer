@@ -47,9 +47,67 @@ PegaControles = function()
 	}
 }
 
-//poções
+//invencibilidade
+invencivel = false;
+invencivel_timer = GAME_SPEED * 3;
+tempo_invencivel = invencivel_timer;
+
+//CENTRO DO PLAYER
+CentroPlayer = function()
+{
+    return [
+        x + sprite_get_width(sprite_index) * abs(image_xscale) / 2,
+        y + sprite_get_height(sprite_index) * abs(image_yscale) / 2
+    ];
+};
+
+//POÇÕES
 raio_teste = 64;
 mostrar_area = true;
+
+//ALCANCE DE USO DAS POÇÕES
+alcance_por_atk = 32;
+
+//Calcula o alcance máximo com base no ataque
+AlcancePocao = function()
+{
+    return max(0, atk * alcance_por_atk);
+};
+
+//Calcula a posição permitida para a área da poção
+PosicaoAlvoPocao = function(_mx, _my)
+{
+    var _centro = CentroPlayer();
+
+    var _px = _centro[0];
+    var _py = _centro[1];
+
+    var _alcance = AlcancePocao();
+
+    var _distancia = point_distance(
+        _px,
+        _py,
+        _mx,
+        _my
+    );
+
+    if(_distancia > _alcance)
+    {
+        var _direcao = point_direction(
+            _px,
+            _py,
+            _mx,
+            _my
+        );
+
+        return [
+            _px + lengthdir_x(_alcance, _direcao),
+            _py + lengthdir_y(_alcance, _direcao)
+        ];
+    }
+
+    return [_mx, _my];
+};
 
 function ExecutaPocao(_numero)
 {
@@ -77,12 +135,19 @@ function ExecutaPocao(_numero)
 	}
 	
 	
+	//Calcula a posição permitida para a poção
+	var _alvo = PosicaoAlvoPocao(
+	    mouse_x,
+	    mouse_y
+	);
+
+	//Cria a área da poção na posição calculada
 	var _contexto =
-		CriaContextoAreaPocao(
-			mouse_x,
-			mouse_y,
-			raio_teste
-		);
+	    CriaContextoAreaPocao(
+	        _alvo[0],
+	        _alvo[1],
+	        raio_teste
+	    );
 	
 	
 	var _resultado =

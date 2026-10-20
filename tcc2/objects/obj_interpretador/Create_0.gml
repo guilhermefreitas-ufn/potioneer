@@ -30,7 +30,7 @@ nome_pocao_max = 40;
 
 //preparado para a futura personalização
 cor_nova_pocao = c_white;
-sprite_nova_pocao = undefined;
+sprite_nova_pocao = spr_pocao;
 
 
 //BOTÃO CRIAR POÇÃO

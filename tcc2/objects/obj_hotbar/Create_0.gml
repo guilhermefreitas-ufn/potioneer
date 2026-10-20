@@ -1,4 +1,5 @@
 
+
 //CONFIGURAÇÃO
 sprite_meu_slot = spr_slot_bolsa_ph;
 
@@ -56,3 +57,17 @@ SlotSobreMouse = function(_mx, _my)
 	
 	return -1;
 };
+
+
+//DIMENSÕES DA HOTBAR
+margem_inferior = 0;
+
+largura_hotbar =
+    espaco_borda * 2
+    + SLOTS_HOTBAR_POCOES * slot_tam
+    + (SLOTS_HOTBAR_POCOES - 1) * entre_slots;
+
+altura_hotbar =
+    espaco_borda * 2
+    + slot_tam
+    + espaco_nome;

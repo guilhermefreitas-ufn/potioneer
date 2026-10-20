@@ -28,7 +28,7 @@ if(instance_exists(obj_interpretador))
 if(_b) { global.debug = !global.debug; }
 
 //resetando o jogo
-if(_r && _posso_clicar) { game_restart(); }
+if(_r && _posso_clicar) { room_restart(); }
 
 //TESTANDO OS INVENTARIOS
 //verificando se existe o item 1 (lagrima) no inventario

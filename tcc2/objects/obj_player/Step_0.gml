@@ -27,3 +27,22 @@ if(room == rm_masmorra)
 	if(_4) { ExecutaPocao(4); }
 	if(_5) { ExecutaPocao(5); }
 }
+
+//dano e invencibilidade
+if(place_meeting(x,y,obj_inimigo_pai) && !invencivel)
+{
+	hp -= 1;
+	invencivel = true;
+	tempo_invencivel = invencivel_timer;
+}
+
+if(invencivel && tempo_invencivel > 0)
+{
+	tempo_invencivel--;
+	image_alpha = max(sin(get_timer()/100000), 0.2);
+}
+else
+{
+	invencivel = false;
+	image_alpha = 1;
+}
