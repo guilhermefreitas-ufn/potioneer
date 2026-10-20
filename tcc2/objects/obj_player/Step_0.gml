@@ -29,9 +29,11 @@ if(room == rm_masmorra)
 }
 
 //dano e invencibilidade
-if(place_meeting(x,y,obj_inimigo_pai) && !invencivel)
+var inimigo = instance_place(x,y,obj_inimigo_pai);
+
+if(inimigo && !invencivel)
 {
-	hp -= 1;
+	hp -= inimigo.atk;
 	invencivel = true;
 	tempo_invencivel = invencivel_timer;
 }
