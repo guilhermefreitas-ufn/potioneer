@@ -52,119 +52,122 @@ get_slot_pos = function(_obj_inventario, _slot)
 
 mouse_over = function()
 {
-	//limpando hover
-	slot_hover = -1;
-	inventario_hover = -1;
-	
-	var _mx = mouse_x;
-	var _my = mouse_y;
-	
-	with(obj_inventario_pai)
-	{
-		//DEFININDO QUANTOS SLOTS DEVEM SER USADOS
-		var _slots = SLOTS_BOLSA;
-		var _margem_caldeirao = 0;
-		
-		if(caldeirao)
-		{
-			_slots = slots_ativos;
-			_margem_caldeirao = slot_tam /2;
-		}
-		
-		//quantidade de colunas e linhas
-		var _colunas_ativas = min(colunas, _slots);
-		var _linhas_ativas = ((_slots - 1) div colunas) + 1;
-		
-		//tamanho da área
-		var _largura = (2 * espaco_borda) + _colunas_ativas * (slot_tam + entre_slots);
-		
-		var _altura = (2 * espaco_borda) + _linhas_ativas * (slot_tam + entre_slots);
-		
-		//VERIFICANDO MOUSE SOBRE O INVENTÁRIO
-		if(point_in_rectangle(
-			_mx,
-			_my,
-			x - espaco_borda,
-			y - espaco_borda,
-			x - espaco_borda + _largura,
-			y - espaco_borda + _altura + _margem_caldeirao 
-		))
-		{
-			//VERIFICANDO CADA SLOT
-			for(var i = 0; i < _slots; i++)
-			{
-				var _xx = x + (i mod colunas) * (slot_tam + entre_slots) + 2;
-				
-				var _yy = y + (i div colunas) * (slot_tam + entre_slots) + 2 + _margem_caldeirao;
-				
-				if(point_in_rectangle(
-					_mx,
-					_my,
-					_xx,
-					_yy,
-					_xx + slot_tam,
-					_yy + slot_tam
-				))
-				{
-					other.slot_hover = i;
-					other.inventario_hover = id;
-				}
-			}
-		}
-	}
-	
-	//ARMÁRIO / HOTBAR
-	pocao_inventario_hover = noone;
-	pocao_slot_hover = -1;
-	
-	//ARMÁRIO
-	if(instance_exists(obj_armario))
-	{
-		var _armario =
-			instance_find(obj_armario, 0);
-	
-		var _slot_armario =
-			_armario.SlotSobreMouse(
-				_mx,
-				_my
-			);
-	
-		if(_slot_armario != -1)
-		{
-			pocao_inventario_hover =
-				_armario;
-		
-			pocao_slot_hover =
-				_slot_armario;
-		}
-	}
+    //LIMPANDO HOVER
+    slot_hover = -1;
+    inventario_hover = -1;
 
+    //COORDENADAS DO MOUSE NO MUNDO
+    var _mx = mouse_x;
+    var _my = mouse_y;
 
-	
-	//HOTBAR
-	
+    //COORDENADAS DO MOUSE NA GUI
+    var _mx_gui = device_mouse_x_to_gui(0);
+    var _my_gui = device_mouse_y_to_gui(0);
 
-	if(instance_exists(obj_hotbar))
-	{
-		var _hotbar =
-			instance_find(obj_hotbar, 0);
-	
-		var _slot_hotbar =
-			_hotbar.SlotSobreMouse(
-				_mx,
-				_my
-			);
-	
-		if(_slot_hotbar != -1)
-		{
-			pocao_inventario_hover =
-				_hotbar;
-		
-			pocao_slot_hover =
-				_slot_hotbar;
-		}
-	}
-}
+    //INVENTÁRIOS COMUNS
+    with(obj_inventario_pai)
+    {
+        //DEFININDO QUANTOS SLOTS DEVEM SER USADOS
+        var _slots = SLOTS_BOLSA;
+        var _margem_caldeirao = 0;
+
+        if(caldeirao)
+        {
+            _slots = slots_ativos;
+            _margem_caldeirao = slot_tam / 2;
+        }
+
+        //QUANTIDADE DE COLUNAS E LINHAS
+        var _colunas_ativas = min(colunas, _slots);
+        var _linhas_ativas = ((_slots - 1) div colunas) + 1;
+
+        //TAMANHO DA ÁREA
+        var _largura =
+            (2 * espaco_borda)
+            + _colunas_ativas * (slot_tam + entre_slots);
+
+        var _altura =
+            (2 * espaco_borda)
+            + _linhas_ativas * (slot_tam + entre_slots);
+
+        //MOUSE SOBRE O INVENTÁRIO
+        if(point_in_rectangle(
+            _mx,
+            _my,
+            x - espaco_borda,
+            y - espaco_borda,
+            x - espaco_borda + _largura,
+            y - espaco_borda + _altura + _margem_caldeirao
+        ))
+        {
+            //VERIFICANDO CADA SLOT
+            for(var i = 0; i < _slots; i++)
+            {
+                var _xx =
+                    x
+                    + (i mod colunas) * (slot_tam + entre_slots)
+                    + 2;
+
+                var _yy =
+                    y
+                    + (i div colunas) * (slot_tam + entre_slots)
+                    + 2
+                    + _margem_caldeirao;
+
+                if(point_in_rectangle(
+                    _mx,
+                    _my,
+                    _xx,
+                    _yy,
+                    _xx + slot_tam,
+                    _yy + slot_tam
+                ))
+                {
+                    other.slot_hover = i;
+                    other.inventario_hover = id;
+                }
+            }
+        }
+    }
+
+    //LIMPANDO HOVER DAS POÇÕES
+    pocao_inventario_hover = noone;
+    pocao_slot_hover = -1;
+
+    //ARMÁRIO: COORDENADAS DO MUNDO
+    if(instance_exists(obj_armario))
+    {
+        var _armario = instance_find(obj_armario, 0);
+
+        var _slot_armario = _armario.SlotSobreMouse(
+            _mx,
+            _my
+        );
+
+        if(_slot_armario != -1)
+        {
+            pocao_inventario_hover = _armario;
+            pocao_slot_hover = _slot_armario;
+        }
+    }
+
+    //HOTBAR: COORDENADAS GUI
+    if(instance_exists(obj_hotbar))
+    {
+        var _hotbar = instance_find(obj_hotbar, 0);
+
+        var _slot_hotbar = _hotbar.SlotSobreMouse(
+            _mx_gui,
+            _my_gui
+        );
+
+        if(_slot_hotbar != -1)
+        {
+            pocao_inventario_hover = _hotbar;
+            pocao_slot_hover = _slot_hotbar;
+        }
+    }
+};
 
 estado_click = function()
 {
@@ -277,17 +280,17 @@ estado_click = function()
 	
 	//VERIFICANDO SE VIROU DRAG
 	var _distancia = point_distance(
-		mouse_inicio_x,
-		mouse_inicio_y,
-		mouse_x,
-		mouse_y
+	    mouse_inicio_x,
+	    mouse_inicio_y,
+	    device_mouse_x_to_gui(0),
+	    device_mouse_y_to_gui(0)
 	);
-	
+
 	if(_distancia >= distancia_drag)
 	{
-		item_drag = inventario_drag.inventario[slot_drag];
-		
-		estado = estado_drag;
+	    item_drag = inventario_drag.inventario[slot_drag];
+
+	    estado = estado_drag;
 	}
 }
 
@@ -295,11 +298,7 @@ estado_click_pocao = function()
 {
 	mouse_over();
 	
-	
-	
 	//SOLTOU → FOI UM CLIQUE
-	
-	
 	if(mouse_check_button_released(mb_left))
 	{
 		var _armario =
@@ -308,11 +307,7 @@ estado_click_pocao = function()
 		var _hotbar =
 			instance_find(obj_hotbar, 0);
 		
-		
-		
 		//ARMÁRIO → HOTBAR
-		
-		
 		if(
 			pocao_inventario_drag == _armario
 		)
@@ -331,11 +326,7 @@ estado_click_pocao = function()
 			}
 		}
 		
-		
-		
 		//HOTBAR → ARMÁRIO
-		
-		
 		else if(
 			pocao_inventario_drag == _hotbar
 		)
@@ -345,11 +336,7 @@ estado_click_pocao = function()
 			);
 		}
 		
-		
-		
 		//RESET
-		
-		
 		pocao_inventario_drag = noone;
 		pocao_slot_drag = -1;
 		pocao_drag = undefined;
@@ -359,42 +346,29 @@ estado_click_pocao = function()
 		return;
 	}
 	
-	
-	
 	//VERIFICANDO SE VIROU DRAG
-	
-	
-	var _distancia =
-		point_distance(
-			mouse_inicio_x,
-			mouse_inicio_y,
-			mouse_x,
-			mouse_y
-		);
-	
-	
+	var _distancia = point_distance(
+	    mouse_inicio_x,
+	    mouse_inicio_y,
+	    device_mouse_x_to_gui(0),
+	    device_mouse_y_to_gui(0)
+	);
+
 	if(_distancia >= distancia_drag)
 	{
-		//salva a poção que está sendo arrastada
-		if(
-			pocao_inventario_drag
-			== instance_find(obj_armario, 0)
-		)
-		{
-			pocao_drag =
-				global.DadosJogador.armario_pocoes[
-					pocao_slot_drag
-				];
-		}
-		else
-		{
-			pocao_drag =
-				global.DadosJogador.hotbar_pocoes[
-					pocao_slot_drag
-				];
-		}
-		
-		estado = estado_drag_pocao;
+	    //SALVA A POÇÃO QUE ESTÁ SENDO ARRASTADA
+	    if(pocao_inventario_drag == instance_find(obj_armario, 0))
+	    {
+	        pocao_drag =
+	            global.DadosJogador.armario_pocoes[pocao_slot_drag];
+	    }
+	    else
+	    {
+	        pocao_drag =
+	            global.DadosJogador.hotbar_pocoes[pocao_slot_drag];
+	    }
+
+	    estado = estado_drag_pocao;
 	}
 };
 
@@ -408,8 +382,8 @@ estado_livre = function()
 		&& inventario_hover.inventario[slot_hover] != -1
 	)
 	{
-		mouse_inicio_x = mouse_x;
-		mouse_inicio_y = mouse_y;
+		mouse_inicio_x = device_mouse_x_to_gui(0);
+		mouse_inicio_y = device_mouse_y_to_gui(0);
 	
 		inventario_drag = inventario_hover;
 		slot_drag = slot_hover;
@@ -442,8 +416,8 @@ estado_livre = function()
 	
 		if(!is_undefined(_pocao))
 		{
-			mouse_inicio_x = mouse_x;
-			mouse_inicio_y = mouse_y;
+			mouse_inicio_x = device_mouse_x_to_gui(0);
+			mouse_inicio_y = device_mouse_y_to_gui(0);
 		
 			pocao_inventario_drag = pocao_inventario_hover;
 		

@@ -1,73 +1,63 @@
-
-
 //CONFIGURAÇÃO
 sprite_meu_slot = spr_slot_bolsa_ph;
 
-slot_tam =
-	sprite_get_width(sprite_meu_slot);
+slot_tam = sprite_get_width(sprite_meu_slot);
 
-entre_slots = 4;
+escala_slot = 2;
 
+entre_slots = 8;
 espaco_borda = 6;
-
 espaco_nome = 20;
+margem_inferior = 32;
 
 fonte = fnt_placeholder_pequena;
 
-//POSIÇÃO DO SLOT
+//DIMENSÕES REAIS DO SLOT
+largura_slot = slot_tam * escala_slot;
+altura_slot = sprite_get_height(sprite_meu_slot) * escala_slot;
+
+//DIMENSÕES DA HOTBAR
+largura_hotbar =
+    espaco_borda * 2
+    + SLOTS_HOTBAR_POCOES * largura_slot
+    + (SLOTS_HOTBAR_POCOES - 1) * entre_slots;
+
+altura_hotbar =
+    espaco_borda * 2
+    + altura_slot
+    + espaco_nome;
+
+//POSIÇÃO DO SLOT NA GUI
 PosicaoSlot = function(_slot)
 {
-	return
-	[
-		x
-		+ espaco_borda
-		+ _slot * (
-			slot_tam + entre_slots
-		),
-		
-		y
-		+ espaco_borda
-	];
+    var _x = (RES_W - largura_hotbar) / 2;
+    var _y = RES_H - altura_hotbar - margem_inferior;
+
+    return [
+        _x + espaco_borda
+            + _slot * (largura_slot + entre_slots),
+
+        _y + espaco_borda
+    ];
 };
 
 //SLOT SOB O MOUSE
 SlotSobreMouse = function(_mx, _my)
 {
-	for(
-		var i = 0;
-		i < SLOTS_HOTBAR_POCOES;
-		i++
-	)
-	{
-		var _pos =
-			PosicaoSlot(i);
-		
-		if(point_in_rectangle(
-			_mx,
-			_my,
-			_pos[0],
-			_pos[1],
-			_pos[0] + slot_tam,
-			_pos[1] + slot_tam
-		))
-		{
-			return i;
-		}
-	}
-	
-	return -1;
+    for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
+    {
+        var _pos = PosicaoSlot(i);
+
+        if(point_in_rectangle(
+            _mx, _my,
+            _pos[0], _pos[1],
+            _pos[0] + largura_slot,
+            _pos[1] + altura_slot
+        ))
+        {
+            return i;
+        }
+    }
+
+    return -1;
 };
-
-
-//DIMENSÕES DA HOTBAR
-margem_inferior = 0;
-
-largura_hotbar =
-    espaco_borda * 2
-    + SLOTS_HOTBAR_POCOES * slot_tam
-    + (SLOTS_HOTBAR_POCOES - 1) * entre_slots;
-
-altura_hotbar =
-    espaco_borda * 2
-    + slot_tam
-    + espaco_nome;

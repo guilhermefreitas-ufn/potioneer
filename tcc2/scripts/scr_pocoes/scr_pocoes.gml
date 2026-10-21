@@ -1,5 +1,6 @@
 #macro SLOTS_ARMARIO_POCOES 32
 #macro SLOTS_HOTBAR_POCOES 5
+#macro SEGUNDOS_COOLDOWN_POCAO 5
 
 function PocaoNomeExiste(_nome)
 {
@@ -153,16 +154,18 @@ function AdicionaPocaoArmario(_nome,_algoritmo,_sentenca,_cor = c_white,_sprite 
 	
 	
 	global.DadosJogador.armario_pocoes[_slot] =
-		{
-			id: _id,
-			
-			nome: _nome,
-			algoritmo: _algoritmo,
-			sentenca: _sentenca,
-			
-			cor: _cor,
-			sprite: _sprite
-		};
+	{
+		id: _id,
+
+		nome: _nome,
+		algoritmo: _algoritmo,
+		sentenca: _sentenca,
+
+		cor: _cor,
+		sprite: _sprite,
+
+		cooldown: 0
+	};
 	
 	
 	return _slot;

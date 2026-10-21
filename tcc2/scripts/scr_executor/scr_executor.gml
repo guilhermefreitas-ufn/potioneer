@@ -291,32 +291,33 @@ function ExecutaCondicao(_condicao, _contexto)
 	return _resultado;
 }
 
+
 function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 {
 	if(_entidade == noone || !instance_exists(_entidade))
 	{
 		return false;
 	}
-	
+
 	var _ing_variavel = IngredientePorNumero(
 		_variavel.variavel
 	);
-	
+
 	var _ing_operador = IngredientePorNumero(
 		_operador_numero
 	);
-	
-	if(is_undefined(_ing_variavel)
-	|| is_undefined(_ing_operador))
+
+	if(
+		is_undefined(_ing_variavel)
+		|| is_undefined(_ing_operador)
+	)
 	{
 		return false;
 	}
-	
+
 	switch(_ing_variavel.token)
 	{
-		
-		//HP
-		
+		// HP
 		case "hp":
 		{
 			switch(_ing_operador.token)
@@ -324,25 +325,36 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 				case "decreases":
 					_entidade.hp -= _valor;
 					break;
-				
+
 				case "increases":
 					_entidade.hp += _valor;
 					break;
-				
+
 				case "becomes":
 					_entidade.hp = _valor;
 					break;
-				
+
 				default:
 					return false;
 			}
-			
+
+			// Vida entre 0 e 20
+			if(_entidade.hp > 20)
+			{
+			    show_debug_message(
+			        "LIMITE DE HP: a poção tentou ultrapassar a vida máxima de 20. Valor ajustado para 20."
+			    );
+			}
+			_entidade.hp = clamp(
+				_entidade.hp,
+				0,
+				20
+			);
+
 			return true;
 		}
-		
-		
-		//SPD
-		
+
+		// SPD
 		case "spd":
 		{
 			switch(_ing_operador.token)
@@ -350,25 +362,36 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 				case "decreases":
 					_entidade.spd -= _valor;
 					break;
-				
+
 				case "increases":
 					_entidade.spd += _valor;
 					break;
-				
+
 				case "becomes":
 					_entidade.spd = _valor;
 					break;
-				
+
 				default:
 					return false;
 			}
-			
+
+			// Velocidade entre 0 e 10
+			if(_entidade.spd > 10)
+			{
+			    show_debug_message(
+			        "LIMITE DE SPD: a poção tentou ultrapassar a velocidade máxima de 10. Valor ajustado para 10."
+			    );
+			}
+			_entidade.spd = clamp(
+				_entidade.spd,
+				0,
+				10
+			);
+
 			return true;
 		}
-		
-		
-		//ATK
-		
+
+		// ATK
 		case "atk":
 		{
 			switch(_ing_operador.token)
@@ -376,25 +399,32 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 				case "decreases":
 					_entidade.atk -= _valor;
 					break;
-				
+
 				case "increases":
 					_entidade.atk += _valor;
 					break;
-				
+
 				case "becomes":
 					_entidade.atk = _valor;
 					break;
-				
+
 				default:
 					return false;
 			}
 			
+			// Ataque >= 0
+			_entidade.atk = max(
+				_entidade.atk,
+				0,
+			);
+
 			return true;
 		}
 	}
-	
+
 	return false;
 }
+
 
 function ExecutaEfeito(_efeito, _contexto)
 {

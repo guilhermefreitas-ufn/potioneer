@@ -3,10 +3,6 @@ event_inherited();
 
 if(room == rm_masmorra)
 {
-	//INVENCIBILIDADE
-	
-	
-	
     //Calcula a posição permitida para a área
     var _alvo = PosicaoAlvoPocao(
         mouse_x,

@@ -30,6 +30,7 @@ PegaControles = function()
 	cima = keyboard_check(ord("W")); 
 	baixo = keyboard_check(ord("S"));
 	
+	
 	//removar daqui se quiser desabilitar os controles em algum estado
 	//"paralisado", por exemplo
 	
@@ -134,6 +135,15 @@ function ExecutaPocao(_numero)
 		return;
 	}
 	
+	// VERIFICA O COOLDOWN DA POÇÃO SELECIONADA
+	if(_pocao.cooldown > 0)
+	{
+		show_debug_message(
+			"A poção está em recarga."
+		);
+
+		return;
+	}
 	
 	//Calcula a posição permitida para a poção
 	var _alvo = PosicaoAlvoPocao(
@@ -155,6 +165,9 @@ function ExecutaPocao(_numero)
 			_pocao.algoritmo,
 			_contexto
 		);
+	
+	// INICIA O COOLDOWN DESTA POÇÃO
+	_pocao.cooldown = round(GAME_SPEED * SEGUNDOS_COOLDOWN_POCAO);
 	
 	show_debug_message(
 	"SUCESSO: " + string(_resultado.sucesso)
