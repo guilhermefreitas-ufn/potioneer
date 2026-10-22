@@ -25,11 +25,42 @@ if(room == rm_masmorra)
 	var _5 = keyboard_check_pressed(vk_numpad5) || keyboard_check_pressed(ord("5"));
 
 	//usando poções
-	if(_1) { ExecutaPocao(1); }
-	if(_2) { ExecutaPocao(2); }
-	if(_3) { ExecutaPocao(3); }
-	if(_4) { ExecutaPocao(4); }
-	if(_5) { ExecutaPocao(5); }
+    // SELEÇÃO POR TECLADO
+    if(_1) { pocao_selecionada = 0; }
+	if(_2) { pocao_selecionada = 1; }
+    if(_3) { pocao_selecionada = 2; }
+	if(_4) { pocao_selecionada = 3; }
+	if(_5) { pocao_selecionada = 4; }
+
+    // SELEÇÃO PELO SCROLL
+    if(mouse_wheel_up())
+    {
+        pocao_selecionada = (pocao_selecionada - 1 + SLOTS_HOTBAR_POCOES) mod SLOTS_HOTBAR_POCOES;
+    }
+    else if(mouse_wheel_down())
+    {
+        pocao_selecionada = (pocao_selecionada + 1) mod SLOTS_HOTBAR_POCOES;
+    }
+
+    // USO DA POÇÃO SELECIONADA
+
+    // Botão esquerdo: cursor
+    if(mouse_check_button_pressed(mb_left))
+    {
+        ExecutaPocao("mouse");
+    }
+
+    // Botão direito: área ao redor do jogador
+    if(mouse_check_button_pressed(mb_right))
+    {
+        ExecutaPocao("player_area");
+    }
+
+    // Espaço: somente o jogador
+    if(keyboard_check_pressed(vk_space))
+    {
+        ExecutaPocao("player_only");
+    }
 }
 
 //cooldown poções

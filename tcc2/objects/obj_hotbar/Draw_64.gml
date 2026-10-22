@@ -8,6 +8,26 @@ var _my = device_mouse_y_to_gui(0);
 
 var _slot_hover = SlotSobreMouse(_mx, _my);
 
+// SLOT SELECIONADO
+var _slot_selecionado = -1;
+
+if(
+    room == rm_masmorra
+    && instance_exists(obj_player)
+)
+{
+    var _player = instance_find(
+        obj_player,
+        0
+    );
+
+    if(_player != noone)
+    {
+        _slot_selecionado =
+            _player.pocao_selecionada;
+    }
+}
+
 //HOTBAR
 for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 {
@@ -18,18 +38,29 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
     var _cx = _pos[0] + largura_slot / 2;
     var _cy = _pos[1] + altura_slot / 2;
 
-    //SLOT
-    draw_sprite_ext(
-        sprite_meu_slot,
-        _slot_hover == i,
-        _pos[0],
-        _pos[1],
-        escala_slot,
-        escala_slot,
-        0,
-        c_white,
-        1
-    );
+    // SLOT
+	var _frame_slot = 0;
+
+	// Slot selecionado ou sob o mouse
+	if(
+	    i == _slot_selecionado
+	    || i == _slot_hover
+	)
+	{
+	    _frame_slot = 1;
+	}
+
+	draw_sprite_ext(
+	    sprite_meu_slot,
+	    _frame_slot,
+	    _pos[0],
+	    _pos[1],
+	    escala_slot,
+	    escala_slot,
+	    0,
+	    c_white,
+	    1
+	);
 
     //POÇÃO
     if(!is_undefined(_pocao))
@@ -87,20 +118,25 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 		    );
 
 		    // Posição e tamanho do relógio
-		    var _raio_relogio = max(
-		        4,
-		        floor(slot_tam * 0.16)
-		    );
+		    //var _raio_relogio = max(
+		    //    4,
+		    //    floor(slot_tam * 0.16)
+		    //);
+			
+			var _raio_relogio = 8;
 
-		    var _centro_x = _pos[0]
-		        + slot_tam
-		        - _raio_relogio
-		        - 2;
-
-		    var _centro_y = _pos[1]
-		        + _raio_relogio
-		        + 2;
-
+		    //var _centro_x = _pos[0]
+		    //    + slot_tam
+		    //    - _raio_relogio
+		    //    - 2;
+			//
+		    //var _centro_y = _pos[1]
+		    //    + _raio_relogio
+		    //    + 2;
+			
+			var _centro_x = _pos[0];
+			var _centro_y = _pos[1];
+			
 		    // Fundo escuro do relógio
 		    draw_set_alpha(0.9);
 		    draw_set_color(c_black);
@@ -108,7 +144,7 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 		    draw_circle(
 		        _centro_x,
 		        _centro_y,
-		        _raio_relogio + 1,
+		        _raio_relogio + 2,
 		        false
 		    );
 
@@ -196,6 +232,8 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
         2,
         0
     );
+	
+	
 }
 
 //DESCRIÇÃO

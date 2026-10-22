@@ -15,9 +15,9 @@ var yy = cell_v div 2;
 
 var chances = 1;
 
-var passos = 600;
+var passos = 1200;
 
-var inimigo_max = 5;
+var inimigo_max = 10;
 
 for(var i = 0; i < passos; i++)
 {

@@ -146,7 +146,7 @@ if(room != rm_inventarios)
 	define_align();
 	draw_set_colour(c_black);
 	draw_set_font(fnt_placeholder_media);
-	draw_text(RES_W/2, 40, "Aperte ESPAÇO para voltar ao Caldeirão.")
+	draw_text(RES_W/2, 40, "Aperte \"-\" para voltar ao Caldeirão.")
 	reseta_draw();
 }
 

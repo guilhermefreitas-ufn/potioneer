@@ -62,11 +62,14 @@ CentroPlayer = function()
     ];
 };
 
-//POÇÕES
+// POÇÕES
 raio_teste = 64;
 mostrar_area = true;
 
-//ALCANCE DE USO DAS POÇÕES
+// Slot selecionado: 0 até 4
+pocao_selecionada = 0;
+
+// ALCANCE DE USO DAS POÇÕES
 alcance_por_atk = 32;
 
 //Calcula o alcance máximo com base no ataque
@@ -110,83 +113,128 @@ PosicaoAlvoPocao = function(_mx, _my)
     return [_mx, _my];
 };
 
-function ExecutaPocao(_numero)
+function ExecutaPocao(_modo)
 {
-	var _indice = _numero - 1;
-	
-	if(
-		_indice < 0
-		|| _indice >= SLOTS_HOTBAR_POCOES
-	)
-	{
-		return;
-	}
-	
-	var _pocao =
-		global.DadosJogador.hotbar_pocoes[_indice];
-	
-	
-	if(is_undefined(_pocao))
-	{
-		show_debug_message(
-			"Não existe uma poção nesse slot da hotbar."
-		);
-		
-		return;
-	}
-	
-	// VERIFICA O COOLDOWN DA POÇÃO SELECIONADA
-	if(_pocao.cooldown > 0)
-	{
-		show_debug_message(
-			"A poção está em recarga."
-		);
+    // O slot selecionado vai de 0 a 4
+    var _indice = pocao_selecionada;
 
-		return;
-	}
-	
-	//Calcula a posição permitida para a poção
-	var _alvo = PosicaoAlvoPocao(
-	    mouse_x,
-	    mouse_y
-	);
+    if(
+        _indice < 0
+        || _indice >= SLOTS_HOTBAR_POCOES
+    )
+    {
+        return;
+    }
 
-	//Cria a área da poção na posição calculada
-	var _contexto =
-	    CriaContextoAreaPocao(
-	        _alvo[0],
-	        _alvo[1],
-	        raio_teste
-	    );
-	
-	
-	var _resultado =
-		ExecutaAlgoritmo(
-			_pocao.algoritmo,
-			_contexto
-		);
-	
-	// INICIA O COOLDOWN DESTA POÇÃO
-	_pocao.cooldown = round(GAME_SPEED * SEGUNDOS_COOLDOWN_POCAO);
-	
-	show_debug_message(
-	"SUCESSO: " + string(_resultado.sucesso)
-	);
+    var _pocao =
+        global.DadosJogador.hotbar_pocoes[_indice];
 
-	show_debug_message(
-		"CONDIÇÃO: " + string(_resultado.condicao)
-	);
+    // Verifica se existe poção
+    if(is_undefined(_pocao))
+    {
+        show_debug_message(
+            "Não existe uma poção no slot selecionado."
+        );
 
-	show_debug_message(
-		"EFEITO: " + string(_resultado.efeito_aplicado)
-	);
+        return;
+    }
 
-	show_debug_message(
-		"ENTIDADES AFETADAS: "
-		+ string(array_length(_resultado.entidades_afetadas))
-	);
+    // Verifica o cooldown
+    if(_pocao.cooldown > 0)
+    {
+        show_debug_message(
+            "A poção está em recarga."
+        );
 
-	show_debug_message(
-		"MENSAGEM: " + _resultado.mensagem
-	);
+        return;
+    }
+
+    var _contexto;
+
+    // Define como a poção será utilizada
+    switch(_modo)
+    {
+        // CLIQUE ESQUERDO: NO CURSOR
+        case "mouse":
+        {
+            var _alvo = PosicaoAlvoPocao(
+                mouse_x,
+                mouse_y
+            );
+
+            _contexto = CriaContextoAreaPocao(
+                _alvo[0],
+                _alvo[1],
+                raio_teste
+            );
+
+            break;
+        }
+
+        // CLIQUE DIREITO: ÁREA AO REDOR DO JOGADOR
+        case "player_area":
+        {
+            var _centro = CentroPlayer();
+
+            _contexto = CriaContextoAreaPocao(
+                _centro[0],
+                _centro[1],
+                raio_teste
+            );
+
+            break;
+        }
+
+        // ESPAÇO: SOMENTE O JOGADOR
+        case "player_only":
+        {
+            _contexto = CriarContextoPocao(
+                [id],
+                [id],
+                []
+            );
+
+            break;
+        }
+
+        default:
+        {
+            return;
+        }
+    }
+
+    // Executa o algoritmo
+    var _resultado = ExecutaAlgoritmo(
+        _pocao.algoritmo,
+        _contexto
+    );
+
+    // Inicia o cooldown desta poção
+    _pocao.cooldown = round(
+        GAME_SPEED * SEGUNDOS_COOLDOWN_POCAO
+    );
+
+    // DEBUG
+    show_debug_message(
+        "SUCESSO: " + string(_resultado.sucesso)
+    );
+
+    show_debug_message(
+        "CONDIÇÃO: " + string(_resultado.condicao)
+    );
+
+    show_debug_message(
+        "EFEITO: " + string(_resultado.efeito_aplicado)
+    );
+
+    show_debug_message(
+        "ENTIDADES AFETADAS: "
+        + string(array_length(
+            _resultado.entidades_afetadas
+        ))
+    );
+
+    show_debug_message(
+        "MENSAGEM: " + _resultado.mensagem
+    );
 }

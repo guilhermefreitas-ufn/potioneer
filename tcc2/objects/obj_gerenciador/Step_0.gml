@@ -14,6 +14,7 @@ _6 = keyboard_check_pressed(vk_numpad6) || keyboard_check_pressed(ord("6"));
 var _enter = keyboard_check_pressed(vk_enter);
 var _backspace = keyboard_check_pressed(vk_backspace);
 var _space = keyboard_check_pressed(vk_space);
+var _menos = keyboard_check_pressed(vk_subtract) || keyboard_check_pressed(ord("-"));
 
 var _posso_clicar = false;
 
@@ -92,7 +93,7 @@ if(_posso_clicar)
 			show_debug_message("Caldeirão e/ou Bolsa não encontrados!");
 		}
 	}
-	if(_space)
+	if(_menos)
 	{
 		if(room != rm_inventarios) { room_goto(rm_inventarios); }
 	}
