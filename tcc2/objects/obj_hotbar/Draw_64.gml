@@ -76,10 +76,7 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 		{
 		    var _cooldown_max = max(
 		        1,
-		        round(
-		            game_get_speed(gamespeed_fps)
-		            * SEGUNDOS_COOLDOWN_POCAO
-		        )
+		        round(GAME_SPEED * SEGUNDOS_COOLDOWN_POCAO)
 		    );
 
 		    // Fração do tempo que ainda resta
@@ -95,12 +92,12 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 		        floor(slot_tam * 0.16)
 		    );
 
-		    var _cx = _pos[0]
+		    var _centro_x = _pos[0]
 		        + slot_tam
 		        - _raio_relogio
 		        - 2;
 
-		    var _cy = _pos[1]
+		    var _centro_y = _pos[1]
 		        + _raio_relogio
 		        + 2;
 
@@ -109,8 +106,8 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 		    draw_set_color(c_black);
 
 		    draw_circle(
-		        _cx,
-		        _cy,
+		        _centro_x,
+		        _centro_y,
 		        _raio_relogio + 1,
 		        false
 		    );
@@ -121,13 +118,13 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 		        90 + 359.8 * _fracao
 		    ) % 360;
 
-		    var _x_final = _cx
+		    var _x_final = _centro_x
 		        + lengthdir_x(
 		            _raio_relogio,
 		            _angulo_final
 		        );
 
-		    var _y_final = _cy
+		    var _y_final = _centro_y
 		        + lengthdir_y(
 		            _raio_relogio,
 		            _angulo_final
@@ -137,13 +134,13 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 		    draw_set_color(c_white);
 
 		    draw_pie(
-		        _cx - _raio_relogio,
-		        _cy - _raio_relogio,
-		        _cx + _raio_relogio,
-		        _cy + _raio_relogio,
+		        _centro_x - _raio_relogio,
+		        _centro_y - _raio_relogio,
+		        _centro_x + _raio_relogio,
+		        _centro_y + _raio_relogio,
 
-		        _cx,
-		        _cy - _raio_relogio,
+		        _centro_x,
+		        _centro_y - _raio_relogio,
 
 		        _x_final,
 		        _y_final,
