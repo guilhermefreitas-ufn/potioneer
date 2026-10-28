@@ -50,6 +50,28 @@ function IngredientePorToken(_token)
 	return undefined;
 }
 
+function IngredientePorNome(_nome)
+{
+    if (!is_string(_nome))
+    {
+        return undefined;
+    }
+
+    var _nome_busca = string_lower(_nome);
+
+    for (var i = 0; i < array_length(global.Ingredientes); i++)
+    {
+        var _ing = global.Ingredientes[i];
+
+        if (string_lower(_ing.nome) == _nome_busca)
+        {
+            return _ing;
+        }
+    }
+
+    return undefined;
+}
+
 function IngredienteEhTipo(_numero, _tipo)
 {
 	var _ing = IngredientePorNumero(_numero);

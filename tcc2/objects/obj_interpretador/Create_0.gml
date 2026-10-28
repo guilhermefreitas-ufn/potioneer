@@ -1,4 +1,3 @@
-
 //procurando caldeirões
 caldeirao = noone;
 
@@ -21,8 +20,6 @@ slot_erro = -1;
 
 
 //NOME DA POÇÃO
-
-
 nomeando_pocao = false;
 nome_pocao = "";
 
@@ -34,8 +31,6 @@ sprite_nova_pocao = spr_pocao;
 
 
 //BOTÃO CRIAR POÇÃO
-
-
 botao_criar_largura = 180;
 botao_criar_altura = 40;
 botao_criar_margem = 24;
@@ -61,10 +56,15 @@ IniciaNomePocao = function()
 
 CriarPocao = function()
 {
+	//CALDEIRÃO VAZIO
+	if(CaldeiraoVazio())
+	{
+		mensagem = "Caldeirão vazio!";
+		mensagem_timer = mensagem_duracao;
+		return;
+	}
 	
 	//ALGORITMO INVÁLIDO
-	
-	
 	if(!sintaxe_valida || !semantica_valida)
 	{
 		mensagem = "Poção inválida!";
@@ -72,11 +72,7 @@ CriarPocao = function()
 		return;
 	}
 	
-	
-	
 	//POÇÃO JÁ EXISTE
-	
-	
 	if(PocaoExiste(algoritmo))
 	{
 		mensagem = "Poção já criada!";
@@ -84,10 +80,6 @@ CriarPocao = function()
 		return;
 	}
 	
-	
-	
 	//PEDINDO NOME
-	
-	
 	IniciaNomePocao();
 };

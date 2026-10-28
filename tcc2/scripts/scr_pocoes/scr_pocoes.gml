@@ -2,6 +2,59 @@
 #macro SLOTS_HOTBAR_POCOES 5
 #macro SEGUNDOS_COOLDOWN_POCAO 5
 
+// RESETA OS COOLDOWNS DE UM ARRAY DE POÇÕES
+function ResetarCooldownsArrayPocoes(_pocoes)
+{
+    if (!is_array(_pocoes))
+    {
+        return;
+    }
+
+    for (var i = 0; i < array_length(_pocoes); i++)
+    {
+        var _pocao = _pocoes[i];
+
+        if (is_struct(_pocao))
+        {
+            _pocao.cooldown = 0;
+        }
+    }
+}
+
+// RESETA OS COOLDOWNS DE TODAS AS POÇÕES
+function ResetarCooldownsPocoes()
+{
+    if (!variable_global_exists("DadosJogador"))
+    {
+        return;
+    }
+
+    var _dados = global.DadosJogador;
+
+    if (!is_struct(_dados))
+    {
+        return;
+    }
+
+    // POÇÕES DA HOTBAR
+    if (variable_struct_exists(_dados, "hotbar_pocoes"))
+    {
+        ResetarCooldownsArrayPocoes(
+            _dados.hotbar_pocoes
+        );
+    }
+
+    // POÇÕES DO ARMÁRIO
+    if (variable_struct_exists(_dados, "armario_pocoes"))
+    {
+        ResetarCooldownsArrayPocoes(
+            _dados.armario_pocoes
+        );
+    }
+
+    show_debug_message("Cooldowns de todas as poções resetados.");
+}
+
 function PocaoNomeExiste(_nome)
 {
 	var _nome_comparacao =

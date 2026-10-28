@@ -104,7 +104,7 @@ if(_posso_clicar)
 if(room == rm_inventarios)
 {
 	//CRIANDO 5 POÇÕES TESTE
-	if(_p)
+	if(_p && CaldeiraoVazio())
 	{
 		CriaPocoesTeste();
 	}

@@ -1021,3 +1021,16 @@ function ConsomeCaldeirao(_caldeirao)
 	
 	AtualizaSlotsInventario(_caldeirao);
 }
+
+function CaldeiraoVazio(_caldeirao = obj_caldeirao)
+{
+	for(var i = 0; i < SLOTS_CALDEIRAO; i++)
+	{
+		if(_caldeirao.inventario[i] != -1)
+		{
+			return false;
+		}
+	}
+
+	return true;
+}

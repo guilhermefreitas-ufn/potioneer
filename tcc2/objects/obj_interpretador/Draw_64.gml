@@ -37,10 +37,7 @@ if(_erro != "")
 	reseta_draw();
 }
 
-
 //BOTÃO CRIAR POÇÃO
-
-
 _x = display_get_gui_width()
 	- botao_criar_largura
 	- botao_criar_margem;
@@ -61,18 +58,21 @@ var _hover = point_in_rectangle(
 	_y + botao_criar_altura
 );
 
-
-
 //FUNDO
-
-
-if(_hover)
+if(CaldeiraoVazio())
+{
+	draw_set_color(c_red);
+	draw_set_alpha(.5);
+}
+else if(_hover)
 {
 	draw_set_color(c_ltgray);
+	draw_set_alpha(1);
 }
 else
 {
 	draw_set_color(c_dkgray);
+	draw_set_alpha(1);
 }
 
 draw_rectangle(
@@ -83,11 +83,7 @@ draw_rectangle(
 	false
 );
 
-
-
 //BORDA
-
-
 draw_set_color(c_black);
 
 draw_rectangle(
@@ -98,11 +94,7 @@ draw_rectangle(
 	true
 );
 
-
-
 //TEXTO
-
-
 draw_set_font(-1);
 define_align(0,0);
 draw_set_color(c_white);
@@ -117,14 +109,9 @@ draw_text(
 	"CRIAR POCAO"
 );
 
-
 reseta_draw();
 
-
-
 //MENSAGEM
-
-
 if(mensagem_timer > 0)
 {
 	draw_set_font(fnt_placeholder_media);
@@ -144,34 +131,48 @@ if(mensagem_timer > 0)
 }
 
 //NOMEANDO POÇÃO
-
 if(nomeando_pocao)
 {
+	//fundo
 	draw_set_colour(c_black);
 	draw_set_alpha(.75);
 	draw_rectangle(0,0,RES_W,RES_H,false);
 	reseta_draw();
 	
+	//texto
 	define_align();
 	draw_set_font(fnt_placeholder_media);
-	draw_set_colour(c_white);
+	//draw_set_colour(c_white);
 	
-	draw_text(
+	draw_text_outline(
 		RES_W / 2,
 		RES_H / 2 - 30,
-		"Nome da poção:"
+		"Nome da poção:",
+		c_white,
+		c_black,
+		1
 	);
 	
-	draw_text(
+	define_align();
+	draw_set_font(fnt_placeholder_media);
+	draw_text_outline(
 		RES_W / 2,
 		RES_H / 2 + 10,
-		nome_pocao + "_"
+		nome_pocao + "_",
+		c_white,
+		c_black,
+		1
 	);
 	
-	draw_text(
+	define_align();
+	draw_set_font(fnt_placeholder_media);
+	draw_text_outline(
 		RES_W / 2,
 		RES_H / 2 + 50,
-		"ENTER = confirmar    ESC = cancelar"
+		"ENTER = confirmar    ESC = cancelar",
+		c_white,
+		c_black,
+		1
 	);
 	
 	reseta_draw();

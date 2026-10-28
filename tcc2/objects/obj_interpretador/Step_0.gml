@@ -112,6 +112,7 @@ if(
 		_x + botao_criar_largura,
 		_y + botao_criar_altura
 	)
+	&& !CaldeiraoVazio()
 )
 {
 	CriarPocao();

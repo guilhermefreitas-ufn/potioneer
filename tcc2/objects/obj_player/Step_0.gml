@@ -10,6 +10,7 @@ if(hp <= 0)
 	exit;
 }
 
+//movimentação
 PegaControles();
 
 move_and_collide(
