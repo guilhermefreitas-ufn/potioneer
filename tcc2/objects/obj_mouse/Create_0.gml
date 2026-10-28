@@ -308,9 +308,7 @@ estado_click_pocao = function()
 			instance_find(obj_hotbar, 0);
 		
 		//ARMÁRIO → HOTBAR
-		if(
-			pocao_inventario_drag == _armario
-		)
+		if(pocao_inventario_drag == _armario)
 		{
 			var _resultado =
 				AdicionaPocaoHotbarPorClique(
@@ -327,9 +325,9 @@ estado_click_pocao = function()
 		}
 		
 		//HOTBAR → ARMÁRIO
-		else if(
-			pocao_inventario_drag == _hotbar
-		)
+		//Só permitir no arsenal
+		else if(pocao_inventario_drag == _hotbar
+			&& room == rm_armario)
 		{
 			DevolvePocaoHotbarPorClique(
 				pocao_slot_drag
@@ -475,18 +473,13 @@ estado_drag_pocao = function()
 {
 	mouse_over();
 	
-	
 	//continua arrastando
 	if(mouse_check_button(mb_left))
 	{
 		return;
 	}
 	
-	
-	
 	//SOLTOU
-	
-	
 	if(mouse_check_button_released(mb_left))
 	{
 		var _armario =
@@ -495,19 +488,15 @@ estado_drag_pocao = function()
 		var _hotbar =
 			instance_find(obj_hotbar, 0);
 		
-		
-		
 		//ORIGEM = ARMÁRIO
-		
-		
 		if(
 			pocao_inventario_drag
 			== _armario
 		)
 		{
-			//------------------------------
+			
 			//ARMÁRIO → HOTBAR
-			//------------------------------
+			
 			
 			if(
 				pocao_inventario_hover
@@ -521,9 +510,8 @@ estado_drag_pocao = function()
 			}
 			
 			
-			//------------------------------
 			//ARMÁRIO → ARMÁRIO
-			//------------------------------
+			
 			
 			else if(
 				pocao_inventario_hover
@@ -543,19 +531,15 @@ estado_drag_pocao = function()
 			}
 		}
 		
-		
-		
 		//ORIGEM = HOTBAR
-		
-		
 		else if(
 			pocao_inventario_drag
 			== _hotbar
 		)
 		{
-			//------------------------------
+			
 			//HOTBAR → HOTBAR
-			//------------------------------
+			
 			
 			if(
 				pocao_inventario_hover
@@ -575,14 +559,11 @@ estado_drag_pocao = function()
 			}
 			
 			
-			//------------------------------
-			//HOTBAR → ARMÁRIO
-			//------------------------------
 			
-			else if(
-				pocao_inventario_hover
-				== _armario
-			)
+			//HOTBAR → ARMÁRIO
+			//Permitido somente no Arsenal
+			else if(pocao_inventario_hover == _armario
+				&& room == rm_armario)
 			{
 				TransferePocaoHotbarParaArmario(
 					pocao_slot_drag,
@@ -590,12 +571,11 @@ estado_drag_pocao = function()
 				);
 			}
 			
-			//------------------------------
-			//HOTBAR → ÁREA VAZIA DO ARMÁRIO
-			//------------------------------
 			
-			else if(
-				instance_exists(_armario)
+			//HOTBAR → ÁREA VAZIA DO ARMÁRIO
+			//Permitido somente no Arsenal
+			else if(room == rm_armario
+				&& instance_exists(_armario)
 				&& _armario.AreaSobreMouse(
 					mouse_x,
 					mouse_y
@@ -608,11 +588,7 @@ estado_drag_pocao = function()
 			}
 		}
 		
-		
-		
 		//RESET
-		
-		
 		pocao_inventario_drag = noone;
 		pocao_slot_drag = -1;
 		pocao_drag = undefined;

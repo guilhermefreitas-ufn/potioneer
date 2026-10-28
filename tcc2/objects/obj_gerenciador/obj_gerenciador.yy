@@ -12,8 +12,8 @@
   "name":"obj_gerenciador",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Controladores",
+    "path":"folders/Objects/Controladores.yy",
   },
   "parentObjectId":null,
   "persistent":true,

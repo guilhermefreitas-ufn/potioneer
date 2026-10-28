@@ -8,7 +8,7 @@ var _my = device_mouse_y_to_gui(0);
 
 var _slot_hover = SlotSobreMouse(_mx, _my);
 
-// SLOT SELECIONADO
+//SLOT SELECIONADO
 var _slot_selecionado = -1;
 
 if(
@@ -38,10 +38,10 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
     var _cx = _pos[0] + largura_slot / 2;
     var _cy = _pos[1] + altura_slot / 2;
 
-    // SLOT
+    //SLOT
 	var _frame_slot = 0;
 
-	// Slot selecionado ou sob o mouse
+	//Slot selecionado ou sob o mouse
 	if(
 	    i == _slot_selecionado
 	    || i == _slot_hover
@@ -102,7 +102,7 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 			draw_set_alpha(1);
         }
 		
-		// RELÓGIO DO COOLDOWN
+		//RELÓGIO DO COOLDOWN
 		if(_pocao.cooldown > 0)
 		{
 		    var _cooldown_max = max(
@@ -110,34 +110,34 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 		        round(GAME_SPEED * SEGUNDOS_COOLDOWN_POCAO)
 		    );
 
-		    // Fração do tempo que ainda resta
+		    //Fração do tempo que ainda resta
 		    var _fracao = clamp(
 		        _pocao.cooldown / _cooldown_max,
 		        0,
 		        1
 		    );
 
-		    // Posição e tamanho do relógio
+		    //Posição e tamanho do relógio
 		    //var _raio_relogio = max(
-		    //    4,
-		    //    floor(slot_tam * 0.16)
+		    //   4,
+		    //   floor(slot_tam * 0.16)
 		    //);
 			
 			var _raio_relogio = 8;
 
 		    //var _centro_x = _pos[0]
-		    //    + slot_tam
-		    //    - _raio_relogio
-		    //    - 2;
+		    //   + slot_tam
+		    //   - _raio_relogio
+		    //   - 2;
 			//
 		    //var _centro_y = _pos[1]
-		    //    + _raio_relogio
-		    //    + 2;
+		    //   + _raio_relogio
+		    //   + 2;
 			
 			var _centro_x = _pos[0];
 			var _centro_y = _pos[1];
 			
-		    // Fundo escuro do relógio
+		    //Fundo escuro do relógio
 		    draw_set_alpha(0.9);
 		    draw_set_color(c_black);
 
@@ -148,8 +148,8 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 		        false
 		    );
 
-		    // Calcula o fim do setor conforme
-		    // a fração do cooldown que ainda resta
+		    //Calcula o fim do setor conforme
+		    //a fração do cooldown que ainda resta
 		    var _angulo_final = (
 		        90 + 359.8 * _fracao
 		    ) % 360;
@@ -166,7 +166,7 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 		            _angulo_final
 		        );
 
-		    // Desenha o setor restante
+		    //Desenha o setor restante
 		    draw_set_color(c_white);
 
 		    draw_pie(
@@ -185,7 +185,7 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 		        24
 		    );
 
-		    // Restaura o estado de desenho
+		    //Restaura o estado de desenho
 		    draw_set_alpha(1);
 		    draw_set_color(c_white);
 		}

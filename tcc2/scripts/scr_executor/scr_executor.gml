@@ -317,7 +317,7 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 
 	switch(_ing_variavel.token)
 	{
-		// HP
+		//HP
 		case "hp":
 		{
 			switch(_ing_operador.token)
@@ -338,7 +338,7 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 					return false;
 			}
 
-			// Vida entre 0 e 20
+			//Vida entre 0 e 20
 			if(_entidade.hp > 20)
 			{
 			    show_debug_message(
@@ -354,7 +354,7 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 			return true;
 		}
 
-		// SPD
+		//SPD
 		case "spd":
 		{
 			switch(_ing_operador.token)
@@ -375,7 +375,7 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 					return false;
 			}
 
-			// Velocidade entre 0 e 10
+			//Velocidade entre 0 e 10
 			if(_entidade.spd > 10)
 			{
 			    show_debug_message(
@@ -391,7 +391,7 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 			return true;
 		}
 
-		// ATK
+		//ATK
 		case "atk":
 		{
 			switch(_ing_operador.token)
@@ -412,7 +412,7 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 					return false;
 			}
 			
-			// Ataque >= 0
+			//Ataque >= 0
 			_entidade.atk = max(
 				_entidade.atk,
 				0,

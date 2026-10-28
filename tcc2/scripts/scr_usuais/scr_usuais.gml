@@ -3,6 +3,20 @@
 #macro RES_W display_get_gui_width()
 #macro GAME_SPEED game_get_speed(gamespeed_fps)
 
+function DesenhaSombra()
+{
+	draw_set_colour(c_dkgray);
+	draw_set_alpha(.5);
+	draw_ellipse(
+		x,
+		y + sprite_height * 0.75,
+		x + sprite_width,
+		y + sprite_height * 1.25,
+		false
+	);
+	reseta_draw();
+}
+
 //desenha texto com outline
 function draw_text_outline(_x, _y, _texto, _corTexto, _corContorno, _offset, _xscale = 1, _yscale = 1, _angle = 0, _sep = -1, _w = -1)
 {

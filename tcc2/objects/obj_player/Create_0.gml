@@ -62,14 +62,35 @@ CentroPlayer = function()
     ];
 };
 
-// POÇÕES
+//POÇÕES
 raio_teste = 64;
 mostrar_area = true;
 
-// Slot selecionado: 0 até 4
+//Slot selecionado: 0 até 4
 pocao_selecionada = 0;
 
-// ALCANCE DE USO DAS POÇÕES
+//Verifica se o cursor está sobre um slot da Hotbar
+MouseSobreSlotHotbar = function()
+{
+    if(!instance_exists(obj_hotbar))
+    {
+        return false;
+    }
+
+    var _hotbar = instance_find(obj_hotbar, 0);
+
+    var _mx_gui = device_mouse_x_to_gui(0);
+    var _my_gui = device_mouse_y_to_gui(0);
+
+    var _slot = _hotbar.SlotSobreMouse(
+        _mx_gui,
+        _my_gui
+    );
+
+    return _slot != -1;
+};
+
+//ALCANCE DE USO DAS POÇÕES
 alcance_por_atk = 32;
 
 //Calcula o alcance máximo com base no ataque
@@ -115,7 +136,7 @@ PosicaoAlvoPocao = function(_mx, _my)
 
 function ExecutaPocao(_modo)
 {
-    // O slot selecionado vai de 0 a 4
+    //O slot selecionado vai de 0 a 4
     var _indice = pocao_selecionada;
 
     if(
@@ -129,7 +150,7 @@ function ExecutaPocao(_modo)
     var _pocao =
         global.DadosJogador.hotbar_pocoes[_indice];
 
-    // Verifica se existe poção
+    //Verifica se existe poção
     if(is_undefined(_pocao))
     {
         show_debug_message(
@@ -139,7 +160,7 @@ function ExecutaPocao(_modo)
         return;
     }
 
-    // Verifica o cooldown
+    //Verifica o cooldown
     if(_pocao.cooldown > 0)
     {
         show_debug_message(
@@ -151,10 +172,10 @@ function ExecutaPocao(_modo)
 
     var _contexto;
 
-    // Define como a poção será utilizada
+    //Define como a poção será utilizada
     switch(_modo)
     {
-        // CLIQUE ESQUERDO: NO CURSOR
+        //CLIQUE ESQUERDO: NO CURSOR
         case "mouse":
         {
             var _alvo = PosicaoAlvoPocao(
@@ -171,7 +192,7 @@ function ExecutaPocao(_modo)
             break;
         }
 
-        // CLIQUE DIREITO: ÁREA AO REDOR DO JOGADOR
+        //CLIQUE DIREITO: ÁREA AO REDOR DO JOGADOR
         case "player_area":
         {
             var _centro = CentroPlayer();
@@ -185,7 +206,7 @@ function ExecutaPocao(_modo)
             break;
         }
 
-        // ESPAÇO: SOMENTE O JOGADOR
+        //ESPAÇO: SOMENTE O JOGADOR
         case "player_only":
         {
             _contexto = CriarContextoPocao(
@@ -203,18 +224,18 @@ function ExecutaPocao(_modo)
         }
     }
 
-    // Executa o algoritmo
+    //Executa o algoritmo
     var _resultado = ExecutaAlgoritmo(
         _pocao.algoritmo,
         _contexto
     );
 
-    // Inicia o cooldown desta poção
+    //Inicia o cooldown desta poção
     _pocao.cooldown = round(
         GAME_SPEED * SEGUNDOS_COOLDOWN_POCAO
     );
 
-    // DEBUG
+    //DEBUG
     show_debug_message(
         "SUCESSO: " + string(_resultado.sucesso)
     );

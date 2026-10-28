@@ -12,7 +12,14 @@ if(hp <= 0)
 
 PegaControles();
 
-move_and_collide(velh, velv, all);
+move_and_collide(
+	velh,
+	velv,
+	[
+		obj_wall,
+		obj_bau
+	]
+);
 
 //poções
 if(room == rm_masmorra)
@@ -25,14 +32,14 @@ if(room == rm_masmorra)
 	var _5 = keyboard_check_pressed(vk_numpad5) || keyboard_check_pressed(ord("5"));
 
 	//usando poções
-    // SELEÇÃO POR TECLADO
+    //SELEÇÃO POR TECLADO
     if(_1) { pocao_selecionada = 0; }
 	if(_2) { pocao_selecionada = 1; }
     if(_3) { pocao_selecionada = 2; }
 	if(_4) { pocao_selecionada = 3; }
 	if(_5) { pocao_selecionada = 4; }
 
-    // SELEÇÃO PELO SCROLL
+    //SELEÇÃO PELO SCROLL
     if(mouse_wheel_up())
     {
         pocao_selecionada = (pocao_selecionada - 1 + SLOTS_HOTBAR_POCOES) mod SLOTS_HOTBAR_POCOES;
@@ -41,26 +48,30 @@ if(room == rm_masmorra)
     {
         pocao_selecionada = (pocao_selecionada + 1) mod SLOTS_HOTBAR_POCOES;
     }
+	
+	//USANDO A POÇÃO SELECIONADA
+    //Verifica se o mouse está sobre a Hotbar
+	var _mouse_na_hotbar = MouseSobreSlotHotbar();
 
-    // USO DA POÇÃO SELECIONADA
+	//CLIQUE ESQUERDO: cursor do mouse
+	if(mouse_check_button_pressed(mb_left)
+	    && !_mouse_na_hotbar)
+	{
+	    ExecutaPocao("mouse");
+	}
 
-    // Botão esquerdo: cursor
-    if(mouse_check_button_pressed(mb_left))
-    {
-        ExecutaPocao("mouse");
-    }
+	//CLIQUE DIREITO: área ao redor do jogador
+	if(mouse_check_button_pressed(mb_right)
+	    && !_mouse_na_hotbar)
+	{
+	    ExecutaPocao("player_area");
+	}
 
-    // Botão direito: área ao redor do jogador
-    if(mouse_check_button_pressed(mb_right))
-    {
-        ExecutaPocao("player_area");
-    }
-
-    // Espaço: somente o jogador
-    if(keyboard_check_pressed(vk_space))
-    {
-        ExecutaPocao("player_only");
-    }
+	//ESPAÇO: somente o jogador
+	if(keyboard_check_pressed(vk_space))
+	{
+	    ExecutaPocao("player_only");
+	}
 }
 
 //cooldown poções

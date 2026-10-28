@@ -19,6 +19,8 @@ var passos = 1200;
 
 var inimigo_max = 10;
 
+var loot_max = 3;
+
 for(var i = 0; i < passos; i++)
 {
 	if(irandom(chances) == chances)
@@ -46,7 +48,7 @@ for(var _xx = 0; _xx < cell_h; _xx++)
 		if(grid[# _xx,_yy] == 0)
 		{
 			//posso colocar uma parede;
-			instance_create_layer(x1, y1, "Instances",obj_wall);
+			instance_create_layer(x1, y1, "Colisores",obj_wall);
 		}
 		
 		//CHÃO
@@ -64,7 +66,7 @@ for(var _xx = 0; _xx < cell_h; _xx++)
 			//INIMIGOS
 			if(inimigo_max > 0)
 			{
-				var _chances = 25;
+				var _chances = 50;
 				
 				var inimigo = choose(obj_ini_morcego, obj_ini_sanguessuga);
 				//var inimigo = obj_teste;
@@ -78,8 +80,21 @@ for(var _xx = 0; _xx < cell_h; _xx++)
 					inimigo_max -= 1;
 				}
 			}
+			
+			//LOOT
+			if(loot_max > 0)
+			{
+				var _chances = 75;
+				
+				var dist = 256;
+				
+				if(irandom(_chances) == _chances and point_distance(x1, y1, obj_player.x, obj_player.y) > dist)
+				{
+					instance_create_layer(x1, y1, "Loot", obj_bau);
+					
+					loot_max -= 1;
+				}
+			}
 		}
-		
-		
 	}
 }

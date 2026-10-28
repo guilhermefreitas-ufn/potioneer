@@ -1,0 +1,3 @@
+DesenhaSombra();
+
+draw_self();
