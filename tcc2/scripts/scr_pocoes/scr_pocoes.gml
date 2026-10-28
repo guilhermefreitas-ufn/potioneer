@@ -2,6 +2,11 @@
 #macro SLOTS_HOTBAR_POCOES 5
 #macro SEGUNDOS_COOLDOWN_POCAO 5
 
+// EFEITOS VISUAIS DAS POÇÕES
+#macro SEGUNDOS_AREA_EFEITO_POCAO 0.75
+#macro VELOCIDADE_ARREMESSO_POCAO 480 //pixels por segundo
+#macro ALPHA_AREA_EFEITO_POCAO 0.35 //de 0 a 1
+
 // RESETA OS COOLDOWNS DE UM ARRAY DE POÇÕES
 function ResetarCooldownsArrayPocoes(_pocoes)
 {

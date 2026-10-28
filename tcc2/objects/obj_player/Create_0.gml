@@ -48,6 +48,114 @@ PegaControles = function()
 	}
 }
 
+// ==================================================
+// MÁQUINA DE ESTADOS DO PLAYER
+// ==================================================
+
+tempo_estado = 0;
+
+
+// Durações dos estados temporários
+duracao_sofrendo = max(
+    1,
+    round(GAME_SPEED * 0.25)
+);
+
+duracao_bebendo = max(
+    1,
+    round(GAME_SPEED * 0.5)
+);
+
+duracao_atacando = max(
+    1,
+    round(GAME_SPEED * 0.25)
+);
+
+
+// ==================================================
+// TRANSIÇÃO ENTRE ESTADOS
+// ==================================================
+
+MudaEstado = function(_novo_estado)
+{
+    // Se já está sofrendo, renova a duração
+    if (estado == _novo_estado)
+    {
+        if (_novo_estado == "sofrendo")
+        {
+            tempo_estado = duracao_sofrendo;
+        }
+
+        return;
+    }
+
+
+    estado = _novo_estado;
+
+
+    switch (estado)
+    {
+        case "sofrendo":
+            tempo_estado = duracao_sofrendo;
+            break;
+
+        case "bebendo":
+            tempo_estado = duracao_bebendo;
+            break;
+
+        case "atacando":
+            tempo_estado = duracao_atacando;
+            break;
+
+        default:
+            tempo_estado = 0;
+            break;
+    }
+
+
+    // Estados diferentes de movendo interrompem
+    // o deslocamento calculado pelos controles.
+    if (estado != "movendo")
+    {
+        velh = 0;
+        velv = 0;
+    }
+};
+
+
+// ==================================================
+// ATUALIZA A MOVIMENTAÇÃO DO PLAYER
+// ==================================================
+
+AtualizaMovimento = function()
+{
+    PegaControles();
+
+    if (velh != 0 || velv != 0)
+    {
+        if (estado != "movendo")
+        {
+            MudaEstado("movendo");
+        }
+
+        move_and_collide(
+            velh,
+            velv,
+            [
+                obj_wall,
+                obj_bau
+            ]
+        );
+    }
+    else
+    {
+        if (estado != "parado")
+        {
+            MudaEstado("parado");
+        }
+    }
+};
+
 //invencibilidade
 invencivel = false;
 invencivel_timer = GAME_SPEED * 3;
@@ -134,48 +242,85 @@ PosicaoAlvoPocao = function(_mx, _my)
     return [_mx, _my];
 };
 
+// ==================================================
+// EXECUTA A POÇÃO SELECIONADA
+// ==================================================
+
 function ExecutaPocao(_modo)
 {
-    //O slot selecionado vai de 0 a 4
     var _indice = pocao_selecionada;
 
-    if(
+
+    // Valida o slot selecionado
+    if (
         _indice < 0
         || _indice >= SLOTS_HOTBAR_POCOES
     )
     {
-        return;
+        return false;
     }
+
 
     var _pocao =
         global.DadosJogador.hotbar_pocoes[_indice];
 
-    //Verifica se existe poção
-    if(is_undefined(_pocao))
+
+    // Verifica se existe uma poção
+    if (is_undefined(_pocao))
     {
         show_debug_message(
             "Não existe uma poção no slot selecionado."
         );
 
-        return;
+        return false;
     }
 
-    //Verifica o cooldown
-    if(_pocao.cooldown > 0)
+
+    // Verifica o cooldown
+    if (_pocao.cooldown > 0)
     {
         show_debug_message(
             "A poção está em recarga."
         );
 
-        return;
+        return false;
     }
 
-    var _contexto;
 
-    //Define como a poção será utilizada
-    switch(_modo)
+    // Obtém o sprite e a cor da poção
+    var _sprite = spr_pocao;
+    var _cor = c_white;
+
+    if (variable_struct_exists(_pocao, "sprite"))
     {
-        //CLIQUE ESQUERDO: NO CURSOR
+        if (!is_undefined(_pocao.sprite))
+        {
+            _sprite = _pocao.sprite;
+        }
+    }
+
+    if (variable_struct_exists(_pocao, "cor"))
+    {
+        if (!is_undefined(_pocao.cor))
+        {
+            _cor = _pocao.cor;
+        }
+    }
+
+
+    var _executada = false;
+
+
+    // ==================================================
+    // FORMAS DE USO
+    // ==================================================
+
+    switch (_modo)
+    {
+        // ----------------------------------------------
+        // CLIQUE ESQUERDO: ARREMESSO ATÉ O CURSOR
+        // ----------------------------------------------
+
         case "mouse":
         {
             var _alvo = PosicaoAlvoPocao(
@@ -183,79 +328,171 @@ function ExecutaPocao(_modo)
                 mouse_y
             );
 
-            _contexto = CriaContextoAreaPocao(
+            var _centro = CentroPlayer();
+
+
+            // Cria o efeito visual na posição do jogador
+            var _efeito = instance_create_depth(
+                _centro[0],
+                _centro[1],
+                depth - 1,
+                obj_efeito_pocao
+            );
+
+
+            if (
+                _efeito == noone
+                || !instance_exists(_efeito)
+            )
+            {
+                return false;
+            }
+
+
+            // Configura o arremesso
+            _efeito.Configurar(
+                _pocao.algoritmo,
+                _sprite,
+                _cor,
+                raio_teste,
+                _centro[0],
+                _centro[1],
                 _alvo[0],
                 _alvo[1],
-                raio_teste
+                "arremesso"
             );
+
+            _executada = true;
 
             break;
         }
 
-        //CLIQUE DIREITO: ÁREA AO REDOR DO JOGADOR
+
+        // ----------------------------------------------
+        // CLIQUE DIREITO: QUEBRA AOS PÉS DO JOGADOR
+        // ----------------------------------------------
+
         case "player_area":
         {
             var _centro = CentroPlayer();
 
-            _contexto = CriaContextoAreaPocao(
+
+            var _efeito = instance_create_depth(
                 _centro[0],
                 _centro[1],
-                raio_teste
+                depth - 1,
+                obj_efeito_pocao
             );
+
+
+            if (
+                _efeito == noone
+                || !instance_exists(_efeito)
+            )
+            {
+                return false;
+            }
+
+
+            // A poção quebra imediatamente no local
+            _efeito.Configurar(
+                _pocao.algoritmo,
+                _sprite,
+                _cor,
+                raio_teste,
+                _centro[0],
+                _centro[1],
+                _centro[0],
+                _centro[1],
+                "impacto"
+            );
+
+            _executada = true;
 
             break;
         }
 
-        //ESPAÇO: SOMENTE O JOGADOR
+
+        // ----------------------------------------------
+        // ESPAÇO: BEBER A POÇÃO
+        // ----------------------------------------------
+
         case "player_only":
         {
-            _contexto = CriarContextoPocao(
+            var _contexto = CriarContextoPocao(
                 [id],
                 [id],
                 []
             );
 
+
+            // O efeito é aplicado imediatamente
+            var _resultado = ExecutaAlgoritmo(
+                _pocao.algoritmo,
+                _contexto
+            );
+
+
+            // DEBUG
+            show_debug_message(
+                "SUCESSO: "
+                + string(_resultado.sucesso)
+            );
+
+            show_debug_message(
+                "CONDIÇÃO: "
+                + string(_resultado.condicao)
+            );
+
+            show_debug_message(
+                "EFEITO: "
+                + string(_resultado.efeito_aplicado)
+            );
+
+            show_debug_message(
+                "ENTIDADES AFETADAS: "
+                + string(
+                    array_length(
+                        _resultado.entidades_afetadas
+                    )
+                )
+            );
+
+            show_debug_message(
+                "MENSAGEM: "
+                + _resultado.mensagem
+            );
+
+
+            _executada = true;
+
             break;
         }
 
+
+        // ----------------------------------------------
+        // MODO INVÁLIDO
+        // ----------------------------------------------
+
         default:
-        {
-            return;
-        }
+            return false;
     }
 
-    //Executa o algoritmo
-    var _resultado = ExecutaAlgoritmo(
-        _pocao.algoritmo,
-        _contexto
+
+    if (!_executada)
+    {
+        return false;
+    }
+
+
+    // Inicia o cooldown quando a utilização é aceita
+    _pocao.cooldown = max(
+        1,
+        round(
+            GAME_SPEED * SEGUNDOS_COOLDOWN_POCAO
+        )
     );
 
-    //Inicia o cooldown desta poção
-    _pocao.cooldown = round(
-        GAME_SPEED * SEGUNDOS_COOLDOWN_POCAO
-    );
 
-    //DEBUG
-    show_debug_message(
-        "SUCESSO: " + string(_resultado.sucesso)
-    );
-
-    show_debug_message(
-        "CONDIÇÃO: " + string(_resultado.condicao)
-    );
-
-    show_debug_message(
-        "EFEITO: " + string(_resultado.efeito_aplicado)
-    );
-
-    show_debug_message(
-        "ENTIDADES AFETADAS: "
-        + string(array_length(
-            _resultado.entidades_afetadas
-        ))
-    );
-
-    show_debug_message(
-        "MENSAGEM: " + _resultado.mensagem
-    );
+    return true;
 }

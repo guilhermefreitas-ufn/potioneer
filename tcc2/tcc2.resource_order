@@ -33,6 +33,7 @@
     {"name":"obj_block_real","order":2,"path":"objects/obj_block_real/obj_block_real.yy",},
     {"name":"obj_caldeirao","order":1,"path":"objects/obj_caldeirao/obj_caldeirao.yy",},
     {"name":"obj_coletavel","order":2,"path":"objects/obj_coletavel/obj_coletavel.yy",},
+    {"name":"obj_efeito_pocao","order":2,"path":"objects/obj_efeito_pocao/obj_efeito_pocao.yy",},
     {"name":"obj_entidade","order":3,"path":"objects/obj_entidade/obj_entidade.yy",},
     {"name":"obj_hotbar","order":4,"path":"objects/obj_hotbar/obj_hotbar.yy",},
     {"name":"obj_ini_morcego","order":1,"path":"objects/obj_ini_morcego/obj_ini_morcego.yy",},

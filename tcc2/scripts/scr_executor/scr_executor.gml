@@ -291,6 +291,83 @@ function ExecutaCondicao(_condicao, _contexto)
 	return _resultado;
 }
 
+// ==================================================
+// ATUALIZA O ESTADO APÓS UMA ALTERAÇÃO DE HP
+// ==================================================
+
+function AtualizaEstadoAposDano(_alvo, _hp_anterior)
+{
+    if (
+        _alvo == noone
+        || !instance_exists(_alvo)
+    )
+    {
+        return;
+    }
+
+    if (!variable_instance_exists(_alvo, "hp"))
+    {
+        return;
+    }
+
+    // Só reage se a vida realmente diminuiu
+    if (_alvo.hp >= _hp_anterior)
+    {
+        return;
+    }
+
+    // A morte tem prioridade sobre o estado sofrendo
+    //if (_alvo.hp <= 0)
+    //{
+    //    if (variable_instance_exists(_alvo, "MudaEstado"))
+    //    {
+    //        _alvo.MudaEstado("morto");
+    //    }
+	//
+    //    return;
+    //}
+
+    // Comunica que o alvo sofreu dano
+    if (variable_instance_exists(_alvo, "MudaEstado"))
+    {
+        _alvo.MudaEstado("sofrendo");
+    }
+}
+
+// ==================================================
+// APLICA DANO DIRETO A UMA ENTIDADE
+// ==================================================
+
+function AplicaDanoEntidade(_alvo, _dano)
+{
+    if (
+        _alvo == noone
+        || !instance_exists(_alvo)
+        || _dano <= 0
+    )
+    {
+        return false;
+    }
+
+    if (!variable_instance_exists(_alvo, "hp"))
+    {
+        return false;
+    }
+
+    var _hp_anterior = _alvo.hp;
+
+    _alvo.hp = max(
+        0,
+        _alvo.hp - _dano
+    );
+
+    AtualizaEstadoAposDano(
+        _alvo,
+        _hp_anterior
+    );
+
+    return _alvo.hp < _hp_anterior;
+}
 
 function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 {
@@ -317,41 +394,51 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 
 	switch(_ing_variavel.token)
 	{
-		//HP
+		// HP
 		case "hp":
 		{
-			switch(_ing_operador.token)
-			{
-				case "decreases":
-					_entidade.hp -= _valor;
-					break;
+		    var _hp_anterior = _entidade.hp;
 
-				case "increases":
-					_entidade.hp += _valor;
-					break;
+		    switch (_ing_operador.token)
+		    {
+		        case "decreases":
+		            _entidade.hp -= _valor;
+		            break;
 
-				case "becomes":
-					_entidade.hp = _valor;
-					break;
+		        case "increases":
+		            _entidade.hp += _valor;
+		            break;
 
-				default:
-					return false;
-			}
+		        case "becomes":
+		            _entidade.hp = _valor;
+		            break;
 
-			//Vida entre 0 e 20
-			if(_entidade.hp > 20)
-			{
-			    show_debug_message(
-			        "LIMITE DE HP: a poção tentou ultrapassar a vida máxima de 20. Valor ajustado para 20."
-			    );
-			}
-			_entidade.hp = clamp(
-				_entidade.hp,
-				0,
-				20
-			);
+		        default:
+		            return false;
+		    }
 
-			return true;
+		    // Limite de vida entre 0 e 20
+		    if (_entidade.hp > 20)
+		    {
+		        show_debug_message(
+		            "LIMITE DE HP: a poção tentou ultrapassar "
+		            + "a vida máxima de 20. Valor ajustado para 20."
+		        );
+		    }
+
+		    _entidade.hp = clamp(
+		        _entidade.hp,
+		        0,
+		        20
+		    );
+
+		    // Atualiza o estado se houve perda de vida
+		    AtualizaEstadoAposDano(
+		        _entidade,
+		        _hp_anterior
+		    );
+
+		    return true;
 		}
 
 		//SPD
@@ -424,7 +511,6 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 
 	return false;
 }
-
 
 function ExecutaEfeito(_efeito, _contexto)
 {

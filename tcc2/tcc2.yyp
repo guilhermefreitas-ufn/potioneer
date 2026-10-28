@@ -58,6 +58,7 @@
     {"id":{"name":"obj_caldeirao","path":"objects/obj_caldeirao/obj_caldeirao.yy",},},
     {"id":{"name":"obj_coletavel","path":"objects/obj_coletavel/obj_coletavel.yy",},},
     {"id":{"name":"obj_drop_anim","path":"objects/obj_drop_anim/obj_drop_anim.yy",},},
+    {"id":{"name":"obj_efeito_pocao","path":"objects/obj_efeito_pocao/obj_efeito_pocao.yy",},},
     {"id":{"name":"obj_entidade","path":"objects/obj_entidade/obj_entidade.yy",},},
     {"id":{"name":"obj_gerenciador","path":"objects/obj_gerenciador/obj_gerenciador.yy",},},
     {"id":{"name":"obj_hotbar","path":"objects/obj_hotbar/obj_hotbar.yy",},},

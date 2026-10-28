@@ -62,3 +62,151 @@ function MovimentoAleatorio(_spd)
 		timer_movimento = 0;
 	}
 }
+
+// ==================================================
+// MÁQUINA DE ESTADOS DO INIMIGO
+// ==================================================
+
+estado = "movendo";
+
+tempo_estado = 0;
+
+duracao_sofrendo = max(
+    1,
+    round(GAME_SPEED * 0.25)
+);
+
+
+// Distância para detectar e perseguir o player
+raio_perseguicao = 160;
+
+
+// ==================================================
+// TRANSIÇÃO ENTRE ESTADOS
+// ==================================================
+
+MudaEstado = function(_novo_estado)
+{
+    // Renova o tempo caso sofra dano novamente
+    // enquanto já estiver no estado sofrendo.
+    if (estado == _novo_estado)
+    {
+        if (_novo_estado == "sofrendo")
+        {
+            tempo_estado = duracao_sofrendo;
+        }
+
+        return;
+    }
+
+
+    estado = _novo_estado;
+
+
+    switch (estado)
+    {
+        case "sofrendo":
+            tempo_estado = duracao_sofrendo;
+            break;
+
+        default:
+            tempo_estado = 0;
+            break;
+    }
+};
+
+
+// ==================================================
+// MOVIMENTO DE PERSEGUIÇÃO
+// ==================================================
+
+PerseguirPlayer = function(_spd)
+{
+    if (_spd <= 0)
+    {
+        return;
+    }
+
+    if (!instance_exists(obj_player))
+    {
+        return;
+    }
+
+
+    var _alvo = instance_find(
+        obj_player,
+        0
+    );
+
+
+    // Direção do inimigo até o jogador
+    var _direcao = point_direction(
+        x,
+        y,
+        _alvo.x,
+        _alvo.y
+    );
+
+
+    var _dx = lengthdir_x(
+        _spd,
+        _direcao
+    );
+
+    var _dy = lengthdir_y(
+        _spd,
+        _direcao
+    );
+
+
+    // ----------------------------------------------
+    // MOVIMENTO HORIZONTAL
+    // ----------------------------------------------
+
+    if (!place_meeting(
+        x + _dx,
+        y,
+        obj_wall
+    ))
+    {
+        x += _dx;
+    }
+
+
+    // ----------------------------------------------
+    // MOVIMENTO VERTICAL
+    // ----------------------------------------------
+
+    if (!place_meeting(
+        x,
+        y + _dy,
+        obj_wall
+    ))
+    {
+        y += _dy;
+    }
+
+
+    // ----------------------------------------------
+    // LIMITES DA ROOM
+    // ----------------------------------------------
+
+    var _margem_esq = x - bbox_left;
+    var _margem_dir = bbox_right - x;
+
+    var _margem_topo = y - bbox_top;
+    var _margem_baixo = bbox_bottom - y;
+
+
+    x = clamp(
+        x,
+        _margem_esq,
+        room_width - _margem_dir
+    );
+
+    y = clamp(
+        y,
+        _margem_topo,
+        room_height - _margem_baixo
+    );
+};
