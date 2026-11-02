@@ -1,48 +1,28 @@
-
-// OBJ_PLAYER — STEP
-
-
 event_inherited();
 
-
-
 // 1. VERIFICAÇÃO DA VIDA
-
-
 if (hp <= 0 && estado != "sofrendo" && estado != "morto")
 {
     MudaEstado("morto");
 }
 
-
-
 // 2. MÁQUINA DE ESTADOS
-
-
 switch (estado)
 {
-    
     case "parado":
-    
-
+	{
         AtualizaMovimento();
 
         break;
-
-
-    
+	}
     case "movendo":
-    
-
+    {
         AtualizaMovimento();
 
         break;
-
-
-    
+	}
     case "atacando":
-    
-
+    {
         tempo_estado--;
 
         if (tempo_estado <= 0)
@@ -51,12 +31,9 @@ switch (estado)
         }
 
         break;
-
-
-    
+	}
     case "sofrendo":
-    
-
+	{
         tempo_estado--;
 
         if (tempo_estado <= 0)
@@ -72,11 +49,9 @@ switch (estado)
         }
 
         break;
-
-
-    
+	}
     case "bebendo":
-    
+    {
 
         tempo_estado--;
 
@@ -88,29 +63,26 @@ switch (estado)
         break;
 
 
-    
+	}
     case "morto":
-    
+    {
 
         instance_destroy();
 
         exit;
 
 
-    
+	}
     default:
-    
+    {
 
         MudaEstado("parado");
 
         break;
+	}
 }
 
-
-
 // 3. COOLDOWN DAS POÇÕES
-
-
 if (room == rm_masmorra)
 {
     for (
@@ -134,49 +106,24 @@ if (room == rm_masmorra)
     }
 }
 
-
-
 // 4. SELEÇÃO E USO DE POÇÕES
-
-
 if (room == rm_masmorra)
 {
     
     // SELEÇÃO POR TECLADO
-    
+    var _1 = keyboard_check_pressed(vk_numpad1) || keyboard_check_pressed(ord("1"));
+    var _2 = keyboard_check_pressed(vk_numpad2) || keyboard_check_pressed(ord("2"));
+    var _3 = keyboard_check_pressed(vk_numpad3) || keyboard_check_pressed(ord("3"));
+    var _4 = keyboard_check_pressed(vk_numpad4) || keyboard_check_pressed(ord("4"));
+    var _5 = keyboard_check_pressed(vk_numpad5) || keyboard_check_pressed(ord("5"));
 
-    var _1 =
-        keyboard_check_pressed(vk_numpad1)
-        || keyboard_check_pressed(ord("1"));
+    if (_1) { pocao_selecionada = 0; }
+    if (_2) { pocao_selecionada = 1; }
+    if (_3) { pocao_selecionada = 2; }
+    if (_4) { pocao_selecionada = 3; }
+    if (_5) { pocao_selecionada = 4; }
 
-    var _2 =
-        keyboard_check_pressed(vk_numpad2)
-        || keyboard_check_pressed(ord("2"));
-
-    var _3 =
-        keyboard_check_pressed(vk_numpad3)
-        || keyboard_check_pressed(ord("3"));
-
-    var _4 =
-        keyboard_check_pressed(vk_numpad4)
-        || keyboard_check_pressed(ord("4"));
-
-    var _5 =
-        keyboard_check_pressed(vk_numpad5)
-        || keyboard_check_pressed(ord("5"));
-
-
-    if (_1) pocao_selecionada = 0;
-    if (_2) pocao_selecionada = 1;
-    if (_3) pocao_selecionada = 2;
-    if (_4) pocao_selecionada = 3;
-    if (_5) pocao_selecionada = 4;
-
-
-    
     // SELEÇÃO PELO SCROLL
-    
-
     if (mouse_wheel_up())
     {
         pocao_selecionada =
@@ -196,12 +143,8 @@ if (room == rm_masmorra)
             )
             mod SLOTS_HOTBAR_POCOES;
     }
-
-
-    
+	
     // USO DAS POÇÕES
-    
-
     // Só permite iniciar uma ação enquanto
     // parado ou movendo.
     if (
@@ -211,7 +154,6 @@ if (room == rm_masmorra)
     {
         var _mouse_na_hotbar =
             MouseSobreSlotHotbar();
-
 
         // CLIQUE ESQUERDO: arremessar
         if (
@@ -235,7 +177,6 @@ if (room == rm_masmorra)
             }
         }
 
-
         // CLIQUE DIREITO: quebrar aos pés
         else if (
             mouse_check_button_pressed(mb_right)
@@ -255,7 +196,6 @@ if (room == rm_masmorra)
             }
         }
 
-
         // ESPAÇO: beber
         else if (keyboard_check_pressed(vk_space))
         {
@@ -274,17 +214,12 @@ if (room == rm_masmorra)
     }
 }
 
-
-
 // 6. DANO DE CONTATO DOS INIMIGOS
-
-
 var inimigo = instance_place(
     x,
     y,
     obj_inimigo_pai
 );
-
 
 // Só recebe dano de um inimigo que esteja atacando
 if (
@@ -301,18 +236,13 @@ if (
         inimigo.atk
     );
 
-
     // Ativa a invencibilidade
     invencivel = true;
 
     tempo_invencivel = invencivel_timer;
 }
 
-
-
 // 7. INVENCIBILIDADE E PISCAR DO SPRITE
-
-
 if (invencivel && tempo_invencivel > 0)
 {
     tempo_invencivel--;

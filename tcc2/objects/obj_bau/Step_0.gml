@@ -1,7 +1,5 @@
 
 // VERIFICA A DISTÂNCIA DO JOGADOR
-
-
 var _player = instance_nearest(x, y, obj_player);
 
 if (_player != noone && !aberto)
@@ -32,12 +30,8 @@ if (_player != noone && !aberto)
     }
 }
 
-
-
 // DROPA OS INGREDIENTES UMA ÚNICA VEZ
-
-
-if (aberto && !itens_droppados)
+if (aberto && !itens_droppados && animation_end())
 {
     DropaIngredientes(
         irandom_range(3, 5),
@@ -51,11 +45,7 @@ if (aberto && !itens_droppados)
     itens_droppados = true;
 }
 
-
-
 // AGUARDA O FIM DA ANIMAÇÃO DE ABERTURA
-
-
 if (aberto && !sumir)
 {
     if (!animation_end())
@@ -69,11 +59,7 @@ if (aberto && !sumir)
     }
 }
 
-
-
 // FAZ O BAÚ DESAPARECER GRADUALMENTE
-
-
 if (sumir)
 {
     image_alpha = max(0, image_alpha - 0.02);

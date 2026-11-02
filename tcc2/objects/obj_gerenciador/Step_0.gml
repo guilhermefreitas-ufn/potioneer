@@ -21,7 +21,7 @@ var _posso_clicar = false;
 if(!instance_exists(obj_interpretador)) { _posso_clicar = true; }
 if(instance_exists(obj_interpretador))
 {
-	if(!obj_interpretador.nomeando_pocao) { _posso_clicar = true; }
+	if(!obj_interpretador.personalizando_pocao) { _posso_clicar = true; }
 }
 
 //usando teclas

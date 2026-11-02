@@ -531,7 +531,7 @@ function CriaPocoesTeste()
 	{
 		with(obj_interpretador)
 		{
-			nomeando_pocao = false;
+			personalizando_pocao = false;
 			nome_pocao = "";
 			keyboard_string = "";
 			

@@ -11,7 +11,7 @@ if(caldeirao == noone)
 }
 
 //DIGITAÇÃO DO NOME DA POÇÃO
-if(nomeando_pocao)
+if(personalizando_pocao)
 {
 	keyboard_string =
 		string_copy(
@@ -21,6 +21,73 @@ if(nomeando_pocao)
 		);
 	
 	nome_pocao = keyboard_string;
+	
+	// ============================================================
+	// SELEÇÃO DA COR DA POÇÃO
+	// ============================================================
+
+	if(mouse_check_button_pressed(mb_left))
+	{
+	    var _mx_gui = device_mouse_x_to_gui(0);
+	    var _my_gui = device_mouse_y_to_gui(0);
+
+	    for(var i = 0; i < array_length(paleta_cores); i++)
+	    {
+	        var _ret = RetanguloCorPocao(i);
+
+	        if(point_in_rectangle(
+	            _mx_gui,
+	            _my_gui,
+	            _ret[0],
+	            _ret[1],
+	            _ret[2],
+	            _ret[3]
+	        ))
+	        {
+	            indice_cor_selecionada = i;
+
+	            cor_nova_pocao = paleta_cores[i].valor;
+
+	            break;
+	        }
+	    }
+	}
+	
+	// ============================================================
+	// SELEÇÃO DO SPRITE DA POÇÃO
+	// ============================================================
+
+	// SÓ PERMITE ESCOLHER SE EXISTIR MAIS DE UMA OPÇÃO
+	if(
+	    array_length(opcoes_sprites_pocao) > 1
+	    && mouse_check_button_pressed(mb_left)
+	)
+	{
+	    var _mx_gui = device_mouse_x_to_gui(0);
+	    var _my_gui = device_mouse_y_to_gui(0);
+
+	    for(var i = 0; i < array_length(opcoes_sprites_pocao); i++)
+	    {
+	        var _ret = RetanguloSpritePocao(i);
+
+	        if(point_in_rectangle(
+	            _mx_gui,
+	            _my_gui,
+	            _ret[0],
+	            _ret[1],
+	            _ret[2],
+	            _ret[3]
+	        ))
+	        {
+	            indice_sprite_selecionado = i;
+
+	            sprite_nova_pocao =
+	                opcoes_sprites_pocao[i].sprite;
+
+	            break;
+	        }
+	    }
+	}
 	
 	//ENTER
 	if(keyboard_check_pressed(vk_enter))
@@ -48,7 +115,7 @@ if(nomeando_pocao)
 	
 			ConsomeCaldeirao(caldeirao);
 	
-			nomeando_pocao = false;
+			personalizando_pocao = false;
 			nome_pocao = "";
 			keyboard_string = "";
 	
@@ -60,7 +127,7 @@ if(nomeando_pocao)
 	//ESC
 	if(keyboard_check_pressed(vk_escape))
 	{
-		nomeando_pocao = false;
+		personalizando_pocao = false;
 		nome_pocao = "";
 		keyboard_string = "";
 	}

@@ -38,6 +38,28 @@ function HitFlash(
 	gpu_set_fog(false, _color, 0, 0);
 }
 
+//cria bolhas
+function CriaBolhas(_chance, _cor = c_white, _layer = "UI", _pai = id, _x = x + sprite_height / 2, _y = y)
+{
+	if(layer_exists(_layer))
+	{
+		//criando bolhas
+		with(instance_create_layer(_x,_y,_layer,obj_gerador_bolhas,
+			{
+				pai : _pai
+			})
+		)
+		{
+			cor = _cor;
+			chance = _chance;
+		}
+	}
+	else
+	{
+		show_debug_message("A Layer informada não existe!");
+	}
+}
+
 //desenha texto com outline
 function draw_text_outline(_x, _y, _texto, _corTexto, _corContorno, _offset, _xscale = 1, _yscale = 1, _angle = 0, _sep = -1, _w = -1)
 {
@@ -54,7 +76,7 @@ function draw_text_outline(_x, _y, _texto, _corTexto, _corContorno, _offset, _xs
 	draw_set_color(_corTexto);
 	draw_text_ext_transformed(_x, _y, _texto, _sep, _w,_xscale,_yscale, _angle);
 	
-	reseta_draw();
+	//reseta_draw();
 }
 
 //define alinhamento de texto

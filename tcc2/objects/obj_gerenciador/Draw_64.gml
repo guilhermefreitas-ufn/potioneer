@@ -146,7 +146,30 @@ if(room != rm_inventarios)
 	define_align();
 	draw_set_colour(c_black);
 	draw_set_font(fnt_placeholder_media);
-	draw_text(RES_W/2, 40, "Aperte \"-\" para voltar ao Caldeirão.")
+	draw_text(RES_W/2, 60, "Aperte \"-\" para voltar ao Caldeirão.")
+	reseta_draw();
+}
+
+if(room == rm_masmorra)
+{
+	var _bau_num = 0;
+	var _inimigo_num = 0;
+	
+	if(instance_exists(obj_bau))
+	{
+		_bau_num = instance_number(obj_bau);
+	}
+	
+	if(instance_exists(obj_inimigo_pai))
+	{
+		_inimigo_num = instance_number(obj_inimigo_pai);
+	}
+	
+	define_align();
+	
+	draw_text_outline(RES_W / 2, 20, "Inimigos restantes: "+string(_inimigo_num),c_white,c_black,1);
+	draw_text_outline(RES_W / 2, 40, "Baus restantes: "+string(_bau_num),c_white,c_black,1);
+	
 	reseta_draw();
 }
 

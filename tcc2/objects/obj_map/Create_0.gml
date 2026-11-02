@@ -13,6 +13,8 @@ var dir = irandom(3);
 var xx = cell_h div 2;
 var yy = cell_v div 2;
 
+var dist = 512;
+
 var chances = 1;
 
 var passos = 1200;
@@ -86,7 +88,7 @@ for(var _xx = 0; _xx < cell_h; _xx++)
 			{
 				var _chances = 75;
 				
-				var dist = 256;
+				
 				
 				if(irandom(_chances) == _chances and point_distance(x1, y1, obj_player.x, obj_player.y) > dist)
 				{

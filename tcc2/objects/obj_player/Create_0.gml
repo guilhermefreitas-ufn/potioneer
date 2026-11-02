@@ -242,10 +242,7 @@ PosicaoAlvoPocao = function(_mx, _my)
     return [_mx, _my];
 };
 
-
 // EXECUTA A POÇÃO SELECIONADA
-
-
 function ExecutaPocao(_modo)
 {
     var _indice = pocao_selecionada;
@@ -288,7 +285,7 @@ function ExecutaPocao(_modo)
 
 
     // Obtém o sprite e a cor da poção
-    var _sprite = spr_pocao;
+    var _sprite = spr_pocao_quadrada;
     var _cor = c_white;
 
     if (variable_struct_exists(_pocao, "sprite"))
@@ -431,6 +428,9 @@ function ExecutaPocao(_modo)
                 _pocao.algoritmo,
                 _contexto
             );
+			
+			// Criando o efeito das bolhas
+			CriaBolhas(7, _pocao.cor);
 
 
             // DEBUG

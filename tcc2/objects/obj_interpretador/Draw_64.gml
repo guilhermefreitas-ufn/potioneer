@@ -130,50 +130,298 @@ if(mensagem_timer > 0)
 	reseta_draw();
 }
 
-//NOMEANDO POÇÃO
-if(nomeando_pocao)
+// ============================================================
+// NOMEANDO E PERSONALIZANDO A POÇÃO
+// ============================================================
+
+if(personalizando_pocao)
 {
-	//fundo
-	draw_set_colour(c_black);
-	draw_set_alpha(.75);
-	draw_rectangle(0,0,RES_W,RES_H,false);
-	reseta_draw();
-	
-	//texto
+    // FUNDO ESCURO
+    draw_set_colour(c_black);
+    draw_set_alpha(.75);
+
+    draw_rectangle(
+        0,
+        0,
+        RES_W,
+        RES_H,
+        false
+    );
+
+    reseta_draw();
+
+
+    // ========================================================
+    // TÍTULO
+    // ========================================================
+
+    define_align();
+    draw_set_font(fnt_placeholder_media);
+
+    draw_text_outline(
+        RES_W / 2,
+        RES_H / 2 - 105,
+        "Nome da poção:",
+        c_white,
+        c_black,
+        1
+    );
+
+
+    // ========================================================
+    // NOME DIGITADO
+    // ========================================================
+
+    define_align();
+    draw_set_font(fnt_placeholder_media);
+
+    draw_text_outline(
+        RES_W / 2,
+        RES_H / 2 - 70,
+        nome_pocao + "_",
+        c_white,
+        c_black,
+        1
+    );
+
+
+    // ========================================================
+    // TÍTULO DA PALETA
+    // ========================================================
+
+    define_align();
+    draw_set_font(fnt_placeholder_media);
+
+    draw_text_outline(
+        RES_W / 2,
+        RES_H / 2 - 35,
+        "Escolha uma cor:",
+        c_white,
+        c_black,
+        1
+    );
+
+
+    // ========================================================
+    // GRID DE CORES
+    // ========================================================
+
+    draw_set_alpha(1);
+
+    for(var i = 0; i < array_length(paleta_cores); i++)
+    {
+        var _ret = RetanguloCorPocao(i);
+
+        var _x1 = _ret[0];
+        var _y1 = _ret[1];
+        var _x2 = _ret[2];
+        var _y2 = _ret[3];
+
+        // DESTAQUE DA COR SELECIONADA
+        if(i == indice_cor_selecionada)
+        {
+            draw_set_colour(c_white);
+
+            draw_rectangle(
+                _x1 - 3,
+                _y1 - 3,
+                _x2 + 3,
+                _y2 + 3,
+                false
+            );
+        }
+
+        // COR DO QUADRADO
+        draw_set_colour(paleta_cores[i].valor);
+
+        draw_rectangle(
+            _x1,
+            _y1,
+            _x2,
+            _y2,
+            false
+        );
+
+        // BORDA
+        draw_set_colour(c_black);
+
+        draw_rectangle(
+            _x1,
+            _y1,
+            _x2,
+            _y2,
+            true
+        );
+    }
+
+    reseta_draw();
+
+
+    // ========================================================
+    // MOSTRA A COR SELECIONADA
+    // ========================================================
+
+    define_align();
+    draw_set_font(fnt_placeholder_media);
+
+    draw_text_outline(
+        RES_W / 2,
+        RES_H / 2 + 105,
+        "Cor selecionada: "
+            + paleta_cores[indice_cor_selecionada].nome,
+        c_white,
+        c_black,
+        1
+    );
+
+	// ============================================================
+	// SELEÇÃO DE SPRITES
+	// ============================================================
+
+	// SÓ MOSTRA A GRADE SE EXISTIREM DUAS OU MAIS OPÇÕES
+	if(array_length(opcoes_sprites_pocao) > 1)
+	{
+	    // TÍTULO
+	    define_align();
+	    draw_set_font(fnt_placeholder_media);
+
+	    draw_text_outline(
+	        RES_W / 2,
+	        RES_H / 2 + 140,
+	        "Escolha o frasco:",
+	        c_white,
+	        c_black,
+	        1
+	    );
+
+	    reseta_draw();
+
+
+	    // DESENHA OS CARDS
+	    for(var i = 0; i < array_length(opcoes_sprites_pocao); i++)
+	    {
+	        var _ret = RetanguloSpritePocao(i);
+
+	        var _x1 = _ret[0];
+	        var _y1 = _ret[1];
+	        var _x2 = _ret[2];
+	        var _y2 = _ret[3];
+
+	        var _cx = (_x1 + _x2) / 2;
+
+	        var _sprite = opcoes_sprites_pocao[i].sprite;
+	        var _nome = opcoes_sprites_pocao[i].nome;
+
+
+	        // FUNDO DO CARD
+	        draw_set_alpha(0.9);
+	        draw_set_colour(c_dkgray);
+
+	        draw_rectangle(
+	            _x1,
+	            _y1,
+	            _x2,
+	            _y2,
+	            false
+	        );
+
+	        draw_set_alpha(1);
+
+
+	        // DESTAQUE DO SPRITE SELECIONADO
+	        if(i == indice_sprite_selecionado)
+	        {
+	            draw_set_colour(c_white);
+
+	            draw_rectangle(
+	                _x1 - 3,
+	                _y1 - 3,
+	                _x2 + 3,
+	                _y2 + 3,
+	                true
+	            );
+	        }
+
+
+	        // DESENHA O SPRITE
+	        if(!is_undefined(_sprite) && sprite_exists(_sprite))
+	        {
+	            // DIMENSÕES ORIGINAIS
+	            var _largura_sprite = sprite_get_width(_sprite);
+	            var _altura_sprite = sprite_get_height(_sprite);
+
+	            // ESCALA PARA CABER NO CARD
+	            var _escala = min(
+	                30 / _largura_sprite,
+	                30 / _altura_sprite
+	            );
+
+	            // CENTRALIZA E APLICA A COR DA POÇÃO
+	            draw_sprite_ext(
+	                _sprite,
+	                0,
+	                _cx,
+	                _y1 + 23,
+	                _escala,
+	                _escala,
+	                0,
+	                cor_nova_pocao,
+	                1
+	            );
+	        }
+
+
+	        // NOME DO SPRITE
+	        draw_set_colour(c_white);
+	        draw_set_font(fnt_placeholder_pequena);
+
+	        draw_set_halign(fa_center);
+	        draw_set_valign(fa_middle);
+
+	        draw_text(
+	            _cx,
+	            _y1 + 53,
+	            _nome
+	        );
+
+	        reseta_draw();
+	    }
+	}
+
+
+	// ============================================================
+	// INSTRUÇÕES
+	// ============================================================
+
+	var _total_sprites = array_length(opcoes_sprites_pocao);
+
+	var _y_instrucoes = RES_H / 2 + 140;
+
+	// SE HOUVER MAIS DE UM SPRITE, CALCULA O ESPAÇO DA GRADE
+	if(_total_sprites > 1)
+	{
+	    var _linhas = ceil(_total_sprites / sprites_colunas);
+
+	    var _altura_grade = _linhas * sprite_card_altura
+	        + (_linhas - 1) * sprite_espaco;
+
+	    _y_instrucoes = RES_H / 2
+	        + 166
+	        + _altura_grade
+	        + 24;
+	}
+
 	define_align();
 	draw_set_font(fnt_placeholder_media);
-	//draw_set_colour(c_white);
-	
+
 	draw_text_outline(
-		RES_W / 2,
-		RES_H / 2 - 30,
-		"Nome da poção:",
-		c_white,
-		c_black,
-		1
+	    RES_W / 2,
+	    _y_instrucoes,
+	    "ENTER = confirmar    ESC = cancelar",
+	    c_white,
+	    c_black,
+	    1
 	);
-	
-	define_align();
-	draw_set_font(fnt_placeholder_media);
-	draw_text_outline(
-		RES_W / 2,
-		RES_H / 2 + 10,
-		nome_pocao + "_",
-		c_white,
-		c_black,
-		1
-	);
-	
-	define_align();
-	draw_set_font(fnt_placeholder_media);
-	draw_text_outline(
-		RES_W / 2,
-		RES_H / 2 + 50,
-		"ENTER = confirmar    ESC = cancelar",
-		c_white,
-		c_black,
-		1
-	);
-	
-	reseta_draw();
+
+    reseta_draw();
 }

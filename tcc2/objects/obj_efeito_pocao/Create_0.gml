@@ -5,7 +5,7 @@ etapa = "nao_configurado";
 
 // Dados da poção
 algoritmo = undefined;
-sprite_pocao = spr_pocao;
+sprite_pocao = spr_pocao_quadrada;
 cor_pocao = c_white;
 raio_efeito = 64;
 
@@ -58,7 +58,7 @@ Configurar = function(
     algoritmo = _algoritmo;
 
     // Sprite de fallback
-    sprite_pocao = spr_pocao;
+    sprite_pocao = spr_pocao_quadrada;
 
     if (!is_undefined(_sprite))
     {

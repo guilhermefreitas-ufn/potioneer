@@ -1,7 +1,5 @@
 
 // IDENTIFICA UM INGREDIENTE PELO NOME, TOKEN, NÚMERO OU STRUCT
-
-
 function IngredientePorReferenciaDrop(_referencia)
 {
     // NENHUMA REFERÊNCIA
@@ -68,12 +66,7 @@ function IngredientePorReferenciaDrop(_referencia)
     return undefined;
 }
 
-
-
-// CONVERTE UMA REFERÊNCIA OU ARRAY DE REFERÊNCIAS EM UM ARRAY
-// DE INGREDIENTES
-
-
+// CONVERTE UMA REFERÊNCIA OU ARRAY DE REFERÊNCIAS EM UM ARRAY DE INGREDIENTES
 function NormalizaIngredientesDrop(_referencias)
 {
     var _lista = [];
@@ -116,11 +109,7 @@ function NormalizaIngredientesDrop(_referencias)
     return _lista;
 }
 
-
-
 // VERIFICA SE UM INGREDIENTE ESTÁ EM UMA LISTA
-
-
 function IngredienteEstaNaListaDrop(_ingrediente, _lista)
 {
     for (var i = 0; i < array_length(_lista); i++)
@@ -134,11 +123,7 @@ function IngredienteEstaNaListaDrop(_ingrediente, _lista)
     return false;
 }
 
-
-
 // ENCONTRA AS DIREÇÕES LIVRES DE PAREDES
-
-
 function DirecoesDropDisponiveis(_origem, _tamanho_celula = 32)
 {
     var _angulos =
@@ -189,11 +174,7 @@ function DirecoesDropDisponiveis(_origem, _tamanho_celula = 32)
     return _livres;
 }
 
-
-
 // CRIA UM INGREDIENTE QUE SE MOVE RADIALMENTE
-
-
 function CriaDropAnimado(
     _origem,
     _numero,
@@ -222,7 +203,7 @@ function CriaDropAnimado(
         _cx,
         _cy,
         _origem.layer,
-        obj_drop_anim
+        obj_efeito_drop
     );
 
     // IDENTIFICAÇÃO DO INGREDIENTE
@@ -262,18 +243,13 @@ function CriaDropAnimado(
     return _drop;
 }
 
-
-
 // SORTEIA E CRIA OS DROPS
-//
 // _quantidade       = quantidade de drops aleatórios adicionais
 // _drop_garantido   = ingrediente(s) que sempre devem dropar
 // _nao_sortear      = ingrediente(s) excluídos do sorteio
 // _origem           = objeto que está soltando os ingredientes
 // _escala           = escala visual dos ingredientes
 // _tamanho_celula   = tamanho dos blocos do mapa
-
-
 function DropaIngredientes(
     _quantidade,
     _drop_garantido = undefined,

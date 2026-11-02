@@ -1,20 +1,12 @@
 event_inherited();
 
-
-
 // 1. VERIFICAÇÃO DA VIDA
-
-
 if (hp <= 0 && estado != "sofrendo" && estado != "morto")
 {
     MudaEstado("morto");
 }
 
-
-
 // 2. DETECÇÃO DO JOGADOR
-
-
 // Durante os estados morto e sofrendo,
 // não iniciamos uma nova perseguição.
 if (
@@ -76,8 +68,6 @@ if (
 
 
 // 3. MÁQUINA DE ESTADOS
-
-
 switch (estado)
 {
     
@@ -98,7 +88,7 @@ switch (estado)
 
         if (spd > 0)
         {
-            MovimentoAleatorio(spd / 2);
+            MovimentoAleatorio(spd / 2, [obj_wall, obj_bau]);
         }
         else
         {
@@ -114,7 +104,7 @@ switch (estado)
 
         if (spd > 0)
         {
-            PerseguirPlayer(spd / 2);
+            PerseguirPlayer(spd / 2, [obj_wall, obj_bau]);
         }
 
         break;
