@@ -2,7 +2,6 @@
 // "nao_configurado", "voando" ou "area"
 etapa = "nao_configurado";
 
-
 // Dados da poção
 algoritmo = undefined;
 sprite_pocao = spr_pocao_quadrada;
@@ -23,26 +22,18 @@ tempo_voo = 0;
 duracao_voo = 1;
 velocidade_voo = VELOCIDADE_ARREMESSO_POCAO;
 
-
 // Área de efeito
 tempo_area = 0;
 
 duracao_area = max(
     1,
-    round(
-        GAME_SPEED * SEGUNDOS_AREA_EFEITO_POCAO
-    )
+    round(GAME_SPEED * SEGUNDOS_AREA_EFEITO_POCAO)
 );
-
 
 // Controle para aplicar o algoritmo somente uma vez
 aplicou_efeito = false;
 
-
-
 // CONFIGURAR A POÇÃO
-
-
 Configurar = function(
     _algoritmo,
     _sprite,
@@ -86,7 +77,6 @@ Configurar = function(
 
     aplicou_efeito = false;
 
-
     // ARREMESSO
     if (_tipo == "arremesso")
     {
@@ -110,8 +100,7 @@ Configurar = function(
 
         etapa = "voando";
     }
-
-
+	
     // QUEBRA IMEDIATA NO LOCAL
     else if (_tipo == "impacto")
     {
@@ -121,7 +110,6 @@ Configurar = function(
         AplicarImpacto();
     }
 
-
     // TIPO INVÁLIDO
     else
     {
@@ -129,11 +117,7 @@ Configurar = function(
     }
 };
 
-
-
 // QUEBRA DA POÇÃO E APLICAÇÃO DO ALGORITMO
-
-
 AplicarImpacto = function()
 {
     // Impede a aplicação repetida do algoritmo
@@ -150,7 +134,6 @@ AplicarImpacto = function()
 
     tempo_area = duracao_area;
 
-
     // Procura entidades no ponto de impacto
     var _contexto = CriaContextoAreaPocao(
         x,
@@ -158,15 +141,13 @@ AplicarImpacto = function()
         raio_efeito
     );
 
-
     // Executa o algoritmo da poção
     var _resultado = ExecutaAlgoritmo(
         algoritmo,
         _contexto
     );
-
-
-    // DEBUG
+	
+	#region DEBUG
     show_debug_message(
         "SUCESSO: " + string(_resultado.sucesso)
     );
@@ -191,4 +172,36 @@ AplicarImpacto = function()
     show_debug_message(
         "MENSAGEM: " + _resultado.mensagem
     );
+	#endregion
+	
+	//pop-up de mensagem
+	if(!instance_exists(obj_player))
+	{
+	    return;
+	}
+
+	var _player = instance_find(
+	    obj_player,
+	    0
+	);
+
+	var _centro = _player.CentroPlayer();
+	
+	if(_resultado.mensagem != "")
+	{
+		CriaMensagem(
+			x_destino,
+			y_destino,
+			_resultado.mensagem
+		);
+	}
+	else
+	{
+		//Retorna quantos/quais entidades foram afetas
+		CriaMensagem(
+			x_destino,
+			y_destino,
+			string(array_length(_resultado.entidades_afetadas)) + " entidade(s) afetada(s) pela poção!"
+		);
+	}
 };

@@ -245,33 +245,33 @@ PosicaoAlvoPocao = function(_mx, _my)
 // EXECUTA A POÇÃO SELECIONADA
 function ExecutaPocao(_modo)
 {
+	var _centro = CentroPlayer();
     var _indice = pocao_selecionada;
 
 
     // Valida o slot selecionado
-    if (
-        _indice < 0
-        || _indice >= SLOTS_HOTBAR_POCOES
-    )
+    if (_indice < 0 || _indice >= SLOTS_HOTBAR_POCOES)
     {
         return false;
     }
 
-
-    var _pocao =
-        global.DadosJogador.hotbar_pocoes[_indice];
-
+    var _pocao = global.DadosJogador.hotbar_pocoes[_indice];
 
     // Verifica se existe uma poção
     if (is_undefined(_pocao))
     {
         show_debug_message(
-            "Não existe uma poção no slot selecionado."
+            "O slot selecionado está vazio."
         );
-
+		
+		CriaMensagem(
+			_centro[0],
+			_centro[1],
+			"O slot selecionado está vazio."
+		);
+		
         return false;
     }
-
 
     // Verifica o cooldown
     if (_pocao.cooldown > 0)
@@ -279,10 +279,15 @@ function ExecutaPocao(_modo)
         show_debug_message(
             "A poção está em recarga."
         );
+		
+		CriaMensagem(
+			_centro[0],
+			_centro[1],
+			"A poção está em recarga."
+		);
 
         return false;
     }
-
 
     // Obtém o sprite e a cor da poção
     var _sprite = spr_pocao_quadrada;
@@ -304,20 +309,13 @@ function ExecutaPocao(_modo)
         }
     }
 
-
     var _executada = false;
 
-
-    
     // FORMAS DE USO
-    
-
     switch (_modo)
     {
         
         // CLIQUE ESQUERDO: ARREMESSO ATÉ O CURSOR
-        
-
         case "mouse":
         {
             var _alvo = PosicaoAlvoPocao(
@@ -325,8 +323,7 @@ function ExecutaPocao(_modo)
                 mouse_y
             );
 
-            var _centro = CentroPlayer();
-
+            //var _centro = CentroPlayer();
 
             // Cria o efeito visual na posição do jogador
             var _efeito = instance_create_depth(
@@ -363,15 +360,11 @@ function ExecutaPocao(_modo)
 
             break;
         }
-
-
-        
+		
         // CLIQUE DIREITO: QUEBRA AOS PÉS DO JOGADOR
-        
-
         case "player_area":
         {
-            var _centro = CentroPlayer();
+            //var _centro = CentroPlayer();
 
 
             var _efeito = instance_create_depth(
@@ -409,13 +402,11 @@ function ExecutaPocao(_modo)
             break;
         }
 
-
-        
         // ESPAÇO: BEBER A POÇÃO
-        
-
         case "player_only":
         {
+			//var _centro = CentroPlayer();
+			
             var _contexto = CriarContextoPocao(
                 [id],
                 [id],
@@ -429,11 +420,30 @@ function ExecutaPocao(_modo)
                 _contexto
             );
 			
-			// Criando o efeito das bolhas
+			//Criando o efeito das bolhas
 			CriaBolhas(7, _pocao.cor);
+			
+			
+			//pop-up de feedback
+			if(_resultado.mensagem != "")
+			{
+				CriaMensagem(
+					_centro[0],
+					_centro[1],
+					_resultado.mensagem
+				);
+			}
+			else
+			{
+				//Retorna quantos/quais entidades foram afetas
+				CriaMensagem(
+					_centro[0],
+					_centro[1],
+					string(array_length(_resultado.entidades_afetadas)) + " entidade(s) afetada(s) pela poção!"
+				);
+			}
 
-
-            // DEBUG
+            #region DEBUG
             show_debug_message(
                 "SUCESSO: "
                 + string(_resultado.sucesso)
@@ -462,28 +472,24 @@ function ExecutaPocao(_modo)
                 "MENSAGEM: "
                 + _resultado.mensagem
             );
-
-
+			#endregion
+			
             _executada = true;
 
             break;
         }
-
-
         
         // MODO INVÁLIDO
-        
-
         default:
+		{
             return false;
+		}
     }
-
 
     if (!_executada)
     {
         return false;
     }
-
 
     // Inicia o cooldown quando a utilização é aceita
     _pocao.cooldown = max(

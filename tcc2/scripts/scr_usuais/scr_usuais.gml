@@ -60,6 +60,123 @@ function CriaBolhas(_chance, _cor = c_white, _layer = "UI", _pai = id, _x = x + 
 	}
 }
 
+// CRIA UMA MENSAGEM NA POSIÇÃO INFORMADA
+// EVITA SOBREPOSIÇÃO COM MENSAGENS PRÓXIMAS
+function CriaMensagem(
+    _x,
+    _y,
+    _texto,
+    _cor = c_white,
+    _layer = "UI"
+)
+{
+    // CONFIGURAÇÕES
+    var _espaco_max = 160;
+    var _espacamento = 6;
+
+    // GARANTE QUE O TEXTO SEJA UMA STRING
+    var _texto_mensagem = string(_texto);
+    
+    // CALCULA A ALTURA DA NOVA MENSAGEM
+    // GUARDA A FONTE ATUAL
+    var _fonte_anterior = draw_get_font();
+
+    // UTILIZA A MESMA FONTE DO OBJETO
+    draw_set_font(fnt_placeholder_pequena);
+
+    // CALCULA A ALTURA CONSIDERANDO AS QUEBRAS DE LINHA
+    var _altura_nova = string_height_ext(
+        _texto_mensagem,
+        -1,
+        _espaco_max
+    );
+
+    // PEQUENA MARGEM DE SEGURANÇA
+    _altura_nova = ceil(_altura_nova) + 2;
+
+    // RESTAURA A FONTE ANTERIOR
+    draw_set_font(_fonte_anterior);
+
+    // PROCURA A MENSAGEM MAIS ALTA DO GRUPO
+    var _encontrou_mensagem = false;
+    var _topo_mais_alto = 0;
+
+    var _total = instance_number(
+        obj_mensagem
+    );
+
+    for(var i = 0; i < _total; i++)
+    {
+        var _existente = instance_find(
+            obj_mensagem,
+            i
+        );
+
+        if(_existente == noone)
+        {
+            continue;
+        }
+
+        // VERIFICA SE PERTENCE AO MESMO GRUPO
+        if(
+            abs(_existente.origem_x - _x) < 100
+            && abs(_existente.origem_y - _y) < 120
+        )
+        {
+            // LIMITE SUPERIOR DO TEXTO EXISTENTE
+            var _topo = _existente.y
+                - _existente.altura_texto / 2;
+
+            // GUARDA A MENSAGEM MAIS ALTA
+            if(
+                !_encontrou_mensagem
+                || _topo < _topo_mais_alto
+            )
+            {
+                _topo_mais_alto = _topo;
+                _encontrou_mensagem = true;
+            }
+        }
+    }
+
+    // DEFINE A POSIÇÃO DA NOVA MENSAGEM
+    var _nova_y = _y;
+
+    if(_encontrou_mensagem)
+    {
+        // POSICIONA A NOVA MENSAGEM ACIMA DAS EXISTENTES
+        _nova_y = _topo_mais_alto
+            - _espacamento
+            - _altura_nova / 2;
+    }
+
+    // CRIA A MENSAGEM
+    var _mensagem = instance_create_layer(
+        _x,
+        _nova_y,
+        _layer,
+        obj_mensagem
+    );
+	
+    // CONFIGURA A MENSAGEM
+    if(_mensagem != noone)
+    {
+        _mensagem.texto = _texto_mensagem;
+
+        _mensagem.cor = _cor;
+
+        _mensagem.largura_maxima = _espaco_max;
+
+        _mensagem.altura_texto = _altura_nova;
+
+        // GUARDA A POSIÇÃO ORIGINAL PARA IDENTIFICAR O GRUPO
+        _mensagem.origem_x = _x;
+        _mensagem.origem_y = _y;
+    }
+
+    return _mensagem;
+}
+
 //desenha texto com outline
 function draw_text_outline(_x, _y, _texto, _corTexto, _corContorno, _offset, _xscale = 1, _yscale = 1, _angle = 0, _sep = -1, _w = -1)
 {

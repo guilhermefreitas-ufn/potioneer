@@ -4,6 +4,9 @@ randomize();
 //dados do jogador
 InicializaDadosJogador();
 
+//progressão
+global.fase = 0;
+
 //debug
 global.debug = false;
 
@@ -180,6 +183,8 @@ global.c_prata = make_colour_rgb(170, 169, 173);
 
 function CriaPocoesTeste()
 {
+	var _dispara_msg = true;
+	
 	#region MORTE
 	//if enemy hp equal enemy hp
 	//enemy hp decreases enemy hp
@@ -247,6 +252,10 @@ function CriaPocoesTeste()
 			"se inimigo saúde é igual à inimigo saúde, então inimigo saúde diminui em inimigo saúde",
 			c_black
 		);
+	}
+	else
+	{
+		_dispara_msg = false;
 	}
 	#endregion
 	
@@ -316,6 +325,10 @@ function CriaPocoesTeste()
 			"se aliado saúde é igual à aliado saúde, então aliado saúde aumenta em 9",
 			c_lime
 		);
+	}
+	else
+	{
+		_dispara_msg = false;
 	}
 	#endregion
 	
@@ -388,6 +401,10 @@ function CriaPocoesTeste()
 			global.c_prata
 		);
 	}
+	else
+	{
+		_dispara_msg = false;
+	}
 	#endregion
 	
 	#region LENTIDÃO
@@ -457,6 +474,10 @@ function CriaPocoesTeste()
 			c_blue
 		);
 	}
+	else
+	{
+		_dispara_msg = false;
+	}
 	#endregion
 	
 	#region FORÇA
@@ -525,9 +546,13 @@ function CriaPocoesTeste()
 			c_orange
 		);
 	}
+	else
+	{
+		_dispara_msg = false;
+	}
 	#endregion
 	
-	if(instance_exists(obj_interpretador))
+	if(instance_exists(obj_interpretador) && _dispara_msg)
 	{
 		with(obj_interpretador)
 		{
@@ -538,15 +563,17 @@ function CriaPocoesTeste()
 			mensagem = "Poções de teste criadas com sucesso!";
 			mensagem_timer = mensagem_duracao;
 		}
+		
+		show_debug_message(
+			"Poções de teste criadas com sucesso!"
+		);
 	}
 	else
 	{
-		msg_erro("Interpretador");
+		show_debug_message("Poções de teste já criadas! OU Interpretador não encontrado!");
 	}
 	
-	show_debug_message(
-		"Poções de teste criadas com sucesso!"
-	);
+	
 }
 
 //botões de debug

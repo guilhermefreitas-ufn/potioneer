@@ -17,7 +17,6 @@ var _altura_calculada =
 //pega o maior dos dois
 var _tamanho_caldeirao = max(_largura_calculada, _altura_calculada);
 
-
 //DESENHANDO O FUNDO DO CALDEIRÃO
 draw_sprite_stretched(
 	meu_sprite,
@@ -27,7 +26,6 @@ draw_sprite_stretched(
 	_tamanho_caldeirao,
 	_tamanho_caldeirao
 );
-
 
 //DESENHANDO SOMENTE OS SLOTS ATIVOS
 for(var i = 0; i < slots_ativos; i++)
@@ -56,7 +54,6 @@ for(var i = 0; i < slots_ativos; i++)
 	}
 }
 
-
  //ESCREVENDO AS INFOS DO ITEM
 for(var i = 0; i < slots_ativos; i++)
 {
@@ -78,11 +75,7 @@ for(var i = 0; i < slots_ativos; i++)
 		
 		var _margem = 0;
 		
-		
-		
 		//NOME DO ITEM
-		
-		
 		var _nome = _ingrediente.nome;
 		
 		//INT mostra seu valor
@@ -90,7 +83,6 @@ for(var i = 0; i < slots_ativos; i++)
 		{
 			_nome += " " + string(valores[i]);
 		}
-		
 		
 		define_align();
 		draw_set_font(fonte);

@@ -130,10 +130,8 @@ if(mensagem_timer > 0)
 	reseta_draw();
 }
 
-// ============================================================
-// NOMEANDO E PERSONALIZANDO A POÇÃO
-// ============================================================
 
+// NOMEANDO E PERSONALIZANDO A POÇÃO
 if(personalizando_pocao)
 {
     // FUNDO ESCURO
@@ -150,11 +148,7 @@ if(personalizando_pocao)
 
     reseta_draw();
 
-
-    // ========================================================
     // TÍTULO
-    // ========================================================
-
     define_align();
     draw_set_font(fnt_placeholder_media);
 
@@ -166,12 +160,8 @@ if(personalizando_pocao)
         c_black,
         1
     );
-
-
-    // ========================================================
+	
     // NOME DIGITADO
-    // ========================================================
-
     define_align();
     draw_set_font(fnt_placeholder_media);
 
@@ -184,11 +174,7 @@ if(personalizando_pocao)
         1
     );
 
-
-    // ========================================================
     // TÍTULO DA PALETA
-    // ========================================================
-
     define_align();
     draw_set_font(fnt_placeholder_media);
 
@@ -201,11 +187,7 @@ if(personalizando_pocao)
         1
     );
 
-
-    // ========================================================
     // GRID DE CORES
-    // ========================================================
-
     draw_set_alpha(1);
 
     for(var i = 0; i < array_length(paleta_cores); i++)
@@ -256,11 +238,7 @@ if(personalizando_pocao)
 
     reseta_draw();
 
-
-    // ========================================================
     // MOSTRA A COR SELECIONADA
-    // ========================================================
-
     define_align();
     draw_set_font(fnt_placeholder_media);
 
@@ -274,10 +252,7 @@ if(personalizando_pocao)
         1
     );
 
-	// ============================================================
 	// SELEÇÃO DE SPRITES
-	// ============================================================
-
 	// SÓ MOSTRA A GRADE SE EXISTIREM DUAS OU MAIS OPÇÕES
 	if(array_length(opcoes_sprites_pocao) > 1)
 	{
@@ -295,7 +270,6 @@ if(personalizando_pocao)
 	    );
 
 	    reseta_draw();
-
 
 	    // DESENHA OS CARDS
 	    for(var i = 0; i < array_length(opcoes_sprites_pocao); i++)
@@ -387,12 +361,8 @@ if(personalizando_pocao)
 	        reseta_draw();
 	    }
 	}
-
-
-	// ============================================================
+	
 	// INSTRUÇÕES
-	// ============================================================
-
 	var _total_sprites = array_length(opcoes_sprites_pocao);
 
 	var _y_instrucoes = RES_H / 2 + 140;

@@ -416,9 +416,19 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 		    if (_entidade.hp > 20)
 		    {
 		        show_debug_message(
-		            "LIMITE DE HP: a poção tentou ultrapassar "
-		            + "a vida máxima de 20. Valor ajustado para 20."
+		            "LIMITE DE HP: a poção tentou ultrapassar a vida máxima de 20. Valor ajustado para 20."
 		        );
+				
+				if(instance_exists(obj_player))
+				{
+					var _centro = obj_player.CentroPlayer();
+					
+					CriaMensagem(
+						_centro[0],
+						_centro[1],
+						"A poção tentou ultrapassar a saúde máxima de 20. Saúde ajustada para 20."
+					);
+				}
 		    }
 
 		    _entidade.hp = clamp(
@@ -463,6 +473,16 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 			    show_debug_message(
 			        "LIMITE DE SPD: a poção tentou ultrapassar a velocidade máxima de 10. Valor ajustado para 10."
 			    );
+				if(instance_exists(obj_player))
+				{
+					var _centro = obj_player.CentroPlayer();
+					
+					CriaMensagem(
+						_centro[0],
+						_centro[1],
+						"A poção tentou ultrapassar a velocidade máxima de 10. Velocidade ajustada para 10."
+					);
+				}
 			}
 			_entidade.spd = clamp(
 				_entidade.spd,
@@ -599,6 +619,7 @@ function ExecutaAlgoritmo(_algoritmo, _contexto)
 		sucesso: false,
 		
 		condicao: false,
+		
 		efeito_aplicado: false,
 		
 		entidades_afetadas: [],

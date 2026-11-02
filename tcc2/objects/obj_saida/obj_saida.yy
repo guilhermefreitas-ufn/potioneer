@@ -1,17 +1,15 @@
 {
   "$GMObject":"",
-  "%Name":"obj_mensagem_coleta",
+  "%Name":"obj_saida",
   "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_mensagem_coleta",
+  "name":"obj_saida",
   "overriddenProperties":[],
   "parent":{
-    "name":"Efeitos",
-    "path":"folders/Objects/Efeitos.yy",
+    "name":"Mapa",
+    "path":"folders/Objects/Mapa.yy",
   },
   "parentObjectId":null,
   "persistent":false,
@@ -31,7 +29,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_saida",
+    "path":"sprites/spr_saida/spr_saida.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

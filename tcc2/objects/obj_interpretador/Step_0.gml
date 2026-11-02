@@ -22,10 +22,7 @@ if(personalizando_pocao)
 	
 	nome_pocao = keyboard_string;
 	
-	// ============================================================
 	// SELEÇÃO DA COR DA POÇÃO
-	// ============================================================
-
 	if(mouse_check_button_pressed(mb_left))
 	{
 	    var _mx_gui = device_mouse_x_to_gui(0);
@@ -53,10 +50,7 @@ if(personalizando_pocao)
 	    }
 	}
 	
-	// ============================================================
 	// SELEÇÃO DO SPRITE DA POÇÃO
-	// ============================================================
-
 	// SÓ PERMITE ESCOLHER SE EXISTIR MAIS DE UMA OPÇÃO
 	if(
 	    array_length(opcoes_sprites_pocao) > 1

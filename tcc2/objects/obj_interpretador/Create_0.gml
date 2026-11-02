@@ -26,7 +26,6 @@ nome_pocao = "";
 nome_pocao_max = 40;
 
 // PERSONALIZAÇÃO DA POÇÃO
-
 cor_nova_pocao = c_white;
 sprite_nova_pocao = spr_pocao_quadrada;
 
@@ -57,10 +56,8 @@ paleta_cores =
     {nome: "Amarelo",		valor: c_yellow}
 ];
 
-// ============================================================
-// OPÇÕES DE SPRITES DAS POÇÕES
-// ============================================================
 
+// OPÇÕES DE SPRITES DAS POÇÕES
 opcoes_sprites_pocao =
 [
     {
@@ -90,7 +87,6 @@ paleta_espaco = 6;
 // ÍNDICE DA COR SELECIONADA
 // White está na posição 17
 indice_cor_selecionada = 17;
-
 
 //BOTÃO CRIAR POÇÃO
 botao_criar_largura = 180;
@@ -189,11 +185,9 @@ RetanguloCorPocao = function(_indice)
     ];
 };
 
-// ============================================================
+
 // RETORNA O RETÂNGULO DE UM SPRITE NA PALETA
 // CENTRALIZANDO CADA LINHA INDEPENDENTEMENTE
-// ============================================================
-
 RetanguloSpritePocao = function(_indice)
 {
     var _total = array_length(opcoes_sprites_pocao);

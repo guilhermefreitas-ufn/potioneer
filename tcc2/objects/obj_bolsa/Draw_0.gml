@@ -49,11 +49,7 @@ for(var i = 0; i < SLOTS_BOLSA; i++)
 		
 		var _margem = 0;
 		
-		
-		
 		//NOME DO ITEM
-		
-		
 		var _nome = _ingrediente.nome;
 		
 		//INT mostra seu valor
@@ -81,11 +77,9 @@ for(var i = 0; i < SLOTS_BOLSA; i++)
 			-1
 		);
 		
-		
+		reseta_draw();
 		
 		//QUANTIDADE
-		
-		
 		draw_text_outline(
 			_xx - entre_slots,
 			_yy + slot_tam - espaco_borda,
@@ -103,4 +97,3 @@ for(var i = 0; i < SLOTS_BOLSA; i++)
 		reseta_draw();
 	}
 }
-

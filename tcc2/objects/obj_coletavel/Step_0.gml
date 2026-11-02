@@ -10,6 +10,9 @@ var _player = instance_find(
 
 var _centro = _player.CentroPlayer();
 
+//var _msg_x = (_player.bbox_left + _player.bbox_right) / 2;
+//var _msg_y = _player.bbox_top - 12;
+
 // VERIFICA A SOBREPOSIÇÃO DOS BBOX
 // Adiciona uma margem para facilitar a coleta.
 var _margem_coleta = 8;
@@ -25,7 +28,6 @@ if(_fora_do_alcance)
 {
     exit;
 }
-
 
 // TENTA ADICIONAR À BOLSA
 if(
@@ -52,18 +54,20 @@ if(
 	}
 
 	// MENSAGEM ACIMA DO PLAYER
-	CriarMensagem(
-	    _nome + " adicionado à bolsa!",
-	    _player
+	CriaMensagem(
+		_centro[0],
+		_centro[1],
+	    _nome + " adicionado à bolsa!"
 	);
 
 	instance_destroy();
 }
 else if(!avisou_bolsa_cheia)
 {
-    CriarMensagem(
-        "Bolsa cheia!",
-        _player
+    CriaMensagem(
+		_centro[0],
+		_centro[1],
+        "Bolsa cheia!"
     );
 
     avisou_bolsa_cheia = true;
