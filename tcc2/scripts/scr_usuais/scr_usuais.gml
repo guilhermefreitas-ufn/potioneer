@@ -3,6 +3,7 @@
 #macro RES_W display_get_gui_width()
 #macro GAME_SPEED game_get_speed(gamespeed_fps)
 
+//desenha a sombra dos objetos
 function DesenhaSombra()
 {
 	draw_set_colour(c_dkgray);
@@ -15,6 +16,26 @@ function DesenhaSombra()
 		false
 	);
 	reseta_draw();
+}
+
+//efeito de hit flash
+function HitFlash(
+	_alpha,
+	_color = c_white,
+	_spr = sprite_index,
+	_img_id = image_index,
+	_x = x,
+	_y = y,
+	_xscale = image_xscale,
+	_yscale = image_yscale,
+	_rot = 0
+)
+{
+	gpu_set_fog(true, _color, 0, 0);
+	
+	draw_sprite_ext(_spr,_img_id,_x,_y,_xscale,_yscale,_rot,_color,_alpha);
+	
+	gpu_set_fog(false, _color, 0, 0);
 }
 
 //desenha texto com outline

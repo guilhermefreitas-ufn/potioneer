@@ -48,9 +48,9 @@ PegaControles = function()
 	}
 }
 
-// ==================================================
+
 // MÁQUINA DE ESTADOS DO PLAYER
-// ==================================================
+
 
 tempo_estado = 0;
 
@@ -72,9 +72,9 @@ duracao_atacando = max(
 );
 
 
-// ==================================================
+
 // TRANSIÇÃO ENTRE ESTADOS
-// ==================================================
+
 
 MudaEstado = function(_novo_estado)
 {
@@ -123,9 +123,9 @@ MudaEstado = function(_novo_estado)
 };
 
 
-// ==================================================
+
 // ATUALIZA A MOVIMENTAÇÃO DO PLAYER
-// ==================================================
+
 
 AtualizaMovimento = function()
 {
@@ -242,9 +242,9 @@ PosicaoAlvoPocao = function(_mx, _my)
     return [_mx, _my];
 };
 
-// ==================================================
+
 // EXECUTA A POÇÃO SELECIONADA
-// ==================================================
+
 
 function ExecutaPocao(_modo)
 {
@@ -311,15 +311,15 @@ function ExecutaPocao(_modo)
     var _executada = false;
 
 
-    // ==================================================
+    
     // FORMAS DE USO
-    // ==================================================
+    
 
     switch (_modo)
     {
-        // ----------------------------------------------
+        
         // CLIQUE ESQUERDO: ARREMESSO ATÉ O CURSOR
-        // ----------------------------------------------
+        
 
         case "mouse":
         {
@@ -368,9 +368,9 @@ function ExecutaPocao(_modo)
         }
 
 
-        // ----------------------------------------------
+        
         // CLIQUE DIREITO: QUEBRA AOS PÉS DO JOGADOR
-        // ----------------------------------------------
+        
 
         case "player_area":
         {
@@ -413,9 +413,9 @@ function ExecutaPocao(_modo)
         }
 
 
-        // ----------------------------------------------
+        
         // ESPAÇO: BEBER A POÇÃO
-        // ----------------------------------------------
+        
 
         case "player_only":
         {
@@ -470,9 +470,9 @@ function ExecutaPocao(_modo)
         }
 
 
-        // ----------------------------------------------
+        
         // MODO INVÁLIDO
-        // ----------------------------------------------
+        
 
         default:
             return false;

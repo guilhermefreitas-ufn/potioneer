@@ -291,10 +291,7 @@ function ExecutaCondicao(_condicao, _contexto)
 	return _resultado;
 }
 
-// ==================================================
 // ATUALIZA O ESTADO APÓS UMA ALTERAÇÃO DE HP
-// ==================================================
-
 function AtualizaEstadoAposDano(_alvo, _hp_anterior)
 {
     if (
@@ -330,14 +327,12 @@ function AtualizaEstadoAposDano(_alvo, _hp_anterior)
     // Comunica que o alvo sofreu dano
     if (variable_instance_exists(_alvo, "MudaEstado"))
     {
-        _alvo.MudaEstado("sofrendo");
+        _alvo.MudaEstado("sofrendo"); //muda para o estado "sofrendo"
+		_alvo.alpha = 1; //efeito de hit flash
     }
 }
 
-// ==================================================
 // APLICA DANO DIRETO A UMA ENTIDADE
-// ==================================================
-
 function AplicaDanoEntidade(_alvo, _dano)
 {
     if (
@@ -523,7 +518,6 @@ function ExecutaEfeito(_efeito, _contexto)
 	
 	
 	//QUEM RECEBE O EFEITO?
-	
 	var _entidades = EntidadesDoAlvo(
 		_efeito.variavel.alvo,
 		_contexto
@@ -547,7 +541,6 @@ function ExecutaEfeito(_efeito, _contexto)
 	
 	
 	//VALOR DO EFEITO
-	
 	var _valor = ResolveValorEfeito(
 		_efeito.valor,
 		_contexto
@@ -561,9 +554,7 @@ function ExecutaEfeito(_efeito, _contexto)
 		return _resultado;
 	}
 	
-	
 	//APLICANDO UMA VEZ POR ENTIDADE
-	
 	for(var i = 0; i < array_length(_entidades); i++)
 	{
 		var _entidade = _entidades[i];
@@ -617,7 +608,6 @@ function ExecutaAlgoritmo(_algoritmo, _contexto)
 	
 	
 	//ALGORITMO INVÁLIDO
-	
 	if(is_undefined(_algoritmo))
 	{
 		_resultado.mensagem =
@@ -626,9 +616,7 @@ function ExecutaAlgoritmo(_algoritmo, _contexto)
 		return _resultado;
 	}
 	
-	
 	//CONDIÇÃO
-	
 	var _condicao = ExecutaCondicao(
 		_algoritmo.condicao,
 		_contexto
@@ -644,9 +632,7 @@ function ExecutaAlgoritmo(_algoritmo, _contexto)
 	
 	_resultado.condicao = true;
 	
-	
 	//EFEITO
-	
 	var _efeito = ExecutaEfeito(
 		_algoritmo.efeito,
 		_contexto
@@ -676,9 +662,7 @@ function ResolveValorEfeito(_expressao, _contexto)
 		return undefined;
 	}
 	
-	
 	//INT
-	
 	if(
 		_expressao.tipo == TipoExpressao.VALOR
 		&& _expressao.subtipo == TipoValor.INT
@@ -687,9 +671,7 @@ function ResolveValorEfeito(_expressao, _contexto)
 		return _expressao.valor;
 	}
 	
-	
 	//VARIÁVEL
-	
 	if(_expressao.tipo == TipoExpressao.VARIAVEL)
 	{
 		var _entidades = EntidadesDoAlvo(
@@ -758,10 +740,7 @@ function CriaContextoAreaPocao(_x, _y, _raio)
 			_entidade
 		);
 		
-		
 		//ALIADOS
-		
-		
 		if(
 			_entidade.object_index == obj_aliado_pai
 			|| object_is_ancestor(
@@ -776,11 +755,7 @@ function CriaContextoAreaPocao(_x, _y, _raio)
 			);
 		}
 		
-		
-		
 		//INIMIGOS
-		
-		
 		if(
 			_entidade.object_index == obj_inimigo_pai
 			|| object_is_ancestor(

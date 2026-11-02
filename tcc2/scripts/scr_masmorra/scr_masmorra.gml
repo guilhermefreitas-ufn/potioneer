@@ -1,6 +1,6 @@
-// ============================================================
+
 // IDENTIFICA UM INGREDIENTE PELO NOME, TOKEN, NÚMERO OU STRUCT
-// ============================================================
+
 
 function IngredientePorReferenciaDrop(_referencia)
 {
@@ -69,10 +69,10 @@ function IngredientePorReferenciaDrop(_referencia)
 }
 
 
-// ============================================================
+
 // CONVERTE UMA REFERÊNCIA OU ARRAY DE REFERÊNCIAS EM UM ARRAY
 // DE INGREDIENTES
-// ============================================================
+
 
 function NormalizaIngredientesDrop(_referencias)
 {
@@ -117,9 +117,9 @@ function NormalizaIngredientesDrop(_referencias)
 }
 
 
-// ============================================================
+
 // VERIFICA SE UM INGREDIENTE ESTÁ EM UMA LISTA
-// ============================================================
+
 
 function IngredienteEstaNaListaDrop(_ingrediente, _lista)
 {
@@ -135,9 +135,9 @@ function IngredienteEstaNaListaDrop(_ingrediente, _lista)
 }
 
 
-// ============================================================
+
 // ENCONTRA AS DIREÇÕES LIVRES DE PAREDES
-// ============================================================
+
 
 function DirecoesDropDisponiveis(_origem, _tamanho_celula = 32)
 {
@@ -190,9 +190,9 @@ function DirecoesDropDisponiveis(_origem, _tamanho_celula = 32)
 }
 
 
-// ============================================================
+
 // CRIA UM INGREDIENTE QUE SE MOVE RADIALMENTE
-// ============================================================
+
 
 function CriaDropAnimado(
     _origem,
@@ -263,7 +263,7 @@ function CriaDropAnimado(
 }
 
 
-// ============================================================
+
 // SORTEIA E CRIA OS DROPS
 //
 // _quantidade       = quantidade de drops aleatórios adicionais
@@ -272,7 +272,7 @@ function CriaDropAnimado(
 // _origem           = objeto que está soltando os ingredientes
 // _escala           = escala visual dos ingredientes
 // _tamanho_celula   = tamanho dos blocos do mapa
-// ============================================================
+
 
 function DropaIngredientes(
     _quantidade,
