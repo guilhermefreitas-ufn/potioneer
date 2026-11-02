@@ -63,9 +63,9 @@ function MovimentoAleatorio(_spd)
 	}
 }
 
-// ==================================================
+
 // MÁQUINA DE ESTADOS DO INIMIGO
-// ==================================================
+
 
 estado = "movendo";
 
@@ -81,9 +81,9 @@ duracao_sofrendo = max(
 raio_perseguicao = 160;
 
 
-// ==================================================
+
 // TRANSIÇÃO ENTRE ESTADOS
-// ==================================================
+
 
 MudaEstado = function(_novo_estado)
 {
@@ -116,9 +116,9 @@ MudaEstado = function(_novo_estado)
 };
 
 
-// ==================================================
+
 // MOVIMENTO DE PERSEGUIÇÃO
-// ==================================================
+
 
 PerseguirPlayer = function(_spd)
 {
@@ -159,9 +159,9 @@ PerseguirPlayer = function(_spd)
     );
 
 
-    // ----------------------------------------------
+    
     // MOVIMENTO HORIZONTAL
-    // ----------------------------------------------
+    
 
     if (!place_meeting(
         x + _dx,
@@ -173,9 +173,9 @@ PerseguirPlayer = function(_spd)
     }
 
 
-    // ----------------------------------------------
+    
     // MOVIMENTO VERTICAL
-    // ----------------------------------------------
+    
 
     if (!place_meeting(
         x,
@@ -187,9 +187,9 @@ PerseguirPlayer = function(_spd)
     }
 
 
-    // ----------------------------------------------
+    
     // LIMITES DA ROOM
-    // ----------------------------------------------
+    
 
     var _margem_esq = x - bbox_left;
     var _margem_dir = bbox_right - x;

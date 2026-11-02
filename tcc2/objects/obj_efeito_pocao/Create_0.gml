@@ -39,9 +39,9 @@ duracao_area = max(
 aplicou_efeito = false;
 
 
-// ==================================================
+
 // CONFIGURAR A POÇÃO
-// ==================================================
+
 
 Configurar = function(
     _algoritmo,
@@ -130,9 +130,9 @@ Configurar = function(
 };
 
 
-// ==================================================
+
 // QUEBRA DA POÇÃO E APLICAÇÃO DO ALGORITMO
-// ==================================================
+
 
 AplicarImpacto = function()
 {

@@ -4,3 +4,5 @@ spd = 1;
 
 nome = "";
 cor = c_white;
+
+alpha = 0;
