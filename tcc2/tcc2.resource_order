@@ -16,12 +16,12 @@
     {"name":"Sprites","order":4,"path":"folders/Sprites.yy",},
     {"name":"Backgrounds","order":29,"path":"folders/Sprites/Backgrounds.yy",},
     {"name":"Efeitos","order":35,"path":"folders/Sprites/Efeitos.yy",},
-    {"name":"UI","order":36,"path":"folders/Sprites/UI.yy",},
     {"name":"Ingredientes","order":30,"path":"folders/Sprites/Ingredientes.yy",},
     {"name":"Inimigos","order":31,"path":"folders/Sprites/Inimigos.yy",},
     {"name":"Masmorra","order":34,"path":"folders/Sprites/Masmorra.yy",},
     {"name":"Placeholders","order":32,"path":"folders/Sprites/Placeholders.yy",},
     {"name":"Poções","order":33,"path":"folders/Sprites/Poções.yy",},
+    {"name":"UI","order":36,"path":"folders/Sprites/UI.yy",},
   ],
   "ResourceOrderSettings":[
     {"name":"fnt_placeholder_pequena","order":1,"path":"fonts/fnt_placeholder_pequena/fnt_placeholder_pequena.yy",},

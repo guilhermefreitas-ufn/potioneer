@@ -7,6 +7,20 @@ InicializaDadosJogador();
 //progressão
 global.fase = 0;
 
+global.lista_inimigos = [
+	obj_ini_sanguessuga,
+	obj_ini_morcego
+];	
+global.tipo_inimigo = [];
+global.qtd_inimigo = 0;
+global.chefe = false;
+
+global.qtd_bau = 2;
+
+global.passos = 400; //procedural
+
+
+
 //debug
 global.debug = false;
 

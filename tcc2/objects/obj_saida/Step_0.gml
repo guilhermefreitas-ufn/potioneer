@@ -16,6 +16,7 @@ if(_dist <= 96)
 
 if(_player)
 {
-	room_goto(rm_inventarios);
-	global.fase++;
+	room_goto(rm_inventarios); //volto para os inventarios
+	
+	global.fase += 1; //aumento a fase
 }

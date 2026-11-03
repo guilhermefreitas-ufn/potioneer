@@ -4,9 +4,9 @@ event_inherited();
 nome = "Sanguessuga";
 cor = c_green;
 
-hp = 12;
-spd = 2;
-atk = 5;
+hp	= 1 + global.fase;
+spd = 2 + floor(global.fase / 3);
+atk = 1 + floor(global.fase / 2);
 
 //testes
 sprite_index = spr_sanguessuga_ph;
