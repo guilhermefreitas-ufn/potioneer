@@ -1,3 +1,6 @@
+#macro MAX_HP 20
+#macro MAX_SPD 10
+
 function CriarContextoPocao(_entidades_target, _entidades_ally, _entidades_enemy)
 {
 	return
@@ -413,7 +416,7 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 		    }
 
 		    // Limite de vida entre 0 e 20
-		    if (_entidade.hp > 20)
+		    if (_entidade.hp > MAX_HP)
 		    {
 		        show_debug_message(
 		            "LIMITE DE HP: a poção tentou ultrapassar a vida máxima de 20. Valor ajustado para 20."
@@ -434,7 +437,7 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 		    _entidade.hp = clamp(
 		        _entidade.hp,
 		        0,
-		        20
+		        MAX_HP
 		    );
 
 		    // Atualiza o estado se houve perda de vida
@@ -468,7 +471,7 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 			}
 
 			//Velocidade entre 0 e 10
-			if(_entidade.spd > 10)
+			if(_entidade.spd > MAX_SPD)
 			{
 			    show_debug_message(
 			        "LIMITE DE SPD: a poção tentou ultrapassar a velocidade máxima de 10. Valor ajustado para 10."
@@ -487,7 +490,7 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 			_entidade.spd = clamp(
 				_entidade.spd,
 				0,
-				10
+				MAX_SPD
 			);
 
 			return true;

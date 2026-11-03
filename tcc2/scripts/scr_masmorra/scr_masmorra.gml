@@ -1,3 +1,4 @@
+#macro CELL_T 32
 
 // IDENTIFICA UM INGREDIENTE PELO NOME, TOKEN, NÚMERO OU STRUCT
 function IngredientePorReferenciaDrop(_referencia)

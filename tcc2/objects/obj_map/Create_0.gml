@@ -1,8 +1,9 @@
-cell_t = 32;
-room_width = cell_t * 60; //1920
+room_width = CELL_T * 60; //1920
 room_height = room_width div 2;
-cell_h = room_width div cell_t;
-cell_v = room_height div cell_t;
+cell_h = room_width div CELL_T; //horizontal
+cell_v = room_height div CELL_T; //vertical
+
+mp_grid = mp_grid_create(0, 0, cell_h, cell_v, CELL_T, CELL_T);
 
 enum TipoObj
 {
@@ -18,7 +19,7 @@ enum TipoObj
 grid = ds_grid_create(cell_h, cell_v);
 ds_grid_clear(grid, TipoObj.VAZIO);
 
-randomise();
+randomize();
 var dir = irandom(3);
 
 var xx = cell_h div 2;
@@ -63,8 +64,8 @@ for(var _xx = 0; _xx < cell_h; _xx++)
 {
 	for(var _yy = 0; _yy < cell_v; _yy++)
 	{
-		var x1 = _xx * cell_t;
-		var y1 = _yy * cell_t;
+		var x1 = _xx * CELL_T;
+		var y1 = _yy * CELL_T;
 		
 		//PAREDES
 		if(grid[# _xx,_yy] == TipoObj.VAZIO)
@@ -169,11 +170,21 @@ for(var _gx = 0; _gx < cell_h; _gx++)
 if(saida_x != -1)
 {
     instance_create_layer(
-        saida_x * cell_t,
-        saida_y * cell_t,
-        "Colisores",
+        saida_x * CELL_T,
+        saida_y * CELL_T,
+        "Saida",
         obj_saida
     );
 
     grid[# saida_x,saida_y] = TipoObj.SAIDA;
+}
+
+//ADICIONANDO OBSTÁCULOS PARA OS INIMIGOS
+var _ini_obstaculos = [
+	obj_wall
+];
+
+for(var i = 0; i < array_length(_ini_obstaculos); i++)
+{
+	mp_grid_add_instances(mp_grid,_ini_obstaculos[i],false);
 }

@@ -127,7 +127,7 @@ MudaEstado = function(_novo_estado)
 // ATUALIZA A MOVIMENTAÇÃO DO PLAYER
 
 
-AtualizaMovimento = function()
+AtualizaMovimento = function(_obstaculos = [obj_wall])
 {
     PegaControles();
 
@@ -141,10 +141,7 @@ AtualizaMovimento = function()
         move_and_collide(
             velh,
             velv,
-            [
-                obj_wall,
-                obj_bau
-            ]
+            _obstaculos
         );
     }
     else

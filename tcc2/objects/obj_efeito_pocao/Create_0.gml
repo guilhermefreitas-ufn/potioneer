@@ -8,6 +8,9 @@ sprite_pocao = spr_pocao_quadrada;
 cor_pocao = c_white;
 raio_efeito = 64;
 
+escala_x = .5;
+escala_y = .5;
+rotacao = 360;
 
 // Posição inicial e destino
 x_inicio = x;
