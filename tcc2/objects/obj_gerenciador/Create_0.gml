@@ -264,7 +264,8 @@ function CriaPocoesTeste()
 			"Morte",
 			_algoritmo,
 			"se inimigo saúde é igual à inimigo saúde, então inimigo saúde diminui em inimigo saúde",
-			c_black
+			c_black,
+			spr_pocao_quadrada
 		);
 	}
 	else
@@ -337,7 +338,8 @@ function CriaPocoesTeste()
 			"Cura",
 			_algoritmo,
 			"se aliado saúde é igual à aliado saúde, então aliado saúde aumenta em 9",
-			c_lime
+			c_lime,
+			spr_pocao
 		);
 	}
 	else
@@ -348,7 +350,7 @@ function CriaPocoesTeste()
 	
 	#region VELOCIDADE
 	//if ally spd equal ally spd
-	//ally spd becomes 5
+	//ally spd increases 5
 	_esq =
 		CriarExpressaoVariavel(
 			3,
@@ -390,7 +392,7 @@ function CriaPocoesTeste()
 	_efeito =
 		CriarEfeito(
 			_variavel,
-			7, //becomes
+			6, //increases
 			_valor
 		);
 	
@@ -411,8 +413,9 @@ function CriaPocoesTeste()
 		AdicionaPocaoArmario(
 			"Velocidade",
 			_algoritmo,
-			"se aliado velocidade é igual à aliado velocidade, então aliado velocidade torna-se 5",
-			global.c_prata
+			"se aliado velocidade é igual à aliado velocidade, então aliado velocidade aumenta em 5",
+			c_aqua,
+			spr_pocao
 		);
 	}
 	else
@@ -421,9 +424,9 @@ function CriaPocoesTeste()
 	}
 	#endregion
 	
-	#region LENTIDÃO
+	#region PARALISIA
 	//if enemy spd equal enemy spd
-	//enemy spd becomes 1
+	//enemy spd becomes 0
 	_esq =
 		CriarExpressaoVariavel(
 			3,
@@ -459,7 +462,7 @@ function CriaPocoesTeste()
 		CriarExpressaoInt(
 			1, //int
 			-1, //slot
-			1 //valor
+			0 //valor
 		);
 	
 	_efeito =
@@ -478,14 +481,15 @@ function CriaPocoesTeste()
 	
 	if(
 		!PocaoExiste(_algoritmo)
-		&& !PocaoNomeExiste("Lentidao")
+		&& !PocaoNomeExiste("Paralisia")
 	)
 	{
 		AdicionaPocaoArmario(
-			"Lentidao",
+			"Paralisia",
 			_algoritmo,
-			"se inimigo velocidade é igual à inimigo velocidade, então inimigo velocidade torna-se 1",
-			c_blue
+			"se inimigo velocidade é igual à inimigo velocidade, então inimigo velocidade torna-se 0",
+			c_dkgray,
+			spr_pocao_quadrada
 		);
 	}
 	else
@@ -494,13 +498,13 @@ function CriaPocoesTeste()
 	}
 	#endregion
 	
-	#region FORÇA
-	//if ally atk greater 0
-	//ally atk increases 3
+	#region FRAQUEZA
+	//if enemy atk greater 0
+	//enemy atk decreases 3
 	_esq =
 		CriarExpressaoVariavel(
 			4,
-			12,
+			13,
 			-1,
 			-1
 		);
@@ -522,7 +526,7 @@ function CriaPocoesTeste()
 	_variavel =
 		CriarExpressaoVariavel(
 			4,
-			12,
+			13,
 			-1,
 			-1
 		);
@@ -537,7 +541,7 @@ function CriaPocoesTeste()
 	_efeito =
 		CriarEfeito(
 			_variavel,
-			6, //increases
+			5, //decreases
 			_valor
 		);
 	
@@ -550,14 +554,15 @@ function CriaPocoesTeste()
 	
 	if(
 		!PocaoExiste(_algoritmo)
-		&& !PocaoNomeExiste("Forca")
+		&& !PocaoNomeExiste("Fraqueza")
 	)
 	{
 		AdicionaPocaoArmario(
-			"Forca",
+			"Fraqueza",
 			_algoritmo,
-			"se aliado ataque é maior que 0, então aliado ataque aumenta em 3",
-			c_orange
+			"se inimigo ataque é maior que 0, então inimigo ataque diminui em 3",
+			c_olive,
+			spr_pocao_quadrada
 		);
 	}
 	else

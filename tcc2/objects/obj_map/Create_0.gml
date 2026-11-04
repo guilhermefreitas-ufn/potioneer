@@ -1,9 +1,10 @@
 room_width = CELL_T * 60; //1920
 room_height = room_width div 2;
+
 cell_h = room_width div CELL_T; //horizontal
 cell_v = room_height div CELL_T; //vertical
 
-mp_grid = mp_grid_create(0, 0, cell_h, cell_v, CELL_T, CELL_T);
+global.grid = mp_grid_create(0, 0, cell_h, cell_v, CELL_T, CELL_T);
 
 enum TipoObj
 {
@@ -186,5 +187,5 @@ var _ini_obstaculos = [
 
 for(var i = 0; i < array_length(_ini_obstaculos); i++)
 {
-	mp_grid_add_instances(mp_grid,_ini_obstaculos[i],false);
+	mp_grid_add_instances(global.grid,_ini_obstaculos[i],false);
 }

@@ -5,7 +5,7 @@ event_inherited();
 dir_movimento = irandom(7) * 45;
 timer_movimento = irandom_range(30, 90);
 
-MovimentoAleatorio = function(_spd, _objetos_colisao = [obj_wall, obj_bau])
+MovimentoAleatorio = function(_spd, _objetos_colisao = [obj_wall])
 {
 	// Não se move se a velocidade for 0 ou negativa
 	if (_spd <= 0) return;
@@ -142,17 +142,19 @@ duracao_sofrendo = max(
     round(GAME_SPEED * 0.25)
 );
 
+//Fail-safe pós pathfinder
+stuck_timer = 0;
+// Calcula os segundos com base no FPS do jogo
+tempo_limite_stuck = GAME_SPEED * 1;
+
 //PERSEGUIÇÃO
 // Distância para detectar e perseguir o player
 raio_perseguicao = 160;
 
 caminho = path_add();
 
-// CONTROLE DO PATH
-tempo_recalculo_path = 0;
-
-celula_alvo_x = -1;
-celula_alvo_y = -1;
+calc_timer = 0; // Timer para atualizar a rota
+calc_delay = 15; // Atualiza a cada 15 frames (1/4 de segundo a 60fps)
 
 PerseguirObj = function(
     _spd = spd / 2,

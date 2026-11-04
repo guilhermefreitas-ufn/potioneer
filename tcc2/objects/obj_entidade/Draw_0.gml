@@ -1,5 +1,5 @@
 //draw_circle_colour(x + sprite_width/2, y + sprite_height, sprite_get_width())
-var _margem_condicoes = 12;
+var _margem_condicoes = 8;
 var _grossura_barras = 4;
 //var _max_hp = 0;
 //var _max_spd = 0;
@@ -29,6 +29,12 @@ draw_set_colour(cor);
 
 //draw_text(
 //	x+sprite_width/2,
+//	y+sprite_height*1.1,
+//	nome
+//);
+
+//draw_text(
+//	x+sprite_width/2,
 //	y - sprite_get_height(sprite_index) / 2 - 30,
 //	"HP: " + string(hp)
 //);
@@ -45,18 +51,48 @@ draw_set_colour(cor);
 //	"ATK: " + string(atk)
 //);
 
-draw_text(
-	x+sprite_width/2,
-	y+sprite_height*1.1,
-	nome
-);
+
 
 if(!global.debug)
 {
+	//CONDIÇÕES
+	var _alpha = 1;
+	
+	if(array_length(condicao) > 0)
+	{
+		_alpha = max(
+	        sin(get_timer() / 100000),
+	        0.1
+	    );
+	}
+	
 	for(var i = 0; i < array_length(condicao); i++)
 	{
+		var _cor = c_white;
+		
+		if(condicao[i] == "Revigorado")		{ _cor = c_lime; }
+		if(condicao[i] == "Acelerado")		{ _cor = c_aqua; }
+		if(condicao[i] == "Enfraquecido")	{ _cor = c_yellow; }
+		if(condicao[i] == "Paralisado")		{ _cor = c_white; }
+		
+		//draw_set_colour(_cor);
+		draw_set_alpha(_alpha);
+		define_align();
+		draw_set_font(fnt_placeholder_pequena);
+		
 		//desenhando meu estado
-		draw_text(x + (sprite_width / 2), y + (sprite_height * 1.5) + (i * _margem_condicoes), condicao[i]);
+		draw_text_outline(
+			x + (sprite_width / 2),
+			y + (sprite_height * 1.25) + (i * _margem_condicoes),
+			condicao[i],
+			_cor,
+			c_dkgray,
+			.5,
+			.5,
+			.5
+		);
+		
+		reseta_draw();
 	}
 }
 else
@@ -67,7 +103,17 @@ else
 
 reseta_draw();
 
+//BARRAS DE STATS
 var _raio = 0;
+
+if(place_meeting(x,y,obj_entidade))
+{
+	draw_set_alpha(.1);
+}
+else
+{
+	draw_set_alpha(1);
+}
 
 draw_healthbar(
 	x,
