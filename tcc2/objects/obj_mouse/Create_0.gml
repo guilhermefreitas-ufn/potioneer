@@ -471,130 +471,189 @@ estado_drag = function()
 
 estado_drag_pocao = function()
 {
-	mouse_over();
-	
-	//continua arrastando
-	if(mouse_check_button(mb_left))
-	{
-		return;
-	}
-	
-	//SOLTOU
-	if(mouse_check_button_released(mb_left))
-	{
-		var _armario =
-			instance_find(obj_armario, 0);
-		
-		var _hotbar =
-			instance_find(obj_hotbar, 0);
-		
-		//ORIGEM = ARMÁRIO
-		if(
-			pocao_inventario_drag
-			== _armario
+    mouse_over();
+
+    // CONTINUA ARRASTANDO
+    if(mouse_check_button(mb_left))
+    {
+        return;
+    }
+
+    // SOLTOU
+    if(mouse_check_button_released(mb_left))
+    {
+        var _armario = instance_find(obj_armario, 0);
+
+        var _hotbar = instance_find(obj_hotbar, 0);
+			
+		// IDENTIFICA A ORIGEM DO ARRASTE
+		var _origem_armario = pocao_inventario_drag == _armario;
+
+		var _origem_hotbar = pocao_inventario_drag == _hotbar;
+   
+        // VERIFICA SE SOLTOU SOBRE A LIXEIRA
+        var _descartar = false;
+        var _lixeira = noone;
+
+        // SOMENTE POÇÕES ARRASTADAS DO ARMÁRIO
+        if(
+		    room == rm_armario
+		    && (_origem_armario || _origem_hotbar)
+		    && instance_exists(obj_lixeira)
 		)
+        {
+            _lixeira = instance_find(
+                obj_lixeira,
+                0
+            );
+
+            if(_lixeira != noone)
+            {
+                _descartar = _lixeira.MouseSobre(
+                    mouse_x,
+                    mouse_y
+                );
+            }
+        }
+
+        // DESCARTA A POÇÃO
+		if(_descartar)
 		{
-			
-			//ARMÁRIO → HOTBAR
-			
-			
-			if(
-				pocao_inventario_hover
-				== _hotbar
-			)
-			{
-				TransferePocaoArmarioParaHotbar(
-					pocao_slot_drag,
-					pocao_slot_hover
-				);
-			}
-			
-			
-			//ARMÁRIO → ARMÁRIO
-			
-			
-			else if(
-				pocao_inventario_hover
-				== _armario
-			)
-			{
-				if(
-					pocao_slot_hover
-					!= pocao_slot_drag
-				)
-				{
-					TrocaPocaoArmario(
-						pocao_slot_drag,
-						pocao_slot_hover
-					);
-				}
-			}
+		    var _pocao_descartada = undefined;
+
+		    // DESCARTA A PARTIR DO ARMÁRIO
+		    if(_origem_armario)
+		    {
+		        _pocao_descartada =
+		            DescartaPocaoArmario(pocao_slot_drag);
+		    }
+
+		    // DESCARTA A PARTIR DA HOTBAR
+		    else if(_origem_hotbar)
+		    {
+		        _pocao_descartada =
+		            DescartaPocaoHotbar(pocao_slot_drag);
+		    }
+
+		    // MENSAGEM DE CONFIRMAÇÃO
+		    if(!is_undefined(_pocao_descartada))
+		    {
+		        CriaMensagem(
+		            _lixeira.x + _lixeira.largura / 2,
+		            _lixeira.y - 12,
+		            "\"" + _pocao_descartada.nome
+		                + "\" descartada!",
+		            c_orange,
+		            "UI"
+		        );
+				
+				obj_lixeira.image_index = 1;
+		    }
 		}
-		
-		//ORIGEM = HOTBAR
-		else if(
-			pocao_inventario_drag
-			== _hotbar
-		)
-		{
-			
-			//HOTBAR → HOTBAR
-			
-			
-			if(
-				pocao_inventario_hover
-				== _hotbar
-			)
-			{
-				if(
-					pocao_slot_hover
-					!= pocao_slot_drag
-				)
-				{
-					TrocaPocaoHotbar(
-						pocao_slot_drag,
-						pocao_slot_hover
-					);
-				}
-			}
-			
-			
-			
-			//HOTBAR → ARMÁRIO
-			//Permitido somente no Arsenal
-			else if(pocao_inventario_hover == _armario
-				&& room == rm_armario)
-			{
-				TransferePocaoHotbarParaArmario(
-					pocao_slot_drag,
-					pocao_slot_hover
-				);
-			}
-			
-			
-			//HOTBAR → ÁREA VAZIA DO ARMÁRIO
-			//Permitido somente no Arsenal
-			else if(room == rm_armario
-				&& instance_exists(_armario)
-				&& _armario.AreaSobreMouse(
-					mouse_x,
-					mouse_y
-				)
-			)
-			{
-				TransferePocaoHotbarParaFimDoArmario(
-					pocao_slot_drag
-				);
-			}
-		}
-		
-		//RESET
-		pocao_inventario_drag = noone;
-		pocao_slot_drag = -1;
-		pocao_drag = undefined;
-		
-		estado = estado_livre;
-	}
+
+        // TRANSFERÊNCIAS NORMAIS
+        else
+        {
+            // ORIGEM = ARMÁRIO
+            if(
+                pocao_inventario_drag == _armario
+            )
+            {
+                // ARMÁRIO → HOTBAR
+                if(
+                    pocao_inventario_hover == _hotbar
+                )
+                {
+                    TransferePocaoArmarioParaHotbar(
+                        pocao_slot_drag,
+                        pocao_slot_hover
+                    );
+                }
+
+
+                // ARMÁRIO → ARMÁRIO
+                else if(
+                    pocao_inventario_hover == _armario
+                )
+                {
+                    if(
+                        pocao_slot_hover != pocao_slot_drag
+                    )
+                    {
+                        TrocaPocaoArmario(
+                            pocao_slot_drag,
+                            pocao_slot_hover
+                        );
+                    }
+                }
+            }
+
+
+            // ORIGEM = HOTBAR
+            else if(
+                pocao_inventario_drag == _hotbar
+            )
+            {
+                // HOTBAR → HOTBAR
+                if(
+                    pocao_inventario_hover == _hotbar
+                )
+                {
+                    if(
+                        pocao_slot_hover != pocao_slot_drag
+                    )
+                    {
+                        TrocaPocaoHotbar(
+                            pocao_slot_drag,
+                            pocao_slot_hover
+                        );
+                    }
+                }
+
+
+                // HOTBAR → ARMÁRIO
+                // PERMITIDO SOMENTE NO ARMÁRIO
+                else if(
+                    pocao_inventario_hover == _armario
+                    && room == rm_armario
+                )
+                {
+                    TransferePocaoHotbarParaArmario(
+                        pocao_slot_drag,
+                        pocao_slot_hover
+                    );
+                }
+
+
+                // HOTBAR → ÁREA VAZIA DO ARMÁRIO
+                // PERMITIDO SOMENTE NO ARMÁRIO
+                else if(
+                    room == rm_armario
+                    && instance_exists(_armario)
+                    && _armario.AreaSobreMouse(
+                        mouse_x,
+                        mouse_y
+                    )
+                )
+                {
+                    TransferePocaoHotbarParaFimDoArmario(
+                        pocao_slot_drag
+                    );
+                }
+            }
+        }
+
+
+        
+        // RESET
+        
+
+        pocao_inventario_drag = noone;
+        pocao_slot_drag = -1;
+        pocao_drag = undefined;
+
+        estado = estado_livre;
+    }
 };
 
 MouseSobreItem = function()

@@ -51,8 +51,6 @@ draw_set_colour(cor);
 //	"ATK: " + string(atk)
 //);
 
-
-
 if(!global.debug)
 {
 	//CONDIÇÕES

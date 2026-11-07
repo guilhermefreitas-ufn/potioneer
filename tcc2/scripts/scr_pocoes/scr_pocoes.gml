@@ -410,6 +410,89 @@ function RemovePocaoArmario(_slot)
 	return _pocao;
 }
 
+// DESCARTA UMA POÇÃO DO ARMÁRIO
+function DescartaPocaoArmario(_slot)
+{
+    // REMOVE A POÇÃO DO ARMÁRIO
+    var _pocao = RemovePocaoArmario(_slot);
+
+    if (is_undefined(_pocao))
+    {
+        return undefined;
+    }
+
+    // IDENTIFICA A POÇÃO NA HOTBAR PELO ID
+    for (var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
+    {
+        var _pocao_hotbar =
+            global.DadosJogador.hotbar_pocoes[i];
+
+        if (is_undefined(_pocao_hotbar))
+        {
+            continue;
+        }
+
+        if (
+            variable_struct_exists(_pocao_hotbar, "id")
+            && variable_struct_exists(_pocao, "id")
+            && _pocao_hotbar.id == _pocao.id
+        )
+        {
+            global.DadosJogador.hotbar_pocoes[i] =
+                undefined;
+        }
+    }
+
+    return _pocao;
+}
+
+// DESCARTA UMA POÇÃO DA HOTBAR
+function DescartaPocaoHotbar(_slot)
+{
+    if (
+        _slot < 0
+        || _slot >= SLOTS_HOTBAR_POCOES
+    )
+    {
+        return undefined;
+    }
+
+    // RECUPERA A POÇÃO
+    var _pocao =
+        global.DadosJogador.hotbar_pocoes[_slot];
+
+    if (is_undefined(_pocao))
+    {
+        return undefined;
+    }
+
+    // LIBERA O SLOT DA HOTBAR
+    global.DadosJogador.hotbar_pocoes[_slot] =
+        undefined;
+
+    // GARANTE QUE NÃO EXISTA UMA CÓPIA NO ARMÁRIO
+    for (var i = 0; i < SLOTS_ARMARIO_POCOES; i++)
+    {
+        var _pocao_armario =
+            global.DadosJogador.armario_pocoes[i];
+
+        if (is_undefined(_pocao_armario))
+        {
+            continue;
+        }
+
+        if (
+            _pocao_armario.id == _pocao.id
+        )
+        {
+            global.DadosJogador.armario_pocoes[i] =
+                undefined;
+        }
+    }
+
+    return _pocao;
+}
+
 function TrocaPocaoArmario(_slot_a, _slot_b)
 {
 	if(
