@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"Script10",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Script10",
+  "parent":{
+    "name":"Efeitos",
+    "path":"folders/Sprites/Efeitos.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

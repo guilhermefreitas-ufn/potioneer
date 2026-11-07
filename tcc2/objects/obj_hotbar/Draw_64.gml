@@ -28,6 +28,71 @@ if(
     }
 }
 
+//PLAYER SOB A HOTBAR?
+var _player_sob_hotbar = false;
+var _alpha_hotbar = 1;
+
+if(
+    room == rm_masmorra
+    && instance_exists(obj_player)
+)
+{
+    var _player = instance_find(obj_player, 0);
+
+    if(_player != noone)
+    {
+        //CONVERTE OS CANTOS DA BBOX DO PLAYER
+        var _pos_sup_esq = MundoParaGUI(
+            _player.bbox_left,
+            _player.bbox_top
+        );
+
+        var _pos_inf_dir = MundoParaGUI(
+            _player.bbox_right,
+            _player.bbox_bottom
+        );
+
+        if(
+            !is_undefined(_pos_sup_esq)
+            && !is_undefined(_pos_inf_dir)
+        )
+        {
+            //PLAYER EM COORDENADAS GUI
+            var _player_left = _pos_sup_esq.x;
+            var _player_right = _pos_inf_dir.x;
+
+            var _player_top = _pos_sup_esq.y;
+            var _player_bottom = _pos_inf_dir.y;
+
+            //HOTBAR EM COORDENADAS GUI
+            var _hotbar_left =
+                (RES_W - largura_hotbar) / 2;
+
+            var _hotbar_right =
+                _hotbar_left + largura_hotbar;
+
+            var _hotbar_top =
+                RES_H - altura_hotbar - margem_inferior;
+
+            var _hotbar_bottom =
+                _hotbar_top + altura_hotbar;
+
+            //VERIFICA SOBREPOSIÇÃO
+            _player_sob_hotbar = (
+                _player_right > _hotbar_left
+                && _player_left < _hotbar_right
+                && _player_bottom > _hotbar_top
+                && _player_top < _hotbar_bottom
+            );
+        }
+    }
+}
+
+//ALPHA DA HOTBAR
+_alpha_hotbar = _player_sob_hotbar //player ta na hotbar
+    ? alpha_player_em_mim //se sim, ajusto meu alpha
+	: 1; //se não, alpha padrão
+
 //HOTBAR
 for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 {
@@ -59,21 +124,46 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 	    escala_slot,
 	    0,
 	    c_white,
-	    1
+	    _alpha_hotbar
 	);
 
     //POÇÃO
     if(!is_undefined(_pocao))
     {
-		var _alpha_pocao = 1;
+		var _frasco = noone;
+		
+		switch(_pocao.sprite)
+		{
+			case spr_pocao:
+			{
+				_frasco = spr_pocao_borda;
+				
+				break;
+			}
+			case spr_pocao_quadrada:
+			{
+				_frasco = spr_pocao_quadrada_borda;
+				
+				break;
+			}
+			default:
+			{
+				_frasco = spr_pocao_borda;
+				
+				break;
+			}
+		}
+		
+		var _alpha_pocao = _alpha_hotbar;
 
 		if(_pocao.cooldown > 0)
 		{
-		    _alpha_pocao = 0.35;
+		    _alpha_pocao *= alpha_player_em_mim;
 		}
 		
         if(!is_undefined(_pocao.sprite))
         {
+			//poção com conteúdo colorido
             draw_sprite_ext(
                 _pocao.sprite,
                 0,
@@ -85,9 +175,27 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
                 _pocao.cor,
                 _alpha_pocao
             );
+			
+			//frasco branco
+			if(i != _slot_selecionado && i != _slot_hover)
+			{
+				draw_sprite_ext(
+				    _frasco,
+				    0,
+				    _cx,
+				    _cy,
+				    escala_slot,
+				    escala_slot,
+				    0,
+				    c_white,
+				    _alpha_pocao
+				);
+			}
         }
+		//se não tenho sprite
         else
         {
+			//placeholder
             draw_set_colour(_pocao.cor);
 			draw_set_alpha(_alpha_pocao);
 			
@@ -138,8 +246,10 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 			var _centro_y = _pos[1];
 			
 		    //Fundo escuro do relógio
-		    draw_set_alpha(0.9);
-		    draw_set_color(c_black);
+		    draw_set_alpha(0.9 * _alpha_hotbar);
+			
+		    //draw_set_color(c_black);
+		    draw_set_color(c_white);
 
 		    draw_circle(
 		        _centro_x,
@@ -167,7 +277,8 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 		        );
 
 		    //Desenha o setor restante
-		    draw_set_color(c_white);
+		    //draw_set_color(c_white);
+		    draw_set_color(c_black);
 
 		    draw_pie(
 		        _centro_x - _raio_relogio,
@@ -193,6 +304,7 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
         //NOME DA POÇÃO
         define_align(1, 0);
         draw_set_font(fonte);
+		draw_set_alpha(_alpha_hotbar);
 
         draw_text_outline(
             _cx,
@@ -208,13 +320,15 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
             -1
         );
     }
-
+	
+	draw_set_alpha(_alpha_hotbar);
     //NÚMERO DA TECLA
     draw_set_font(fonte);
     draw_set_halign(fa_center);
     draw_set_valign(fa_top);
 
-    draw_set_colour(c_black);
+    //draw_set_colour(c_black);
+    draw_set_colour(c_white);
     draw_circle(
         _cx,
         _pos[1] - 12,
@@ -222,7 +336,7 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
         false
     );
 
-    draw_set_colour(c_white);
+    draw_set_colour(c_black);
 
     draw_text_transformed(
         _cx,
@@ -233,7 +347,7 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
         0
     );
 	
-	
+	reseta_draw();
 }
 
 //DESCRIÇÃO

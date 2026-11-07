@@ -9,7 +9,7 @@ var _dist = point_distance(x + sprite_width /2, y + sprite_height/2,_centro[0],_
 
 var _player = place_meeting(x,y,obj_player);
 
-if(_dist <= 96)
+if(_dist <= distancia_player)
 {
 	image_index = 1;
 }

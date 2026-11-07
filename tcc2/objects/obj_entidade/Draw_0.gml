@@ -104,7 +104,7 @@ reseta_draw();
 //BARRAS DE STATS
 var _raio = 0;
 
-if(place_meeting(x,y,obj_entidade))
+if(place_meeting(x,y,obj_entidade) && object_index != obj_player)
 {
 	draw_set_alpha(.1);
 }

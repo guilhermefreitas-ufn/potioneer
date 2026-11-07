@@ -3,6 +3,94 @@
 #macro RES_W display_get_gui_width()
 #macro GAME_SPEED game_get_speed(gamespeed_fps)
 
+function MundoParaGUI(_x, _y, _viewport = 0)
+{
+    //VERIFICA SE EXISTE UMA CÂMERA ATIVA
+    if(
+        !view_enabled
+        || !view_visible[_viewport]
+    )
+    {
+        return undefined;
+    }
+
+    var _camera = view_camera[_viewport];
+
+    if(_camera == -1)
+    {
+        return undefined;
+    }
+
+    //POSIÇÃO DA CÂMERA
+    var _camera_x = camera_get_view_x(_camera);
+    var _camera_y = camera_get_view_y(_camera);
+
+    //DIMENSÕES DA CÂMERA
+    var _camera_w = camera_get_view_width(_camera);
+    var _camera_h = camera_get_view_height(_camera);
+
+    //DIMENSÕES DA GUI
+    var _gui_w = display_get_gui_width();
+    var _gui_h = display_get_gui_height();
+
+    //ESCALAS
+    var _escala_x = _gui_w / _camera_w;
+    var _escala_y = _gui_h / _camera_h;
+
+    //CONVERSÃO
+    var _gui_x = (_x - _camera_x) * _escala_x;
+    var _gui_y = (_y - _camera_y) * _escala_y;
+
+    //RETORNA POSIÇÃO E ESCALAS
+    return {
+        x: _gui_x,
+        y: _gui_y,
+
+        escala_x: _escala_x,
+        escala_y: _escala_y
+    };
+}
+
+/// @func cria_luz(_x, _y, _tam_x, _tam_y, _pulsa)
+/// @desc Cria uma luz na posição e tamanho especificados.
+/// @param _x (real) — posição x da luz (origem centro)
+/// @param _y (real) — posição y da luz (origem centro)
+/// @param _tam_x (real) — largura da luz (em pixels)
+/// @param _tam_y (real) — altura da luz (em pixels)
+/// @param _pulsa (boolean) — define se a luz pulsa ou não.
+function cria_luz(_x, _y, _tam_x, _tam_y, _pulsa = true)
+{
+	if(!instance_exists(obj_iluminacao))
+	{
+	    instance_create_layer(0,0,"UI",obj_iluminacao);
+	}
+	
+	with(obj_iluminacao)
+	{
+		//configurando minha luz
+		luz_tam_x = _tam_x; //largura em pixels (este valor * 40)
+		luz_tam_y = _tam_y; //altura em pixels (este valor * 40)
+		
+		//posição
+		luz_pos_x = _x; //posição x (origem da sprite no centro dela)
+		luz_pos_y = _y; //posição y (origem da sprite no centro dela)
+	}
+	
+	var l = instance_create_layer(_x, _y, "Iluminacao", obj_luz);
+	l.pos_x = _x;
+	l.pos_y = _y;
+	
+	l.tam_x = _tam_x / l.sprite_width;
+	l.tam_y = _tam_y / l.sprite_height;
+	
+	l.image_xscale = l.tam_x;
+	l.image_yscale = l.tam_y;
+	
+	l.pulsa = _pulsa;
+	
+	return l;
+}
+
 //desenha a sombra dos objetos
 function DesenhaSombra()
 {

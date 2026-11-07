@@ -168,9 +168,9 @@ if(room == rm_masmorra)
 	define_align();
 	draw_set_font(fnt_placeholder_media);
 	
-	draw_text_outline(RES_W / 2, 40, "Inimigos restantes: "+string(_inimigo_num),c_white,c_black,1);
-	draw_text_outline(RES_W / 2, 60, "Baús restantes: "+string(_bau_num),c_white,c_black,1);
-	draw_text_outline(RES_W / 2, 80, "FASE "+string(global.fase),c_white,c_black,1);
+	draw_text_outline(RES_W / 2, 40, "Inimigos restantes: "+string(_inimigo_num),c_white,c_black,2);
+	draw_text_outline(RES_W / 2, 60, "Baús restantes: "+string(_bau_num),c_white,c_black,2);
+	draw_text_outline(RES_W / 2, 80, "Nível "+string(global.fase),c_white,c_black,2);
 	
 	reseta_draw();
 }

@@ -29,12 +29,14 @@ var _proximo_y = y
     + lengthdir_y(_passo, direcao);
 
 
-// VERIFICA A COLISÃO COM A PAREDE
+// VERIFICA A COLISÃO COM OBSTACULOS
+var _obstaculos = [ obj_wall, obj_saida];
+
 if(
     place_meeting(
         _proximo_x,
         _proximo_y,
-        obj_wall
+        _obstaculos
     )
 )
 {

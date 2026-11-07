@@ -13,6 +13,10 @@ sprite_index = spr_placeholder_32;
 image_speed = 0;
 image_index = 0;
 
+//minha iluminação
+luz = noone;
+luz_tam = 256;
+
 //movimentação
 estado = "parado";
 velh = 0;
@@ -48,12 +52,8 @@ PegaControles = function()
 	}
 }
 
-
 // MÁQUINA DE ESTADOS DO PLAYER
-
-
 tempo_estado = 0;
-
 
 // Durações dos estados temporários
 duracao_sofrendo = max(
@@ -71,11 +71,7 @@ duracao_atacando = max(
     round(GAME_SPEED * 0.25)
 );
 
-
-
 // TRANSIÇÃO ENTRE ESTADOS
-
-
 MudaEstado = function(_novo_estado)
 {
     // Se já está sofrendo, renova a duração
@@ -122,11 +118,7 @@ MudaEstado = function(_novo_estado)
     }
 };
 
-
-
 // ATUALIZA A MOVIMENTAÇÃO DO PLAYER
-
-
 AtualizaMovimento = function(_obstaculos = [obj_wall])
 {
     PegaControles();
@@ -170,6 +162,9 @@ CentroPlayer = function()
 //POÇÕES
 raio_teste = 64;
 mostrar_area = true;
+alpha_alcance = 0.1;
+alpha_descricao_area = 0.2;
+alpha_area = 0.5;
 
 //Slot selecionado: 0 até 4
 pocao_selecionada = 0;

@@ -10,8 +10,8 @@
   "name":"obj_coletavel",
   "overriddenProperties":[],
   "parent":{
-    "name":"Mapa",
-    "path":"folders/Objects/Mapa.yy",
+    "name":"Masmorra",
+    "path":"folders/Objects/Masmorra.yy",
   },
   "parentObjectId":null,
   "persistent":false,

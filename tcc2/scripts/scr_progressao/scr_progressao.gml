@@ -15,9 +15,9 @@ function RegrasProgressao()
             colunas_max: 30,
             linhas_max: 60,
 
-            passos_por_celula: 0.33,
+            passos_por_celula: 0.25,
 
-            chance_mudar_direcao: 0.33
+            chance_mudar_direcao: 0.50
         },
 
         // CONFIGURAÇÕES DOS INIMIGOS
@@ -68,12 +68,8 @@ function ConfiguracaoFase(_fase, _regras)
     var _mapa = _regras.mapa;
     var _ini = _regras.inimigos;
     var _loot = _regras.loot;
-
-
-    
+	
     // TAMANHO DO MAPA
-    
-
     var _aumentos_mapa = floor(
         _nivel / _mapa.intervalo_aumento
     );
@@ -87,23 +83,15 @@ function ConfiguracaoFase(_fase, _regras)
         _mapa.linhas_max,
         _mapa.linhas_iniciais + _aumentos_mapa * _mapa.aumento_linhas
     );
-
-
-    
+	
     // PASSOS DA GERAÇÃO
-    
-
     var _area = _cell_h * _cell_v;
 
     var _passos = round(
         _area * _mapa.passos_por_celula
     );
 
-
-    
     // QUANTIDADE DE INIMIGOS
-    
-
     var _aumentos_ini = floor(
         _nivel / _ini.intervalo_aumento
     );
@@ -113,11 +101,7 @@ function ConfiguracaoFase(_fase, _regras)
         _ini.max_inicial + _aumentos_ini * _ini.aumento
     );
 
-
-    
     // QUANTIDADE DE LOOTS
-    
-
     var _aumentos_loot = floor(
         _nivel / _loot.intervalo_aumento
     );
@@ -126,23 +110,15 @@ function ConfiguracaoFase(_fase, _regras)
         _loot.maximo,
         _loot.max_inicial + _aumentos_loot * _loot.aumento
     );
-
-
-    
+	
     // DISTÂNCIAS MÍNIMAS
-    
-
     var _dist_base = min(_cell_h, _cell_v) * CELL_T;
 
     var _dist_inimigo = _dist_base * _ini.distancia_relativa;
 
     var _dist_loot = _dist_base * _loot.distancia_relativa;
 
-
-    
     // MULTIPLICADORES DOS INIMIGOS
-    
-
     var _mult_hp = min(
         _ini.mult_hp_max,
         1 + _nivel * _ini.mult_hp_por_fase
@@ -158,11 +134,7 @@ function ConfiguracaoFase(_fase, _regras)
         1 + _nivel * _ini.mult_spd_por_fase
     );
 
-
-    
     // RETORNO DAS CONFIGURAÇÕES
-    
-
     return {
         cell_h: _cell_h,
         cell_v: _cell_v,

@@ -1,12 +1,12 @@
 event_inherited();
 
-// 1. VERIFICAÇÃO DA VIDA
+// VERIFICAÇÃO DA VIDA
 if (hp <= 0 && estado != "sofrendo" && estado != "morto")
 {
     MudaEstado("morto");
 }
 
-// 2. MÁQUINA DE ESTADOS
+// MÁQUINA DE ESTADOS
 switch (estado)
 {
     case "parado":
@@ -82,9 +82,10 @@ switch (estado)
 	}
 }
 
-// 3. COOLDOWN DAS POÇÕES
+
 if (room == rm_masmorra)
 {
+	// COOLDOWN DAS POÇÕES
     for (
         var i = 0;
         i < SLOTS_HOTBAR_POCOES;
@@ -104,13 +105,9 @@ if (room == rm_masmorra)
             _pocao.cooldown--;
         }
     }
-}
 
-// 4. SELEÇÃO E USO DE POÇÕES
-if (room == rm_masmorra)
-{
-    
-    // SELEÇÃO POR TECLADO
+	#region SELEÇÃO E USO DE POÇÕES
+	// SELEÇÃO POR TECLADO
     var _1 = keyboard_check_pressed(vk_numpad1) || keyboard_check_pressed(ord("1"));
     var _2 = keyboard_check_pressed(vk_numpad2) || keyboard_check_pressed(ord("2"));
     var _3 = keyboard_check_pressed(vk_numpad3) || keyboard_check_pressed(ord("3"));
@@ -212,9 +209,35 @@ if (room == rm_masmorra)
             }
         }
     }
+	#endregion
+	
+	#region ILUMINAÇÃO
+	
+	var _cp = CentroPlayer();
+	
+	if(luz == noone)
+	{
+		//var _luz_tam = 256;
+		
+		luz = cria_luz(_cp[0], _cp[1], luz_tam, luz_tam);
+	}
+	else
+	{
+		luz.pos_x = _cp[0];
+		luz.pos_y = _cp[1];
+	}
+	
+	#endregion
 }
 
-// 6. DANO DE CONTATO DOS INIMIGOS
+
+if (room == rm_masmorra)
+{
+    
+    
+}
+
+// DANO DE CONTATO DOS INIMIGOS
 var inimigo = instance_place(
     x,
     y,
@@ -242,7 +265,7 @@ if (
     tempo_invencivel = invencivel_timer;
 }
 
-// 7. INVENCIBILIDADE E PISCAR DO SPRITE
+// INVENCIBILIDADE E PISCAR DO SPRITE
 if (invencivel && tempo_invencivel > 0)
 {
     tempo_invencivel--;
