@@ -91,6 +91,7 @@
     {"id":{"name":"scr_inventario","path":"scripts/scr_inventario/scr_inventario.yy",},},
     {"id":{"name":"scr_masmorra","path":"scripts/scr_masmorra/scr_masmorra.yy",},},
     {"id":{"name":"scr_pocoes","path":"scripts/scr_pocoes/scr_pocoes.yy",},},
+    {"id":{"name":"scr_progressao","path":"scripts/scr_progressao/scr_progressao.yy",},},
     {"id":{"name":"scr_usuais","path":"scripts/scr_usuais/scr_usuais.yy",},},
     {"id":{"name":"spr_background","path":"sprites/spr_background/spr_background.yy",},},
     {"id":{"name":"spr_bau","path":"sprites/spr_bau/spr_bau.yy",},},

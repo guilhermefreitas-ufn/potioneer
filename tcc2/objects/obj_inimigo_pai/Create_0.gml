@@ -1,6 +1,24 @@
 //Inherit the parent event
 event_inherited();
 
+//PROGRESSÃO
+// Atributos-base
+hp_base = 1;
+spd_base = 1;
+atk_base = 1;
+
+// APLICAR DIFICULDADE DA FASE
+AplicarEscalonamentoFase = function()
+{
+    var _cfg = global.config_fase;
+
+    hp = max(1, ceil(hp_base * _cfg.mult_hp));
+
+    spd = max(0, spd_base * _cfg.mult_spd);
+
+    atk = max(1, ceil(atk_base * _cfg.mult_atk));
+};
+
 //MOVIMENTO NORMAL
 dir_movimento = irandom(7) * 45;
 timer_movimento = irandom_range(30, 90);
@@ -208,7 +226,7 @@ PerseguirObj = function(
 
     // Calcula o novo caminho
     var _encontrou = mp_grid_path(
-        _mapa.mp_grid,
+        global.grid,
         _caminho,
         _x1,
         _y1,
@@ -244,13 +262,13 @@ PerseguirObj = function(
 
         // DEBUG: verifica as células inicial e final
         var _inicio = mp_grid_get_cell(
-            _mapa.mp_grid,
+            global.grid,
             _ix,
             _iy
         );
 
         var _destino = mp_grid_get_cell(
-            _mapa.mp_grid,
+            global.grid,
             _cx,
             _cy
         );

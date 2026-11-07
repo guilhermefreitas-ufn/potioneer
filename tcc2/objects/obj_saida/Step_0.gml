@@ -14,9 +14,11 @@ if(_dist <= 96)
 	image_index = 1;
 }
 
-if(_player)
+if (_player && !transicao_iniciada)
 {
-	room_goto(rm_inventarios); //volto para os inventarios
-	
-	global.fase += 1; //aumento a fase
+    transicao_iniciada = true;
+
+    global.fase += 1;
+
+    room_goto(rm_inventarios);
 }

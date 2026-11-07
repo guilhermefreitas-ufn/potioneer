@@ -125,7 +125,7 @@ function IngredienteEstaNaListaDrop(_ingrediente, _lista)
 }
 
 // ENCONTRA AS DIREÇÕES LIVRES DE PAREDES
-function DirecoesDropDisponiveis(_origem, _tamanho_celula = 32)
+function DirecoesDropDisponiveis(_origem, _tamanho_celula = 32, _obstaculos = [obj_wall, obj_saida])
 {
     var _angulos =
     [
@@ -149,24 +149,22 @@ function DirecoesDropDisponiveis(_origem, _tamanho_celula = 32)
     {
         var _direcao = _angulos[i];
 
-        var _dx = round(lengthdir_x(1, _direcao))
-            * _tamanho_celula;
-
-        var _dy = round(lengthdir_y(1, _direcao))
-            * _tamanho_celula;
+        var _dx = round(lengthdir_x(1, _direcao)) * _tamanho_celula;
+        var _dy = round(lengthdir_y(1, _direcao)) * _tamanho_celula;
 
         var _px = _cx + _dx;
         var _py = _cy + _dy;
 
-        var _parede = collision_point(
+        // O GameMaker moderno aceita o array _obstaculos diretamente aqui
+        var _colisao = collision_point(
             _px,
             _py,
-            obj_wall,
+            _obstaculos, 
             false,
             false
         );
 
-        if (_parede == noone)
+        if (_colisao == noone)
         {
             array_push(_livres, _direcao);
         }

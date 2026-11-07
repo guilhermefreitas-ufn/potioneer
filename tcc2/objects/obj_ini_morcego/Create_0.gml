@@ -4,9 +4,12 @@ event_inherited();
 nome = "Morcego";
 cor = c_red;
 
-hp	= 3 + global.fase;
-spd = 3 + floor(global.fase / 3);
-atk = 2 + floor(global.fase / 2);
+hp_base		= 3;
+spd_base	= 3;
+atk_base	= 2;
+
+// APLICANDO A DIFICULDADE DA FASE
+AplicarEscalonamentoFase();
 
 //testes
 sprite_index = spr_morcego_ph;

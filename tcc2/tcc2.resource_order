@@ -61,6 +61,7 @@
     {"name":"scr_inventario","order":2,"path":"scripts/scr_inventario/scr_inventario.yy",},
     {"name":"scr_masmorra","order":7,"path":"scripts/scr_masmorra/scr_masmorra.yy",},
     {"name":"scr_pocoes","order":6,"path":"scripts/scr_pocoes/scr_pocoes.yy",},
+    {"name":"scr_progressao","order":8,"path":"scripts/scr_progressao/scr_progressao.yy",},
     {"name":"scr_usuais","order":1,"path":"scripts/scr_usuais/scr_usuais.yy",},
     {"name":"spr_background","order":2,"path":"sprites/spr_background/spr_background.yy",},
     {"name":"spr_bg_ph","order":1,"path":"sprites/spr_bg_ph/spr_bg_ph.yy",},

@@ -1,10 +1,41 @@
-room_width = CELL_T * 60; //1920
-room_height = room_width div 2;
+// INICIALIZAÇÃO DA FASE
+if (!variable_global_exists("fase"))
+{
+    global.fase = 1;
+}
 
-cell_h = room_width div CELL_T; //horizontal
-cell_v = room_height div CELL_T; //vertical
+// CARREGANDO AS REGRAS DE PROGRESSÃO
+if (!variable_global_exists("regras_progressao"))
+{
+    global.regras_progressao = RegrasProgressao();
+}
 
-global.grid = mp_grid_create(0, 0, cell_h, cell_v, CELL_T, CELL_T);
+// CALCULANDO A FASE ATUAL
+global.config_fase = ConfiguracaoFase(
+    global.fase,
+    global.regras_progressao
+);
+
+var _cfg = global.config_fase;
+
+
+// TAMANHO DO MAPA
+cell_h = _cfg.cell_h;
+cell_v = _cfg.cell_v;
+
+room_width = CELL_T * cell_h;
+room_height = CELL_T * cell_v;
+
+
+// GRID DE NAVEGAÇÃO
+global.grid = mp_grid_create(
+    0,
+    0,
+    cell_h,
+    cell_v,
+    CELL_T,
+    CELL_T
+);
 
 enum TipoObj
 {
@@ -28,23 +59,29 @@ var yy = cell_v div 2;
 
 var chances = 1;
 
-var passos = 1200;
+var passos = _cfg.passos;
 
-var inimigo_max = 10;
+var inimigo_max = _cfg.inimigo_max;
 
-var loot_max = 3;
+var loot_max = _cfg.loot_max;
 
-dist_loot = 512;
+dist_loot = _cfg.dist_loot;
 
-dist_inimigo = 512;
+dist_inimigo = _cfg.dist_inimigo;
 
 //percorro o grid
 for(var i = 0; i < passos; i++)
 {
 	//mudando de direção
-	if(irandom(chances) == chances)
+	if (random(1) < _cfg.chance_mudar_direcao)
 	{
-		dir = irandom(3);
+	    // Escolhe uma das duas direções perpendiculares
+	    var _direcoes = [
+	        (dir + 1) mod 4,
+	        (dir + 3) mod 4
+	    ];
+
+	    dir = _direcoes[irandom(1)];
 	}
 	
 	xx += lengthdir_x(1,dir * 90);
@@ -56,6 +93,28 @@ for(var i = 0; i < passos; i++)
 	//definindo paredes
 	grid[# xx,yy] = TipoObj.CHAO;
 }
+
+//DEBUG: CALCULANDO A OCUPAÇÃO DO MAPA
+var _celulas_chao = 0;
+
+for (var _x = 0; _x < cell_h; _x++)
+{
+    for (var _y = 0; _y < cell_v; _y++)
+    {
+        if (grid[# _x, _y] == TipoObj.CHAO)
+        {
+            _celulas_chao++;
+        }
+    }
+}
+
+var _ocupacao = (
+    _celulas_chao / (cell_h * cell_v)
+) * 100;
+
+show_debug_message(
+    "Ocupação do mapa: " + string(_ocupacao) + "%"
+);
 
 var player_inicio_x = -1;
 var player_inicio_y = -1;
@@ -98,11 +157,12 @@ for(var _xx = 0; _xx < cell_h; _xx++)
 				var _chances = 50;
 				
 				var inimigo = choose(obj_ini_morcego, obj_ini_sanguessuga);
-				//var inimigo = obj_teste;
 				
-				//var dist = 256;
-				
-				if(irandom(_chances) == _chances and point_distance(x1, y1, obj_player.x, obj_player.y) > dist_inimigo)
+				// INIMIGOS
+				if(
+					point_distance(x1, y1, obj_player.x, obj_player.y) > dist_inimigo
+					&& random(100) < _cfg.chance_inimigo
+				)
 				{
 					instance_create_layer(x1, y1, "Instances", inimigo);
 					
@@ -121,7 +181,11 @@ for(var _xx = 0; _xx < cell_h; _xx++)
 				
 				//var dist = 512;
 				
-				if(irandom(_chances) == _chances and point_distance(x1, y1, obj_player.x, obj_player.y) > dist_loot)
+				// LOOT
+				if(
+					point_distance(x1, y1, obj_player.x, obj_player.y) > dist_loot
+					&& random(100) < _cfg.chance_loot
+				)
 				{
 					instance_create_layer(x1, y1, "Loot", obj_bau);
 					

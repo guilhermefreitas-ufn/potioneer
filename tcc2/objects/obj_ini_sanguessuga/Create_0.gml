@@ -4,9 +4,12 @@ event_inherited();
 nome = "Sanguessuga";
 cor = c_green;
 
-hp	= 1 + global.fase;
-spd = 2 + floor(global.fase / 3);
-atk = 1 + floor(global.fase / 2);
+hp_base		= 1;
+spd_base	= 2;
+atk_base	= 1;
+
+// APLICANDO A DIFICULDADE DA FASE
+AplicarEscalonamentoFase();
 
 //testes
 sprite_index = spr_sanguessuga_ph;
