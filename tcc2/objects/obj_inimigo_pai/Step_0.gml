@@ -6,8 +6,6 @@ if (hp <= 0 && estado != "sofrendo" && estado != "morto")
     MudaEstado("morto");
 }
 
-
-
 // DETECÇÃO DO JOGADOR
 // Durante os estados morto e sofrendo,
 // não iniciamos uma nova perseguição.

@@ -1,42 +1,16 @@
 //desenhando meu título
-//define_align();
-//draw_set_font(title_fnt);
-
-//draw_text_ext_transformed_colour(RES_W / 2, RES_H / 2.5, "RESCUE\nHORSE",80,-1,1,1,0,global.dourado_claro,dourado_medio,dourado_escuro,dourado_medio,1);
-
-/*
-draw_text_outline(
-	RES_W / 2 - 48,
-	RES_H / 4.5,
-	"RESCUE\nHORSE",
-	global.dourado_highlight,
-	global.dourado_highlight,
-	2,
-	1,1,0,
-	96,-1
-);
-
 define_align();
-draw_set_font(title_fnt);
-draw_text_ext_transformed_colour(
-	RES_W / 2 - 48,
-	RES_H / 4.5,
-	"RESCUE\nHORSE",
-	96,
-	-1,
-	1,1,0,
-	global.dourado_claro,
-	global.dourado_medio,
-	global.dourado_escuro,
-	global.dourado_medio,
+draw_set_font(fnt_grande_titulo);
+draw_text_outline(
+	RES_W / 2,
+	RES_H / 4,
+	"Potioneer",
+	c_orange,
+	c_red,
 	1
 );
-*/
 
-//draw_set_font(fnt_text_pequeno);
-//draw_text_outline(RES_W / 2, RES_H / 1.7, "A luz que cura a guerra", dourado_highlight, dourado_highlight, 1);
-
-//reseta_draw();
+reseta_draw();
 
 //pegando a posicao do mouse
 var _m_x = device_mouse_x_to_gui(0);
@@ -224,7 +198,7 @@ for(var i = 0; i < creditos_tam; i++)
 	define_align();
 	
 	//draw_text(_creditos_x2, creditos_y, creditos[i]);
-	draw_text_outline(_creditos_x2, creditos_y, creditos[i], _cor, c_green, .25);
+	draw_text_outline(_creditos_x2, creditos_y, creditos[i], c_teal, c_navy, 1);
 }
 
 reseta_draw();

@@ -2,6 +2,7 @@
 sprite_meu_slot = spr_slot_hotbar;
 
 alpha_player_em_mim = 0.25;
+raio_translucidez = 96;
 
 slot_tam = sprite_get_width(sprite_meu_slot);
 

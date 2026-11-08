@@ -10,7 +10,7 @@
 // 6: FOCO_ENTRADA (Pausa no alvo de entrada)
 // 7: ABRINDO (Iris In total)
 
-
+global.pause = true;
 
 state = 0; //Inicia em NENHUM
 target_room = noone;

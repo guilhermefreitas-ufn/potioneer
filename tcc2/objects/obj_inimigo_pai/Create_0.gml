@@ -295,6 +295,9 @@ MudaEstado = function(_novo_estado)
 
         return;
     }
+	
+	//parou meu caminho
+	path_end();
 
     //// Encerra o path ao sair da perseguição
     //if (estado == "perseguindo" && _novo_estado != "perseguindo")

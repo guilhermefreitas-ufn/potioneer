@@ -1,3 +1,4 @@
+//botões
 if(room == rm_inventarios || room == rm_armario)
 {
 	//BOTÃO ARSENAL
@@ -67,48 +68,56 @@ if(room == rm_inventarios || room == rm_armario)
 	);
 
 	reseta_draw();
-}
-
-if(room == rm_armario)
-{
+	
 	//BOTÃO MASMORRA
-	var _x =
+	var _x2 =
 		RES_W
 		- botao_largura
 		- botao_margem;
 
-	var _y =
+	var _y2 =
 		RES_H
 		- botao_altura
 		- botao_margem;
 
-	var _mx = device_mouse_x_to_gui(0);
-	var _my = device_mouse_y_to_gui(0);
+	var _mx2 = device_mouse_x_to_gui(0);
+	var _my2 = device_mouse_y_to_gui(0);
+	
+	if(room == rm_inventarios)
+	{
+		_x2 = 2 * botao_margem + botao_largura;
+		_y2 = display_get_gui_height()
+			- botao_altura
+			- botao_margem;
 
-	var _hover = point_in_rectangle(
-		_mx,
-		_my,
-		_x,
-		_y,
-		_x + botao_largura,
-		_y + botao_altura
+		_mx2 = device_mouse_x_to_gui(0);
+		_my2 = device_mouse_y_to_gui(0);
+	}
+	
+	var _hover2 = point_in_rectangle(
+		_mx2,
+		_my2,
+		_x2,
+		_y2,
+		_x2 + botao_largura,
+		_y2 + botao_altura
 	);
 
 	//FUNDO
-	if(_hover)
+	if(_hover2)
 	{
-		draw_set_color(c_ltgray);
+		draw_set_color(c_yellow);
 	}
 	else
 	{
-		draw_set_color(c_dkgray);
+		draw_set_color(c_olive);
 	}
 
 	draw_rectangle(
-		_x,
-		_y,
-		_x + botao_largura,
-		_y + botao_altura,
+		_x2,
+		_y2,
+		_x2 + botao_largura,
+		_y2 + botao_altura,
 		false
 	);
 
@@ -116,13 +125,13 @@ if(room == rm_armario)
 	draw_set_color(c_black);
 
 	draw_rectangle(
-		_x,
-		_y,
-		_x + botao_largura,
-		_y + botao_altura,
+		_x2,
+		_y2,
+		_x2 + botao_largura,
+		_y2 + botao_altura,
 		true
 	);
-	
+
 	//TEXTO
 	draw_set_font(-1);
 	draw_set_halign(fa_left);
@@ -130,19 +139,20 @@ if(room == rm_armario)
 	draw_set_color(c_white);
 	draw_set_font(fnt_media_black);
 
-	var _texto = "EXPLORAR MASMORRA";
-	var _texto_largura = string_width(_texto);
-	var _offset_y = 6;
+	var _texto2 = "EXPLORAR MASMORRA";
+	var _texto_largura2 = string_width(_texto2);
+	var _offset_y2 = 6;
 
 	draw_text(
-		_x + (botao_largura - _texto_largura) / 2,
-		_y + _offset_y,
-		_texto
+		_x2 + (botao_largura - _texto_largura2) / 2,
+		_y2 + _offset_y2,
+		_texto2
 	);
-
+	
 	reseta_draw();
 }
 
+//debug
 if(room != rm_inventarios)
 {
 	define_align();
@@ -152,10 +162,12 @@ if(room != rm_inventarios)
 	reseta_draw();
 }
 
+//masmorra
 if(room == rm_masmorra)
 {
 	var _bau_num = 0;
 	var _inimigo_num = 0;
+	var _texto = "Subsolo "+string(global.fase);
 	
 	if(instance_exists(obj_bau))
 	{
@@ -167,12 +179,17 @@ if(room == rm_masmorra)
 		_inimigo_num = instance_number(obj_inimigo_pai);
 	}
 	
+	if(global.fase == 0)
+	{
+		_texto = "Térreo";
+	}
+	
 	define_align();
 	draw_set_font(fnt_placeholder_media);
 	
-	draw_text_outline(RES_W / 2, 40, "Inimigos restantes: "+string(_inimigo_num),c_white,c_black,2);
-	draw_text_outline(RES_W / 2, 60, "Baús restantes: "+string(_bau_num),c_white,c_black,2);
-	draw_text_outline(RES_W / 2, 80, "Nível "+string(global.fase),c_white,c_black,2);
+	draw_text_outline(RES_W / 2, 40, "Inimigos restantes: "+string(_inimigo_num), c_white, c_black,2);
+	draw_text_outline(RES_W / 2, 60, "Baús restantes: "+string(_bau_num), c_white, c_black,2);
+	draw_text_outline(RES_W / 2, 80, _texto, c_white, c_black,2);
 	
 	reseta_draw();
 }

@@ -20,7 +20,7 @@ options_y = RES_H / 1.85;
 options_dist = 56;
 
 //fonte das minhas opções
-options_fnt = fnt_placeholder_media;
+options_fnt = fnt_grande_menu;
 
 //opção selecionada
 index = -1;

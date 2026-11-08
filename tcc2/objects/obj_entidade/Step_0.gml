@@ -1,3 +1,4 @@
+if(global.pause) { exit; }
 
 //controlando o alpha do hit flash
 if(alpha > 0)

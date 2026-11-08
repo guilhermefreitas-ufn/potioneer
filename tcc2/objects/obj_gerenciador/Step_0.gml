@@ -186,7 +186,7 @@ if(room == rm_inventarios)
 }
 #endregion
 
-if(room == rm_armario)
+if(room == rm_armario || room == rm_inventarios)
 {
 	var _x =
 		RES_W
@@ -198,27 +198,57 @@ if(room == rm_armario)
 		- botao_altura
 		- botao_margem;
 
-
 	//posição do mouse na GUI
 	var _mx = device_mouse_x_to_gui(0);
 	var _my = device_mouse_y_to_gui(0);
 
-
-	//clique
-	if(
-		mouse_check_button_pressed(mb_left)
-		&& point_in_rectangle(
-			_mx,
-			_my,
-			_x,
-			_y,
-			_x + botao_largura,
-			_y + botao_altura
-		)
-	)
+	if(room == rm_armario)
 	{
-		aplica_transicao(rm_masmorra);
-		//room_goto(rm_masmorra);
+		//clique
+		if(
+			mouse_check_button_pressed(mb_left)
+			&& point_in_rectangle(
+				_mx,
+				_my,
+				_x,
+				_y,
+				_x + botao_largura,
+				_y + botao_altura
+			)
+		)
+		{
+			aplica_transicao(rm_masmorra);
+			//room_goto(rm_masmorra);
+		}
+	}
+	
+
+	//POSIÇÃO ESPECIAL NA SALA DE INVENTÁRIOS
+	if(room == rm_inventarios)
+	{
+	    _x =
+	        2 * botao_margem + botao_largura;
+
+	    _y =
+	        display_get_gui_height()
+	        - botao_altura
+	        - botao_margem;
+		
+		//VERIFICA CLIQUE
+		if(
+		    device_mouse_check_button_pressed(0, mb_left)
+		    && point_in_rectangle(
+		        _mx,
+		        _my,
+		        _x,
+		        _y,
+		        _x + botao_largura,
+		        _y + botao_altura
+		    )
+		)
+		{
+		    aplica_transicao(rm_masmorra);
+		}
 	}
 }
 

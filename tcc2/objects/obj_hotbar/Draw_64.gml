@@ -28,70 +28,91 @@ if(
     }
 }
 
-//PLAYER SOB A HOTBAR?
-var _player_sob_hotbar = false;
+//OBJETOS QUE PODEM DEIXAR A HOTBAR TRANSLÚCIDA
+var _objetos_sob_hotbar = [
+    obj_player,
+	obj_saida
+];
+
+//VARIÁVEIS
+var _objeto_sob_hotbar = false;
 var _alpha_hotbar = 1;
 
-if(
-    room == rm_masmorra
-    && instance_exists(obj_player)
-)
+//HOTBAR EM COORDENADAS GUI
+var _hotbar_left =
+    (RES_W - largura_hotbar) / 2;
+
+var _hotbar_right =
+    _hotbar_left + largura_hotbar;
+
+var _hotbar_top =
+    RES_H - altura_hotbar - margem_inferior;
+
+var _hotbar_bottom =
+    _hotbar_top + altura_hotbar;
+
+
+//VERIFICA OBJETOS SOB A HOTBAR
+if(room == rm_masmorra)
 {
-    var _player = instance_find(obj_player, 0);
-
-    if(_player != noone)
+    for(var i = 0; i < array_length(_objetos_sob_hotbar); i++)
     {
-        //CONVERTE OS CANTOS DA BBOX DO PLAYER
-        var _pos_sup_esq = MundoParaGUI(
-            _player.bbox_left,
-            _player.bbox_top
-        );
+        var _obj = _objetos_sob_hotbar[i];
 
-        var _pos_inf_dir = MundoParaGUI(
-            _player.bbox_right,
-            _player.bbox_bottom
-        );
+        //QUANTIDADE DE INSTÂNCIAS DESSE OBJETO
+        var _quantidade = instance_number(_obj);
 
-        if(
-            !is_undefined(_pos_sup_esq)
-            && !is_undefined(_pos_inf_dir)
-        )
+        for(var j = 0; j < _quantidade; j++)
         {
-            //PLAYER EM COORDENADAS GUI
-            var _player_left = _pos_sup_esq.x;
-            var _player_right = _pos_inf_dir.x;
+            var _inst = instance_find(_obj, j);
 
-            var _player_top = _pos_sup_esq.y;
-            var _player_bottom = _pos_inf_dir.y;
+            if(_inst == noone) continue;
 
-            //HOTBAR EM COORDENADAS GUI
-            var _hotbar_left =
-                (RES_W - largura_hotbar) / 2;
+            //CONVERTE OS CANTOS DA BBOX PARA GUI
+            var _pos_sup_esq = MundoParaGUI(
+                _inst.bbox_left,
+                _inst.bbox_top
+            );
 
-            var _hotbar_right =
-                _hotbar_left + largura_hotbar;
+            var _pos_inf_dir = MundoParaGUI(
+                _inst.bbox_right,
+                _inst.bbox_bottom
+            );
 
-            var _hotbar_top =
-                RES_H - altura_hotbar - margem_inferior;
+            if(
+                is_undefined(_pos_sup_esq)
+                || is_undefined(_pos_inf_dir)
+            ) continue;
 
-            var _hotbar_bottom =
-                _hotbar_top + altura_hotbar;
+            //POSIÇÃO DO OBJETO EM GUI
+            var _left = _pos_sup_esq.x;
+            var _right = _pos_inf_dir.x;
+
+            var _top = _pos_sup_esq.y;
+            var _bottom = _pos_inf_dir.y;
 
             //VERIFICA SOBREPOSIÇÃO
-            _player_sob_hotbar = (
-                _player_right > _hotbar_left
-                && _player_left < _hotbar_right
-                && _player_bottom > _hotbar_top
-                && _player_top < _hotbar_bottom
-            );
+            if(
+                _right > _hotbar_left
+                && _left < _hotbar_right
+                && _bottom > _hotbar_top
+                && _top < _hotbar_bottom
+            )
+            {
+                _objeto_sob_hotbar = true;
+                break;
+            }
         }
+
+        //JÁ ENCONTROU UM OBJETO SOBRE A HOTBAR
+        if(_objeto_sob_hotbar) break;
     }
 }
 
 //ALPHA DA HOTBAR
-_alpha_hotbar = _player_sob_hotbar //player ta na hotbar
-    ? alpha_player_em_mim //se sim, ajusto meu alpha
-	: 1; //se não, alpha padrão
+_alpha_hotbar = _objeto_sob_hotbar
+    ? alpha_player_em_mim
+    : 1;
 
 //HOTBAR
 for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)

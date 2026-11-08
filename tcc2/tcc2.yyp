@@ -11,6 +11,7 @@
   "defaultScriptType":1,
   "Folders":[
     {"$GMFolder":"","%Name":"Fonts","folderPath":"folders/Fonts.yy","name":"Fonts","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Notes","folderPath":"folders/Notes.yy","name":"Notes","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Objects","folderPath":"folders/Objects.yy","name":"Objects","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Controladores","folderPath":"folders/Objects/Controladores.yy","name":"Controladores","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Efeitos","folderPath":"folders/Objects/Efeitos.yy","name":"Efeitos","resourceType":"GMFolder","resourceVersion":"2.0",},
@@ -44,6 +45,8 @@
   },
   "name":"tcc2",
   "resources":[
+    {"id":{"name":"fnt_grande_menu","path":"fonts/fnt_grande_menu/fnt_grande_menu.yy",},},
+    {"id":{"name":"fnt_grande_titulo","path":"fonts/fnt_grande_titulo/fnt_grande_titulo.yy",},},
     {"id":{"name":"fnt_media_black","path":"fonts/fnt_media_black/fnt_media_black.yy",},},
     {"id":{"name":"fnt_placeholder_media","path":"fonts/fnt_placeholder_media/fnt_placeholder_media.yy",},},
     {"id":{"name":"fnt_placeholder_pequena","path":"fonts/fnt_placeholder_pequena/fnt_placeholder_pequena.yy",},},
