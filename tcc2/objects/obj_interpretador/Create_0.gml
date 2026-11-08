@@ -4,7 +4,7 @@ caldeirao = noone;
 tokens = [];
 sentenca = "";
 cor_sentenca = c_white;
-fonte = fnt_placeholder_media;
+fonte = fnt_media_black;
 
 algoritmo = undefined;
 

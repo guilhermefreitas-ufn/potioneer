@@ -5,7 +5,7 @@ if(room == rm_masmorra)
 		draw_circle(
 			mouse_x,
 			mouse_y,
-			raio_teste,
+			raio_pocao,
 			true
 		);
 	}

@@ -17,8 +17,8 @@ if(room == rm_masmorra)
         if(mostrar_area)
         {
             //ÁREA DA POÇÃO
-            var _raio_x = raio_teste * _pos_alvo.escala_x;
-            var _raio_y = raio_teste * _pos_alvo.escala_y;
+            var _raio_x = raio_pocao * _pos_alvo.escala_x;
+            var _raio_y = raio_pocao * _pos_alvo.escala_y;
 
             draw_set_colour(c_white);
             draw_set_alpha(alpha_area);
@@ -71,7 +71,7 @@ if(room == rm_masmorra)
         draw_text(
             _pos_alvo.x,
             _pos_alvo.y,
-            "Área da poção."
+            "ÁREA DA POÇÃO"
         );
 
         draw_set_alpha(1);

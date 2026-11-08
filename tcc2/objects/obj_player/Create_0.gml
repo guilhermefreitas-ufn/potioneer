@@ -4,9 +4,9 @@ event_inherited();
 nome = "Player";
 cor = c_black;
 
-hp = 20;
-spd = 3;
-atk = 5;
+hp = 10;
+spd = 2;
+atk = 6;
 
 //testes
 sprite_index = spr_placeholder_32;
@@ -160,11 +160,14 @@ CentroPlayer = function()
 };
 
 //POÇÕES
-raio_teste = 64;
+raio_pocao = 32;
 mostrar_area = true;
 alpha_alcance = 0.1;
 alpha_descricao_area = 0.2;
 alpha_area = 0.5;
+
+//ALCANCE DE USO DAS POÇÕES
+alcance_por_atk = 16;
 
 //Slot selecionado: 0 até 4
 pocao_selecionada = 0;
@@ -190,8 +193,7 @@ MouseSobreSlotHotbar = function()
     return _slot != -1;
 };
 
-//ALCANCE DE USO DAS POÇÕES
-alcance_por_atk = 32;
+
 
 //Calcula o alcance máximo com base no ataque
 AlcancePocao = function()
@@ -340,7 +342,7 @@ function ExecutaPocao(_modo)
                 _pocao.algoritmo,
                 _sprite,
                 _cor,
-                raio_teste,
+                raio_pocao,
                 _centro[0],
                 _centro[1],
                 _alvo[0],
@@ -381,7 +383,7 @@ function ExecutaPocao(_modo)
                 _pocao.algoritmo,
                 _sprite,
                 _cor,
-                raio_teste,
+                raio_pocao,
                 _centro[0],
                 _centro[1],
                 _centro[0],

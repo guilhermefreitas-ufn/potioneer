@@ -19,17 +19,20 @@ var _menos = keyboard_check_pressed(vk_subtract) || keyboard_check_pressed(ord("
 var _posso_clicar = false;
 
 if(!instance_exists(obj_interpretador)) { _posso_clicar = true; }
+
 if(instance_exists(obj_interpretador))
 {
 	if(!obj_interpretador.personalizando_pocao) { _posso_clicar = true; }
 }
 
+#region debug
 //usando teclas
-//debug
-if(_b) { global.debug = !global.debug; }
+
+//if(_b) { global.debug = !global.debug; }
 
 //resetando o jogo
-if(_r && _posso_clicar) { room_restart(); }
+
+//if(_r && _posso_clicar) { room_restart(); }
 
 //TESTANDO OS INVENTARIOS
 //verificando se existe o item 1 (lagrima) no inventario
@@ -48,8 +51,8 @@ if(_0)
 	{
 		with(obj_bolsa)
 		{
-			AdicionaInventario(obj_bolsa, INGREDIENTE_INT, 4);
-			alarm[0] = 60;
+			//AdicionaInventario(obj_bolsa, INGREDIENTE_INT, 4);
+			//alarm[0] = 60;
 		}
 	}
 	else
@@ -66,8 +69,8 @@ if(_9)
 	{
 		with(obj_bolsa)
 		{
-			AdicionaInventario(obj_bolsa, INGREDIENTE_INT, 4);
-			alarm[1] = 60;
+			//AdicionaInventario(obj_bolsa, INGREDIENTE_INT, 4);
+			//alarm[1] = 60;
 		}
 	}
 	else
@@ -80,13 +83,13 @@ if(_posso_clicar)
 {
 	if(_enter)
 	{
-		PreencheBolsa();
+		//PreencheBolsa();
 	}
 	if(_backspace)
 	{
 		if(instance_exists(obj_bolsa) && instance_exists(obj_caldeirao))
 		{
-			LimpaCaldeirao();
+			//LimpaCaldeirao();
 		}
 		else
 		{
@@ -95,7 +98,7 @@ if(_posso_clicar)
 	}
 	if(_menos)
 	{
-		if(room != rm_inventarios) { room_goto(rm_inventarios); }
+		//if(room != rm_inventarios) { room_goto(rm_inventarios); }
 	}
 }
 
@@ -106,7 +109,7 @@ if(room == rm_inventarios)
 	//CRIANDO 5 POÇÕES TESTE
 	if(_p && CaldeiraoVazio())
 	{
-		CriaPocoesTeste();
+		//CriaPocoesTeste();
 	}
 	
 	//CLIQUE NOS BOTÕES
@@ -136,63 +139,64 @@ if(room == rm_inventarios)
 				{
 					//BOTÃO 0 - RESET
 					case 0:
-						game_restart();
-					break;
+					{
+						//game_restart();
+						break;
+					}
 					
 					//BOTÃO 1 - INT +4 + ALARME 0
 					case 1:
-					with(obj_bolsa)
 					{
-						AdicionaInventario(
-							obj_bolsa,
-							INGREDIENTE_INT,
-							4
-						);
-
-						alarm[0] = 60;
+						with(obj_bolsa)
+						{
+							//AdicionaInventario(obj_bolsa,INGREDIENTE_INT,4);
+							//alarm[0] = 60;
+						}
+						break;
 					}
-					break;
 					
 					//BOTÃO 2 - INT +4 + ALARME 1
 					case 2:
-					with(obj_bolsa)
 					{
-						AdicionaInventario(
-							obj_bolsa,
-							INGREDIENTE_INT,
-							4
-						);
-
-						alarm[1] = 60;
+						with(obj_bolsa)
+						{
+							//AdicionaInventario(obj_bolsa,INGREDIENTE_INT,4);
+							//alarm[1] = 60;
+						}
+						break;
 					}
-					break;
 
 					//BOTÃO 3 - ADICIONAR ITENS
 					case 3:
-						PreencheBolsa();
-					break;
+					{
+						//PreencheBolsa();
+						break;
+					}
 
 					//BOTÃO 4 - LIMPAR CALDEIRÃO
 					case 4:
-						LimpaCaldeirao();
-					break;
+					{
+						//LimpaCaldeirao();
+						break;
+					}
 				}
 			}
 		}
 	}
 }
+#endregion
 
 if(room == rm_armario)
 {
 	var _x =
 		RES_W
-		- botao_masmorra_largura
-		- botao_masmorra_margem;
+		- botao_largura
+		- botao_margem;
 
 	var _y =
 		RES_H
-		- botao_masmorra_altura
-		- botao_masmorra_margem;
+		- botao_altura
+		- botao_margem;
 
 
 	//posição do mouse na GUI
@@ -208,12 +212,13 @@ if(room == rm_armario)
 			_my,
 			_x,
 			_y,
-			_x + botao_masmorra_largura,
-			_y + botao_masmorra_altura
+			_x + botao_largura,
+			_y + botao_altura
 		)
 	)
 	{
-		room_goto(rm_masmorra);
+		aplica_transicao(rm_masmorra);
+		//room_goto(rm_masmorra);
 	}
 }
 
@@ -223,11 +228,11 @@ if(room != rm_inicio && room != rm_masmorra)
 	var _mx_armario = device_mouse_x_to_gui(0);
 	var _my_armario = device_mouse_y_to_gui(0);
 
-	var _x_armario = botao_armario_margem;
+	var _x_armario = botao_margem;
 
 	var _y_armario = display_get_gui_height()
-		- botao_armario_altura
-		- botao_armario_margem;
+		- botao_altura
+		- botao_margem;
 
 	if(
 		mouse_check_button_pressed(mb_left)
@@ -236,12 +241,12 @@ if(room != rm_inicio && room != rm_masmorra)
 			_my_armario,
 			_x_armario,
 			_y_armario,
-			_x_armario + botao_armario_largura,
-			_y_armario + botao_armario_altura
+			_x_armario + botao_largura,
+			_y_armario + botao_altura
 		)
 	)
 	{
 		if(room == rm_inventarios) { VaiParaArmario(rm_armario); }
-		if(room == rm_armario) { room_goto(rm_inventarios); }
+		if(room == rm_armario) { /*room_goto(rm_inventarios);*/ aplica_transicao(rm_inventarios) }
 	}
 }

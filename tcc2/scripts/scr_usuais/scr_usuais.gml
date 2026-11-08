@@ -3,6 +3,145 @@
 #macro RES_W display_get_gui_width()
 #macro GAME_SPEED game_get_speed(gamespeed_fps)
 
+//on off overlay
+///@description Desenha um overlay e pausa o jogo.
+///@param {string} _tipo: pause, win, lose, pre, tutorial
+///@param {bool} _ligar: true (liga), false (desliga)
+function controla_overlay(_tipo, _ligar)
+{
+	//Verifica se há uma transição de sala ativa
+	if(instance_exists(obj_transicao) && obj_transicao.state != 0)
+	{
+		//Se estiver ligando um overlay, salva o tipo pendente
+		if(_ligar)
+		{
+			global.overlay_pendente = _tipo;
+		}
+		else
+		{
+			//Se estiver desligando, limpa o pendente (se for o mesmo tipo)
+			if(global.overlay_pendente == _tipo)
+			{
+				global.overlay_pendente = "";
+			}
+		}
+		//A transição será responsável por ativar ou ignorar o overlay pendente.
+		return; 
+	}
+	
+	//Nenhuma transição ativa, executa o overlay imediatamente
+	if(_ligar)
+	{
+		global.overlay_tipo = _tipo;
+		global.overlay_ativo = true;
+		
+		//pausa o jogo
+		global.pause = true;
+	}
+	else
+	{
+		global.overlay_ativo = false;
+		global.overlay_tipo = "";
+		
+		//retoma o jogo
+		global.pause = false;
+	}
+}
+
+///@function aplica_transicao(_room_destino, _alvo_out, _tempo_foco_out, _alvo_in, _tempo_foco_in)
+///@param {real} _room_destino A room de destino.
+///@param {real} _alvo_out Objeto para foco de saída (padrão: noone). Use 'noone' para centro da tela.
+///@param {real} _tempo_foco_out Tempo em segundos do foco de saída (padrão: 2).
+///@param {real} _alvo_in Objeto para foco de entrada (padrão: noone). Use 'noone' para centro da tela.
+///@param {real} _tempo_foco_in Tempo em segundos do foco de entrada (padrão: 0).
+function aplica_transicao(_room_destino, _alvo_out = noone, _tempo_foco_out = 2, _alvo_in = noone, _tempo_foco_in = 0)
+{
+    //show_debug_message("aplica transicao chamado");
+    
+    //Verifica se já existe uma transição ativa
+    if(instance_exists(obj_transicao) && obj_transicao.state != 0)
+    {
+        return;
+    }
+    
+    //Removendo overlays e pausando
+    if(global.overlay_ativo) { global.overlay_ativo = false; global.overlay_tipo = ""; }
+    if(!global.pause) { global.pause = true; }
+    
+    //Inicializa o objeto de transição
+    var _inst = noone;
+    
+    if(!instance_exists(obj_transicao))
+    {
+        _inst = instance_create_layer(0, 0, "UI", obj_transicao);
+    }
+    else
+    {
+        _inst = instance_find(obj_transicao, 0);
+    }
+    
+    with(_inst)
+    {
+        //1. Definições de Visão e Raio Máximo
+        var _view_w = camera_get_view_width(view_camera[0]);
+        var _view_h = camera_get_view_height(view_camera[0]);
+        radius_max = ceil(point_distance(0, 0, _view_w, _view_h));
+        radius = radius_max; //Inicia totalmente aberto
+        
+        //2. Parâmetros de SAÍDA (Out)
+        var _out_target = noone;
+        if(_alvo_out != noone)
+        {
+            _out_target = instance_find(_alvo_out, 0);
+        }
+        
+        if(instance_exists(_out_target))
+        {
+            //Alvo EXISTE: Transição normal com foco
+            alvo_out_id = _out_target;
+            focus_time_out_frames = _tempo_foco_out * GAME_SPEED;
+            
+            var _spr_out = _out_target.sprite_index;
+            var _spr_w_out = sprite_get_width(_spr_out);
+            var _spr_h_out = sprite_get_height(_spr_out);
+            
+            //Raio mínimo é metade da maior dimensão
+            radius_min_out = max(_spr_w_out, _spr_h_out) / 2;
+            
+            //Centralização pelo Offset do Sprite
+            var _spr_xoff_out = sprite_get_xoffset(_spr_out);
+            var _spr_yoff_out = sprite_get_yoffset(_spr_out);
+            
+            //Calcula o centro do sprite: Posição do Objeto - Offset da Origem + Metade da Largura/Altura
+            center_x = (_out_target.x - _spr_xoff_out) + (_spr_w_out / 2);
+            center_y = (_out_target.y - _spr_yoff_out) + (_spr_h_out / 2);
+            
+            state = 1; //Inicia FECHANDO
+        }
+        else
+        {
+            //Alvo NÃO EXISTE: Fechamento total imediato no centro da tela
+            alvo_out_id = noone;
+            radius_min_out = 0;
+            focus_time_out_frames = 0;
+            
+            // Define o centro somando a posição da câmera com a metade da resolução
+            center_x = camera_get_view_x(view_camera[0]) + (RES_W / 2);
+            center_y = camera_get_view_y(view_camera[0]) + (RES_H / 2);
+            
+            state = 3; //Inicia FECHAMENTO_TOTAL
+        }
+        
+        //Parâmetros de ENTRADA (In)
+        alvo_in_id = _alvo_in; //Salva o ÍNDICE do objeto (ex: obj_player)
+        focus_time_in_frames = _tempo_foco_in * GAME_SPEED;
+        radius_min_in = 0; //Será calculado no Step Event
+        
+        //4. Parâmetro Final
+        target_room = _room_destino;
+    }
+}
+
 function MundoParaGUI(_x, _y, _viewport = 0)
 {
     //VERIFICA SE EXISTE UMA CÂMERA ATIVA

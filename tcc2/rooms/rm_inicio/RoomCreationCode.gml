@@ -1,1 +1,1 @@
-room_goto(rm_inventarios);
+room_goto(rm_menu);

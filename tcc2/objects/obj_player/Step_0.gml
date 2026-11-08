@@ -40,6 +40,7 @@ switch (estado)
         {
 			if(hp <= 0)
 			{
+				CriaMensagem(CentroPlayer()[0],CentroPlayer()[1],"Derrota!");
 				MudaEstado("morto");
 			}
 			else
@@ -66,12 +67,43 @@ switch (estado)
 	}
     case "morto":
     {
-
-        instance_destroy();
-
+		
+		//Verificando se a Mensagem de Derrota já acabou
+		
+		//se não existe mensagem
+        if(!instance_exists(obj_mensagem))
+		{
+			//me destruo
+			instance_destroy();
+		}
+		
+		//se existe mensagem
+		else
+		{
+			//inicio dizendo que não nenhuma mensagem é a de Derrota
+			var _tem = false;
+			
+			//cada mensagem...
+			with(obj_mensagem)
+			{
+				//...verifica se seu texto é "Derrota"
+				if(texto == "Derrota!")
+				{
+					//se for, gravo que tem Mensagem de Derrota
+					_tem = true;
+				}
+			}
+			
+			//se nenhuma mensagem é a mensagem de Derrota
+			if(!_tem)
+			{
+				//me destruo
+				instance_destroy();
+			}
+		}
+		
+		//tô morto, não faço mais nada
         exit;
-
-
 	}
     default:
     {
@@ -81,7 +113,6 @@ switch (estado)
         break;
 	}
 }
-
 
 if (room == rm_masmorra)
 {
@@ -196,17 +227,17 @@ if (room == rm_masmorra)
         // ESPAÇO: beber
         else if (keyboard_check_pressed(vk_space))
         {
-            if (ExecutaPocao("player_only"))
-            {
-                if (
-                    hp > 0
-                    && estado != "sofrendo"
-                    && estado != "morto"
-                )
-                {
-                    MudaEstado("bebendo");
-                }
-            }
+            //if (ExecutaPocao("player_only"))
+            //{
+            //    if (
+            //        hp > 0
+            //        && estado != "sofrendo"
+            //        && estado != "morto"
+            //    )
+            //    {
+            //        MudaEstado("bebendo");
+            //    }
+            //}
         }
     }
 	#endregion
@@ -228,13 +259,6 @@ if (room == rm_masmorra)
 	}
 	
 	#endregion
-}
-
-
-if (room == rm_masmorra)
-{
-    
-    
 }
 
 // DANO DE CONTATO DOS INIMIGOS

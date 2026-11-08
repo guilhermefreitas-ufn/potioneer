@@ -20,5 +20,6 @@ if (_player && !transicao_iniciada)
 
     global.fase += 1;
 
-    room_goto(rm_inventarios);
+    //room_goto(rm_inventarios);
+	aplica_transicao(rm_inventarios);
 }

@@ -2,18 +2,31 @@
 var _margem = 32;
 var _texto = sentenca;
 var _x = RES_W/2;
-var _y = RES_H;
+var _y = 0;
+var _y_erro = RES_H;
 var _max_tam = RES_H - _margem;
 
 //sentença
-if(_texto != " ") { _texto = "\" "+_texto+" \""; }
+if(_texto != " ") { _texto = "\" "+_texto+". \""; }
 
 define_align();
 //draw_set_colour(cor_sentenca);
 var _cor_contorno = c_black;
 draw_set_font(fonte);
 
-draw_text_outline(_x, _y - 2 * _margem,_texto,cor_sentenca,_cor_contorno,1,1,1,0,-1, _max_tam);
+draw_text_outline(
+	_x,
+	_y + 2 * _margem,
+	string_upper(_texto),
+	cor_sentenca,
+	_cor_contorno,
+	1,
+	1,
+	1,
+	0,
+	-1,
+	_max_tam
+);
 
 reseta_draw();
 
@@ -33,7 +46,7 @@ if(_erro != "")
 {
 	define_align();
 	draw_set_font(fonte);
-	draw_text_outline(_x, _y  - _margem, _erro, cor_erro, c_black, 1, 1, 1, 0, -1, _max_tam);
+	draw_text_outline(_x, _y_erro  - _margem * 2, _erro, cor_erro, c_black, 1, 1, 1, 0, -1, _max_tam);
 	reseta_draw();
 }
 
@@ -98,15 +111,16 @@ draw_rectangle(
 draw_set_font(-1);
 define_align(0,0);
 draw_set_color(c_white);
+draw_set_font(fnt_media_black);
 
 //var _texto = ;
-var _texto_largura = string_width("CRIAR POCAO");
+var _texto_largura = string_width("CRIAR POÇÃO");
 var _offset_y = 6;
 
 draw_text(
 	_x + (botao_criar_largura - _texto_largura) / 2,
 	_y + _offset_y,
-	"CRIAR POCAO"
+	"CRIAR POÇÃO"
 );
 
 reseta_draw();
@@ -129,7 +143,6 @@ if(mensagem_timer > 0)
 	
 	reseta_draw();
 }
-
 
 // NOMEANDO E PERSONALIZANDO A POÇÃO
 if(personalizando_pocao)
@@ -286,7 +299,6 @@ if(personalizando_pocao)
 	        var _sprite = opcoes_sprites_pocao[i].sprite;
 	        var _nome = opcoes_sprites_pocao[i].nome;
 
-
 	        // FUNDO DO CARD
 	        draw_set_alpha(0.9);
 	        draw_set_colour(c_dkgray);
@@ -301,7 +313,6 @@ if(personalizando_pocao)
 
 	        draw_set_alpha(1);
 
-
 	        // DESTAQUE DO SPRITE SELECIONADO
 	        if(i == indice_sprite_selecionado)
 	        {
@@ -315,7 +326,6 @@ if(personalizando_pocao)
 	                true
 	            );
 	        }
-
 
 	        // DESENHA O SPRITE
 	        if(!is_undefined(_sprite) && sprite_exists(_sprite))
@@ -343,7 +353,6 @@ if(personalizando_pocao)
 	                1
 	            );
 	        }
-
 
 	        // NOME DO SPRITE
 	        draw_set_colour(c_white);

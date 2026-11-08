@@ -4,35 +4,19 @@ randomize();
 //dados do jogador
 InicializaDadosJogador();
 
+//overlay
+global.overlay_ativo = false;
+global.overlay_tipo = "";
+global.overlay_pendente = "";
+
+//pausa
+global.pause = false;
+
 //progressão
 global.fase = 0;
 
-//global.lista_inimigos = [
-//	obj_ini_sanguessuga,
-//	obj_ini_morcego
-//];	
-//global.tipo_inimigo = [];
-//global.qtd_inimigo = 0;
-//global.chefe = false;
-
-//global.qtd_bau = 2;
-
-//global.passos = 400; //procedural
-
-
-
 //debug
 global.debug = false;
-
-//botao para armário de poções (arsenal)
-botao_armario_largura = 220;
-botao_armario_altura = 40;
-botao_armario_margem = 24;
-
-//botão para explorar masmorra
-botao_masmorra_largura = 220;
-botao_masmorra_altura = 40;
-botao_masmorra_margem = 24;
 
 //Cadastro de Ingredientes
 global.Ingredientes =
@@ -42,7 +26,7 @@ global.Ingredientes =
 	
 	CriarIngrediente(2, "Chifre",	"Um chifre longo e bem afiado."			,spr_ing_chifre,	"saúde",		"hp",		TipoIngrediente.VARIAVEL),
 	CriarIngrediente(3, "Osso",		"Um osso velho e esquecido."			,spr_ing_osso,		"velocidade",	"spd",		TipoIngrediente.VARIAVEL),
-	CriarIngrediente(4, "Fogo",		"Uma labareda de fogo eterno."			,spr_ing_fogo,		"ataque",		"atk",		TipoIngrediente.VARIAVEL),
+	CriarIngrediente(4, "Fogo",		"Uma labareda de fogo eterno."			,spr_ing_fogo,		"força",		"atk",		TipoIngrediente.VARIAVEL),
 	
 	CriarIngrediente(5, "Folha",	"Uma folha de uma árvore desconhecida."	,spr_ing_folha,		"diminui em",	"decreases",TipoIngrediente.OPERADOR_EFEITO),
 	CriarIngrediente(6, "Sol",		"Um mini sol sustentado por magia."		,spr_ing_sol,		"aumenta em",	"increases",TipoIngrediente.OPERADOR_EFEITO),
@@ -190,10 +174,9 @@ function VaiParaArmario(_rm_armario)
 	);
 	
 	
-	room_goto(_rm_armario);
+	//room_goto(_rm_armario);
+	aplica_transicao(_rm_armario);
 }
-
-global.c_prata = make_colour_rgb(170, 169, 173);
 
 function CriaPocoesTeste()
 {
@@ -595,13 +578,14 @@ function CriaPocoesTeste()
 	
 }
 
-//botões de debug
-
+//botões
 //CONFIGURAÇÃO DOS BOTÕES
-fonte_texto =fnt_placeholder_media;
+fonte_texto = fnt_placeholder_media;
+
+botao_margem = 24;
 
 botao_largura = 220;
-botao_altura = 32;
+botao_altura = 40;
 
 botao_espaco = 10;
 

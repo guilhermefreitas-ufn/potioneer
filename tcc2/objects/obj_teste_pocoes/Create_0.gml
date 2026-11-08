@@ -1,4 +1,4 @@
-raio_teste = 80;
+raio_pocao = 80;
 mostrar_area = true;
 
 function ExecutaPocao(_numero)
@@ -34,7 +34,7 @@ function ExecutaPocao(_numero)
 		CriaContextoAreaPocao(
 			mouse_x,
 			mouse_y,
-			raio_teste
+			raio_pocao
 		);
 	
 	

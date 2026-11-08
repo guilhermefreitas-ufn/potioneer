@@ -5,10 +5,10 @@ if(room == rm_inventarios || room == rm_armario)
 	draw_set_halign(fa_left);
 	draw_set_valign(fa_top);
 
-	var _x = botao_armario_margem;
+	var _x = botao_margem;
 	var _y = display_get_gui_height()
-			- botao_armario_altura
-			- botao_armario_margem;
+			- botao_altura
+			- botao_margem;
 
 	var _mx = device_mouse_x_to_gui(0);
 	var _my = device_mouse_y_to_gui(0);
@@ -18,8 +18,8 @@ if(room == rm_inventarios || room == rm_armario)
 		_my,
 		_x,
 		_y,
-		_x + botao_armario_largura,
-		_y + botao_armario_altura
+		_x + botao_largura,
+		_y + botao_altura
 	);
 	
 	//FUNDO
@@ -35,8 +35,8 @@ if(room == rm_inventarios || room == rm_armario)
 	draw_rectangle(
 		_x,
 		_y,
-		_x + botao_armario_largura,
-		_y + botao_armario_altura,
+		_x + botao_largura,
+		_y + botao_altura,
 		false
 	);
 	
@@ -46,21 +46,22 @@ if(room == rm_inventarios || room == rm_armario)
 	draw_rectangle(
 		_x,
 		_y,
-		_x + botao_armario_largura,
-		_y + botao_armario_altura,
+		_x + botao_largura,
+		_y + botao_altura,
 		true
 	);
 
 	//TEXTO
 	draw_set_color(c_white);
+	draw_set_font(fnt_media_black);
 
-	var _texto = "ARMARIO DE POCOES";
-	if(room == rm_armario) { _texto = "VOLTAR AO CALDEIRAO"; }
+	var _texto = "ARMÁRIO DE POÇÕES";
+	if(room == rm_armario) { _texto = "VOLTAR AO CALDEIRÃO"; }
 	var _texto_largura = string_width(_texto);
 	var _offset_y = 6;
 
 	draw_text(
-		_x + (botao_armario_largura - _texto_largura) / 2,
+		_x + (botao_largura - _texto_largura) / 2,
 		_y + _offset_y,
 		_texto
 	);
@@ -73,13 +74,13 @@ if(room == rm_armario)
 	//BOTÃO MASMORRA
 	var _x =
 		RES_W
-		- botao_masmorra_largura
-		- botao_masmorra_margem;
+		- botao_largura
+		- botao_margem;
 
 	var _y =
 		RES_H
-		- botao_masmorra_altura
-		- botao_masmorra_margem;
+		- botao_altura
+		- botao_margem;
 
 	var _mx = device_mouse_x_to_gui(0);
 	var _my = device_mouse_y_to_gui(0);
@@ -89,8 +90,8 @@ if(room == rm_armario)
 		_my,
 		_x,
 		_y,
-		_x + botao_masmorra_largura,
-		_y + botao_masmorra_altura
+		_x + botao_largura,
+		_y + botao_altura
 	);
 
 	//FUNDO
@@ -106,8 +107,8 @@ if(room == rm_armario)
 	draw_rectangle(
 		_x,
 		_y,
-		_x + botao_masmorra_largura,
-		_y + botao_masmorra_altura,
+		_x + botao_largura,
+		_y + botao_altura,
 		false
 	);
 
@@ -117,8 +118,8 @@ if(room == rm_armario)
 	draw_rectangle(
 		_x,
 		_y,
-		_x + botao_masmorra_largura,
-		_y + botao_masmorra_altura,
+		_x + botao_largura,
+		_y + botao_altura,
 		true
 	);
 	
@@ -127,13 +128,14 @@ if(room == rm_armario)
 	draw_set_halign(fa_left);
 	draw_set_valign(fa_top);
 	draw_set_color(c_white);
+	draw_set_font(fnt_media_black);
 
 	var _texto = "EXPLORAR MASMORRA";
 	var _texto_largura = string_width(_texto);
 	var _offset_y = 6;
 
 	draw_text(
-		_x + (botao_masmorra_largura - _texto_largura) / 2,
+		_x + (botao_largura - _texto_largura) / 2,
 		_y + _offset_y,
 		_texto
 	);

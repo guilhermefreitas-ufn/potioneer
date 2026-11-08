@@ -9,14 +9,7 @@ var _slot_hover =
 		_my
 	);
 
-//TÍTULO
-draw_set_colour(c_white);
 
-draw_text(
-	x,
-	y - 16,
-	"ARMÁRIO DE POÇÕES"
-);
 
 //SLOTS
 for(var i = 0; i < SLOTS_ARMARIO_POCOES; i++)
