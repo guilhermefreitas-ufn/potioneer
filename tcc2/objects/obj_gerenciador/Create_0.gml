@@ -18,6 +18,17 @@ global.fase = 0;
 //debug
 global.debug = false;
 
+//eventos de progressão
+if (!variable_global_exists("eventos_progressao"))
+{
+    global.eventos_progressao = EventosProgressao();
+}
+
+if (!variable_global_exists("eventos_processados"))
+{
+    global.eventos_processados = ds_map_create();
+}
+
 //Cadastro de Ingredientes
 global.Ingredientes =
 [
@@ -42,6 +53,31 @@ global.Ingredientes =
 	
 	//,CriarIngrediente(14, "Lua", "Uma mini lua perfeitamente mordida.",spr_ing_lua,	"enquanto",		"while",	TipoIngrediente.CONDICIONAL)
 ];
+
+global.ingredientes_finais = [
+	{
+		nome : "Âmbar",
+		sprite : spr_ing_ambar
+	},
+	{
+		nome : "Cogumelo",
+		sprite : spr_ing_cogumelo
+	},
+	{
+		nome : "Pena",
+		sprite : spr_ing_pena
+	},
+	{
+		nome : "Dente",
+		sprite : spr_ing_dente
+	},
+	{
+		nome : "Cinzas",
+		sprite : spr_ing_cinzas
+	}
+];
+
+global.ing_finais_coletados = 0;
 
 //funções para testes
 function VerificaIngrediente(_numero = 1)

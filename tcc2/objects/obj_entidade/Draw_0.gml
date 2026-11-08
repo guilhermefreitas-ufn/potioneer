@@ -5,6 +5,7 @@ var _grossura_barras = 4;
 //var _max_spd = 0;
 //var _max_atk = 0;
 
+//setanto meus atributos máximos
 if(!setei_stats)
 {
 	max_hp = hp;
@@ -12,6 +13,20 @@ if(!setei_stats)
 	max_atk = atk;
 	
 	setei_stats = true;
+}
+
+//Atualizando meus atributos máximos
+if(hp > max_hp)
+{
+	max_hp = hp;
+}
+if(spd > max_spd)
+{
+	max_spd = spd;
+}
+if(atk > max_atk)
+{
+	max_atk = atk;
 }
 
 DesenhaSombra();

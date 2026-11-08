@@ -168,10 +168,19 @@ if(room == rm_masmorra)
 	var _bau_num = 0;
 	var _inimigo_num = 0;
 	var _texto = "Subsolo "+string(global.fase);
+	var _bau_especial = 0;
 	
 	if(instance_exists(obj_bau))
 	{
-		_bau_num = instance_number(obj_bau);
+		with(obj_bau)
+		{
+			if(especial)
+			{
+				_bau_especial += 1;
+			}
+		}
+		
+		_bau_num = instance_number(obj_bau) - _bau_especial;
 	}
 	
 	if(instance_exists(obj_inimigo_pai))
@@ -184,12 +193,20 @@ if(room == rm_masmorra)
 		_texto = "Térreo";
 	}
 	
+	var _yy = 0;
+	
 	define_align();
 	draw_set_font(fnt_placeholder_media);
 	
 	draw_text_outline(RES_W / 2, 40, "Inimigos restantes: "+string(_inimigo_num), c_white, c_black,2);
 	draw_text_outline(RES_W / 2, 60, "Baús restantes: "+string(_bau_num), c_white, c_black,2);
-	draw_text_outline(RES_W / 2, 80, _texto, c_white, c_black,2);
+	draw_text_outline(RES_W / 2, 80, "Ingredientes finais: "+string(global.ing_finais_coletados)+"/5", c_white, c_black,2);
+	if(_bau_especial > 0)
+	{
+		_yy = 20;
+		draw_text_outline(RES_W / 2, 100, "Baús especiais: "+string(_bau_especial), c_aqua, c_teal,2);
+	}
+	draw_text_outline(RES_W / 2, _yy, 100+_yy, c_white, c_black,2);
 	
 	reseta_draw();
 }

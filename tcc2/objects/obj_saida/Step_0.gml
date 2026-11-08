@@ -40,7 +40,14 @@ if (_player && !instance_exists(obj_transicao) && _espaco)
     //transicao_iniciada = true;
 
     //room_goto(rm_inventarios);
-	aplica_transicao(rm_inventarios);
+	if(global.ing_finais_coletados < 5)
+	{
+		aplica_transicao(rm_inventarios);
 	
-	global.fase += 1;
+		global.fase += 1;
+	}
+	else
+	{
+		aplica_transicao(rm_menu);
+	}
 }

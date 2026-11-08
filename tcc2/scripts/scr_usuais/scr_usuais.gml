@@ -231,15 +231,15 @@ function cria_luz(_x, _y, _tam_x, _tam_y, _pulsa = true)
 }
 
 //desenha a sombra dos objetos
-function DesenhaSombra()
+function DesenhaSombra(_offset_x = 0, _offset_y = 0)
 {
 	draw_set_colour(c_dkgray);
 	draw_set_alpha(.5);
 	draw_ellipse(
-		x,
-		y + sprite_height * 0.75,
-		x + sprite_width,
-		y + sprite_height * 1.25,
+		x + _offset_x,
+		y + (sprite_height * 0.75)  + _offset_y,
+		x + sprite_width + _offset_x,
+		y + (sprite_height * 1.25)  + _offset_y,
 		false
 	);
 	reseta_draw();

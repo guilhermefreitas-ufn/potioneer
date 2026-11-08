@@ -1,4 +1,8 @@
-if(global.pause) { exit; }
+if(global.pause)
+{
+	MudaEstado("parado");
+	exit;
+}
 
 //controlando o alpha do hit flash
 if(alpha > 0)

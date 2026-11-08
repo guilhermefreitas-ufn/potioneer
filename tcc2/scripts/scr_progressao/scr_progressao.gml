@@ -1,3 +1,160 @@
+function EventosProgressao()
+{
+    return [
+
+        // RECORRENTE
+		// Acontece de vez em vez comecando em "inicio" a cada "intervalo"
+        {
+            id: "bau_especial",
+            tipo: "recorrente",
+            inicio: 0,
+            intervalo: 1
+        },
+
+        // ÚNICO
+		//Acontece uma unica vez na "fase"
+        {
+            id: "exemplo",
+            tipo: "unico",
+            fase: 20
+        },
+
+        // INTERVALO
+		// Acontece em todas as fases do intervalo, comecando em "inicio" e parando em "fim"
+        {
+            id: "exemplo 2",
+            tipo: "intervalo",
+            inicio: 20,
+            fim: 100
+        }
+
+    ];
+}
+
+function ProcessarEventosFase(_fase)
+{
+    var _eventos = global.eventos_progressao;
+
+    for (var i = 0; i < array_length(_eventos); i++)
+    {
+        var _evento = _eventos[i];
+
+        // Verifica se o evento está ativo
+        if (!EventoAtivoNaFase(_evento, _fase))
+        {
+            continue;
+        }
+		
+		// IDENTIFICADOR DE EXECUÇÃO
+
+		var _chave = _evento.id;
+
+		// Eventos recorrentes e intervalos podem executar
+		// novamente em outras fases, mas não duas vezes na mesma.
+		if (_evento.tipo != "unico")
+		{
+		    _chave += "_" + string(_fase);
+		}
+
+		// Verifica se já foi executado
+		if (ds_map_exists(global.eventos_processados, _chave))
+		{
+		    continue;
+		}
+
+        // Executa a ação correspondente
+        switch (_evento.id)
+        {
+            case "exemplo":
+			{
+                // Aplica funcionamento do exemplo
+                break;
+			}
+
+            case "exemplo 2":
+			{
+                // Executa exemplo 2
+                break;
+			}
+
+            case "bau_especial":
+			{
+				if(instance_exists(obj_map))
+				{
+					var _tem_especial = false;
+					
+					if(instance_exists(obj_bau))
+					{
+						with(obj_bau)
+						{
+							if(especial)
+							{
+								_tem_especial = true;
+								
+								show_debug_message("já tem baú especial");
+							}
+						}
+					}
+					
+					if(!_tem_especial)
+					{
+						show_debug_message("avisando mapa que precisa de bau especial");
+						obj_map.cria_bau_especial = true;
+					}
+				}
+				
+				//var _tem_especial = false;
+				//
+				//if(instance_exists(obj_bau))
+				//{
+				//	with(obj_bau)
+				//	{
+				//		if(especial)
+				//		{
+				//			_tem_especial = true;
+				//		}
+				//	}
+				//}
+				//
+				//
+                //if(!_tem_especial && instance_exists(obj_map))
+				//{
+				//	with(obj_map)
+				//	{
+				//		//percorro o mapa
+				//		for(var _xx = 0; _xx < cell_h; _xx++)
+				//		{
+				//			for(var _yy = 0; _yy < cell_v; _yy++)
+				//			{
+				//				var x1 = _xx * CELL_T;
+				//				var y1 = _yy * CELL_T;
+				//			
+				//				if(grid[# _xx,_yy] == TipoObj.CHAO)
+				//				{
+				//					//Crio o baú especial
+				//					with(instance_create_layer(x1, y1, "Loot", obj_bau))
+				//					{
+				//						especial = true;
+				//					}
+				//					
+				//					//Atualizo a posição
+				//					grid[# _xx,_yy] = TipoObj.LOOT;
+				//				
+				//					break;
+				//				}
+				//			}
+				//		}
+				//	}
+				//}
+				
+                break;
+			}
+        }
+		
+		ds_map_add(global.eventos_processados, _chave, true);
+    }
+}
+
 function RegrasProgressao()
 {
     return {
@@ -41,7 +198,18 @@ function RegrasProgressao()
             mult_atk_max: 2.5,
 
             mult_spd_por_fase: 0.015,
-            mult_spd_max: 1.5
+            mult_spd_max: 1.5,
+			
+			// PROGRESSÃO DOS TIPOS DE INIMIGOS
+			fase_inicio_morcego: 10,
+
+			fase_morcego_garantido: 20,
+
+			chance_morcego_inicio_pct: 10,
+
+			chance_morcego_fim_pct: 50,
+
+			min_inimigos_fase20: 3
         },
 
         // CONFIGURAÇÕES DOS LOOTS
@@ -59,6 +227,37 @@ function RegrasProgressao()
             distancia_relativa: 0.25
         }
     };
+}
+
+function EventoAtivoNaFase(_evento, _fase)
+{
+    switch (_evento.tipo)
+    {
+        // A cada N fases
+        case "recorrente":
+
+            return (
+                _fase >= _evento.inicio
+                && ((_fase - _evento.inicio) mod _evento.intervalo) == 0
+            );
+
+
+        // Em uma fase específica
+        case "unico":
+
+            return _fase == _evento.fase;
+
+
+        // Durante um intervalo de fases
+        case "intervalo":
+
+            return (
+                _fase >= _evento.inicio
+                && _fase <= _evento.fim
+            );
+    }
+
+    return false;
 }
 
 function ConfiguracaoFase(_fase, _regras)
@@ -100,6 +299,40 @@ function ConfiguracaoFase(_fase, _regras)
         _ini.maximo,
         _ini.max_inicial + _aumentos_ini * _ini.aumento
     );
+	
+	// GARANTE INIMIGOS SUFICIENTES NA FASE 20+
+	if (_fase >= _ini.fase_morcego_garantido)
+	{
+	    _inimigo_max = max(
+	        _inimigo_max,
+	        _ini.min_inimigos_fase20
+	    );
+	}
+
+	
+	// CHANCE DE APARECER MORCEGO
+	
+
+	var _chance_morcego = 0;
+
+	if (
+	    _fase >= _ini.fase_inicio_morcego
+	    && _fase < _ini.fase_morcego_garantido
+	)
+	{
+	    var _progresso = (
+	        _fase - _ini.fase_inicio_morcego
+	    ) / (
+	        _ini.fase_morcego_garantido
+	        - _ini.fase_inicio_morcego - 1
+	    );
+
+	    _chance_morcego = lerp(
+	        _ini.chance_morcego_inicio_pct,
+	        _ini.chance_morcego_fim_pct,
+	        _progresso
+	    );
+	}
 
     // QUANTIDADE DE LOOTS
     var _aumentos_loot = floor(
@@ -145,6 +378,11 @@ function ConfiguracaoFase(_fase, _regras)
 
         inimigo_max: _inimigo_max,
         chance_inimigo: _ini.chance_pct,
+		
+		fase_inicio_morcego: _ini.fase_inicio_morcego,
+		fase_morcego_garantido: _ini.fase_morcego_garantido,
+		chance_morcego_pct: _chance_morcego,
+		min_inimigos_fase20: _ini.min_inimigos_fase20,
 
         loot_max: _loot_max,
         chance_loot: _loot.chance_pct,

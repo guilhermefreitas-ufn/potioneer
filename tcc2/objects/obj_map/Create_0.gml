@@ -1,8 +1,5 @@
-// INICIALIZAÇÃO DA FASE
-if (!variable_global_exists("fase"))
-{
-    global.fase = 1;
-}
+//BAU ESPECIAL
+cria_bau_especial = false;
 
 // CARREGANDO AS REGRAS DE PROGRESSÃO
 if (!variable_global_exists("regras_progressao"))
@@ -94,7 +91,7 @@ for(var i = 0; i < passos; i++)
 	grid[# xx,yy] = TipoObj.CHAO;
 }
 
-//DEBUG: CALCULANDO A OCUPAÇÃO DO MAPA
+#region DEBUG: CALCULANDO A OCUPAÇÃO DO MAPA
 var _celulas_chao = 0;
 
 for (var _x = 0; _x < cell_h; _x++)
@@ -115,9 +112,21 @@ var _ocupacao = (
 show_debug_message(
     "Ocupação do mapa: " + string(_ocupacao) + "%"
 );
+#endregion
 
+//posição do player
 var player_inicio_x = -1;
 var player_inicio_y = -1;
+
+// CONTROLE DOS INIMIGOS GERADOS
+var inimigos_criados = 0;
+
+var morcegos_criados = 0;
+
+var sanguessugas_criadas = 0;
+
+// PROCESSAMENTO DOS EVENTOS DA FASE
+ProcessarEventosFase(global.fase);
 
 //percorro o mapa
 for(var _xx = 0; _xx < cell_h; _xx++)
@@ -127,20 +136,25 @@ for(var _xx = 0; _xx < cell_h; _xx++)
 		var x1 = _xx * CELL_T;
 		var y1 = _yy * CELL_T;
 		
-		//PAREDES
+		//CRIANDO PAREDES
 		if(grid[# _xx,_yy] == TipoObj.VAZIO)
 		{
 			//posso colocar uma parede;
 			instance_create_layer(x1, y1, "Colisores",obj_wall);
 		}
 		
-		//CHÃO
+		//SE É CHÃO...
 		if(grid[# _xx,_yy] == TipoObj.CHAO)
 		{
 			// POSICIONAMENTO DO PLAYER
 			if(!instance_exists(obj_player))
 			{
-			    instance_create_layer(x1, y1, "Player", obj_player);
+			    var _player = instance_create_layer(
+			        x1,
+			        y1,
+			        "Player",
+			        obj_player
+			    );
 
 			    // Guardando a posição inicial na grid
 			    player_inicio_x = _xx;
@@ -148,34 +162,178 @@ for(var _xx = 0; _xx < cell_h; _xx++)
 
 			    grid[# _xx,_yy] = TipoObj.PLAYER;
 
+			    // BAÚ ESPECIAL
+			    if(cria_bau_especial)
+			    {
+			        var _slot_x = -1;
+			        var _slot_y = -1;
+
+			        var _distancia_maxima = -1;
+
+			        // Procura o chão mais distante do jogador
+			        for(var _gx = 0; _gx < cell_h; _gx++)
+			        {
+			            for(var _gy = 0; _gy < cell_v; _gy++)
+			            {
+			                if(grid[# _gx,_gy] == TipoObj.CHAO)
+			                {
+			                    var _px = _gx * CELL_T + CELL_T / 2;
+			                    var _py = _gy * CELL_T + CELL_T / 2;
+
+			                    var _distancia = point_distance(
+			                        _player.x,
+			                        _player.y,
+			                        _px,
+			                        _py
+			                    );
+
+			                    if(_distancia > _distancia_maxima)
+			                    {
+			                        _distancia_maxima = _distancia;
+
+			                        _slot_x = _gx;
+			                        _slot_y = _gy;
+			                    }
+			                }
+			            }
+			        }
+
+			        // Cria o baú na posição reservada
+			        if(_slot_x != -1)
+			        {
+			            var _bau = instance_create_layer(
+						    _slot_x * CELL_T,
+						    _slot_y * CELL_T,
+						    "Loot",
+						    obj_bau,
+						    {
+						        especial: true
+						    }
+						);
+
+			            grid[# _slot_x,_slot_y] = TipoObj.LOOT;
+
+			            cria_bau_especial = false;
+
+			            show_debug_message(
+			                "BAÚ ESPECIAL CRIADO! Posição: " +
+			                string(_slot_x) + ", " +
+			                string(_slot_y)
+			            );
+			        }
+			        else
+			        {
+			            show_debug_message(
+			                "ERRO: Não foi encontrada uma célula livre para o baú especial!"
+			            );
+			        }
+			    }
+
 			    continue;
 			}
 			
-			//INIMIGOS
-			if(inimigo_max > 0)
+			// INIMIGOS
+			if (
+			    inimigo_max > 0
+			    && point_distance(x1, y1, obj_player.x, obj_player.y) > dist_inimigo
+			)
 			{
-				var _chances = 50;
-				
-				var inimigo = choose(obj_ini_morcego, obj_ini_sanguessuga);
-				
-				// INIMIGOS
-				if(
-					point_distance(x1, y1, obj_player.x, obj_player.y) > dist_inimigo
-					&& random(100) < _cfg.chance_inimigo
-				)
-				{
-					instance_create_layer(x1, y1, "Instances", inimigo);
+			    var _fase = global.fase;
+
+			    // Nas fases 20+, força a criação dos
+			    // primeiros 3 inimigos.
+			    var _forcar_spawn = (
+			        _fase >= _cfg.fase_morcego_garantido
+			        && inimigos_criados < _cfg.min_inimigos_fase20
+			    );
+
+			    // Verifica se deve gerar um inimigo nesta célula
+			    var _tentar_spawn = (
+			        _forcar_spawn
+			        || random(100) < _cfg.chance_inimigo
+			    );
+
+			    if (_tentar_spawn)
+			    {
+			        // Por padrão, utiliza a sanguessuga
+			        var _inimigo = obj_ini_sanguessuga;
+
+
+			        
+			        // FASE 20+: MORCEGOS EM MAIORIA
+			        
+
+			        if (_fase >= _cfg.fase_morcego_garantido)
+			        {
+			            // Composição inicial: 2 morcegos e 1 sanguessuga
+			            if (
+			                inimigos_criados == 0
+			                || inimigos_criados == 2
+			            )
+			            {
+			                _inimigo = obj_ini_morcego;
+			            }
+			            else if (inimigos_criados == 1)
+			            {
+			                _inimigo = obj_ini_sanguessuga;
+			            }
+			            else
+			            {
+			                // Mantém os morcegos em maioria
+			                if (morcegos_criados <= sanguessugas_criadas + 1)
+			                {
+			                    _inimigo = obj_ini_morcego;
+			                }
+			                else
+			                {
+			                    _inimigo = obj_ini_sanguessuga;
+			                }
+			            }
+			        }
 					
-					grid[# _xx,_yy] = TipoObj.INIMIGO;
-					
-					inimigo_max -= 1;
-					
-					continue;
-				}
+					// FASE 10-19: CHANCE DE MORCEGO
+			        else if (
+			            _fase >= _cfg.fase_inicio_morcego
+			            && inimigos_criados > 0
+			        )
+			        {
+			            if (random(100) < _cfg.chance_morcego_pct)
+			            {
+			                _inimigo = obj_ini_morcego;
+			            }
+			        }
+
+					// CRIAÇÃO DO INIMIGO
+			        instance_create_layer(
+			            x1,
+			            y1,
+			            "Instances",
+			            _inimigo
+			        );
+
+			        // Atualiza os contadores
+			        inimigos_criados++;
+
+			        if (_inimigo == obj_ini_morcego)
+			        {
+			            morcegos_criados++;
+			        }
+			        else
+			        {
+			            sanguessugas_criadas++;
+			        }
+
+			        // Atualiza a grid
+			        grid[# _xx, _yy] = TipoObj.INIMIGO;
+
+			        inimigo_max--;
+
+			        continue;
+			    }
 			}
 			
 			//LOOT
-			if(loot_max > 0)
+			if(grid[# _xx,_yy] == TipoObj.CHAO && loot_max > 0)
 			{
 				var _chances = 75;
 				
@@ -192,11 +350,41 @@ for(var _xx = 0; _xx < cell_h; _xx++)
 					grid[# _xx,_yy] = TipoObj.LOOT;
 					
 					loot_max -= 1;
+					
+					continue;
 				}
 			}
+			
+			// BAÚ ESPECIAL
+			//if(cria_bau_especial && grid[# _xx,_yy] == TipoObj.CHAO)
+			//{
+			//    if(
+			//        point_distance(x1, y1, obj_player.x, obj_player.y) > dist_loot
+			//    )
+			//    {
+			//        var _bau = instance_create_layer(
+			//            x1,
+			//            y1,
+			//            "Loot",
+			//            obj_bau
+			//        );
+			//
+			//        _bau.especial = true;
+			//
+			//        grid[# _xx,_yy] = TipoObj.LOOT;
+			//
+			//        cria_bau_especial = false;
+			//
+			//        show_debug_message("Baú especial criado!");
+			//
+			//        continue;
+			//    }
+			//}
 		}
 	}
 }
+
+show_debug_message(cria_bau_especial);
 
 // PROCURANDO A POSIÇÃO DA SAÍDA
 var distancia_maxima = -1;
@@ -244,7 +432,7 @@ if(saida_x != -1)
     grid[# saida_x,saida_y] = TipoObj.SAIDA;
 }
 
-//ADICIONANDO OBSTÁCULOS PARA OS INIMIGOS
+//ADICIONANDO OBSTÁCULOS PATHFINDER
 var _ini_obstaculos = [
 	obj_wall
 ];
@@ -253,3 +441,6 @@ for(var i = 0; i < array_length(_ini_obstaculos); i++)
 {
 	mp_grid_add_instances(global.grid,_ini_obstaculos[i],false);
 }
+
+//Eventos de progressão
+ProcessarEventosFase(global.fase);
