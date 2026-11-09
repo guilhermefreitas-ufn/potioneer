@@ -105,12 +105,12 @@ function salva_jogo()
 	if (_sucesso)
 	{
 	    show_debug_message("Jogo salvo com sucesso!");
-	    CriaMensagem(RES_W / 2, RES_H / 2, "Jogo salvo com sucesso!");
+	    CriaMensagem(x, y, "Jogo salvo com sucesso!");
 	}
 	else
 	{
 	    show_debug_message("ERRO: Não foi possível verificar o save.");
-	    CriaMensagem(RES_W / 2, RES_H / 2, "ERRO: Não foi possível salvar o jogo.");
+	    CriaMensagem(x, y, "ERRO: Não foi possível salvar o jogo.");
 	}
 
 	return _sucesso;

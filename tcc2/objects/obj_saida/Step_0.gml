@@ -101,6 +101,8 @@ if (_player && !instance_exists(obj_transicao) && _espaco)
 		
 		salva_jogo();
 		
+		CriaMensagem(x,y,"OBRIGADO POR JOGAR!", c_red);
+		
 		aplica_transicao(rm_menu);
 	}
 }
