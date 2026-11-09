@@ -80,6 +80,22 @@ _texto =
 
 draw_text_ext(_x_esq, _y_esq, _texto, -1, _largura_coluna);
 
+// SALVAMENTO AUTOMÁTICO
+
+_y_esq += string_height_ext(_texto, -1, _largura_coluna) + 14;
+
+draw_set_color(c_yellow);
+draw_text(_x_esq, _y_esq, "SALVAMENTO AUTOMÁTICO");
+
+_y_esq += 20;
+
+draw_set_color(c_white);
+
+_texto =
+    "O jogo salva seu progresso automaticamente somente quando você avança para o próximo nível após coletar um ingrediente raro em um baú azul. Esse é o único momento em que o salvamento acontece.";
+
+draw_text_ext(_x_esq, _y_esq, _texto, -1, _largura_coluna);
+
 // COLUNA DIREITA
 // ELEMENTOS DA POÇÃO
 draw_set_color(c_yellow);
