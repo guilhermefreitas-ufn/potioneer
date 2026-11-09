@@ -57,6 +57,47 @@ if (_player && !instance_exists(obj_transicao) && _espaco)
 	}
 	else
 	{
+		global.fase = 0;
+		
+		// INGREDIENTES FINAIS
+	    global.ing_finais_coletados = 0;
+
+	    // VERIFICAÇÃO DA SAÍDA
+	    global.qtd_ing_finais = 0;
+	
+		//LISTA DE INGREDIENTES FINAIS
+		global.ingredientes_finais = [
+			{
+				nome : "Âmbar",
+				sprite : spr_ing_ambar
+				//Por 1 minuto, diminui o cooldown das poções para 1 segundo (funciona entre níveis)
+			},
+			{
+				nome : "Cogumelo",
+				sprite : spr_ing_cogumelo
+				//Por 1 minuto, dá visão no escuro (funciona entre níveis)
+			},
+			{
+				nome : "Pena",
+				sprite : spr_ing_pena
+				//Por 1 minuto, aumenta para 10 os slots da hotbar (funcina entre níveis)
+			},
+			{
+				nome : "Dente",
+				sprite : spr_ing_dente
+				//Por 1 minuto, permite atravessar paredes (funciona entre níveis)
+				//Se tiver dentro de uma parede quando o efeito terminar
+				//teleporta para o último lugar que esteve fora das paredes
+			},
+			{
+				nome : "Cinzas",
+				sprite : spr_ing_cinzas
+				//Por 1 minuto, deixa invencível (funciona entre níveis)
+			}
+		];
+		
+		salva_jogo();
+		
 		aplica_transicao(rm_menu);
 	}
 }
