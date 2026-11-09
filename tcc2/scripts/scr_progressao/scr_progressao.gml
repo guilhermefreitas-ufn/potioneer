@@ -75,8 +75,8 @@ function EventosProgressao()
         {
             id: "bau_especial",
             tipo: "recorrente",
-            inicio: 1,
-            intervalo: 1
+            inicio: 15,
+            intervalo: 15
         },
 
         // ÚNICO
