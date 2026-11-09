@@ -52,12 +52,15 @@ if (_player && !instance_exists(obj_transicao) && _espaco)
 		}
 		
 		aplica_transicao(rm_inventarios);
-	
-		
 	}
 	else
 	{
+		// NIVEL 
 		global.fase = 0;
+		
+		// EVENTOS
+		global.eventos_progressao = EventosProgressao();
+		global.eventos_processados = ds_map_create();
 		
 		// INGREDIENTES FINAIS
 	    global.ing_finais_coletados = 0;

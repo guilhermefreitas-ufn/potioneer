@@ -397,7 +397,7 @@ function carrega_jogo()
     // RESTAURA A FASE
     if (variable_struct_exists(_salvos, "fase"))
     {
-        global.fase = max(1, _salvos.fase);
+        global.fase = max(0, _salvos.fase);
     }
 
     // RESTAURA OS DADOS DO JOGADOR

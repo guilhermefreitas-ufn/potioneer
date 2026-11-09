@@ -335,8 +335,6 @@ function ConfiguracaoFase(_fase, _regras)
 
 	
 	// CHANCE DE APARECER MORCEGO
-	
-
 	var _chance_morcego = 0;
 
 	if (
