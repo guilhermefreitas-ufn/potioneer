@@ -63,11 +63,11 @@ if(_erro != "")
 }
 
 //BOTÃO CRIAR POÇÃO
-_x = display_get_gui_width()
+_x = RES_W
 	- botao_criar_largura
 	- botao_criar_margem;
 
-_y = display_get_gui_height()
+_y = RES_H
 	- botao_criar_altura
 	- botao_criar_margem;
 
@@ -145,7 +145,7 @@ if(mensagem_timer > 0)
 	//draw_set_colour(c_white);
 	
 	draw_text_outline(
-		display_get_gui_width() / 2,
+		RES_W / 2,
 		_y - 32,
 		string_upper(mensagem),
 		c_aqua,

@@ -39,7 +39,7 @@ salva_timer_sem_save = timer_sem_save;
 draw_sem_save = false;
 
 //creditos
-creditos = ["Guilherme Freitas"];
+creditos = ["Guilherme Freitas Cardoso"];
 creditos_tam = array_length(creditos);
 creditos_margem = RES_W / (creditos_tam + 1);
 creditos_x = RES_W / (creditos_tam + 1);

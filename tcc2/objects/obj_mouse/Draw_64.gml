@@ -17,10 +17,10 @@ if(view_enabled && view_camera[0] != -1)
 {
     var _camera = view_camera[0];
 
-    _escala_x = display_get_gui_width()
+    _escala_x = RES_W
         / camera_get_view_width(_camera);
 
-    _escala_y = display_get_gui_height()
+    _escala_y = RES_H
         / camera_get_view_height(_camera);
 }
 

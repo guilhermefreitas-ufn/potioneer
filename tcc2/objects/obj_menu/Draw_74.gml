@@ -43,7 +43,7 @@ for(var i = 0; i < options_tam; i++)
 	);
 	
 	//checando a colisão
-	if(hover && !global.overlay_ativo && options[i] != "Como Jogar")
+	if(hover && !global.overlay_ativo)
 	{
 		//mudando a cor
 		//_cor = global.dourado_highlight;
@@ -132,6 +132,8 @@ for(var i = 0; i < options_tam; i++)
 			{
 				//show_message("\nMouse\nW, A, S, D\nReset: R\nPause: P\nESC");
 				//controla_overlay("tutorial",true);
+				
+				aplica_transicao(rm_tutorial);
 			}
 			//sair
 			else if(index == 3)
@@ -141,14 +143,14 @@ for(var i = 0; i < options_tam; i++)
 		}
 	}
 	
-	if(options[i] == "Como Jogar")
-	{
-		draw_set_alpha(.33);
-	}
-	else
-	{
-		draw_set_alpha(1);
-	}
+	//if(options[i] == "Como Jogar")
+	//{
+	//	draw_set_alpha(.33);
+	//}
+	//else
+	//{
+	//	draw_set_alpha(1);
+	//}
 	
 	//desenhando as opções
 	draw_text_outline(options_x, _options_y_2, options[i], _cor, _cor_contorno, 1);
@@ -200,7 +202,7 @@ for(var i = 0; i < creditos_tam; i++)
 	define_align();
 	
 	//draw_text(_creditos_x2, creditos_y, creditos[i]);
-	draw_text_outline(_creditos_x2, creditos_y, creditos[i], c_teal, c_navy, 1);
+	draw_text_outline(_creditos_x2, creditos_y, creditos[i], c_aqua, c_navy, 1);
 }
 
 reseta_draw();

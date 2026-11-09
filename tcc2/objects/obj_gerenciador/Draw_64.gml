@@ -7,7 +7,7 @@ if(room == rm_inventarios || room == rm_armario)
 	draw_set_valign(fa_top);
 
 	var _x = botao_margem;
-	var _y = display_get_gui_height()
+	var _y = RES_H
 			- botao_altura
 			- botao_margem;
 
@@ -86,7 +86,7 @@ if(room == rm_inventarios || room == rm_armario)
 	if(room == rm_inventarios)
 	{
 		_x2 = 2 * botao_margem + botao_largura;
-		_y2 = display_get_gui_height()
+		_y2 = RES_H
 			- botao_altura
 			- botao_margem;
 
@@ -147,6 +147,83 @@ if(room == rm_inventarios || room == rm_armario)
 		_x2 + (botao_largura - _texto_largura2) / 2,
 		_y2 + _offset_y2,
 		_texto2
+	);
+	
+	reseta_draw();
+	
+	//BOTÃO SAIR
+	var _x3 = 3 * botao_margem + botao_largura * 2;
+	var _y3 = RES_H - botao_altura - botao_margem;
+
+	var _mx3 = device_mouse_x_to_gui(0);
+	var _my3 = device_mouse_y_to_gui(0);
+	
+	if(room == rm_armario)
+	{
+	    _x3 =
+			RES_W
+			- botao_largura * 2
+			- botao_margem * 2;
+
+		_y3 =
+			RES_H
+			- botao_altura
+			- botao_margem;
+	}
+	
+	var _hover3 = point_in_rectangle(
+		_mx3,
+		_my3,
+		_x3,
+		_y3,
+		_x3 + botao_largura,
+		_y3 + botao_altura
+	);
+
+	//FUNDO
+	if(_hover3)
+	{
+		draw_set_color(c_ltgrey);
+	}
+	else
+	{
+		draw_set_color(c_dkgray);
+	}
+
+	draw_rectangle(
+		_x3,
+		_y3,
+		_x3 + botao_largura,
+		_y3 + botao_altura,
+		false
+	);
+
+	//BORDA
+	draw_set_color(c_black);
+
+	draw_rectangle(
+		_x3,
+		_y3,
+		_x3 + botao_largura,
+		_y3 + botao_altura,
+		true
+	);
+
+	//TEXTO
+	draw_set_font(-1);
+	draw_set_halign(fa_left);
+	draw_set_valign(fa_top);
+	draw_set_color(c_white);
+	draw_set_font(fnt_media_black);
+
+	var _texto3 = "MENU";
+	var _texto_largura3 = string_width(_texto3);
+	var _offset_y3 = 6;
+
+	draw_text(
+		_x3 + (botao_largura - _texto_largura3) / 2,
+		_y3 + _offset_y3,
+		_texto3
 	);
 	
 	reseta_draw();

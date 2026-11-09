@@ -605,8 +605,8 @@ function MundoParaGUI(_x, _y, _viewport = 0)
     var _camera_h = camera_get_view_height(_camera);
 
     //DIMENSÕES DA GUI
-    var _gui_w = display_get_gui_width();
-    var _gui_h = display_get_gui_height();
+    var _gui_w = RES_W;
+    var _gui_h = RES_H;
 
     //ESCALAS
     var _escala_x = _gui_w / _camera_w;

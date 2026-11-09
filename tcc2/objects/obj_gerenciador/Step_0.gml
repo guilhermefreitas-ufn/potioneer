@@ -1,4 +1,4 @@
-//iniciando variáveis
+#region iniciando variáveis
 var _p, _b, _r, _0, _9, _8, _7, _6, _5, _4, _3, _2, _1;
 
 _b = keyboard_check_pressed(ord("B"));
@@ -17,6 +17,7 @@ var _space = keyboard_check_pressed(vk_space);
 var _menos = keyboard_check_pressed(vk_subtract) || keyboard_check_pressed(ord("-"));
 
 var _posso_clicar = false;
+#endregion
 
 if(!instance_exists(obj_interpretador)) { _posso_clicar = true; }
 
@@ -186,8 +187,11 @@ if(room == rm_inventarios)
 }
 #endregion
 
+//BOTÕES
+
 if(room == rm_armario || room == rm_inventarios)
 {
+	//VAI PRA MASMORRA
 	var _x =
 		RES_W
 		- botao_largura
@@ -230,7 +234,7 @@ if(room == rm_armario || room == rm_inventarios)
 	        2 * botao_margem + botao_largura;
 
 	    _y =
-	        display_get_gui_height()
+	        RES_H
 	        - botao_altura
 	        - botao_margem;
 		
@@ -252,8 +256,49 @@ if(room == rm_armario || room == rm_inventarios)
 		    aplica_transicao(rm_masmorra);
 		}
 	}
+	
+	//VOLTA PRO MENU
+	var _x = 3 * botao_margem + botao_largura * 2;
+	var _y = RES_H - botao_altura - botao_margem;
+
+	//posição do mouse na GUI
+	var _mx = device_mouse_x_to_gui(0);
+	var _my = device_mouse_y_to_gui(0);
+
+	//POSIÇÃO ESPECIAL NA SALA DE INVENTÁRIOS
+	if(room == rm_armario)
+	{
+	    var _x =
+			RES_W
+			- botao_largura * 2
+			- botao_margem * 2;
+
+		var _y =
+			RES_H
+			- botao_altura
+			- botao_margem;
+	}
+	
+	//VERIFICA CLIQUE
+	if(
+	    device_mouse_check_button_pressed(0, mb_left)
+	    && point_in_rectangle(
+	        _mx,
+	        _my,
+	        _x,
+	        _y,
+	        _x + botao_largura,
+	        _y + botao_altura
+	    )
+	)
+	{
+		DevolveItens();
+		
+	    aplica_transicao(rm_menu);
+	}
 }
 
+//INVERTE ARMARIO x CRIAÇÃO DE POÇÕES
 if(room != rm_inicio && room != rm_masmorra)
 {
 	//CLIQUE NO BOTÃO ARMARIO / CALDEIRAO
@@ -262,7 +307,7 @@ if(room != rm_inicio && room != rm_masmorra)
 
 	var _x_armario = botao_margem;
 
-	var _y_armario = display_get_gui_height()
+	var _y_armario = RES_H
 		- botao_altura
 		- botao_margem;
 

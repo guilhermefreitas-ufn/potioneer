@@ -155,11 +155,11 @@ if(mensagem_timer > 0)
 var _mx = device_mouse_x_to_gui(0);
 var _my = device_mouse_y_to_gui(0);
 
-var _x = display_get_gui_width()
+var _x = RES_W
 		- botao_criar_largura
 		- botao_criar_margem;
 
-var _y = display_get_gui_height()
+var _y = RES_H
 		- botao_criar_altura
 		- botao_criar_margem;
 
