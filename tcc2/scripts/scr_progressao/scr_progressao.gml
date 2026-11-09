@@ -7,8 +7,8 @@ function EventosProgressao()
         {
             id: "bau_especial",
             tipo: "recorrente",
-            inicio: 0,
-            intervalo: 1
+            inicio: 20,
+            intervalo: 20
         },
 
         // ÚNICO
@@ -102,50 +102,6 @@ function ProcessarEventosFase(_fase)
 						obj_map.cria_bau_especial = true;
 					}
 				}
-				
-				//var _tem_especial = false;
-				//
-				//if(instance_exists(obj_bau))
-				//{
-				//	with(obj_bau)
-				//	{
-				//		if(especial)
-				//		{
-				//			_tem_especial = true;
-				//		}
-				//	}
-				//}
-				//
-				//
-                //if(!_tem_especial && instance_exists(obj_map))
-				//{
-				//	with(obj_map)
-				//	{
-				//		//percorro o mapa
-				//		for(var _xx = 0; _xx < cell_h; _xx++)
-				//		{
-				//			for(var _yy = 0; _yy < cell_v; _yy++)
-				//			{
-				//				var x1 = _xx * CELL_T;
-				//				var y1 = _yy * CELL_T;
-				//			
-				//				if(grid[# _xx,_yy] == TipoObj.CHAO)
-				//				{
-				//					//Crio o baú especial
-				//					with(instance_create_layer(x1, y1, "Loot", obj_bau))
-				//					{
-				//						especial = true;
-				//					}
-				//					
-				//					//Atualizo a posição
-				//					grid[# _xx,_yy] = TipoObj.LOOT;
-				//				
-				//					break;
-				//				}
-				//			}
-				//		}
-				//	}
-				//}
 				
                 break;
 			}
