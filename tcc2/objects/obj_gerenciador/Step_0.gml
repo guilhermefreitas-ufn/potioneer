@@ -247,6 +247,8 @@ if(room == rm_armario || room == rm_inventarios)
 		    )
 		)
 		{
+			DevolveItens();
+			
 		    aplica_transicao(rm_masmorra);
 		}
 	}
@@ -276,7 +278,7 @@ if(room != rm_inicio && room != rm_masmorra)
 		)
 	)
 	{
-		if(room == rm_inventarios) { VaiParaArmario(rm_armario); }
-		if(room == rm_armario) { /*room_goto(rm_inventarios);*/ aplica_transicao(rm_inventarios) }
+		if(room == rm_inventarios) { DevolveItens(); aplica_transicao(rm_armario); }
+		if(room == rm_armario) { /*room_goto(rm_inventarios);*/ aplica_transicao(rm_inventarios); }
 	}
 }

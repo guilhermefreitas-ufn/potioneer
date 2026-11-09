@@ -517,7 +517,7 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 					return false;
 			}
 			
-			//Ataque >= 0
+			//força >= 0
 			_entidade.atk = max(
 				_entidade.atk,
 				0,

@@ -227,9 +227,7 @@ switch (estado)
     case "morto":
     {
 
-        show_debug_message(
-            "Inimigo destruído!"
-        );
+        //show_debug_message("Inimigo destruído!");
 
         instance_destroy();
 

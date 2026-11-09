@@ -184,7 +184,7 @@ function LerVariavel(_tokens, _indice)
 		{
 			_resultado.erro =
 				"O alvo \"" + _a.ingrediente.elemento +
-				"\" precisa de uma variável: \"saúde\", \"ataque\" ou \"velocidade\".";
+				"\" precisa de uma variável: \"saúde\", \"força\" ou \"velocidade\".";
 			
 			_resultado.slot_erro = _a.slot;
 			

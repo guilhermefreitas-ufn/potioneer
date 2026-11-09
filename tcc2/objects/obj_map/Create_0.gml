@@ -15,14 +15,12 @@ global.config_fase = ConfiguracaoFase(
 
 var _cfg = global.config_fase;
 
-
 // TAMANHO DO MAPA
 cell_h = _cfg.cell_h;
 cell_v = _cfg.cell_v;
 
 room_width = CELL_T * cell_h;
 room_height = CELL_T * cell_v;
-
 
 // GRID DE NAVEGAÇÃO
 global.grid = mp_grid_create(
@@ -236,6 +234,7 @@ for(var _xx = 0; _xx < cell_h; _xx++)
 			if (
 			    inimigo_max > 0
 			    && point_distance(x1, y1, obj_player.x, obj_player.y) > dist_inimigo
+				&& global.fase != 0 //não cria inimigos na fase 0 (térreo)
 			)
 			{
 			    var _fase = global.fase;
@@ -384,7 +383,7 @@ for(var _xx = 0; _xx < cell_h; _xx++)
 	}
 }
 
-show_debug_message(cria_bau_especial);
+//show_debug_message(cria_bau_especial);
 
 // PROCURANDO A POSIÇÃO DA SAÍDA
 var distancia_maxima = -1;

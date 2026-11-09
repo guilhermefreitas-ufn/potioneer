@@ -43,7 +43,7 @@ for(var i = 0; i < options_tam; i++)
 	);
 	
 	//checando a colisão
-	if(hover && !global.overlay_ativo && (options[i] != "Continuar" && options[i] != "Como Jogar"))
+	if(hover && !global.overlay_ativo && options[i] != "Como Jogar")
 	{
 		//mudando a cor
 		//_cor = global.dourado_highlight;
@@ -75,55 +75,57 @@ for(var i = 0; i < options_tam; i++)
 			//novo jogo
 			if(index == 0)
 			{
-				if(file_exists(_filename))
-				{
-					//show_debug_message("tentei new game com save");
-					//controla_overlay("loss save", true);
-				}
-				else
-				{
-					//reseta as fases
-					//global.ultima_fase = 1;
-					//
-					////reseta o rank
-					//global.rank = [
-					//	0 //fazenda
-					//	,0 //estrada
-					//	,0 //torre
-					//	,0 //cerco
-					//	,0 //cidade
-					//]
+				//if(file_exists(_filename))
+				//{
+				//	show_debug_message("tentei new game com save");
+				//	//controla_overlay("loss save", true);
+				//}
+				//else
+				//{
+					//reseta tudo
+					IniciaNovoJogo();
+
+					// EXCLUI O SAVE ANTERIOR
+					if (file_exists("savedata.sav"))
+					{
+					    file_delete("savedata.sav");
+					}
 					
 					//aplica_transicao(rm_cutscenes);
 					aplica_transicao(primeira_room, noone, 0, noone, 2);
-				}
+				//}
 
 			}
 			//continuar
 			else if(index == 1)
 			{
-				if(file_exists(_filename))
+				if(carrega_jogo())
 				{
-					//carrega_jogo();
-					
-					var _foco = noone;
-					
-					//switch(global.ultima_fase)
-					//{
-					//	case 1: { _foco = obj_botao_fase_1; break; }
-					//	case 2: { _foco = obj_botao_fase_2; break; }
-					//	case 3: { _foco = obj_botao_fase_3; break; }
-					//	case 4: { _foco = obj_botao_fase_4; break; }
-					//	default: { _foco = obj_botao_fase_5; break; }
-					//}
-					
-					aplica_transicao(primeira_room, noone, 0, _foco, 2);
-					
+				aplica_transicao(primeira_room);
 				}
-				else
-				{
-					draw_sem_save = true;
-				}
+				//if(file_exists(_filename))
+				//{
+				//	carrega_jogo();
+				//	
+				//	var _foco = noone;
+				//	
+				//	//switch(global.ultima_fase)
+				//	//{
+				//	//	case 1: { _foco = obj_botao_fase_1; break; }
+				//	//	case 2: { _foco = obj_botao_fase_2; break; }
+				//	//	case 3: { _foco = obj_botao_fase_3; break; }
+				//	//	case 4: { _foco = obj_botao_fase_4; break; }
+				//	//	default: { _foco = obj_botao_fase_5; break; }
+				//	//}
+				//	
+				//	aplica_transicao(primeira_room, noone, 0, _foco, 2);
+				//	
+				//}
+				//else
+				//{
+				//	
+				//	draw_sem_save = true;
+				//}
 			}
 			//como jogar
 			else if(index == 2)
@@ -139,7 +141,7 @@ for(var i = 0; i < options_tam; i++)
 		}
 	}
 	
-	if(options[i] == "Continuar" || options[i] == "Como Jogar")
+	if(options[i] == "Como Jogar")
 	{
 		draw_set_alpha(.33);
 	}

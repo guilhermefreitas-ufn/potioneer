@@ -4,6 +4,9 @@ randomize();
 //dados do jogador
 InicializaDadosJogador();
 
+//sistema de save e load
+global.stat_data = {};
+
 //overlay
 global.overlay_ativo = false;
 global.overlay_tipo = "";
@@ -19,15 +22,8 @@ global.fase = 0;
 global.debug = false;
 
 //eventos de progressão
-if (!variable_global_exists("eventos_progressao"))
-{
-    global.eventos_progressao = EventosProgressao();
-}
-
-if (!variable_global_exists("eventos_processados"))
-{
-    global.eventos_processados = ds_map_create();
-}
+global.eventos_progressao = EventosProgressao();
+global.eventos_processados = ds_map_create();
 
 //Cadastro de Ingredientes
 global.Ingredientes =
@@ -58,22 +54,29 @@ global.ingredientes_finais = [
 	{
 		nome : "Âmbar",
 		sprite : spr_ing_ambar
+		//Por 1 minuto, diminui o cooldown das poções para 1 segundo (funciona entre níveis)
 	},
 	{
 		nome : "Cogumelo",
 		sprite : spr_ing_cogumelo
+		//Por 1 minuto, dá visão no escuro (funciona entre níveis)
 	},
 	{
 		nome : "Pena",
 		sprite : spr_ing_pena
+		//Por 1 minuto, aumenta para 10 os slots da hotbar (funcina entre níveis)
 	},
 	{
 		nome : "Dente",
 		sprite : spr_ing_dente
+		//Por 1 minuto, permite atravessar paredes (funciona entre níveis)
+		//Se tiver dentro de uma parede quando o efeito terminar
+		//teleporta para o último lugar que esteve fora das paredes
 	},
 	{
 		nome : "Cinzas",
 		sprite : spr_ing_cinzas
+		//Por 1 minuto, deixa invencível (funciona entre níveis)
 	}
 ];
 
@@ -142,7 +145,7 @@ function PreencheBolsa(_quantidade = 10)
 	}
 }
 
-function VaiParaMasmorra(_rm_masmorra)
+function DevolveItens()
 {
 	if(!instance_exists(obj_bolsa))
 	{
@@ -171,47 +174,7 @@ function VaiParaMasmorra(_rm_masmorra)
 		SincronizaBolsaGlobal(_bolsa);
 	}
 	
-	room_goto(_rm_masmorra);
-}
-
-function VaiParaArmario(_rm_armario)
-{
-	if(!instance_exists(obj_bolsa))
-	{
-		msg_erro("Bolsa");
-		return;
-	}
-	
-	
-	if(!instance_exists(obj_caldeirao))
-	{
-		msg_erro("Caldeirão");
-		return;
-	}
-	
-	
-	var _bolsa =
-		instance_find(obj_bolsa, 0);
-	
-	var _caldeirao =
-		instance_find(obj_caldeirao, 0);
-	
-	
-	//devolve ingredientes não utilizados
-	LimpaCaldeirao(
-		_caldeirao,
-		_bolsa
-	);
-	
-	
-	//salva o estado atualizado da bolsa
-	SincronizaBolsaGlobal(
-		_bolsa
-	);
-	
-	
-	//room_goto(_rm_armario);
-	aplica_transicao(_rm_armario);
+	show_debug_message("Itens do caldeirão devolvidos para bolsa");
 }
 
 function CriaPocoesTeste()
@@ -579,7 +542,7 @@ function CriaPocoesTeste()
 		AdicionaPocaoArmario(
 			"Fraqueza",
 			_algoritmo,
-			"se inimigo ataque é maior que 0, então inimigo ataque diminui em 3",
+			"se inimigo força é maior que 0, então inimigo força diminui em 3",
 			c_olive,
 			spr_pocao_quadrada
 		);

@@ -1,9 +1,9 @@
 
 var _margem = 32;
 var _texto = sentenca;
-var _x = RES_W/2;
-var _y = 0;
-var _y_erro = RES_H;
+var _x = RES_W / 2;
+var _y = 2 * _margem;
+var _y_erro = _y + _margem * 2;
 var _max_tam = RES_H - _margem;
 
 //sentença
@@ -16,7 +16,7 @@ draw_set_font(fonte);
 
 draw_text_outline(
 	_x,
-	_y + 2 * _margem,
+	_y ,
 	string_upper(_texto),
 	cor_sentenca,
 	_cor_contorno,
@@ -46,7 +46,19 @@ if(_erro != "")
 {
 	define_align();
 	draw_set_font(fonte);
-	draw_text_outline(_x, _y_erro  - _margem * 2, _erro, cor_erro, c_black, 1, 1, 1, 0, -1, _max_tam);
+	draw_text_outline(
+		_x,
+		_y_erro,
+		_erro,
+		cor_erro,
+		c_black,
+		1,
+		1,
+		1,
+		0,
+		-1,
+		_max_tam
+	);
 	reseta_draw();
 }
 
@@ -128,14 +140,14 @@ reseta_draw();
 //MENSAGEM
 if(mensagem_timer > 0)
 {
-	draw_set_font(fnt_placeholder_media);
+	draw_set_font(fnt_media_black);
 	define_align();
 	//draw_set_colour(c_white);
 	
 	draw_text_outline(
 		display_get_gui_width() / 2,
 		_y - 32,
-		mensagem,
+		string_upper(mensagem),
 		c_aqua,
 		c_black,
 		1

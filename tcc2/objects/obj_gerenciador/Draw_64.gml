@@ -152,16 +152,6 @@ if(room == rm_inventarios || room == rm_armario)
 	reseta_draw();
 }
 
-//debug
-if(room != rm_inventarios)
-{
-	define_align();
-	draw_set_colour(c_black);
-	draw_set_font(fnt_placeholder_media);
-	//draw_text(RES_W/2, 20, "Aperte \"-\" para voltar ao Caldeirão.")
-	reseta_draw();
-}
-
 //masmorra
 if(room == rm_masmorra)
 {
@@ -180,7 +170,9 @@ if(room == rm_masmorra)
 			}
 		}
 		
-		_bau_num = instance_number(obj_bau) - _bau_especial;
+		_bau_num = (instance_number(obj_bau) - _bau_especial > 0)
+		? instance_number(obj_bau) - _bau_especial
+		: 0;
 	}
 	
 	if(instance_exists(obj_inimigo_pai))
@@ -201,12 +193,15 @@ if(room == rm_masmorra)
 	draw_text_outline(RES_W / 2, 40, "Inimigos restantes: "+string(_inimigo_num), c_white, c_black,2);
 	draw_text_outline(RES_W / 2, 60, "Baús restantes: "+string(_bau_num), c_white, c_black,2);
 	draw_text_outline(RES_W / 2, 80, "Ingredientes finais: "+string(global.ing_finais_coletados)+"/5", c_white, c_black,2);
+	
 	if(_bau_especial > 0)
 	{
 		_yy = 20;
+		
 		draw_text_outline(RES_W / 2, 100, "Baús especiais: "+string(_bau_especial), c_aqua, c_teal,2);
 	}
-	draw_text_outline(RES_W / 2, _yy, 100+_yy, c_white, c_black,2);
+	
+	draw_text_outline(RES_W / 2, 100 + _yy, _texto, c_white, c_black,2);
 	
 	reseta_draw();
 }
@@ -337,6 +332,14 @@ if(global.debug)
 				_texto
 			);
 		}
+	}
+	else
+	{
+		define_align();
+		draw_set_colour(c_black);
+		draw_set_font(fnt_placeholder_media);
+		draw_text(RES_W/2, 20, "Aperte \"-\" para voltar ao Caldeirão.")
+		reseta_draw();
 	}
 
 	//resetando alinhamentos

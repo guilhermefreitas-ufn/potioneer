@@ -1,3 +1,71 @@
+function IniciaNovoJogo()
+{
+    // REINICIALIZA OS DADOS DO JOGADOR
+    InicializaDadosJogador(true);
+
+    // PROGRESSÃO
+    global.fase = 0;
+
+    // INGREDIENTES FINAIS
+    global.ing_finais_coletados = 0;
+
+    // VERIFICAÇÃO DA SAÍDA
+    global.qtd_ing_finais = 0;
+	
+	//LISTA DE INGREDIENTES FINAIS
+	global.ingredientes_finais = [
+		{
+			nome : "Âmbar",
+			sprite : spr_ing_ambar
+			//Por 1 minuto, diminui o cooldown das poções para 1 segundo (funciona entre níveis)
+		},
+		{
+			nome : "Cogumelo",
+			sprite : spr_ing_cogumelo
+			//Por 1 minuto, dá visão no escuro (funciona entre níveis)
+		},
+		{
+			nome : "Pena",
+			sprite : spr_ing_pena
+			//Por 1 minuto, aumenta para 10 os slots da hotbar (funcina entre níveis)
+		},
+		{
+			nome : "Dente",
+			sprite : spr_ing_dente
+			//Por 1 minuto, permite atravessar paredes (funciona entre níveis)
+			//Se tiver dentro de uma parede quando o efeito terminar
+			//teleporta para o último lugar que esteve fora das paredes
+		},
+		{
+			nome : "Cinzas",
+			sprite : spr_ing_cinzas
+			//Por 1 minuto, deixa invencível (funciona entre níveis)
+		}
+	];
+
+    // STRUCT DE SAVE
+    global.stat_data = {};
+
+    // ATUALIZA A BOLSA, CASO EXISTA
+    var _bolsa = instance_find(obj_bolsa, 0);
+
+    if (_bolsa != noone)
+    {
+        CarregaBolsaGlobal(_bolsa);
+    }
+
+    // EXCLUI O SAVE ANTERIOR
+    if (file_exists("savedata.sav"))
+    {
+        file_delete("savedata.sav");
+    }
+
+    show_debug_message("Novo jogo iniciado!");
+    CriaMensagem(RES_W/4,RES_H/4,"Novo jogo iniciado!");
+
+    return true;
+}
+
 function EventosProgressao()
 {
     return [
@@ -7,8 +75,8 @@ function EventosProgressao()
         {
             id: "bau_especial",
             tipo: "recorrente",
-            inicio: 20,
-            intervalo: 20
+            inicio: 1,
+            intervalo: 1
         },
 
         // ÚNICO
@@ -147,13 +215,13 @@ function RegrasProgressao()
 
             distancia_relativa: 0.35,
 
-            mult_hp_por_fase: 0.10,
+            mult_hp_por_fase: 0.05,
             mult_hp_max: 3.0,
 
-            mult_atk_por_fase: 0.08,
+            mult_atk_por_fase: 0.04,
             mult_atk_max: 2.5,
 
-            mult_spd_por_fase: 0.015,
+            mult_spd_por_fase: 0.010,
             mult_spd_max: 1.5,
 			
 			// PROGRESSÃO DOS TIPOS DE INIMIGOS

@@ -8,3 +8,8 @@ y += sprite_width / 2;
 tempo_saida = GAME_SPEED * 5;
 timer_saida = tempo_saida;
 mostra_mensagem = true;
+
+if (!variable_global_exists("qtd_ing_finais"))
+{
+    global.qtd_ing_finais = 0;
+}

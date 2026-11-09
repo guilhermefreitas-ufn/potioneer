@@ -42,9 +42,18 @@ if (_player && !instance_exists(obj_transicao) && _espaco)
     //room_goto(rm_inventarios);
 	if(global.ing_finais_coletados < 5)
 	{
+		global.fase += 1;
+		
+		if(global.qtd_ing_finais < global.ing_finais_coletados)
+		{
+			global.qtd_ing_finais = global.ing_finais_coletados;
+			
+			salva_jogo();
+		}
+		
 		aplica_transicao(rm_inventarios);
 	
-		global.fase += 1;
+		
 	}
 	else
 	{

@@ -193,9 +193,7 @@ MouseSobreSlotHotbar = function()
     return _slot != -1;
 };
 
-
-
-//Calcula o alcance máximo com base no ataque
+//Calcula o alcance máximo com base no força
 AlcancePocao = function()
 {
     return max(0, atk * alcance_por_atk);

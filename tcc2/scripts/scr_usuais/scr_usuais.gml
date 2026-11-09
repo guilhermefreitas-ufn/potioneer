@@ -3,6 +3,442 @@
 #macro RES_W display_get_gui_width()
 #macro GAME_SPEED game_get_speed(gamespeed_fps)
 
+//sistema de save e load
+function AjustaArraySave(_array, _tamanho, _valor_padrao)
+{
+    var _novo_array = array_create(
+        _tamanho,
+        _valor_padrao
+    );
+
+    if (!is_array(_array))
+    {
+        return _novo_array;
+    }
+
+    var _limite = min(
+        array_length(_array),
+        _tamanho
+    );
+
+    for (var i = 0; i < _limite; i++)
+    {
+        _novo_array[i] = _array[i];
+    }
+
+    return _novo_array;
+}
+
+//save
+function salva_jogo()
+{
+    // SINCRONIZA A BOLSA, CASO ELA EXISTA NA ROOM
+    var _bolsa = instance_find(obj_bolsa, 0);
+
+    if (_bolsa != noone)
+    {
+        SincronizaBolsaGlobal(_bolsa);
+    }
+
+    // ORGANIZA TODOS OS DADOS
+    global.stat_data =
+    {
+        versao: 1,
+
+        // PROGRESSÃO
+        fase: global.fase,
+
+        // DADOS DO JOGADOR
+        DadosJogador: DadosJogadorParaSave(),
+
+        // INGREDIENTES FINAIS COLETADOS
+        ingredientes_finais: global.ing_finais_coletados,
+		
+		// SAÍDA
+		verificacao_saida: global.qtd_ing_finais
+    };
+
+    // CONVERTE PARA JSON
+    var _json = json_stringify(global.stat_data);
+
+    // CRIA O BUFFER
+    var _buffer = buffer_create(
+        string_byte_length(_json) + 1,
+        buffer_fixed,
+        1
+    );
+
+    // ESCREVE O JSON
+    buffer_write(
+        _buffer,
+        buffer_string,
+        _json
+    );
+
+   // SALVA O ARQUIVO
+	buffer_save(_buffer, "savedata.sav");
+
+	// LIBERA O BUFFER ORIGINAL
+	buffer_delete(_buffer);
+
+	// VERIFICA SE O SAVE FOI GRAVADO
+	var _sucesso = false;
+
+	var _buffer_verificacao = buffer_load("savedata.sav");
+
+	if (_buffer_verificacao != -1)
+	{
+	    // LÊ O CONTEÚDO GRAVADO
+	    var _json_verificado = buffer_read(
+	        _buffer_verificacao,
+	        buffer_string
+	    );
+
+	    // COMPARA COM O JSON ORIGINAL
+	    _sucesso = (_json_verificado == _json);
+
+	    // LIBERA O BUFFER DE VERIFICAÇÃO
+	    buffer_delete(_buffer_verificacao);
+	}
+
+	// MENSAGEM
+	if (_sucesso)
+	{
+	    show_debug_message("Jogo salvo com sucesso!");
+	    CriaMensagem(RES_W / 2, RES_H / 2, "Jogo salvo com sucesso!");
+	}
+	else
+	{
+	    show_debug_message("ERRO: Não foi possível verificar o save.");
+	    CriaMensagem(RES_W / 2, RES_H / 2, "ERRO: Não foi possível salvar o jogo.");
+	}
+
+	return _sucesso;
+}
+
+function SerializaArrayPocoes(_pocoes)
+{
+    var _salvas = array_create(
+        array_length(_pocoes),
+        undefined
+    );
+
+    for (var i = 0; i < array_length(_pocoes); i++)
+    {
+        var _pocao = _pocoes[i];
+
+        // SLOT VAZIO
+        if (is_undefined(_pocao))
+        {
+            continue;
+        }
+
+        if (!is_struct(_pocao))
+        {
+            continue;
+        }
+
+        // NOME DO SPRITE
+        var _sprite_nome = sprite_get_name(spr_pocao);
+
+        if (
+            variable_struct_exists(_pocao, "sprite")
+            && sprite_exists(_pocao.sprite)
+        )
+        {
+            _sprite_nome = sprite_get_name(
+                _pocao.sprite
+            );
+        }
+
+        _salvas[i] =
+        {
+            id: _pocao.id,
+
+            nome: _pocao.nome,
+            algoritmo: _pocao.algoritmo,
+            sentenca: _pocao.sentenca,
+
+            cor: _pocao.cor,
+            sprite_nome: _sprite_nome
+        };
+    }
+
+    return _salvas;
+}
+
+function DadosJogadorParaSave()
+{
+    var _dados = global.DadosJogador;
+
+    return
+    {
+        // POÇÕES
+        armario_pocoes: SerializaArrayPocoes(
+            _dados.armario_pocoes
+        ),
+
+        hotbar_pocoes: SerializaArrayPocoes(
+            _dados.hotbar_pocoes
+        ),
+
+        proximo_id_pocao: _dados.proximo_id_pocao,
+
+        // BOLSA
+        bolsa_inventario: _dados.bolsa_inventario,
+        bolsa_quantidades: _dados.bolsa_quantidades,
+        bolsa_valores: _dados.bolsa_valores
+    };
+}
+
+//load
+function RestauraArrayPocoes(_salvas, _quantidade_slots)
+{
+    var _pocoes = array_create(
+        _quantidade_slots,
+        undefined
+    );
+
+    if (!is_array(_salvas))
+    {
+        return _pocoes;
+    }
+
+    var _limite = min(
+        array_length(_salvas),
+        _quantidade_slots
+    );
+
+    for (var i = 0; i < _limite; i++)
+    {
+        var _salva = _salvas[i];
+
+        // SLOT VAZIO
+        if (!is_struct(_salva))
+        {
+            continue;
+        }
+
+        // RECUPERA O SPRITE
+        var _sprite = asset_get_index(
+            _salva.sprite_nome
+        );
+
+        // SPRITE INVÁLIDO
+        if (
+            _sprite < 0
+            || !sprite_exists(_sprite)
+        )
+        {
+            _sprite = spr_pocao;
+        }
+
+        // RECONSTRÓI A POÇÃO
+        _pocoes[i] =
+        {
+            id: _salva.id,
+
+            nome: _salva.nome,
+            algoritmo: _salva.algoritmo,
+            sentenca: _salva.sentenca,
+
+            cor: _salva.cor,
+            sprite: _sprite,
+
+            cooldown: 0
+        };
+    }
+
+    return _pocoes;
+}
+
+function AplicaDadosJogadorSave(_salvos)
+{
+    if (!is_struct(_salvos))
+    {
+        return false;
+    }
+
+    var _dados = global.DadosJogador;
+
+    // POÇÕES DO ARMÁRIO
+    if (variable_struct_exists(_salvos, "armario_pocoes"))
+    {
+        _dados.armario_pocoes = RestauraArrayPocoes(
+            _salvos.armario_pocoes,
+            SLOTS_ARMARIO_POCOES
+        );
+    }
+
+    // POÇÕES DA HOTBAR
+    if (variable_struct_exists(_salvos, "hotbar_pocoes"))
+    {
+        _dados.hotbar_pocoes = RestauraArrayPocoes(
+            _salvos.hotbar_pocoes,
+            SLOTS_HOTBAR_POCOES
+        );
+    }
+
+    // PRÓXIMO ID DE POÇÃO
+    if (variable_struct_exists(_salvos, "proximo_id_pocao"))
+    {
+        _dados.proximo_id_pocao = _salvos.proximo_id_pocao;
+    }
+
+    // BOLSA: INVENTÁRIO
+    if (variable_struct_exists(_salvos, "bolsa_inventario"))
+    {
+        _dados.bolsa_inventario = AjustaArraySave(
+            _salvos.bolsa_inventario,
+            SLOTS_BOLSA,
+            -1
+        );
+    }
+
+    // BOLSA: QUANTIDADES
+    if (variable_struct_exists(_salvos, "bolsa_quantidades"))
+    {
+        _dados.bolsa_quantidades = AjustaArraySave(
+            _salvos.bolsa_quantidades,
+            SLOTS_BOLSA,
+            0
+        );
+    }
+
+    // BOLSA: VALORES
+    if (variable_struct_exists(_salvos, "bolsa_valores"))
+    {
+        _dados.bolsa_valores = AjustaArraySave(
+            _salvos.bolsa_valores,
+            SLOTS_BOLSA,
+            undefined
+        );
+    }
+
+    return true;
+}
+
+function carrega_jogo()
+{
+    var _filename = "savedata.sav";
+
+    // VERIFICA SE O ARQUIVO EXISTE
+    if (!file_exists(_filename))
+    {
+        show_debug_message("Nenhum save encontrado.");
+        CriaMensagem(RES_W / 4, RES_H / 4,"Nenhum save encontrado.");
+
+        return false;
+    }
+
+    // CARREGA O BUFFER
+    var _buffer = buffer_load(_filename);
+
+    if (_buffer < 0)
+    {
+        show_debug_message("ERRO: Não foi possível carregar o save.");
+        CriaMensagem(RES_W / 4, RES_H / 4,"ERRO: Não foi possível carregar o save.");
+
+        return false;
+    }
+
+    // LÊ O JSON
+    var _json = buffer_read(
+        _buffer,
+        buffer_string
+    );
+
+    buffer_delete(_buffer);
+
+    // INTERPRETA O JSON
+    var _salvos;
+
+    try
+    {
+        _salvos = json_parse(_json);
+    }
+    catch (_erro)
+    {
+        show_debug_message("ERRO: Arquivo de save inválido.");
+        CriaMensagem(RES_W / 4, RES_H / 4,"ERRO: Arquivo de save inválido.");
+
+        return false;
+    }
+
+    // COMPATIBILIDADE COM O FORMATO ANTIGO,
+    // QUE UTILIZAVA UM ARRAY COM A STRUCT NA POSIÇÃO 0.
+    if (is_array(_salvos))
+    {
+        if (array_length(_salvos) <= 0)
+        {
+            return false;
+        }
+
+        _salvos = _salvos[0];
+    }
+
+    if (!is_struct(_salvos))
+    {
+        return false;
+    }
+
+    // VERSÃO DO SAVE
+    if (
+        variable_struct_exists(_salvos, "versao")
+        && _salvos.versao > 1
+    )
+    {
+        show_debug_message("ERRO: Versão de save incompatível.");
+        CriaMensagem(RES_W / 4, RES_H / 4,"ERRO: Versão de save incompatível.");
+
+        return false;
+    }
+
+    // RESTAURA A FASE
+    if (variable_struct_exists(_salvos, "fase"))
+    {
+        global.fase = max(1, _salvos.fase);
+    }
+
+    // RESTAURA OS DADOS DO JOGADOR
+    if (variable_struct_exists(_salvos, "DadosJogador"))
+    {
+        AplicaDadosJogadorSave(
+            _salvos.DadosJogador
+        );
+    }
+
+    // RESTAURA OS INGREDIENTES FINAIS
+    if (variable_struct_exists(_salvos, "ingredientes_finais"))
+    {
+        global.ing_finais_coletados =
+            _salvos.ingredientes_finais;
+    }
+	
+	// RESTAURA A VERIFICAÇÃO DA SAÍDA
+	if (variable_struct_exists(_salvos, "verificacao_saida"))
+	{
+	    global.qtd_ing_finais =
+	        _salvos.verificacao_saida;
+	}
+
+    // ATUALIZA A BOLSA, CASO ELA JÁ EXISTA
+    var _bolsa = instance_find(obj_bolsa, 0);
+
+    if (_bolsa != noone)
+    {
+        CarregaBolsaGlobal(_bolsa);
+    }
+
+    // MANTÉM A STRUCT DE SAVE ATUALIZADA
+    global.stat_data = _salvos;
+
+    show_debug_message("Jogo carregado com sucesso!");
+    CriaMensagem(RES_W / 4, RES_H/4,"Jogo carregado com sucesso!");
+
+    return true;
+}
+
 //on off overlay
 ///@description Desenha um overlay e pausa o jogo.
 ///@param {string} _tipo: pause, win, lose, pre, tutorial
@@ -471,11 +907,7 @@ function blink_alpha(_vel, _alpha_min = 0, _alpha_max = 1)
 //verifica se estou numa room de gameplay
 function gameplay_room()
 {
-	return room == rm_01_fazenda
-	|| room == rm_02_estrada
-	|| room == rm_03_torre
-	|| room == rm_04_cerco
-	|| room == rm_05_cidade;
+	return room == rm_masmorra;
 }
 
 //cria feedback de duração (relógio estilo gráfico de pizza)
