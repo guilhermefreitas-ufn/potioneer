@@ -1,4 +1,4 @@
-DesenhaSombra();
+
 
 var _ing = IngredientePorNumero(
     ingrediente_numero
@@ -8,6 +8,8 @@ if(!is_undefined(_ing))
 {
     // ESCALA DO INGREDIENTE
     var _escala = escala_ingrediente;
+	
+	DesenhaSombra(0,0,_ing.sprite,_escala, _escala);
 
     // DESENHA JÁ NO TAMANHO CORRETO
     draw_sprite_ext(

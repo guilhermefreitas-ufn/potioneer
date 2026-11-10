@@ -7,6 +7,9 @@ if (hp <= 0 && estado != "sofrendo" && estado != "morto")
 }
 
 // DETECÇÃO DO JOGADOR
+var pcentro_x = 0;
+var pcentro_y = 0;
+
 // Durante os estados morto e sofrendo,
 // não iniciamos uma nova perseguição.
 if (estado != "morto" && estado != "sofrendo")
@@ -18,13 +21,16 @@ if (estado != "morto" && estado != "sofrendo")
             0
         );
 		
-		var _parede = collision_line(x+sprite_width/2,y+sprite_height/2,obj_player.x+obj_player.sprite_width/2,obj_player.y+obj_player.sprite_height/2,obj_wall,false,true);
+		pcentro_x = _player.Centro()[0];
+		pcentro_y = _player.Centro()[1];
+		
+		var _parede = collision_line(x+sprite_width/2,y+sprite_height/2,pcentro_x,pcentro_y,obj_wall,false,true);
 		
         var _distancia = point_distance(
             x,
             y,
-            _player.x,
-            _player.y
+            pcentro_x,
+            pcentro_y
         );
 
         // Prioridade 1: contato com o jogador
@@ -138,10 +144,10 @@ switch (estado)
 			    // Passamos o centro do inimigo e do player para o grid achar a célula correta
 				var centro_x = x + (sprite_width / 2);
 				var centro_y = y + (sprite_height / 2);
-				var player_centro_x = obj_player.x + (obj_player.sprite_width / 2);
-				var player_centro_y = obj_player.y + (obj_player.sprite_height / 2);
+				//var player_centro_x = obj_player.Centro()[0];
+				//var player_centro_y = obj_player.Centro()[1];
 				
-				var encontrou_caminho = mp_grid_path(global.grid, caminho, centro_x, centro_y, player_centro_x, player_centro_y, true);
+				var encontrou_caminho = mp_grid_path(global.grid, caminho, centro_x, centro_y, pcentro_x, pcentro_y, true);
 				
 				if (encontrou_caminho) {
 				    // Desloca o caminho inteiro metade do tamanho do sprite para trás
@@ -200,8 +206,8 @@ switch (estado)
 	                var _distancia_alvo = point_distance(
 	                    x,
 	                    y,
-	                    _alvo.x,
-	                    _alvo.y
+	                    _alvo.Centro()[0],
+	                    _alvo.Centro()[1]
 	                );
 
 	                if (_distancia_alvo <= raio_perseguicao)

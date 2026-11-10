@@ -4,6 +4,18 @@ if(global.pause)
 	exit;
 }
 
+if(estado == "movendo")
+{
+	//minha direção
+	direcao = (point_direction(0, 0, velh, velv) div 90);
+	
+	if(velh != 0)
+	{
+		//olhando para o lado certo
+		image_xscale = sign(velh);
+	}
+}
+
 //controlando o alpha do hit flash
 if(alpha > 0)
 {

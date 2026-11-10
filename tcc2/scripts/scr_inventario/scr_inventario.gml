@@ -1,6 +1,58 @@
 #macro SLOTS_BOLSA 32
 #macro SLOTS_CALDEIRAO 12
 
+function TextoTipoIngrediente(_tipo)
+{
+    switch(_tipo)
+    {
+        case TipoIngrediente.CONDICIONAL:
+            return "condicional";
+
+        case TipoIngrediente.PRIMITIVO:
+            return "inteiro";
+
+        case TipoIngrediente.VARIAVEL:
+            return "atributo";
+
+        case TipoIngrediente.OPERADOR_EFEITO:
+            return "operador";
+
+        case TipoIngrediente.OPERADOR_COMPARACAO:
+            return "comparador";
+
+        case TipoIngrediente.ALVO:
+            return "alvo";
+    }
+
+    return "desconhecido";
+}
+
+function CorTipoIngrediente(_tipo)
+{
+    switch(_tipo)
+    {
+        case TipoIngrediente.CONDICIONAL:
+            return make_colour_rgb(105, 65, 145); // Roxo
+
+        case TipoIngrediente.PRIMITIVO:
+            return make_colour_rgb(40, 85, 135); // Azul
+
+        case TipoIngrediente.VARIAVEL:
+            return make_colour_rgb(35, 105, 90); // Verde azulado
+
+        case TipoIngrediente.OPERADOR_EFEITO:
+            return make_colour_rgb(145, 75, 25); // Laranja
+
+        case TipoIngrediente.OPERADOR_COMPARACAO:
+            return make_colour_rgb(140, 50, 65); // Vermelho
+
+        case TipoIngrediente.ALVO:
+            return make_colour_rgb(75, 105, 45); // Verde
+    }
+
+    return c_gray;
+}
+
 function ProcuraInventario(_obj_raiz, _tipo_item, _caldeirao = caldeirao)
 {
 	var _quantidade = SLOTS_BOLSA;

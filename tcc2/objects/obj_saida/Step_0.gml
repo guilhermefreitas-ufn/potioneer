@@ -3,7 +3,7 @@ if(!instance_exists(obj_player))
 	exit;
 }
 
-var _centro = obj_player.CentroPlayer();
+var _centro = obj_player.Centro();
 
 var _dist = point_distance(x, y,_centro[0],_centro[1]);
 

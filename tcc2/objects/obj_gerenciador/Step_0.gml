@@ -110,7 +110,7 @@ if(room == rm_inventarios)
 	//CRIANDO 5 POÇÕES TESTE
 	if(_p && CaldeiraoVazio())
 	{
-		//CriaPocoesTeste();
+		CriaPocoesTeste();
 	}
 	
 	//CLIQUE NOS BOTÕES
@@ -258,22 +258,18 @@ if(room == rm_armario || room == rm_inventarios)
 	}
 	
 	//VOLTA PRO MENU
-	var _x = 3 * botao_margem + botao_largura * 2;
-	var _y = RES_H - botao_altura - botao_margem;
-
-	//posição do mouse na GUI
-	var _mx = device_mouse_x_to_gui(0);
-	var _my = device_mouse_y_to_gui(0);
+	_x = 3 * botao_margem + botao_largura * 2;
+	_y = RES_H - botao_altura - botao_margem;
 
 	//POSIÇÃO ESPECIAL NA SALA DE INVENTÁRIOS
 	if(room == rm_armario)
 	{
-	    var _x =
+	    _x =
 			RES_W
 			- botao_largura * 2
 			- botao_margem * 2;
 
-		var _y =
+		_y =
 			RES_H
 			- botao_altura
 			- botao_margem;

@@ -1,5 +1,7 @@
 if(room == rm_masmorra)
 {
+	//draw_text(RES_W / 2, 200, string(instance_number(obj_sombra)));
+	
     //POSIÇÃO DO ALVO NO MUNDO
     var _alvo = PosicaoAlvoPocao(
         mouse_x,
@@ -32,7 +34,7 @@ if(room == rm_masmorra)
             );
 
             //ALCANCE MÁXIMO DO PLAYER
-            var _centro = CentroPlayer();
+            var _centro = Centro();
 
             var _pos_centro = MundoParaGUI(
                 _centro[0],

@@ -424,7 +424,7 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 				
 				if(instance_exists(obj_player))
 				{
-					var _centro = obj_player.CentroPlayer();
+					var _centro = obj_player.Centro();
 					
 					CriaMensagem(
 						_centro[0],
@@ -478,7 +478,7 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 			    );
 				if(instance_exists(obj_player))
 				{
-					var _centro = obj_player.CentroPlayer();
+					var _centro = obj_player.Centro();
 					
 					CriaMensagem(
 						_centro[0],

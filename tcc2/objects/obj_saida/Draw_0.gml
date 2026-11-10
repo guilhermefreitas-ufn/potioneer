@@ -8,8 +8,8 @@ if(image_index == 1 && instance_exists(obj_player))
     var _start_x = x;
     var _start_y = y;
     
-    var _end_x = obj_player.CentroPlayer()[0];
-    var _end_y = obj_player.CentroPlayer()[1];
+    var _end_x = obj_player.Centro()[0];
+    var _end_y = obj_player.Centro()[1];
 
     var _achou_caminho = mp_grid_path(
         global.grid,

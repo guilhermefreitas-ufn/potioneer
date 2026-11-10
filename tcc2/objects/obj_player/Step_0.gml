@@ -12,12 +12,34 @@ switch (estado)
     case "parado":
 	{
         AtualizaMovimento();
+		
+		muda_sprite(
+			DefineSprite(
+				direcao,
+				spr_player_idle_frente,
+				spr_player_idle_lado,
+				spr_player_idle_costas
+			)
+		);
 
         break;
 	}
     case "movendo":
     {
         AtualizaMovimento();
+		
+		//direcao = point_direction(0, 0, direita - esquerda, baixo - cima);
+		
+		//show_debug_message(direcao);
+		
+		muda_sprite(
+			DefineSprite(
+				direcao,
+				spr_player_walk_frente,
+				spr_player_walk_lado,
+				spr_player_walk_costas
+			)
+		);
 
         break;
 	}
@@ -40,7 +62,7 @@ switch (estado)
         {
 			if(hp <= 0)
 			{
-				CriaMensagem(CentroPlayer()[0],CentroPlayer()[1],"Derrota!");
+				CriaMensagem(Centro()[0],Centro()[1],"Derrota!");
 				MudaEstado("morto");
 			}
 			else
@@ -244,7 +266,7 @@ if (room == rm_masmorra)
 	
 	#region ILUMINAÇÃO
 	
-	var _cp = CentroPlayer();
+	var _cp = Centro();
 	
 	if(luz == noone)
 	{

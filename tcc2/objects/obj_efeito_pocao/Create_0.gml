@@ -188,7 +188,7 @@ AplicarImpacto = function()
 	    0
 	);
 
-	var _centro = _player.CentroPlayer();
+	var _centro = _player.Centro();
 	
 	if(_resultado.mensagem != "")
 	{

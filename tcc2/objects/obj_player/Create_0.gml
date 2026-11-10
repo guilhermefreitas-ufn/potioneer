@@ -9,9 +9,9 @@ spd = 2;
 atk = 6;
 
 //testes
-sprite_index = spr_placeholder_32;
-image_speed = 0;
-image_index = 0;
+//sprite_index = spr_placeholder_32;
+//image_speed = 0;
+//image_index = 0;
 
 //minha iluminação
 luz = noone;
@@ -22,10 +22,12 @@ estado = "parado";
 velh = 0;
 velv = 0;
 
-direita = 0;
-esquerda = 0;
-cima = 0;
-baixo = 0;
+direcao = 0;
+
+direita		= 0;
+esquerda	= 0;
+cima		= 0;
+baixo		= 0;
 
 PegaControles = function()
 {
@@ -150,14 +152,7 @@ invencivel = false;
 invencivel_timer = GAME_SPEED * 3;
 tempo_invencivel = invencivel_timer;
 
-//CENTRO DO PLAYER
-CentroPlayer = function()
-{
-    return [
-        x + sprite_get_width(sprite_index) * abs(image_xscale) / 2,
-        y + sprite_get_height(sprite_index) * abs(image_yscale) / 2
-    ];
-};
+
 
 //POÇÕES
 raio_pocao = 32;
@@ -202,7 +197,7 @@ AlcancePocao = function()
 //Calcula a posição permitida para a área da poção
 PosicaoAlvoPocao = function(_mx, _my)
 {
-    var _centro = CentroPlayer();
+    var _centro = Centro();
 
     var _px = _centro[0];
     var _py = _centro[1];
@@ -237,7 +232,7 @@ PosicaoAlvoPocao = function(_mx, _my)
 // EXECUTA A POÇÃO SELECIONADA
 function ExecutaPocao(_modo)
 {
-	var _centro = CentroPlayer();
+	var _centro = Centro();
     var _indice = pocao_selecionada;
 
 
@@ -315,7 +310,7 @@ function ExecutaPocao(_modo)
                 mouse_y
             );
 
-            //var _centro = CentroPlayer();
+            //var _centro = Centro();
 
             // Cria o efeito visual na posição do jogador
             var _efeito = instance_create_depth(
@@ -356,7 +351,7 @@ function ExecutaPocao(_modo)
         // CLIQUE DIREITO: QUEBRA AOS PÉS DO JOGADOR
         case "player_area":
         {
-            //var _centro = CentroPlayer();
+            //var _centro = Centro();
 
 
             var _efeito = instance_create_depth(
@@ -397,7 +392,7 @@ function ExecutaPocao(_modo)
         // ESPAÇO: BEBER A POÇÃO
         case "player_only":
         {
-			//var _centro = CentroPlayer();
+			//var _centro = Centro();
 			
             var _contexto = CriarContextoPocao(
                 [id],

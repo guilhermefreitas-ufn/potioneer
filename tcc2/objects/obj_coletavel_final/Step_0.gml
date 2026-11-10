@@ -42,7 +42,7 @@ var _player = instance_find(
     0
 );
 
-var _centro = _player.CentroPlayer();
+var _centro = _player.Centro();
 
 // VERIFICA A SOBREPOSIÇÃO DOS BBOX
 // Adiciona uma margem para facilitar a coleta.

@@ -1,3 +1,14 @@
+//ETIQUETA DO TIPO DE INGREDIENTE
+cor_tag_tipo = make_colour_rgb(75, 105, 135);
+cor_texto_tag_tipo = c_white;
+
+tag_tipo_padding_x = 7;
+tag_tipo_padding_y = 2;
+tag_tipo_espaco = 8;
+tag_tipo_raio = 5;
+
+raio_borda_desc = 10;
+
 //numero de colunas
 colunas = 6;
 

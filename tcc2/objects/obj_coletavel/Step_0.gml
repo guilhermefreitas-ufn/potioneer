@@ -8,7 +8,7 @@ var _player = instance_find(
     0
 );
 
-var _centro = _player.CentroPlayer();
+var _centro = _player.Centro();
 
 //var _msg_x = (_player.bbox_left + _player.bbox_right) / 2;
 //var _msg_y = _player.bbox_top - 12;

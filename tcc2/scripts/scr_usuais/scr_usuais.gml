@@ -3,6 +3,22 @@
 #macro RES_W display_get_gui_width()
 #macro GAME_SPEED game_get_speed(gamespeed_fps)
 
+//define sprite 4 direcoes
+function DefineSprite(_direcao, _spr_frente, _spr_lado, _spr_costas)
+{
+	var _sprite = spr_placeholder_32;
+	
+	switch(_direcao)
+	{
+		case 0: _sprite = _spr_lado; break;
+		case 1: _sprite = _spr_costas; break;
+		case 2: _sprite = _spr_lado; break;
+		case 3: _sprite = _spr_frente; break;
+	}
+	
+	return _sprite;
+}
+
 //sistema de save e load
 function AjustaArraySave(_array, _tamanho, _valor_padrao)
 {
@@ -667,18 +683,25 @@ function cria_luz(_x, _y, _tam_x, _tam_y, _pulsa = true)
 }
 
 //desenha a sombra dos objetos
-function DesenhaSombra(_offset_x = 0, _offset_y = 0)
+function DesenhaSombra(_offset_x = 0, _offset_y = 0, _sprite = sprite_index, _escala_x = image_xscale, _escala_y = image_yscale)
 {
-	draw_set_colour(c_dkgray);
-	draw_set_alpha(.5);
-	draw_ellipse(
-		x + _offset_x,
-		y + (sprite_height * 0.75)  + _offset_y,
-		x + sprite_width + _offset_x,
-		y + (sprite_height * 1.25)  + _offset_y,
-		false
-	);
-	reseta_draw();
+	var _tenho_sombra = false;
+	
+	if(instance_exists(obj_sombra))
+	{
+		with(obj_sombra)
+		{
+			if(pai == other.id)
+			{
+				_tenho_sombra = true;
+			}
+		}
+	}
+	
+	if(!_tenho_sombra)
+	{
+		instance_create_layer(x,y,"Sombras",obj_sombra, { pai : id, offset_x : _offset_x, offset_y : _offset_y, sprite : _sprite, escala_x : _escala_x, escala_y : _escala_y })
+	}
 }
 
 //efeito de hit flash

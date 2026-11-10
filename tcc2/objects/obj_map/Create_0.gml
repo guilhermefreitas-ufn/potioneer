@@ -148,8 +148,8 @@ for(var _xx = 0; _xx < cell_h; _xx++)
 			if(!instance_exists(obj_player))
 			{
 			    var _player = instance_create_layer(
-			        x1,
-			        y1,
+			        x1 + 16,
+			        y1 + 32,
 			        "Player",
 			        obj_player
 			    );

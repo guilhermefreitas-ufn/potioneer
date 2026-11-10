@@ -35,7 +35,13 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
-  "spriteMaskId":null,
+  "spriteId":{
+    "name":"spr_player_walk_frente",
+    "path":"sprites/spr_player_walk_frente/spr_player_walk_frente.yy",
+  },
+  "spriteMaskId":{
+    "name":"spr_player_walk_frente",
+    "path":"sprites/spr_player_walk_frente/spr_player_walk_frente.yy",
+  },
   "visible":true,
 }
