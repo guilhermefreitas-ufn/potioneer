@@ -1,6 +1,11 @@
 //Inherit the parent event
 event_inherited();
 
+//testes
+//sprite_index = spr_placeholder_32;
+//image_speed = 0;
+//image_index = 0;
+
 nome = "Player";
 cor = c_black;
 
@@ -8,10 +13,22 @@ hp = 10;
 spd = 2;
 atk = 6;
 
-//testes
-//sprite_index = spr_placeholder_32;
-//image_speed = 0;
-//image_index = 0;
+//invencibilidade
+invencivel = false;
+invencivel_timer = GAME_SPEED * 3;
+tempo_invencivel = invencivel_timer;
+
+//POÇÕES
+raio_pocao = 32;
+mostrar_area = true;
+alpha_alcance = 0.1;
+alpha_descricao_area = 0.2;
+alpha_area = 0.5;
+alcance_por_atk = 16;
+cor_alcance = c_yellow;
+
+//Slot selecionado: 0 até 4
+pocao_selecionada = 0;
 
 //minha iluminação
 luz = noone;
@@ -146,26 +163,6 @@ AtualizaMovimento = function(_obstaculos = [obj_wall])
         }
     }
 };
-
-//invencibilidade
-invencivel = false;
-invencivel_timer = GAME_SPEED * 3;
-tempo_invencivel = invencivel_timer;
-
-
-
-//POÇÕES
-raio_pocao = 32;
-mostrar_area = true;
-alpha_alcance = 0.1;
-alpha_descricao_area = 0.2;
-alpha_area = 0.5;
-
-//ALCANCE DE USO DAS POÇÕES
-alcance_por_atk = 16;
-
-//Slot selecionado: 0 até 4
-pocao_selecionada = 0;
 
 //Verifica se o cursor está sobre um slot da Hotbar
 MouseSobreSlotHotbar = function()

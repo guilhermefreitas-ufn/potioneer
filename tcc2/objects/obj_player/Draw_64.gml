@@ -48,7 +48,7 @@ if(room == rm_masmorra)
                 var _alcance_x = _alcance * _pos_centro.escala_x;
                 var _alcance_y = _alcance * _pos_centro.escala_y;
 
-                draw_set_colour(c_white);
+                draw_set_colour(cor_alcance);
                 draw_set_alpha(alpha_alcance);
 
                 draw_ellipse(
