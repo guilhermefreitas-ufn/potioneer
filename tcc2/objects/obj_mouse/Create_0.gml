@@ -147,7 +147,7 @@ mouse_over = function()
         if(_slot_armario != -1)
         {
             pocao_inventario_hover = _armario;
-            pocao_slot_hover = _slot_armario;
+            pocao_slot_hover= _slot_armario;
         }
     }
 
@@ -577,7 +577,7 @@ estado_drag_pocao = function()
                 )
                 {
                     if(
-                        pocao_slot_hover != pocao_slot_drag
+                        pocao_slot_hover!= pocao_slot_drag
                     )
                     {
                         TrocaPocaoArmario(
@@ -600,7 +600,7 @@ estado_drag_pocao = function()
                 )
                 {
                     if(
-                        pocao_slot_hover != pocao_slot_drag
+                        pocao_slot_hover!= pocao_slot_drag
                     )
                     {
                         TrocaPocaoHotbar(
