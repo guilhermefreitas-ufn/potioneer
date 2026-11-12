@@ -1,3 +1,212 @@
+//desenhando botão de "Como Jogar"
+//nas rooms: armário, inventários e masmorra
+var _rooms = PegaRooms(["inventarios", "armario", "masmorra"]);
+
+var _inventarios	= array_get_index(_rooms, rm_inventarios);
+var _masmorra		= array_get_index(_rooms, rm_masmorra);
+var _armario		= array_get_index(_rooms, rm_armario);
+
+if(global.debug)
+{
+	//debug
+	define_align();
+	draw_set_colour(c_blue);
+	draw_text(RES_W - 60, 40, "debug");
+	reseta_draw();
+	
+	//poções
+	draw_text(RES_W - 96, RES_H / 7 - 24, "ARMARIO:");
+
+	for(var i = 0; i < array_length(global.DadosJogador.armario_pocoes); i++)
+	{
+	    var _pocao = global.DadosJogador.armario_pocoes[i];
+
+	    if(is_struct(_pocao))
+	    {
+	        draw_text(
+	            RES_W - 96,
+	            RES_H / 7 + i * 16,
+	            string(_pocao.nome)
+	        );
+	    }
+	    else
+	    {
+	        draw_text(
+	            RES_W - 96,
+	            RES_H / 7 + i * 16,
+	            "VAZIO"
+	        );
+	    }
+	}
+
+
+	//hotbar
+	draw_text(RES_W - 192, RES_H / 7 - 24, "HOTBAR:");
+
+	for(var i = 0; i < array_length(global.DadosJogador.hotbar_pocoes); i++)
+	{
+	    var _pocao = global.DadosJogador.hotbar_pocoes[i];
+
+	    if(is_struct(_pocao))
+	    {
+	        draw_text(
+	            RES_W - 192,
+	            RES_H / 7 + i * 16,
+	            string(_pocao.nome)
+	        );
+	    }
+	    else
+	    {
+	        draw_text(
+	            RES_W - 192,
+	            RES_H / 7 + i * 16,
+	            "VAZIO"
+	        );
+	    }
+	}
+	
+	if(room == rm_inventarios)
+	{
+		//DESENHANDO OS BOTÕES
+		var _mx = device_mouse_x_to_gui(0);
+		var _my = device_mouse_y_to_gui(0);
+	
+		for(var i = 0; i < botoes_qtd; i++)
+		{
+			var _bx = botao_x + i * (botao_largura + botao_espaco);
+			var _by = botao_y;
+
+			//mouse sobre o botão?
+			var _sobre = point_in_rectangle(
+				_mx,
+				_my,
+				_bx,
+				_by,
+				_bx + botao_largura,
+				_by + botao_altura
+			);
+			
+			//FUNDO
+			if(_sobre)
+			{
+				draw_set_color(c_ltgray);
+			}
+			else
+			{
+				draw_set_color(c_dkgray);
+			}
+
+			draw_rectangle(
+				_bx,
+				_by,
+				_bx + botao_largura,
+				_by + botao_altura,
+				false
+			);
+			
+			//BORDA
+			draw_set_color(c_black);
+
+			draw_rectangle(
+				_bx,
+				_by,
+				_bx + botao_largura,
+				_by + botao_altura,
+				true
+			);
+			
+			//TEXTO
+			draw_set_font(-1);
+			draw_set_halign(fa_left);
+			draw_set_valign(fa_top);
+			draw_set_color(c_white);
+
+			var _texto = botoes_texto[i];
+
+			var _texto_largura = string_width(_texto);
+			var _offset_y = 6;
+
+			draw_text(
+				_bx + (botao_largura - _texto_largura) / 2,
+				_by + _offset_y,
+				_texto
+			);
+		}
+	}
+	else
+	{
+		define_align();
+		draw_set_colour(c_black);
+		draw_set_font(fnt_placeholder_media);
+		draw_text(RES_W/2, 20, "Aperte \"-\" para voltar ao Caldeirão.")
+		reseta_draw();
+	}
+
+	//resetando alinhamentos
+	reseta_draw();
+}
+
+//desenhando botão de "Como Jogar"
+//nas rooms: armário, inventários e masmorra
+if(room == rm_inventarios || room == rm_armario || room == rm_masmorra)
+{
+	var _mx = device_mouse_x_to_gui(0);
+	var _my = device_mouse_y_to_gui(0);
+	
+	var _botao_raio = 16;
+	var _margem = 32;
+	
+	var _x = RES_W - _margem;
+	var _y = _margem;
+
+	var _hover = point_in_circle(
+		_mx,
+		_my,
+		_x,
+		_y,
+		_botao_raio
+	);
+	
+	if(_hover)
+	{
+		draw_set_colour(c_ltgray);
+	}
+	else
+	{
+		draw_set_colour(c_dkgray);
+	}
+	
+	draw_circle(
+		_x,
+		_y,
+		_botao_raio,
+		false
+	);
+	
+	draw_set_colour(c_black);
+	
+	draw_circle(
+		_x,
+		_y,
+		_botao_raio,
+		true
+	);
+	
+	draw_set_colour(c_white);
+	
+	define_align();
+	
+	draw_text(
+		RES_W - 32,
+		32,
+		"?"
+	);
+	
+	reseta_draw();
+}
+
+if(global.pause) { exit; }
+
 //botões
 if(room == rm_inventarios || room == rm_armario)
 {
@@ -283,142 +492,3 @@ if(room == rm_masmorra)
 	reseta_draw();
 }
 
-if(global.debug)
-{
-	//debug
-	define_align();
-	draw_set_colour(c_blue);
-	draw_text(RES_W - 60, 40, "debug");
-	reseta_draw();
-	
-	//poções
-	draw_text(RES_W - 96, RES_H / 7 - 24, "ARMARIO:");
-
-	for(var i = 0; i < array_length(global.DadosJogador.armario_pocoes); i++)
-	{
-	    var _pocao = global.DadosJogador.armario_pocoes[i];
-
-	    if(is_struct(_pocao))
-	    {
-	        draw_text(
-	            RES_W - 96,
-	            RES_H / 7 + i * 16,
-	            string(_pocao.nome)
-	        );
-	    }
-	    else
-	    {
-	        draw_text(
-	            RES_W - 96,
-	            RES_H / 7 + i * 16,
-	            "VAZIO"
-	        );
-	    }
-	}
-
-
-	//hotbar
-	draw_text(RES_W - 192, RES_H / 7 - 24, "HOTBAR:");
-
-	for(var i = 0; i < array_length(global.DadosJogador.hotbar_pocoes); i++)
-	{
-	    var _pocao = global.DadosJogador.hotbar_pocoes[i];
-
-	    if(is_struct(_pocao))
-	    {
-	        draw_text(
-	            RES_W - 192,
-	            RES_H / 7 + i * 16,
-	            string(_pocao.nome)
-	        );
-	    }
-	    else
-	    {
-	        draw_text(
-	            RES_W - 192,
-	            RES_H / 7 + i * 16,
-	            "VAZIO"
-	        );
-	    }
-	}
-	
-	if(room == rm_inventarios)
-	{
-		//DESENHANDO OS BOTÕES
-		var _mx = device_mouse_x_to_gui(0);
-		var _my = device_mouse_y_to_gui(0);
-	
-		for(var i = 0; i < botoes_qtd; i++)
-		{
-			var _bx = botao_x + i * (botao_largura + botao_espaco);
-			var _by = botao_y;
-
-			//mouse sobre o botão?
-			var _sobre = point_in_rectangle(
-				_mx,
-				_my,
-				_bx,
-				_by,
-				_bx + botao_largura,
-				_by + botao_altura
-			);
-			
-			//FUNDO
-			if(_sobre)
-			{
-				draw_set_color(c_ltgray);
-			}
-			else
-			{
-				draw_set_color(c_dkgray);
-			}
-
-			draw_rectangle(
-				_bx,
-				_by,
-				_bx + botao_largura,
-				_by + botao_altura,
-				false
-			);
-			
-			//BORDA
-			draw_set_color(c_black);
-
-			draw_rectangle(
-				_bx,
-				_by,
-				_bx + botao_largura,
-				_by + botao_altura,
-				true
-			);
-			
-			//TEXTO
-			draw_set_font(-1);
-			draw_set_halign(fa_left);
-			draw_set_valign(fa_top);
-			draw_set_color(c_white);
-
-			var _texto = botoes_texto[i];
-
-			var _texto_largura = string_width(_texto);
-			var _offset_y = 6;
-
-			draw_text(
-				_bx + (botao_largura - _texto_largura) / 2,
-				_by + _offset_y,
-				_texto
-			);
-		}
-	}
-	else
-	{
-		define_align();
-		draw_set_colour(c_black);
-		draw_set_font(fnt_placeholder_media);
-		draw_text(RES_W/2, 20, "Aperte \"-\" para voltar ao Caldeirão.")
-		reseta_draw();
-	}
-
-	//resetando alinhamentos
-	reseta_draw();
-}

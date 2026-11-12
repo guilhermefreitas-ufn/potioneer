@@ -64,7 +64,7 @@ if(_fora_do_alcance)
 CriaMensagem(
 	x,
 	y,
-    nome + " encontrado!"
+    "Ingrediente final encontrado!"
 );
 
 //me removo da lista possivel

@@ -187,8 +187,52 @@ if(room == rm_inventarios)
 }
 #endregion
 
-//BOTÕES
+//BOTÃO COMO JOGAR
+if(room == rm_armario || room == rm_inventarios || room == rm_masmorra)
+{
+	var _mx = device_mouse_x_to_gui(0);
+	var _my = device_mouse_y_to_gui(0);
+	
+	var _botao_raio = 16;
+	var _margem = 32;
+	
+	var _x = RES_W - _margem;
+	var _y = _margem;
+	
+	var _click_esq = mouse_check_button_pressed(mb_left);
 
+	var _hover = point_in_circle(
+		_mx,
+		_my,
+		_x,
+		_y,
+		_botao_raio
+	);
+	
+	//se to com o cursor no lugar certo
+	//se cliquei com o esquerdo
+	//se não existe o "como jogar"
+	if(_hover && _click_esq && !instance_exists(obj_tutorial))
+	{
+		//se não existe o interpretador
+		if(!instance_exists(obj_interpretador))
+		{
+			//crio o "como jogar"
+			instance_create_layer(0,0,"UI",obj_tutorial);
+		}
+		//se existe o interpretador
+		//mas não to personalizando a poção
+		else if(!obj_interpretador.personalizando_pocao)
+		{
+			//crio o "como jogar"
+			instance_create_layer(0,0,"UI",obj_tutorial);
+		}
+	}
+}
+
+if(global.pause) { exit; }
+
+//OUTROS BOTÕES
 if(room == rm_armario || room == rm_inventarios)
 {
 	//VAI PRA MASMORRA

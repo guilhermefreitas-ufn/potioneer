@@ -145,7 +145,6 @@ erro_semantica = _resultado.erro_semantica;
 
 slot_erro = _resultado.slot_erro;
 
-
 //MENSAGEM
 if(mensagem_timer > 0)
 {
@@ -162,6 +161,8 @@ var _x = RES_W
 var _y = RES_H
 		- botao_criar_altura
 		- botao_criar_margem;
+
+if(global.pause) { exit; }
 
 if(
 	mouse_check_button_pressed(mb_left)

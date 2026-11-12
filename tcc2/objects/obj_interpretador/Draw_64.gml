@@ -1,4 +1,6 @@
 
+if(global.pause) { exit; }
+
 var _margem = 32;
 var _texto = sentenca;
 var _x = RES_W / 2;

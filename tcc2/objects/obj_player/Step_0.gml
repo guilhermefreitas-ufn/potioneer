@@ -1,5 +1,7 @@
 event_inherited();
 
+if(global.pause) { exit; }
+
 // VERIFICAÇÃO DA VIDA
 if (hp <= 0 && estado != "sofrendo" && estado != "morto")
 {

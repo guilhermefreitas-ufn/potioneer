@@ -230,5 +230,12 @@ if(
 	)
 )
 {
-	aplica_transicao(rm_menu);
+	if(room == rm_tutorial)
+	{
+		aplica_transicao(rm_menu);
+	}
+	else
+	{
+		instance_destroy();
+	}
 }

@@ -7,3 +7,5 @@ botao_espaco = 10;
 
 botao_x = 30;
 botao_y = 30;
+
+global.pause = true;

@@ -85,7 +85,7 @@ global.ingredientes_finais = [
 
 global.ing_finais_coletados = 0;
 
-//funções para testes
+//funções locais
 function VerificaIngrediente(_numero = 1)
 {
 	if(instance_exists(obj_bolsa))
@@ -578,6 +578,50 @@ function CriaPocoesTeste()
 	}
 	
 	
+}
+
+function PegaRooms(_salas)
+{
+	var _rooms = [];
+	
+	if(!is_array(_salas)) { return; }
+	
+	for(var i = 0; i < array_length(_salas); i++)
+	{
+		if(_salas[i] == "armario")
+		{
+			array_push(_rooms, rm_armario);
+		}
+		if(_salas[i] == "inicio")
+		{
+			array_push(_rooms, rm_inicio);
+		}
+		if(_salas[i] == "inventarios")
+		{
+			array_push(_rooms, rm_inventarios);
+		}
+		if(_salas[i] == "masmorra")
+		{
+			array_push(_rooms, rm_masmorra);
+		}
+		if(_salas[i] == "menu")
+		{
+			array_push(_rooms, rm_menu);
+		}
+		if(_salas[i] == "tutorial")
+		{
+			array_push(_rooms, rm_tutorial);
+		}
+	}
+	
+	if(array_length(_rooms) > 0)
+	{
+		return _rooms;
+	}
+	else
+	{
+		show_debug_message("Nenhuma room encontrada!");
+	}
 }
 
 //botões
