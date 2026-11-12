@@ -371,6 +371,8 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 	reseta_draw();
 }
 
+if(room != rm_masmorra) { exit; }
+
 //DESCRIÇÃO
 draw_set_font(fonte);
 define_align(0, 0);
