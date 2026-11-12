@@ -36,8 +36,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_player_walk_frente",
-    "path":"sprites/spr_player_walk_frente/spr_player_walk_frente.yy",
+    "name":"spr_player_idle_frente",
+    "path":"sprites/spr_player_idle_frente/spr_player_idle_frente.yy",
   },
   "spriteMaskId":{
     "name":"spr_player_walk_frente",

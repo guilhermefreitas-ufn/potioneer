@@ -1,5 +1,23 @@
 event_inherited();
 
+#region ILUMINAÇÃO
+	
+	var _cp = Centro();
+	
+	if(luz == noone)
+	{
+		//var _luz_tam = 256;
+		
+		luz = cria_luz(_cp[0], _cp[1], luz_tam, luz_tam);
+	}
+	else
+	{
+		luz.pos_x = _cp[0];
+		luz.pos_y = _cp[1];
+	}
+	
+	#endregion
+
 if(global.pause) { exit; }
 
 // VERIFICAÇÃO DA VIDA
@@ -8,8 +26,7 @@ if (hp <= 0 && estado != "sofrendo" && estado != "morto")
     MudaEstado("morto");
 }
 
-// MÁQUINA DE ESTADOS
-switch (estado)
+switch (estado)// MÁQUINA DE ESTADOS
 {
     case "parado":
 	{
@@ -138,10 +155,7 @@ switch (estado)
 	}
 }
 
-if (room == rm_masmorra)
-{
-	// COOLDOWN DAS POÇÕES
-    for (
+for (// COOLDOWN DAS POÇÕES
         var i = 0;
         i < SLOTS_HOTBAR_POCOES;
         i++
@@ -161,7 +175,7 @@ if (room == rm_masmorra)
         }
     }
 
-	#region SELEÇÃO E USO DE POÇÕES
+#region SELEÇÃO E USO DE POÇÕES
 	// SELEÇÃO POR TECLADO
     var _1 = keyboard_check_pressed(vk_numpad1) || keyboard_check_pressed(ord("1"));
     var _2 = keyboard_check_pressed(vk_numpad2) || keyboard_check_pressed(ord("2"));
@@ -265,25 +279,6 @@ if (room == rm_masmorra)
         }
     }
 	#endregion
-	
-	#region ILUMINAÇÃO
-	
-	var _cp = Centro();
-	
-	if(luz == noone)
-	{
-		//var _luz_tam = 256;
-		
-		luz = cria_luz(_cp[0], _cp[1], luz_tam, luz_tam);
-	}
-	else
-	{
-		luz.pos_x = _cp[0];
-		luz.pos_y = _cp[1];
-	}
-	
-	#endregion
-}
 
 // DANO DE CONTATO DOS INIMIGOS
 var inimigo = instance_place(
