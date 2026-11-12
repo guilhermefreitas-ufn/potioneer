@@ -373,8 +373,6 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 	reseta_draw();
 }
 
-if(room != rm_masmorra) { exit; }
-
 //DESCRIÇÃO
 draw_set_font(fonte);
 define_align(0, 0);
@@ -400,7 +398,7 @@ if(_slot_hover != -1)
         //FUNDO
         draw_set_colour(c_black);
 
-        draw_roundrect(
+        draw_rectangle(
             _x_desc - 10,
             _y_desc - 10,
             _x_desc + _largura_desc + 10,

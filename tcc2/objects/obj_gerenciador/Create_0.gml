@@ -1,9 +1,6 @@
 //aleatorizando
 randomize();
 
-//window_get_fullscreen();
-global.fullscreen = false;
-
 //dados do jogador
 InicializaDadosJogador();
 
