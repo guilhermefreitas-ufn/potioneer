@@ -113,7 +113,7 @@ if(room == rm_inventarios)
 	//CRIANDO 5 POÇÕES TESTE
 	if(_m && CaldeiraoVazio())
 	{
-		CriaPocoesTeste();
+		//CriaPocoesTeste();
 	}
 	
 	//CLIQUE NOS BOTÕES
