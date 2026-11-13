@@ -20,7 +20,7 @@ if(_slot_hover != -1)
 
     if(!is_undefined(_pocao))
     {
-        var _x_desc = obj_armario.x + colunas * (slot_tam + entre_slots) + 30;
+        var _x_desc = obj_armario.x + obj_armario.colunas * (obj_armario.slot_tam + obj_armario.entre_slots) + 30;
 		
 		var _y_desc =  obj_armario.y;
 		

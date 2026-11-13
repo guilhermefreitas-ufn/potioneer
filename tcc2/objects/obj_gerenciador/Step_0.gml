@@ -1,9 +1,10 @@
 #region iniciando variáveis
-var _p, _b, _r, _0, _9, _8, _7, _6, _5, _4, _3, _2, _1;
+var _p, _b, _r, _0, _9, _8, _7, _6, _5, _4, _3, _2, _1, _m;
 
 _b = keyboard_check_pressed(ord("B"));
 _r = keyboard_check_pressed(ord("R"));
 _p = keyboard_check_pressed(ord("P"));
+_m = keyboard_check_pressed(ord("M"));
 _0 = keyboard_check_pressed(vk_numpad0) || keyboard_check_pressed(ord("0"));
 _1 = keyboard_check_pressed(vk_numpad1) || keyboard_check_pressed(ord("1"));
 _2 = keyboard_check_pressed(vk_numpad2) || keyboard_check_pressed(ord("2"));
@@ -110,9 +111,9 @@ if(_posso_clicar)
 if(room == rm_inventarios)
 {
 	//CRIANDO 5 POÇÕES TESTE
-	if(_p && CaldeiraoVazio())
+	if(_m && CaldeiraoVazio())
 	{
-		//CriaPocoesTeste();
+		CriaPocoesTeste();
 	}
 	
 	//CLIQUE NOS BOTÕES
