@@ -1,4 +1,4 @@
-if(room != rm_armario) { exit; }
+if(global.pause || !instance_exists(obj_armario)) { exit; }
 
 draw_set_font(fonte);
 draw_set_halign(fa_center);
@@ -20,9 +20,9 @@ if(_slot_hover != -1)
 
     if(!is_undefined(_pocao))
     {
-        var _x_desc = obj_armario.x + obj_armario.colunas * (obj_armario.slot_tam + obj_armario.entre_slots) + 30;
+        var _x_desc = obj_armario.x + colunas * (slot_tam + entre_slots) + 30;
 		
-		var _y_desc = obj_armario.y;
+		var _y_desc =  obj_armario.y;
 		
 		var _largura_desc = 260;
 		
@@ -36,7 +36,7 @@ if(_slot_hover != -1)
         //FUNDO
         draw_set_colour(c_black);
 
-        draw_roundrect(
+        draw_rectangle(
             _x_desc - 10,
             _y_desc - 10,
             _x_desc + _largura_desc + 10,

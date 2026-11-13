@@ -4,6 +4,9 @@ randomize();
 //dados do jogador
 InicializaDadosJogador();
 
+//tela cheia
+global.fullscreen = false;
+
 //sistema de save e load
 global.stat_data = {};
 

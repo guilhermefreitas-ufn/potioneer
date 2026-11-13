@@ -193,7 +193,7 @@ if(room == rm_inventarios || room == rm_armario || room == rm_masmorra)
 	);
 	
 	draw_set_colour(c_white);
-	
+	draw_set_font(fnt_media_black);
 	define_align();
 	
 	draw_text(

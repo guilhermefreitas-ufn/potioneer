@@ -19,6 +19,8 @@ var _menos = keyboard_check_pressed(vk_subtract) || keyboard_check_pressed(ord("
 var _posso_clicar = false;
 #endregion
 
+
+
 if(!instance_exists(obj_interpretador)) { _posso_clicar = true; }
 
 if(instance_exists(obj_interpretador))
@@ -110,7 +112,7 @@ if(room == rm_inventarios)
 	//CRIANDO 5 POÇÕES TESTE
 	if(_p && CaldeiraoVazio())
 	{
-		CriaPocoesTeste();
+		//CriaPocoesTeste();
 	}
 	
 	//CLIQUE NOS BOTÕES
@@ -211,21 +213,32 @@ if(room == rm_armario || room == rm_inventarios || room == rm_masmorra)
 	
 	//se to com o cursor no lugar certo
 	//se cliquei com o esquerdo
-	//se não existe o "como jogar"
-	if(_hover && _click_esq && !instance_exists(obj_tutorial))
+	//ou cliquei P
+	if((_hover && _click_esq) || _p)
 	{
-		//se não existe o interpretador
-		if(!instance_exists(obj_interpretador))
+		//se não existe o "como jogar"
+		if(!instance_exists(obj_tutorial))
 		{
-			//crio o "como jogar"
-			instance_create_layer(0,0,"UI",obj_tutorial);
+			//se não existe o interpretador
+			if(!instance_exists(obj_interpretador))
+			{
+				//crio o "como jogar"
+				instance_create_layer(0,0,"UI",obj_tutorial);
+			}
+			//se existe o interpretador
+			//mas não to personalizando a poção
+			else if(!obj_interpretador.personalizando_pocao)
+			{
+				//crio o "como jogar"
+				instance_create_layer(0,0,"UI",obj_tutorial);
+			}
 		}
-		//se existe o interpretador
-		//mas não to personalizando a poção
-		else if(!obj_interpretador.personalizando_pocao)
+		else
 		{
-			//crio o "como jogar"
-			instance_create_layer(0,0,"UI",obj_tutorial);
+			with(obj_tutorial)
+			{
+				instance_destroy();
+			}
 		}
 	}
 }
