@@ -220,11 +220,29 @@ for (// COOLDOWN DAS POÇÕES
     {
         var _mouse_na_hotbar =
             MouseSobreSlotHotbar();
+		
+		var _mx = device_mouse_x_to_gui(0);
+		var _my = device_mouse_y_to_gui(0);
+			
+		var _botao_raio = 16;
+		var _margem = 32;
+	
+		var _x = RES_W - _margem;
+		var _y = _margem;
+
+		var _hover = point_in_circle(
+			_mx,
+			_my,
+			_x,
+			_y,
+			_botao_raio
+		);
 
         // CLIQUE ESQUERDO: arremessar
         if (
             mouse_check_button_pressed(mb_left)
             && !_mouse_na_hotbar
+			&& !_hover
         )
         {
             if (ExecutaPocao("mouse"))

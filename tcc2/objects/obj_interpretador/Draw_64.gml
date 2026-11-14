@@ -6,7 +6,7 @@ var _texto = sentenca;
 var _x = RES_W / 2;
 var _y = 2 * _margem;
 var _y_erro = _y + _margem * 2;
-var _max_tam = RES_H - _margem * 2;
+var _max_tam = RES_W / 3;//_margem * 3;
 
 //sentença
 if(_texto != " ") { _texto = "\" "+_texto+". \""; }

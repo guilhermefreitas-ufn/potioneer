@@ -13,10 +13,7 @@ var _slot_hover = SlotSobreMouse(_mx, _my);
 //SLOT SELECIONADO
 var _slot_selecionado = -1;
 
-if(
-    room == rm_masmorra
-    && instance_exists(obj_player)
-)
+if(room == rm_masmorra && instance_exists(obj_player))
 {
     var _player = instance_find(
         obj_player,
@@ -25,8 +22,7 @@ if(
 
     if(_player != noone)
     {
-        _slot_selecionado =
-            _player.pocao_selecionada;
+        _slot_selecionado = _player.pocao_selecionada;
     }
 }
 
@@ -41,18 +37,13 @@ var _objeto_sob_hotbar = false;
 var _alpha_hotbar = 1;
 
 //HOTBAR EM COORDENADAS GUI
-var _hotbar_left =
-    (RES_W - largura_hotbar) / 2;
+var _hotbar_left = (RES_W - largura_hotbar) / 2;
 
-var _hotbar_right =
-    _hotbar_left + largura_hotbar;
+var _hotbar_right = _hotbar_left + largura_hotbar;
 
-var _hotbar_top =
-    RES_H - altura_hotbar - margem_inferior;
+var _hotbar_top = RES_H - altura_hotbar - margem_inferior;
 
-var _hotbar_bottom =
-    _hotbar_top + altura_hotbar;
-
+var _hotbar_bottom = _hotbar_top + altura_hotbar;
 
 //VERIFICA OBJETOS SOB A HOTBAR
 if(room == rm_masmorra)
@@ -268,8 +259,9 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 			var _centro_x = _pos[0];
 			var _centro_y = _pos[1];
 			
-		    //Fundo escuro do relógio
-		    draw_set_alpha(0.9 * _alpha_hotbar);
+		    //Fundo do relógio
+		    //draw_set_alpha(0.9 * _alpha_hotbar);
+		    draw_set_alpha(_alpha_hotbar);
 			
 		    //draw_set_color(c_black);
 		    draw_set_color(c_white);
@@ -373,6 +365,8 @@ for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
 	reseta_draw();
 }
 
+if(instance_exists(obj_armario)) { exit; }
+
 //DESCRIÇÃO
 draw_set_font(fonte);
 define_align(0, 0);
@@ -398,7 +392,7 @@ if(_slot_hover != -1)
         //FUNDO
         draw_set_colour(c_black);
 
-        draw_rectangle(
+        draw_roundrect(
             _x_desc - 10,
             _y_desc - 10,
             _x_desc + _largura_desc + 10,

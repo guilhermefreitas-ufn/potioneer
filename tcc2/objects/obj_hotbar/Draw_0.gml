@@ -36,7 +36,7 @@ if(_slot_hover != -1)
         //FUNDO
         draw_set_colour(c_black);
 
-        draw_rectangle(
+        draw_roundrect(
             _x_desc - 10,
             _y_desc - 10,
             _x_desc + _largura_desc + 10,

@@ -84,28 +84,189 @@ function IngredienteEhTipo(_numero, _tipo)
 	return _ing.tipo == _tipo;
 }
 
-function ApresentaDescricaoIngrediente(_token_ou_numero, _x=72, _y=48, _fonte=fnt_placeholder_media, _cor_bg = c_black, _cor_fonte = c_white, _halign = 1, _valign = 1)
+function ApresentaDescricaoIngrediente(
+    _token_ou_numero,
+    _x = 72,
+    _y = 48,
+    _fonte = fnt_placeholder_media,
+    _cor_bg = c_black,
+    _cor_fonte = c_white,
+    _halign = 0,
+    _valign = 1,
+    _quantidade = undefined,
+    _valor = undefined,
+    _margem_x = 8,
+    _margem_y = 8,
+    _raio_borda = 6,
+    _tag_padding_x = 7,
+    _tag_padding_y = 2,
+    _tag_raio = 5,
+    _tag_espaco = 8,
+    _cor_texto_tag = c_white
+)
 {
-	var _ing = (is_undefined(IngredientePorNumero(_token_ou_numero))) ? IngredientePorToken(_token_ou_numero) : IngredientePorNumero(_token_ou_numero);
-	
-	if(is_undefined(_ing))
-	{
-		return undefined;
-	}
-	
-	define_align(_halign, _valign);
-	draw_set_font(_fonte);
-	draw_set_colour(_cor_bg);
-	
-	draw_rectangle(_x, _y, _x+128,_y+64,false);
-	
-	draw_set_colour(_cor_fonte);
-	
-	draw_text(_x, _y, _ing.nome + "("+ _ing.token + ")");
-	draw_text(_x, _y+string_height(_ing.nome), "\""+_ing.elemento+"\"");
-	draw_text(_x, _y+string_height(_ing.nome)*2, _ing.descricao);
-	
-	reseta_draw();
+    //OBTÉM O INGREDIENTE
+    var _ing = IngredientePorNumero(_token_ou_numero);
+
+    if(is_undefined(_ing))
+    {
+        _ing = IngredientePorToken(_token_ou_numero);
+    }
+
+    if(is_undefined(_ing))
+    {
+        return undefined;
+    }
+
+
+    //CONFIGURAÇÕES DE DESENHO
+    define_align(_halign, _valign);
+    draw_set_font(_fonte);
+
+
+    //NOME DO INGREDIENTE
+    var _nome = _ing.nome;
+
+    //INGREDIENTE INT MOSTRA SEU VALOR
+    if(
+        _ing.numero == INGREDIENTE_INT
+        && !is_undefined(_valor)
+    )
+    {
+        _nome += " " + string(_valor);
+    }
+
+    //NOME + QUANTIDADE
+    var _texto_nome = _nome;
+
+    if(!is_undefined(_quantidade))
+    {
+        _texto_nome += " (" + string(_quantidade) + ")";
+    }
+
+
+    //ELEMENTO / TOKEN
+    var _texto_elemento =
+        "\"" + _ing.elemento + "\"" +
+        " (" + _ing.token + ")";
+
+
+    //TIPO DO INGREDIENTE
+    var _texto_tipo = TextoTipoIngrediente(_ing.tipo);
+
+
+    //DIMENSÕES DA ETIQUETA
+    var _tag_largura =
+        string_width(_texto_tipo) +
+        _tag_padding_x * 2;
+
+    var _tag_altura =
+        string_height(_texto_tipo) +
+        _tag_padding_y * 2;
+
+
+    //LARGURA DA DESCRIÇÃO
+    var _desc_largura =
+        max(
+            string_width(_texto_nome) + _tag_largura + _tag_espaco,
+            string_width(_ing.descricao),
+            string_width(_texto_elemento)
+        )
+        + _margem_x * 2;
+
+
+    //POSIÇÃO VERTICAL DOS TEXTOS
+    var _linha_nome_y = _margem_y;
+
+    var _linha_desc_y = _margem_y * 2.5;
+
+    var _linha_elemento_y = _margem_y * 4;
+
+
+    //ALTURA DA DESCRIÇÃO
+    var _desc_altura = _margem_y * 5;
+
+
+    //FUNDO DA DESCRIÇÃO
+    draw_set_colour(_cor_bg);
+
+    draw_roundrect_ext(
+        _x,
+        _y,
+        _x + _desc_largura,
+        _y + _desc_altura,
+        _raio_borda,
+        _raio_borda,
+        false
+    );
+
+
+    //TEXTOS
+    draw_set_colour(_cor_fonte);
+
+    draw_text(
+        _x + _margem_x,
+        _y + _linha_nome_y,
+        _texto_nome
+    );
+
+    draw_text(
+        _x + _margem_x,
+        _y + _linha_desc_y,
+        _ing.descricao
+    );
+
+    draw_text(
+        _x + _margem_x,
+        _y + _linha_elemento_y,
+        _texto_elemento
+    );
+
+
+    //ETIQUETA DO TIPO
+    var _tag_x =
+        _x + _desc_largura -
+        _margem_x -
+        _tag_largura;
+
+    var _tag_y =
+        _y + _linha_nome_y -
+        _tag_altura / 2;
+
+
+    //COR CONFORME O TIPO
+    var _cor_tag_tipo = CorTipoIngrediente(_ing.tipo);
+
+
+    //FUNDO ARREDONDADO DA ETIQUETA
+    draw_roundrect_colour_ext(
+        _tag_x,
+        _tag_y,
+        _tag_x + _tag_largura,
+        _tag_y + _tag_altura,
+        _tag_raio,
+        _tag_raio,
+        _cor_tag_tipo,
+        _cor_tag_tipo,
+        false
+    );
+
+
+    //TEXTO DA ETIQUETA
+    draw_set_colour(_cor_texto_tag);
+
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_middle);
+
+    draw_text(
+        _tag_x + _tag_largura / 2,
+        _tag_y + _tag_altura / 2,
+        _texto_tipo
+    );
+
+
+    //RESTAURA CONFIGURAÇÕES
+    reseta_draw();
 }
 
 function ItensIguais(_obj_a, _slot_a, _obj_b, _slot_b)

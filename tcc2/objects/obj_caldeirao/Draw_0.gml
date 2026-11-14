@@ -54,6 +54,7 @@ for(var i = 0; i < slots_ativos; i++)
 	}
 }
 
+/*BOLSA ESTÁ CUIDANDO DE DESENHAR AS INFOS DOS INGREDIENTES
  //ESCREVENDO AS INFOS DO ITEM
 for(var i = 0; i < slots_ativos; i++)
 {

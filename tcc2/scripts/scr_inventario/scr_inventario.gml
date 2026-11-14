@@ -1,4 +1,4 @@
-#macro SLOTS_BOLSA 32
+#macro SLOTS_BOLSA 36
 #macro SLOTS_CALDEIRAO 12
 
 function TextoTipoIngrediente(_tipo)

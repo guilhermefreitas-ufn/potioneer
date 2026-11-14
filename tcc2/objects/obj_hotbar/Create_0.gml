@@ -11,7 +11,8 @@ escala_slot = 2;
 entre_slots = 8;
 espaco_borda = 6;
 espaco_nome = 20;
-margem_inferior = 32;
+margem_inferior = 48;
+if(room == rm_masmorra) { margem_inferior = 32; }
 
 fonte = fnt_placeholder_pequena;
 

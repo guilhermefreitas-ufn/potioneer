@@ -31,7 +31,7 @@ for(var i = 0; i < SLOTS_BOLSA; i++)
 	}
 }
 
-//escrevendo as infos do item depois para ficarem por cima
+//escrevendo NOME e VALOR do item depois para ficarem por cima
 for(var i = 0; i < SLOTS_BOLSA; i++)
 {
 	var _xx = x + (i mod colunas) * (slot_tam + entre_slots) + 2;

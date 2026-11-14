@@ -1,5 +1,4 @@
 //ETIQUETA DO TIPO DE INGREDIENTE
-cor_tag_tipo = make_colour_rgb(75, 105, 135);
 cor_texto_tag_tipo = c_white;
 
 tag_tipo_padding_x = 7;
@@ -14,6 +13,16 @@ colunas = 6;
 
 //bolsa sempre possui todos os slots
 slots_ativos = SLOTS_BOLSA;
+
+//descrição dos ingredientes
+desc_offset_x = 26;
+desc_offset_y = 80;
+fonte = fnt_placeholder_media;
+desc_cor = c_white;
+//desc_x = x + 84;
+//desc_y = y + 24;
+desc_margem_x = string_width("O");
+desc_margem_y = string_height("I");
 
 #region dados jogador
 InicializaDadosJogador();
@@ -41,11 +50,3 @@ sprite_meu_slot = spr_slot_bolsa_ph;
 slot_tam = sprite_get_width(sprite_meu_slot);
 espaco_borda = 6; //margem entre borda e slots
 entre_slots = 4; //margem entre slots
-
-//texto
-fonte = fnt_placeholder_media;
-desc_cor = c_white;
-//desc_x = x + 84;
-//desc_y = y + 24;
-desc_margem_x = string_width("O");
-desc_margem_y = string_height("I");
