@@ -8,7 +8,7 @@ distancia_percorrida = 0;
 
 velocidade = 4;
 
-escala_ingrediente = 1;
+escala_ingrediente = ESCALA_BASE;
 
 image_xscale = escala_ingrediente;
 image_yscale = escala_ingrediente;
@@ -32,8 +32,7 @@ FinalizaDrop = function()
         obj_coletavel
     );
 
-    _coletavel.ingrediente_numero =
-        ingrediente_numero;
+    _coletavel.ingrediente_numero = ingrediente_numero;
 
     _coletavel.valor = valor;
 

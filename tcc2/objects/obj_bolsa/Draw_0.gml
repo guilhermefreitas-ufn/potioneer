@@ -1,12 +1,12 @@
 //desenhando o fundo do inventario
-draw_sprite_stretched(
-	meu_sprite,
-	0,
-	x-espaco_borda,
-	y-espaco_borda,
-	(2*espaco_borda)+colunas*(slot_tam + entre_slots),
-	(2*espaco_borda)+(((SLOTS_BOLSA-1) div colunas)+1)*(slot_tam + entre_slots)
-);
+//draw_sprite_stretched(
+//	meu_sprite,
+//	0,
+//	x-espaco_borda,
+//	y-espaco_borda,
+//	(2*espaco_borda)+colunas*(slot_tam + entre_slots),
+//	(2*espaco_borda)+(((SLOTS_BOLSA-1) div colunas)+1)*(slot_tam + entre_slots)
+//);
 
 //desenhando os slots e os itens
 for(var i = 0; i < SLOTS_BOLSA; i++)
@@ -26,7 +26,17 @@ for(var i = 0; i < SLOTS_BOLSA; i++)
 		if(obj_mouse.inventario_drag == id) && (obj_mouse.slot_drag == i) { _alpha = .5; }
 		draw_set_alpha(_alpha);
 		//draw_sprite(SpriteIng(inventario[i]), 0, _xx, _yy);
-		draw_sprite(global.Ingredientes[inventario[i]].sprite, 0, _xx, _yy);
+		draw_sprite_ext(
+			global.Ingredientes[inventario[i]].sprite,
+			-1,
+			_xx,
+			_yy,
+			ESCALA_BASE,
+			ESCALA_BASE,
+			0,
+			c_white,
+			1
+		);
 		draw_set_alpha(1);
 	}
 }
@@ -42,10 +52,10 @@ for(var i = 0; i < SLOTS_BOLSA; i++)
 		var _ingrediente = global.Ingredientes[inventario[i]];
 		
 		var _meio_x_sprite =
-			sprite_get_width(_ingrediente.sprite) / 2;
+			sprite_get_width(_ingrediente.sprite) * ESCALA_BASE / 2;
 		
 		var _meio_y_sprite =
-			sprite_get_height(_ingrediente.sprite) / 2;
+			sprite_get_height(_ingrediente.sprite) * ESCALA_BASE / 2;
 		
 		var _margem = 0;
 		
@@ -61,7 +71,6 @@ for(var i = 0; i < SLOTS_BOLSA; i++)
 		
 		define_align();
 		draw_set_font(fonte);
-		
 		
 		draw_text_outline(
 			_xx + _meio_x_sprite,
@@ -81,8 +90,8 @@ for(var i = 0; i < SLOTS_BOLSA; i++)
 		
 		//QUANTIDADE
 		draw_text_outline(
-			_xx - entre_slots,
-			_yy + slot_tam - espaco_borda,
+			_xx,// - entre_slots * 2 + slot_tam,
+			_yy,// + slot_tam - espaco_borda * 2,
 			string(quantidades[i]) + "x",
 			desc_cor,
 			c_black,

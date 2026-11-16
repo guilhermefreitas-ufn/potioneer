@@ -35,7 +35,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_caldeirao_orig",
+    "path":"sprites/spr_caldeirao_orig/spr_caldeirao_orig.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

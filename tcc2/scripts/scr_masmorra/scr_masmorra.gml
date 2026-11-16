@@ -125,7 +125,7 @@ function IngredienteEstaNaListaDrop(_ingrediente, _lista)
 }
 
 // ENCONTRA AS DIREÇÕES LIVRES DE PAREDES
-function DirecoesDropDisponiveis(_origem, _tamanho_celula = 32, _obstaculos = [obj_wall, obj_saida])
+function DirecoesDropDisponiveis(_origem, _tamanho_celula = CELL_T, _obstaculos = [obj_wall, obj_saida])
 {
     var _angulos =
     [
@@ -181,7 +181,7 @@ function CriaDropAnimado(
     _direcao,
     _distancia,
     _atraso = 0,
-    _escala = 0.5
+    _escala = ESCALA_BASE * 0.5
 )
 {
     var _ing = IngredientePorNumero(_numero);
@@ -254,8 +254,8 @@ function DropaIngredientes(
     _drop_garantido = undefined,
     _nao_sortear = undefined,
     _origem = id,
-    _escala = 0.5,
-    _tamanho_celula = 32
+    _escala = ESCALA_BASE * 0.5,
+    _tamanho_celula = CELL_T
 )
 {
     // VERIFICA A ORIGEM
@@ -349,7 +349,7 @@ function DropaIngredientes(
         );
     }
 
-    // CALCULA O MAIOR TAMANHO DE SPRITE DOS INGREDIENTES
+    // CALCULA O MAIOR TAMANHO VISUAL DOS INGREDIENTES NA ROOM
     var _maior_dim = 0;
 
     for (var m = 0; m < array_length(global.Ingredientes); m++)
@@ -363,7 +363,7 @@ function DropaIngredientes(
                 max(
                     sprite_get_width(_sprite),
                     sprite_get_height(_sprite)
-                )
+                ) * _escala
             );
         }
     }

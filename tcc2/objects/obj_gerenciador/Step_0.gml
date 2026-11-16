@@ -87,7 +87,7 @@ if(_posso_clicar)
 {
 	if(_enter)
 	{
-		//PreencheBolsa();
+		PreencheBolsa();
 	}
 	if(_backspace)
 	{

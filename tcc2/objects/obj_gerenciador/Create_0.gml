@@ -31,24 +31,24 @@ global.eventos_processados = ds_map_create();
 //Cadastro de Ingredientes
 global.Ingredientes =
 [
-	CriarIngrediente(0, "Cubo",		"Um objeto de formato impossível."		,spr_ing_cubo,		"se",			"if",		TipoIngrediente.CONDICIONAL),
-	CriarIngrediente(1, "Crina",	"Um punhado de crina na cor índigo."	,spr_ing_crina,		"valor inteiro","int",		TipoIngrediente.PRIMITIVO),
+	CriarIngrediente(0, "Cubo",		"Um objeto de formato impossível."			,spr_cubo_hd,			"se",			"if",		TipoIngrediente.CONDICIONAL),
+	CriarIngrediente(1, "Escama",	"Uma placa coberta por várias escamas."		,spr_escama_azul_hd,	"valor inteiro","int",		TipoIngrediente.PRIMITIVO),
 	
-	CriarIngrediente(2, "Chifre",	"Um chifre longo e bem afiado."			,spr_ing_chifre,	"saúde",		"hp",		TipoIngrediente.VARIAVEL),
-	CriarIngrediente(3, "Osso",		"Um osso velho e esquecido."			,spr_ing_osso,		"velocidade",	"spd",		TipoIngrediente.VARIAVEL),
-	CriarIngrediente(4, "Fogo",		"Uma labareda de fogo eterno."			,spr_ing_fogo,		"força",		"atk",		TipoIngrediente.VARIAVEL),
+	CriarIngrediente(2, "Fruta",	"Uma fruta que lembra um coração."			,spr_fruta_hd,			"saúde",		"hp",		TipoIngrediente.VARIAVEL),
+	CriarIngrediente(3, "Asa",		"Uma asa de ave rara eveloz."				,spr_asa_hd,			"velocidade",	"spd",		TipoIngrediente.VARIAVEL),
+	CriarIngrediente(4, "Músculo",	"Um forte músculo sem pele."				,spr_musculo_hd,		"força",		"atk",		TipoIngrediente.VARIAVEL),
 	
-	CriarIngrediente(5, "Folha",	"Uma folha de uma árvore desconhecida."	,spr_ing_folha,		"diminui em",	"decreases",TipoIngrediente.OPERADOR_EFEITO),
-	CriarIngrediente(6, "Sol",		"Um mini sol sustentado por magia."		,spr_ing_sol,		"aumenta em",	"increases",TipoIngrediente.OPERADOR_EFEITO),
-	CriarIngrediente(7, "Nadadeira","Uma nadadeira de monstro marinho."		,spr_ing_nadadeira,	"torna-se",		"becomes",	TipoIngrediente.OPERADOR_EFEITO),
+	CriarIngrediente(5, "Dente",	"Um dente perfeito para triturar."			,spr_dente_hd,			"diminui em",	"decreases",TipoIngrediente.OPERADOR_EFEITO),
+	CriarIngrediente(6, "Cogumelo",	"Um cogumelo de proliferação rápida."		,spr_cogumelo_hd,		"aumenta em",	"increases",TipoIngrediente.OPERADOR_EFEITO),
+	CriarIngrediente(7, "Lágrima",	"Uma lágrima capaz de queimar e confortar."	,spr_lagrima_hd,		"torna-se",		"becomes",	TipoIngrediente.OPERADOR_EFEITO),
 	
-	CriarIngrediente(8, "Lágrima",	"Uma lágrima de monstro do deserto."	,spr_ing_lagrima,	"é maior que",	"greater",	TipoIngrediente.OPERADOR_COMPARACAO),
-	CriarIngrediente(9, "Alma",		"Uma alma perdida e vagante."			,spr_ing_alma,		"é menor que",	"lower",	TipoIngrediente.OPERADOR_COMPARACAO),
-	CriarIngrediente(10,"Olho",		"Um olho de monstro hipnotizador."		,spr_ing_olho,		"é igual à",	"equal",	TipoIngrediente.OPERADOR_COMPARACAO),
+	CriarIngrediente(8, "Olho",		"Um olho útil e de tamanho nobre."			,spr_olho_hd,			"é maior que",	"greater",	TipoIngrediente.OPERADOR_COMPARACAO),
+	CriarIngrediente(9, "Mão",		"Uma mão bizarra e peluda."					,spr_mao_hd,			"é menor que",	"lower",	TipoIngrediente.OPERADOR_COMPARACAO),
+	CriarIngrediente(10,"Prata",	"Um lingote de prata que caiu da lua."		,spr_prata_hd,			"é igual à",	"equal",	TipoIngrediente.OPERADOR_COMPARACAO),
 	
-	CriarIngrediente(11,"Planta",	"Uma raiz cuja forma imita humanoides."	,spr_ing_mandragora,"alvo",			"target",	TipoIngrediente.ALVO),
-	CriarIngrediente(12,"Escama",	"Uma escama de monstro blindado."		,spr_ing_escama,	"aliado",		"ally",		TipoIngrediente.ALVO),
-	CriarIngrediente(13,"Estrela",	"Uma estrela que caiu anos atrás."		,spr_ing_estrela,	"inimigo",		"enemy",	TipoIngrediente.ALVO)
+	CriarIngrediente(11,"Raiz",		"Uma raiz de planta muito barulhenta."		,spr_raiz_hd,			"alvo",			"target",	TipoIngrediente.ALVO),
+	CriarIngrediente(12,"Crina",	"Um punhado de crina de unicórnio."			,spr_crina_hd,			"aliado",		"ally",		TipoIngrediente.ALVO),
+	CriarIngrediente(13,"Acônito",	"Um belo ramo de acônito venenoso."			,spr_aconito_hd,		"inimigo",		"enemy",	TipoIngrediente.ALVO)
 	
 	//,CriarIngrediente(14, "Lua", "Uma mini lua perfeitamente mordida.",spr_ing_lua,	"enquanto",		"while",	TipoIngrediente.CONDICIONAL)
 ];
@@ -84,6 +84,13 @@ global.ingredientes_finais = [
 ];
 
 global.ing_finais_coletados = 0;
+
+//sprites HD
+gpu_set_tex_mip_enable(mip_on);
+
+texture_debug_messages(true);
+
+surface_resize(application_surface, 1280, 720);
 
 //funções locais
 function VerificaIngrediente(_numero = 1)

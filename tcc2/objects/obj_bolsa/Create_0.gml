@@ -15,8 +15,8 @@ colunas = 6;
 slots_ativos = SLOTS_BOLSA;
 
 //descrição dos ingredientes
-desc_offset_x = 26;
-desc_offset_y = 80;
+desc_offset_x = 24;
+desc_offset_y = 72;
 fonte = fnt_placeholder_media;
 desc_cor = c_white;
 //desc_x = x + 84;

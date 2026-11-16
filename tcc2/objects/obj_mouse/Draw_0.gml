@@ -17,11 +17,16 @@ if(click_animando && click_anim_item != -1)
 
     draw_set_alpha(0.5);
 
-    draw_sprite(
+    draw_sprite_ext(
         global.Ingredientes[click_anim_item].sprite,
         0,
         _xx,
-        _yy
+        _yy,
+		ESCALA_BASE,
+		ESCALA_BASE,
+		0,
+		-1,
+		0.5
     );
 
     draw_set_alpha(1);

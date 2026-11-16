@@ -4,8 +4,8 @@ sumir = false;
 itens_droppados = false;
 
 // CONFIGURAÇÕES DOS DROPS
-escala_drop = 0.5;
-tamanho_celula_drop = 32;
+escala_drop = ESCALA_BASE * 0.5;
+tamanho_celula_drop = CELL_T;
 
 
 // DISTÂNCIA NECESSÁRIA PARA ABRIR O BAÚ
@@ -60,9 +60,6 @@ Dropar = function(_especial = especial)
 				tam_x = .5;
 				tam_y = .5;
 			}
-
-	        // REMOVO O INGREDIENTE DO ARRAY GLOBAL
-	        //array_delete(global.ingredientes_finais, _indice, 1);
 	    }
 	}
 };

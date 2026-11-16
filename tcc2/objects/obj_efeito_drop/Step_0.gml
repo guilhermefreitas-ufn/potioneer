@@ -6,8 +6,7 @@ if(atraso > 0)
 }
 
 // VERIFICA SE AINDA HÁ DISTÂNCIA A PERCORRER
-var _restante = distancia_total
-    - distancia_percorrida;
+var _restante = distancia_total - distancia_percorrida;
 
 if(_restante <= 0)
 {
@@ -22,11 +21,9 @@ var _passo = min(
     _restante
 );
 
-var _proximo_x = x
-    + lengthdir_x(_passo, direcao);
+var _proximo_x = x + lengthdir_x(_passo, direcao);
 
-var _proximo_y = y
-    + lengthdir_y(_passo, direcao);
+var _proximo_y = y + lengthdir_y(_passo, direcao);
 
 
 // VERIFICA A COLISÃO COM OBSTACULOS

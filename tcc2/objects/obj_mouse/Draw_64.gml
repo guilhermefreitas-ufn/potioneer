@@ -1,15 +1,9 @@
 
 // COORDENADAS DO MOUSE NA GUI
-
-
 var _mx = device_mouse_x_to_gui(0);
 var _my = device_mouse_y_to_gui(0);
 
-
-
 // ESCALA DA CÂMERA PARA A GUI
-
-
 var _escala_x = 1;
 var _escala_y = 1;
 
@@ -24,11 +18,7 @@ if(view_enabled && view_camera[0] != -1)
         / camera_get_view_height(_camera);
 }
 
-
-
 // SPRITE DO INGREDIENTE SENDO ARRASTADO
-
-
 if(item_drag != -1)
 {
     draw_set_alpha(0.5);
@@ -38,11 +28,11 @@ if(item_drag != -1)
         0,
         _mx,
         _my,
-        _escala_x,
-        _escala_y,
+        _escala_x / 20,
+        _escala_y / 20,
         0,
         c_white,
-        1
+        0.5
     );
 
     draw_set_alpha(1);

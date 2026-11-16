@@ -130,10 +130,10 @@ _texto =
     "Se saúde inimigo maior que 0, então saúde inimigo torna-se velocidade inimigo.\n\n" +
 
     "CONDIÇÃO:\n" +
-    "[Saúde inimigo] [maior que] [0]\n\n" +
+    "[Saúde] [inimigo] [maior que] [0]\n\n" +
 
     "EFEITO:\n" +
-    "[Saúde inimigo] [torna-se] [Velocidade inimigo]\n\n" +
+    "[Saúde] [inimigo] [torna-se] [Velocidade] [inimigo]\n\n" +
 
     "INTERPRETAÇÃO:\n" +
     "Ao atingir um inimigo, a poção verifica se sua saúde é maior que zero. Se for, sua saúde passa a ter o mesmo valor da sua velocidade.";

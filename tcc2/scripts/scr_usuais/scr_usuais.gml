@@ -2,6 +2,8 @@
 #macro RES_H display_get_gui_height()
 #macro RES_W display_get_gui_width()
 #macro GAME_SPEED game_get_speed(gamespeed_fps)
+#macro SPRITE_TAM 640
+#macro ESCALA_BASE (CELL_T / SPRITE_TAM)
 
 //define sprite 4 direcoes
 function DefineSprite(_direcao, _spr_frente, _spr_lado, _spr_costas)

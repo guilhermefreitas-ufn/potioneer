@@ -42,13 +42,111 @@ click_anim_tempo = 0;
 click_anim_duracao = 8;
 
 //funções
+//RETORNA O RETÂNGULO DE UM SLOT
+get_slot_rect = function(_obj_inventario, _slot)
+{
+	var _sprite_slot = _obj_inventario.sprite_meu_slot;
+
+	var _largura_slot = sprite_get_width(_sprite_slot);
+	var _altura_slot = sprite_get_height(_sprite_slot);
+
+	var _offset_x = sprite_get_xoffset(_sprite_slot);
+	var _offset_y = sprite_get_yoffset(_sprite_slot);
+
+	var _espaco = _obj_inventario.entre_slots;
+
+	var _passo_x = _largura_slot + _espaco;
+	var _passo_y = _altura_slot + _espaco;
+
+	var _colunas = _obj_inventario.colunas;
+
+	var _esquerda;
+	var _topo;
+
+
+	//CALDEIRÃO
+	if(_obj_inventario.caldeirao)
+	{
+		//DIMENSÕES DO SPRITE
+		var _sprite_fundo = _obj_inventario.sprite_index;
+
+		var _largura_fundo = sprite_get_width(_sprite_fundo);
+		var _altura_fundo = sprite_get_height(_sprite_fundo);
+
+		var _origem_x = sprite_get_xoffset(_sprite_fundo);
+		var _origem_y = sprite_get_yoffset(_sprite_fundo);
+
+		//CANTO SUPERIOR ESQUERDO DO CALDEIRÃO
+		var _fundo_x = _obj_inventario.x - _origem_x;
+		var _fundo_y = _obj_inventario.y - _origem_y;
+
+		//DIMENSÕES DA GRADE COMPLETA
+		var _colunas_max = min(_colunas, SLOTS_CALDEIRAO);
+		var _linhas_max = ceil(SLOTS_CALDEIRAO / _colunas_max);
+
+		var _largura_grade =
+			_colunas_max * _largura_slot
+			+ (_colunas_max - 1) * _espaco;
+
+		var _altura_grade =
+			_linhas_max * _altura_slot
+			+ (_linhas_max - 1) * _espaco;
+
+		//POSIÇÃO INICIAL DA GRADE CENTRALIZADA
+		var _inicio_x =
+			_fundo_x + (_largura_fundo - _largura_grade) / 2;
+
+		var _inicio_y =
+			_fundo_y + (_altura_fundo - _altura_grade) / 2;
+
+		//POSIÇÃO DO SLOT
+		_esquerda =
+			_inicio_x + (_slot mod _colunas) * _passo_x;
+
+		_topo =
+			_inicio_y + (_slot div _colunas) * _passo_y;
+	}
+
+	//BOLSA E OUTROS INVENTÁRIOS
+	else
+	{
+		//MANTÉM O POSICIONAMENTO ORIGINAL
+		var _draw_x =
+			_obj_inventario.x
+			+ (_slot mod _colunas) * _passo_x
+			+ 2;
+
+		var _draw_y =
+			_obj_inventario.y
+			+ (_slot div _colunas) * _passo_y
+			+ 2;
+
+		//CONVERTENDO A ORIGEM PARA CANTO SUPERIOR ESQUERDO
+		_esquerda = _draw_x - _offset_x;
+		_topo = _draw_y - _offset_y;
+	}
+
+	//RETORNANDO OS LIMITES DO SLOT
+	return [
+		_esquerda,
+		_topo,
+		_esquerda + _largura_slot,
+		_topo + _altura_slot
+	];
+};
+
+//RETORNA A POSIÇÃO DE DESENHO DE UM SLOT
 get_slot_pos = function(_obj_inventario, _slot)
 {
+	var _rect = get_slot_rect(_obj_inventario, _slot);
+
+	var _sprite_slot = _obj_inventario.sprite_meu_slot;
+
 	return [
-		_obj_inventario.x + (_slot mod _obj_inventario.colunas) * (slot_tam + entre_slots) + 2,
-		_obj_inventario.y + (_slot div _obj_inventario.colunas) * (slot_tam + entre_slots) + 2
+		_rect[0] + sprite_get_xoffset(_sprite_slot),
+		_rect[1] + sprite_get_yoffset(_sprite_slot)
 	];
-}
+};
 
 mouse_over = function()
 {
@@ -65,70 +163,39 @@ mouse_over = function()
     var _my_gui = device_mouse_y_to_gui(0);
 
     //INVENTÁRIOS COMUNS
-    with(obj_inventario_pai)
-    {
-        //DEFININDO QUANTOS SLOTS DEVEM SER USADOS
-        var _slots = SLOTS_BOLSA;
-        var _margem_caldeirao = 0;
+	with(obj_inventario_pai)
+	{
+		//QUANTIDADE DE SLOTS
+		var _slots = SLOTS_BOLSA;
 
-        if(caldeirao)
-        {
-            _slots = slots_ativos;
-            _margem_caldeirao = slot_tam / 2;
-        }
+		if(caldeirao)
+		{
+			_slots = slots_ativos;
+		}
 
-        //QUANTIDADE DE COLUNAS E LINHAS
-        var _colunas_ativas = min(colunas, _slots);
-        var _linhas_ativas = ((_slots - 1) div colunas) + 1;
+		//VERIFICANDO CADA SLOT
+		for(var i = 0; i < _slots; i++)
+		{
+			//LIMITES REAIS DO SLOT
+			var _rect = other.get_slot_rect(id, i);
 
-        //TAMANHO DA ÁREA
-        var _largura =
-            (2 * espaco_borda)
-            + _colunas_ativas * (slot_tam + entre_slots);
+			//MOUSE SOBRE O SLOT
+			if(point_in_rectangle(
+				_mx,
+				_my,
+				_rect[0],
+				_rect[1],
+				_rect[2],
+				_rect[3]
+			))
+			{
+				other.slot_hover = i;
+				other.inventario_hover = id;
 
-        var _altura =
-            (2 * espaco_borda)
-            + _linhas_ativas * (slot_tam + entre_slots);
-
-        //MOUSE SOBRE O INVENTÁRIO
-        if(point_in_rectangle(
-            _mx,
-            _my,
-            x - espaco_borda,
-            y - espaco_borda,
-            x - espaco_borda + _largura,
-            y - espaco_borda + _altura + _margem_caldeirao
-        ))
-        {
-            //VERIFICANDO CADA SLOT
-            for(var i = 0; i < _slots; i++)
-            {
-                var _xx =
-                    x
-                    + (i mod colunas) * (slot_tam + entre_slots)
-                    + 2;
-
-                var _yy =
-                    y
-                    + (i div colunas) * (slot_tam + entre_slots)
-                    + 2
-                    + _margem_caldeirao;
-
-                if(point_in_rectangle(
-                    _mx,
-                    _my,
-                    _xx,
-                    _yy,
-                    _xx + slot_tam,
-                    _yy + slot_tam
-                ))
-                {
-                    other.slot_hover = i;
-                    other.inventario_hover = id;
-                }
-            }
-        }
-    }
+				break;
+			}
+		}
+	}
 
     //LIMPANDO HOVER DAS POÇÕES
     pocao_inventario_hover = noone;

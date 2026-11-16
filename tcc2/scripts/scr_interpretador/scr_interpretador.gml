@@ -169,7 +169,7 @@ function LerVariavel(_tokens, _indice)
 	
 	if(_indice >= array_length(_tokens))
 	{
-		_resultado.erro = "Esperada uma variável.";
+		_resultado.erro = "Esperado um atributo.";
 		return _resultado;
 	}
 	
@@ -184,7 +184,7 @@ function LerVariavel(_tokens, _indice)
 		{
 			_resultado.erro =
 				"O alvo \"" + _a.ingrediente.elemento +
-				"\" precisa de uma variável: \"saúde\", \"força\" ou \"velocidade\".";
+				"\" precisa de um atributo: \"saúde\", \"força\" ou \"velocidade\".";
 			
 			_resultado.slot_erro = _a.slot;
 			
@@ -197,7 +197,7 @@ function LerVariavel(_tokens, _indice)
 		{
 			_resultado.erro =
 				"O alvo \"" + _a.ingrediente.elemento +
-				"\" precisa ser seguido por uma variável.";
+				"\" precisa ser seguido por um atributo.";
 			
 			_resultado.slot_erro = _b.slot;
 			
@@ -224,7 +224,7 @@ function LerVariavel(_tokens, _indice)
 		if(_indice + 1 >= array_length(_tokens))
 		{
 			_resultado.erro =
-				"A variável \"" + _a.ingrediente.elemento +
+				"O atributo \"" + _a.ingrediente.elemento +
 				"\" precisa de um alvo: \"aliado\", \"inimigo\", \"alvo\".";
 			
 			_resultado.slot_erro = _a.slot;
@@ -258,7 +258,7 @@ function LerVariavel(_tokens, _indice)
 		return _resultado;
 	}
 	
-	_resultado.erro = "Esperada uma variável.";
+	_resultado.erro = "Esperado um atributo.";
 	_resultado.slot_erro = _a.slot;
 	
 	return _resultado;
@@ -386,7 +386,7 @@ function AnalisaCondicao(_tokens, _indice)
 	if(_indice >= array_length(_tokens))
 	{
 		_resultado.erro =
-			"Esperado um operador de comparação.";
+			"Esperado um comparador.";
 		
 		return _resultado;
 	}
@@ -396,7 +396,7 @@ function AnalisaCondicao(_tokens, _indice)
 	if(_operador.ingrediente.tipo != TipoIngrediente.OPERADOR_COMPARACAO)
 	{
 		_resultado.erro =
-			"Esperado um operador de comparação.";
+			"Esperado um comparador.";
 		
 		_resultado.slot_erro = _operador.slot;
 		
@@ -462,7 +462,7 @@ function AnalisaEfeito(_tokens, _indice)
 	if(!_variavel.sucesso)
 	{
 		_resultado.erro =
-			"Esperada uma variável para o efeito. " +
+			"Esperado um atributo para o efeito. " +
 			_variavel.erro;
 		
 		_resultado.slot_erro = _variavel.slot_erro;
@@ -476,7 +476,7 @@ function AnalisaEfeito(_tokens, _indice)
 	if(_indice >= array_length(_tokens))
 	{
 		_resultado.erro =
-			"Esperado um operador de efeito.";
+			"Esperado um operador.";
 		
 		return _resultado;
 	}
@@ -486,7 +486,7 @@ function AnalisaEfeito(_tokens, _indice)
 	if(_operador.ingrediente.tipo != TipoIngrediente.OPERADOR_EFEITO)
 	{
 		_resultado.erro =
-			"Esperado um operador de efeito.";
+			"Esperado um operador.";
 		
 		_resultado.slot_erro = _operador.slot;
 		
