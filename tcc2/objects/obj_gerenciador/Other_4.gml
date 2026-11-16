@@ -19,7 +19,8 @@ var _sprites = [
 	#endregion
 	
 	spr_bg_inventarios,
-	spr_caldeirao
+	spr_caldeirao,
+	spr_bg_armario
 ];
 
 if(room != rm_inventarios)
