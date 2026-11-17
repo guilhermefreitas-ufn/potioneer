@@ -11,11 +11,11 @@ if(!is_undefined(_pos))
     draw_set_font(fnt_media_black);
 	draw_set_colour(c_white);
 
-	draw_text(
-		_pos.x,
-		_pos.y,
-		"ARMÁRIO DE POÇÕES"
-	);
+	//raw_text(
+	//	_pos.x,
+	//	_pos.y,
+	//	"ARMÁRIO DE POÇÕES"
+	//;
 	
 	reseta_draw();
 }
