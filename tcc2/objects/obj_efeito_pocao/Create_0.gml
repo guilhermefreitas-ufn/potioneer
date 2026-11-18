@@ -204,7 +204,11 @@ AplicarImpacto = function()
 		CriaMensagem(
 			x_destino,
 			y_destino,
-			string(array_length(_resultado.entidades_afetadas)) + " entidade(s) afetada(s) pela poção!"
+			string(
+				array_length(
+					_resultado.entidades_afetadas
+				)
+			) + " entidade(s) afetada(s) pela poção!"
 		);
 	}
 };

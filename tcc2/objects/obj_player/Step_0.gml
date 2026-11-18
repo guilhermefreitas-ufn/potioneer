@@ -20,6 +20,21 @@ event_inherited();
 
 if(global.pause) { exit; }
 
+//Iniciando Variáveis
+var _mouse_na_hotbar = MouseSobreSlotHotbar();
+		
+var _mx = device_mouse_x_to_gui(0);
+var _my = device_mouse_y_to_gui(0);
+
+//Botão de "Como Jogar"
+var _botao_raio = 16;
+var _margem = 32;
+
+var _x = RES_W - _margem;
+var _y = _margem;
+
+var _hover_como_jogar = point_in_circle(_mx, _my, _x, _y, _botao_raio);
+
 // VERIFICAÇÃO DA VIDA
 if (hp <= 0 && estado != "sofrendo" && estado != "morto")
 {
@@ -177,126 +192,70 @@ for (// COOLDOWN DAS POÇÕES
 
 #region SELEÇÃO E USO DE POÇÕES
 	// SELEÇÃO POR TECLADO
-    var _1 = keyboard_check_pressed(vk_numpad1) || keyboard_check_pressed(ord("1"));
-    var _2 = keyboard_check_pressed(vk_numpad2) || keyboard_check_pressed(ord("2"));
-    var _3 = keyboard_check_pressed(vk_numpad3) || keyboard_check_pressed(ord("3"));
-    var _4 = keyboard_check_pressed(vk_numpad4) || keyboard_check_pressed(ord("4"));
-    var _5 = keyboard_check_pressed(vk_numpad5) || keyboard_check_pressed(ord("5"));
-
-    if (_1) { pocao_selecionada = 0; }
-    if (_2) { pocao_selecionada = 1; }
-    if (_3) { pocao_selecionada = 2; }
-    if (_4) { pocao_selecionada = 3; }
-    if (_5) { pocao_selecionada = 4; }
-
-    // SELEÇÃO PELO SCROLL
-    if (mouse_wheel_up())
-    {
-        pocao_selecionada =
-            (
-                pocao_selecionada
-                - 1
-                + SLOTS_HOTBAR_POCOES
-            )
-            mod SLOTS_HOTBAR_POCOES;
-    }
-    else if (mouse_wheel_down())
-    {
-        pocao_selecionada =
-            (
-                pocao_selecionada
-                + 1
-            )
-            mod SLOTS_HOTBAR_POCOES;
-    }
+	var _1 = keyboard_check_pressed(vk_numpad1) || keyboard_check_pressed(ord("1"));
+	var _2 = keyboard_check_pressed(vk_numpad2) || keyboard_check_pressed(ord("2"));
+	var _3 = keyboard_check_pressed(vk_numpad3) || keyboard_check_pressed(ord("3"));
+	var _4 = keyboard_check_pressed(vk_numpad4) || keyboard_check_pressed(ord("4"));
+	var _5 = keyboard_check_pressed(vk_numpad5) || keyboard_check_pressed(ord("5"));
+	var _click_esq = mouse_check_button_pressed(mb_left);
+	var _click_dir = mouse_check_button_pressed(mb_right);
 	
-    // USO DAS POÇÕES
-    // Só permite iniciar uma ação enquanto
-    // parado ou movendo.
-    if (
-        estado == "parado"
-        || estado == "movendo"
-    )
-    {
-        var _mouse_na_hotbar =
-            MouseSobreSlotHotbar();
+	if (_1) { pocao_selecionada = 0; }
+	if (_2) { pocao_selecionada = 1; }
+	if (_3) { pocao_selecionada = 2; }
+	if (_4) { pocao_selecionada = 3; }
+	if (_5) { pocao_selecionada = 4; }
+	
+	// SELEÇÃO PELO SCROLL
+	if (mouse_wheel_up())
+	{
+	    pocao_selecionada =
+	        (
+	            pocao_selecionada
+	            - 1
+	            + SLOTS_HOTBAR_POCOES
+	        )
+	        mod SLOTS_HOTBAR_POCOES;
+	}
+	else if (mouse_wheel_down())
+	{
+	    pocao_selecionada =
+	        (
+	            pocao_selecionada
+	            + 1
+	        )
+	        mod SLOTS_HOTBAR_POCOES;
+	}
+	
+	//USO DAS POÇÕES
+	//Só permite iniciar uma ação enquanto parado ou movendo.
+	if(estado == "parado" || estado == "movendo")
+	{
+		//CLIQUE ESQUERDO: arremessar
+		if(_click_esq && !_mouse_na_hotbar && !_hover_como_jogar)
+		{
+			if(ExecutaPocao("mouse"))
+			{
+				if (hp > 0 && estado != "sofrendo" && estado != "morto")
+				{
+					MudaEstado("atacando");
+				}
+			}
+		}
 		
-		var _mx = device_mouse_x_to_gui(0);
-		var _my = device_mouse_y_to_gui(0);
-			
-		var _botao_raio = 16;
-		var _margem = 32;
-	
-		var _x = RES_W - _margem;
-		var _y = _margem;
-
-		var _hover = point_in_circle(
-			_mx,
-			_my,
-			_x,
-			_y,
-			_botao_raio
-		);
-
-        // CLIQUE ESQUERDO: arremessar
-        if (
-            mouse_check_button_pressed(mb_left)
-            && !_mouse_na_hotbar
-			&& !_hover
-        )
+		// CLIQUE DIREITO: quebrar aos pés
+		else if(_click_dir)
         {
-            if (ExecutaPocao("mouse"))
-            {
-                // Um efeito imediato pode ter causado
-                // dano ao próprio jogador. Não devemos
-                // substituir esse estado por atacando.
-                if (
-                    hp > 0
-                    && estado != "sofrendo"
-                    && estado != "morto"
-                )
-                {
-                    MudaEstado("atacando");
-                }
-            }
+			if(ExecutaPocao("player_area"))
+			{
+				if (hp > 0 && estado != "sofrendo" && estado != "morto")
+				{
+					MudaEstado("atacando");
+				}
+			}
         }
-
-        // CLIQUE DIREITO: quebrar aos pés
-        else if (
-            mouse_check_button_pressed(mb_right)
-            && !_mouse_na_hotbar
-        )
-        {
-            if (ExecutaPocao("player_area"))
-            {
-                if (
-                    hp > 0
-                    && estado != "sofrendo"
-                    && estado != "morto"
-                )
-                {
-                    MudaEstado("atacando");
-                }
-            }
-        }
-
-        // ESPAÇO: beber
-        else if (keyboard_check_pressed(vk_space))
-        {
-            //if (ExecutaPocao("player_only"))
-            //{
-            //    if (
-            //        hp > 0
-            //        && estado != "sofrendo"
-            //        && estado != "morto"
-            //    )
-            //    {
-            //        MudaEstado("bebendo");
-            //    }
-            //}
-        }
-    }
-	#endregion
+	}
+#endregion
 
 // DANO DE CONTATO DOS INIMIGOS
 var inimigo = instance_place(

@@ -1,8 +1,7 @@
 switch (etapa)
 {
-    
     case "voando":
-    
+    {
 
         tempo_voo++;
 
@@ -30,11 +29,11 @@ switch (etapa)
         }
 
         break;
-
+	}
 
     
     case "area":
-    
+    {
 
         tempo_area--;
 
@@ -46,13 +45,12 @@ switch (etapa)
 
         break;
 
-
+	}
     
     case "nao_configurado":
-    
-
+    {
         // Evita manter uma instância sem configuração
         instance_destroy();
         exit;
-
+	}
 }

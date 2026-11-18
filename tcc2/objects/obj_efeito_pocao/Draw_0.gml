@@ -1,8 +1,5 @@
-
-
 switch (etapa)
 {
-    
     case "voando":
     {
 		//girando
@@ -53,10 +50,8 @@ switch (etapa)
 
         var _alpha = ALPHA_AREA_EFEITO_POCAO * _fracao;
 
-
         draw_set_colour(cor_pocao);
         draw_set_alpha(_alpha);
-
         
         draw_circle(
             x,
@@ -64,7 +59,6 @@ switch (etapa)
             raio_efeito,
             false // false = círculo preenchido
         );
-
 
         // Restaura as configurações de desenho
         draw_set_alpha(1);

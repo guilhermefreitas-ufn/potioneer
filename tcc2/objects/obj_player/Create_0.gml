@@ -226,263 +226,165 @@ PosicaoAlvoPocao = function(_mx, _my)
     return [_mx, _my];
 };
 
-// EXECUTA A POÇÃO SELECIONADA
+//EXECUTA A POÇÃO SELECIONADA
 function ExecutaPocao(_modo)
 {
 	var _centro = Centro();
-    var _indice = pocao_selecionada;
-
-
-    // Valida o slot selecionado
-    if (_indice < 0 || _indice >= SLOTS_HOTBAR_POCOES)
-    {
-        return false;
-    }
-
-    var _pocao = global.DadosJogador.hotbar_pocoes[_indice];
-
-    // Verifica se existe uma poção
-    if (is_undefined(_pocao))
-    {
-        show_debug_message(
-            "O slot selecionado está vazio."
-        );
-		
+	var _indice = pocao_selecionada;
+	
+	
+	//Valida o slot selecionado
+	if(_indice < 0 || _indice >= SLOTS_HOTBAR_POCOES)
+	{
+		return false;
+	}
+	
+	var _pocao = global.DadosJogador.hotbar_pocoes[_indice];
+	
+	//Verifica se existe uma poção
+	if (is_undefined(_pocao))
+	{
 		CriaMensagem(
 			_centro[0],
 			_centro[1],
 			"O slot selecionado está vazio."
 		);
 		
-        return false;
-    }
-
-    // Verifica o cooldown
-    if (_pocao.cooldown > 0)
-    {
-        show_debug_message(
-            "A poção está em recarga."
-        );
-		
+		return false;
+	}
+	
+	//Verifica o cooldown
+	if(_pocao.cooldown > 0)
+	{
 		CriaMensagem(
 			_centro[0],
 			_centro[1],
 			"A poção está em recarga."
 		);
-
-        return false;
-    }
-
-    // Obtém o sprite e a cor da poção
-    var _sprite = spr_pocao_quadrada;
-    var _cor = c_white;
-
-    if (variable_struct_exists(_pocao, "sprite"))
-    {
-        if (!is_undefined(_pocao.sprite))
-        {
-            _sprite = _pocao.sprite;
-        }
-    }
-
-    if (variable_struct_exists(_pocao, "cor"))
-    {
-        if (!is_undefined(_pocao.cor))
-        {
-            _cor = _pocao.cor;
-        }
-    }
-
-    var _executada = false;
-
-    // FORMAS DE USO
-    switch (_modo)
-    {
-        
-        // CLIQUE ESQUERDO: ARREMESSO ATÉ O CURSOR
-        case "mouse":
-        {
-            var _alvo = PosicaoAlvoPocao(
-                mouse_x,
-                mouse_y
-            );
-
-            //var _centro = Centro();
-
-            // Cria o efeito visual na posição do jogador
-            var _efeito = instance_create_depth(
-                _centro[0],
-                _centro[1],
-                depth - 1,
-                obj_efeito_pocao
-            );
-
-
-            if (
-                _efeito == noone
-                || !instance_exists(_efeito)
-            )
-            {
-                return false;
-            }
-
-
-            // Configura o arremesso
-            _efeito.Configurar(
-                _pocao.algoritmo,
-                _sprite,
-                _cor,
-                raio_pocao,
-                _centro[0],
-                _centro[1],
-                _alvo[0],
-                _alvo[1],
-                "arremesso"
-            );
-
-            _executada = true;
-
-            break;
-        }
 		
-        // CLIQUE DIREITO: QUEBRA AOS PÉS DO JOGADOR
-        case "player_area":
-        {
-            //var _centro = Centro();
-
-
-            var _efeito = instance_create_depth(
-                _centro[0],
-                _centro[1],
-                depth - 1,
-                obj_efeito_pocao
-            );
-
-
-            if (
-                _efeito == noone
-                || !instance_exists(_efeito)
-            )
-            {
-                return false;
-            }
-
-
-            // A poção quebra imediatamente no local
-            _efeito.Configurar(
-                _pocao.algoritmo,
-                _sprite,
-                _cor,
-                raio_pocao,
-                _centro[0],
-                _centro[1],
-                _centro[0],
-                _centro[1],
-                "impacto"
-            );
-
-            _executada = true;
-
-            break;
-        }
-
-        // ESPAÇO: BEBER A POÇÃO
-        case "player_only":
-        {
-			//var _centro = Centro();
-			
-            var _contexto = CriarContextoPocao(
-                [id],
-                [id],
-                []
-            );
-
-
-            // O efeito é aplicado imediatamente
-            var _resultado = ExecutaAlgoritmo(
-                _pocao.algoritmo,
-                _contexto
-            );
-			
-			//Criando o efeito das bolhas
-			CriaBolhas(7, _pocao.cor);
-			
-			
-			//pop-up de feedback
-			if(_resultado.mensagem != "")
-			{
-				CriaMensagem(
-					_centro[0],
-					_centro[1],
-					_resultado.mensagem
-				);
-			}
-			else
-			{
-				//Retorna quantos/quais entidades foram afetas
-				CriaMensagem(
-					_centro[0],
-					_centro[1],
-					string(array_length(_resultado.entidades_afetadas)) + " entidade(s) afetada(s) pela poção!"
-				);
-			}
-
-            #region DEBUG
-            show_debug_message(
-                "SUCESSO: "
-                + string(_resultado.sucesso)
-            );
-
-            show_debug_message(
-                "CONDIÇÃO: "
-                + string(_resultado.condicao)
-            );
-
-            show_debug_message(
-                "EFEITO: "
-                + string(_resultado.efeito_aplicado)
-            );
-
-            show_debug_message(
-                "ENTIDADES AFETADAS: "
-                + string(
-                    array_length(
-                        _resultado.entidades_afetadas
-                    )
-                )
-            );
-
-            show_debug_message(
-                "MENSAGEM: "
-                + _resultado.mensagem
-            );
-			#endregion
-			
-            _executada = true;
-
-            break;
-        }
-        
-        // MODO INVÁLIDO
-        default:
+		return false;
+	}
+	
+	//Pegando o sprite e a cor da poção
+	var _sprite = spr_pocao;
+	var _cor = c_white;
+	
+	if(variable_struct_exists(_pocao, "sprite"))
+	{
+		if (!is_undefined(_pocao.sprite))
 		{
-            return false;
+			_sprite = _pocao.sprite;
 		}
-    }
-
-    if (!_executada)
-    {
-        return false;
-    }
-
-    // Inicia o cooldown quando a utilização é aceita
-    _pocao.cooldown = max(
-        1,
-        round(
-            GAME_SPEED * SEGUNDOS_COOLDOWN_POCAO
-        )
-    );
-
-
-    return true;
+	}
+	
+	if(variable_struct_exists(_pocao, "cor"))
+	{
+		if(!is_undefined(_pocao.cor))
+		{
+			_cor = _pocao.cor;
+		}
+	}
+	
+	var _executada = false;
+	
+	//FORMAS DE USO
+	switch (_modo)
+	{
+		//CLIQUE ESQUERDO: Arremesso até o cursor
+		case "mouse":
+		{
+			var _alvo = PosicaoAlvoPocao(
+				mouse_x,
+				mouse_y
+			);
+			
+			//Cria o efeito visual na posição do jogador
+			var _efeito = instance_create_depth(
+			    _centro[0],
+			    _centro[1],
+			    depth - 1,
+			    obj_efeito_pocao
+			);
+			
+			if(
+				_efeito == noone
+				|| !instance_exists(_efeito)
+			)
+			{
+				return false;
+			}
+			
+			//Configura o arremesso
+			_efeito.Configurar(
+				_pocao.algoritmo,
+				_sprite,
+				_cor,
+				raio_pocao,
+				_centro[0],
+				_centro[1],
+				_alvo[0],
+				_alvo[1],
+				"arremesso"
+			);
+			
+			_executada = true;
+			
+			break;
+		}
+		
+		//CLIQUE DIREITO: Quebra aos pés do personagem
+		case "player_area":
+		{
+			var _efeito = instance_create_depth(
+				_centro[0],
+				_centro[1],
+				depth - 1,
+				obj_efeito_pocao
+			);
+			
+			if(
+				_efeito == noone
+				|| !instance_exists(_efeito)
+			)
+			{
+				return false;
+			}
+			
+			//A poção quebra imediatamente no local
+			_efeito.Configurar(
+				_pocao.algoritmo,
+				_sprite,
+				_cor,
+				raio_pocao,
+				_centro[0],
+				_centro[1],
+				_centro[0],
+				_centro[1],
+				"impacto"
+			);
+			
+			_executada = true;
+			
+			break;
+		}
+		
+		//Modo inválido
+		default:
+		{
+			return false;
+		}
+	}
+	
+	if(!_executada)
+	{
+		return false;
+	}
+	
+	//Inicia o cooldown
+	_pocao.cooldown = max(
+		1,
+		round(GAME_SPEED * SEGUNDOS_COOLDOWN_POCAO)
+	);
+	
+	return true;
 }
