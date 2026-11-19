@@ -36,5 +36,5 @@
     "path":"sprites/spr_lixeira/spr_lixeira.yy",
   },
   "spriteMaskId":null,
-  "visible":true,
+  "visible":false,
 }
