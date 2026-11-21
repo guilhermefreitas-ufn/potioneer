@@ -24,3 +24,9 @@ var _sprites = [
 ];
 
 sprite_flush_multi(_sprites);
+
+//Controlando a interpolação de cores entre pixels
+if(room == rm_masmorra)
+{
+	gpu_set_texfilter(true);
+}
