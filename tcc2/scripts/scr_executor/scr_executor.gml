@@ -59,13 +59,17 @@ function ResolveVariavel(_expressao, _entidade)
 	switch(_ing_variavel.token)
 	{
 		case "hp":
+		{
 			return _entidade.hp;
-			
+		}
 		case "spd":
+		{
 			return _entidade.spd;
-			
+		}
 		case "atk":
+		{
 			return _entidade.atk;
+		}
 	}
 	
 	return undefined;
@@ -78,9 +82,7 @@ function ResolveValor(_expressao, _entidade)
 		return undefined;
 	}
 	
-	
 	//INT
-	
 	if(
 		_expressao.tipo == TipoExpressao.VALOR
 		&& _expressao.subtipo == TipoValor.INT
@@ -89,9 +91,7 @@ function ResolveValor(_expressao, _entidade)
 		return _expressao.valor;
 	}
 	
-	
 	//VARIÁVEL
-	
 	if(_expressao.tipo == TipoExpressao.VARIAVEL)
 	{
 		return ResolveVariavel(
@@ -117,13 +117,17 @@ function VerificaComparacao(_operador_numero, _esquerda, _direita)
 	switch(_ing_operador.token)
 	{
 		case "greater":
+		{
 			return _esquerda > _direita;
-			
+		}
 		case "lower":
+		{
 			return _esquerda < _direita;
-			
+		}
 		case "equal":
+		{
 			return _esquerda == _direita;
+		}
 	}
 	
 	return false;
@@ -140,22 +144,14 @@ function ExecutaCondicao(_condicao, _contexto)
 		entidade_direita: noone
 	};
 	
-	
-	
 	//TIPO DE CADA LADO
-	
-	
 	var _esquerda_variavel =
 		_condicao.esquerda.tipo == TipoExpressao.VARIAVEL;
 		
 	var _direita_variavel =
 		_condicao.direita.tipo == TipoExpressao.VARIAVEL;
 	
-	
-	
 	//ENTIDADES DO LADO ESQUERDO
-	
-	
 	var _esquerdas = [];
 	
 	if(_esquerda_variavel)
@@ -187,11 +183,7 @@ function ExecutaCondicao(_condicao, _contexto)
 		_esquerdas = [noone];
 	}
 	
-	
-	
 	//ENTIDADES DO LADO DIREITO
-	
-	
 	var _direitas = [];
 	
 	if(_direita_variavel)
@@ -223,11 +215,7 @@ function ExecutaCondicao(_condicao, _contexto)
 		_direitas = [noone];
 	}
 	
-	
-	
 	//TESTANDO TODAS AS COMBINAÇÕES
-	
-	
 	for(var i = 0; i < array_length(_esquerdas); i++)
 	{
 		var _entidade_esquerda = _esquerdas[i];
@@ -257,7 +245,6 @@ function ExecutaCondicao(_condicao, _contexto)
 				continue;
 			}
 			
-			
 			if(
 				VerificaComparacao(
 					_condicao.operador,
@@ -266,10 +253,7 @@ function ExecutaCondicao(_condicao, _contexto)
 				)
 			)
 			{
-				
 				//PRIMEIRO TRUE
-				
-				
 				_resultado.verdadeira = true;
 				
 				_resultado.entidade_esquerda =
@@ -282,89 +266,73 @@ function ExecutaCondicao(_condicao, _contexto)
 			}
 		}
 	}
-	
-	
-	
+
 	//NENHUMA COMBINAÇÃO FOI VERDADEIRA
-	
-	
-	_resultado.mensagem =
-		"A condição não foi satisfeita.";
+	_resultado.mensagem = "A condição não foi satisfeita.";
 	
 	return _resultado;
 }
 
-// ATUALIZA O ESTADO APÓS UMA ALTERAÇÃO DE HP
+//ATUALIZA O ESTADO APÓS UMA ALTERAÇÃO DE HP
 function AtualizaEstadoAposDano(_alvo, _hp_anterior)
 {
-    if (
-        _alvo == noone
-        || !instance_exists(_alvo)
-    )
-    {
-        return;
-    }
-
-    if (!variable_instance_exists(_alvo, "hp"))
-    {
-        return;
-    }
-
-    // Só reage se a vida realmente diminuiu
-    if (_alvo.hp >= _hp_anterior)
-    {
-        return;
-    }
-
-    // A morte tem prioridade sobre o estado sofrendo
-    //if (_alvo.hp <= 0)
-    //{
-    //    if (variable_instance_exists(_alvo, "MudaEstado"))
-    //    {
-    //        _alvo.MudaEstado("morto");
-    //    }
-	//
-    //    return;
-    //}
-
-    // Comunica que o alvo sofreu dano
-    if (variable_instance_exists(_alvo, "MudaEstado"))
-    {
-        _alvo.MudaEstado("sofrendo"); //muda para o estado "sofrendo"
+	if(
+		_alvo == noone
+		|| !instance_exists(_alvo)
+	)
+	{
+		return;
+	}
+	
+	if(!variable_instance_exists(_alvo, "hp"))
+	{
+		return;
+	}
+	
+	//Só reage se a vida realmente diminuiu
+	if(_alvo.hp >= _hp_anterior)
+	{
+		return;
+	}
+	
+	//Comunica que o alvo sofreu dano
+	if(variable_instance_exists(_alvo, "MudaEstado"))
+	{
+		_alvo.MudaEstado("sofrendo"); //muda para o estado "sofrendo"
 		_alvo.alpha = 1; //efeito de hit flash
-    }
+	}
 }
 
-// APLICA DANO DIRETO A UMA ENTIDADE
+//APLICA DANO DIRETO A UMA ENTIDADE
 function AplicaDanoEntidade(_alvo, _dano)
 {
-    if (
-        _alvo == noone
-        || !instance_exists(_alvo)
-        || _dano <= 0
-    )
-    {
-        return false;
-    }
-
-    if (!variable_instance_exists(_alvo, "hp"))
-    {
-        return false;
-    }
-
-    var _hp_anterior = _alvo.hp;
-
-    _alvo.hp = max(
-        0,
-        _alvo.hp - _dano
-    );
-
-    AtualizaEstadoAposDano(
-        _alvo,
-        _hp_anterior
-    );
-
-    return _alvo.hp < _hp_anterior;
+	if(
+		_alvo == noone
+		|| !instance_exists(_alvo)
+		|| _dano <= 0
+	)
+	{
+		return false;
+	}
+	
+	if(!variable_instance_exists(_alvo, "hp"))
+	{
+		return false;
+	}
+	
+	var _hp_anterior = _alvo.hp;
+	
+	_alvo.hp = max(
+		0,
+		_alvo.hp - _dano
+	);
+	
+	AtualizaEstadoAposDano(
+		_alvo,
+		_hp_anterior
+	);
+	
+	return _alvo.hp < _hp_anterior;
 }
 
 function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
@@ -392,36 +360,41 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 
 	switch(_ing_variavel.token)
 	{
-		// HP
+		//HP
 		case "hp":
 		{
-		    var _hp_anterior = _entidade.hp;
-
-		    switch (_ing_operador.token)
-		    {
-		        case "decreases":
-		            _entidade.hp -= _valor;
-		            break;
-
-		        case "increases":
-		            _entidade.hp += _valor;
-		            break;
-
-		        case "becomes":
-		            _entidade.hp = _valor;
-		            break;
-
-		        default:
-		            return false;
-		    }
-
-		    // Limite de vida entre 0 e 20
-		    if (_entidade.hp > MAX_HP)
-		    {
-		        show_debug_message(
-		            "LIMITE DE HP: a poção tentou ultrapassar a vida máxima de 20. Valor ajustado para 20."
-		        );
-				
+			var _hp_anterior = _entidade.hp;
+			
+			switch (_ing_operador.token)
+			{
+				case "decreases":
+				{
+					_entidade.hp -= _valor;
+					break;
+				}
+				case "increases":
+				{
+					_entidade.hp += _valor;
+					break;
+				}
+				case "becomes":
+				{
+					_entidade.hp = _valor;
+					break;
+				}
+				default:
+				{
+					return false;
+				}
+			}
+			
+			//Limite de vida entre 0 e 20
+			if(_entidade.hp > MAX_HP)
+			{
+				show_debug_message(
+					"LIMITE DE HP: a poção tentou ultrapassar a vida máxima de 20. Valor ajustado para 20."
+				);
+						
 				if(instance_exists(obj_player))
 				{
 					var _centro = obj_player.Centro();
@@ -432,21 +405,21 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 						"A poção tentou ultrapassar a saúde máxima de 20. Saúde ajustada para 20."
 					);
 				}
-		    }
-
-		    _entidade.hp = clamp(
-		        _entidade.hp,
-		        0,
-		        MAX_HP
-		    );
-
-		    // Atualiza o estado se houve perda de vida
-		    AtualizaEstadoAposDano(
-		        _entidade,
-		        _hp_anterior
-		    );
-
-		    return true;
+			}
+			
+			_entidade.hp = clamp(
+				_entidade.hp,
+				0,
+				MAX_HP
+			);
+			
+			//Atualiza o estado se houve perda de vida
+			AtualizaEstadoAposDano(
+				_entidade,
+				_hp_anterior
+			);
+			
+			return true;
 		}
 
 		//SPD
@@ -455,27 +428,33 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 			switch(_ing_operador.token)
 			{
 				case "decreases":
+				{
 					_entidade.spd -= _valor;
 					break;
-
+				}
 				case "increases":
+				{
 					_entidade.spd += _valor;
 					break;
-
+				}
 				case "becomes":
+				{
 					_entidade.spd = _valor;
 					break;
-
+				}
 				default:
+				{
 					return false;
+				}
 			}
 
 			//Velocidade entre 0 e 10
 			if(_entidade.spd > MAX_SPD)
 			{
-			    show_debug_message(
-			        "LIMITE DE SPD: a poção tentou ultrapassar a velocidade máxima de 10. Valor ajustado para 10."
-			    );
+				show_debug_message(
+					"LIMITE DE SPD: a poção tentou ultrapassar a velocidade máxima de 10. Valor ajustado para 10."
+				);
+				
 				if(instance_exists(obj_player))
 				{
 					var _centro = obj_player.Centro();
@@ -502,19 +481,24 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 			switch(_ing_operador.token)
 			{
 				case "decreases":
+				{
 					_entidade.atk -= _valor;
 					break;
-
+				}
 				case "increases":
+				{
 					_entidade.atk += _valor;
 					break;
-
+				}
 				case "becomes":
+				{
 					_entidade.atk = _valor;
 					break;
-
+				}
 				default:
+				{
 					return false;
+				}
 			}
 			
 			//força >= 0

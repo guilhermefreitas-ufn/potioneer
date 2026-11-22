@@ -6,7 +6,11 @@ if(state == 0) { exit; }
 var _surf_w = RES_W;
 var _surf_h = RES_H;
 
-if(!surface_exists(global.iris_surface) || surface_get_width(global.iris_surface) != _surf_w || surface_get_height(global.iris_surface) != _surf_h)
+if(
+	!surface_exists(global.iris_surface)
+	|| surface_get_width(global.iris_surface) != _surf_w
+	|| surface_get_height(global.iris_surface) != _surf_h
+)
 {
 	if(surface_exists(global.iris_surface))
 	{

@@ -2,62 +2,62 @@
 #macro SLOTS_HOTBAR_POCOES 5
 #macro SEGUNDOS_COOLDOWN_POCAO 5
 
-// EFEITOS VISUAIS DAS POÇÕES
+//EFEITOS VISUAIS DAS POÇÕES
 #macro SEGUNDOS_AREA_EFEITO_POCAO 0.75
 #macro VELOCIDADE_ARREMESSO_POCAO 480 //pixels por segundo
 #macro ALPHA_AREA_EFEITO_POCAO 0.35 //de 0 a 1
 
-// RESETA OS COOLDOWNS DE UM ARRAY DE POÇÕES
+//RESETA OS COOLDOWNS DE UM ARRAY DE POÇÕES
 function ResetarCooldownsArrayPocoes(_pocoes)
 {
-    if (!is_array(_pocoes))
-    {
-        return;
-    }
-
-    for (var i = 0; i < array_length(_pocoes); i++)
-    {
-        var _pocao = _pocoes[i];
-
-        if (is_struct(_pocao))
-        {
-            _pocao.cooldown = 0;
-        }
-    }
+	if(!is_array(_pocoes))
+	{
+		return;
+	}
+	
+	for(var i = 0; i < array_length(_pocoes); i++)
+	{
+		var _pocao = _pocoes[i];
+	
+		if(is_struct(_pocao))
+		{
+			_pocao.cooldown = 0;
+		}
+	}
 }
 
-// RESETA OS COOLDOWNS DE TODAS AS POÇÕES
+//RESETA OS COOLDOWNS DE TODAS AS POÇÕES
 function ResetarCooldownsPocoes()
 {
-    if (!variable_global_exists("DadosJogador"))
-    {
-        return;
-    }
-
-    var _dados = global.DadosJogador;
-
-    if (!is_struct(_dados))
-    {
-        return;
-    }
-
-    // POÇÕES DA HOTBAR
-    if (variable_struct_exists(_dados, "hotbar_pocoes"))
-    {
-        ResetarCooldownsArrayPocoes(
-            _dados.hotbar_pocoes
-        );
-    }
-
-    // POÇÕES DO ARMÁRIO
-    if (variable_struct_exists(_dados, "armario_pocoes"))
-    {
-        ResetarCooldownsArrayPocoes(
-            _dados.armario_pocoes
-        );
-    }
-
-    show_debug_message("Cooldowns de todas as poções resetados.");
+	if(!variable_global_exists("DadosJogador"))
+	{
+		return;
+	}
+	
+	var _dados = global.DadosJogador;
+	
+	if(!is_struct(_dados))
+	{
+		return;
+	}
+	
+	//POÇÕES DA HOTBAR
+	if(variable_struct_exists(_dados, "hotbar_pocoes"))
+	{
+		ResetarCooldownsArrayPocoes(
+			_dados.hotbar_pocoes
+		);
+	}
+	
+	//POÇÕES DO ARMÁRIO
+	if(variable_struct_exists(_dados, "armario_pocoes"))
+	{
+		ResetarCooldownsArrayPocoes(
+			_dados.armario_pocoes
+		);
+	}
+	
+	show_debug_message("Cooldowns de todas as poções resetados.");
 }
 
 function PocaoNomeExiste(_nome)
@@ -119,7 +119,6 @@ function PocaoNomeExiste(_nome)
 		}
 	}
 	
-	
 	return false;
 }
 
@@ -152,8 +151,6 @@ function PocaoExiste(_algoritmo)
 		}
 	}
 	
-	
-	
 	//HOTBAR
 	for(
 		var i = 0;
@@ -177,7 +174,6 @@ function PocaoExiste(_algoritmo)
 			return true;
 		}
 	}
-	
 	
 	return false;
 }
@@ -204,12 +200,9 @@ function AdicionaPocaoArmario(_nome,_algoritmo,_sentenca,_cor = c_white,_sprite 
 		return -1;
 	}
 	
-	
-	var _id =
-		global.DadosJogador.proximo_id_pocao;
+	var _id = global.DadosJogador.proximo_id_pocao;
 	
 	global.DadosJogador.proximo_id_pocao++;
-	
 	
 	global.DadosJogador.armario_pocoes[_slot] =
 	{
@@ -224,7 +217,6 @@ function AdicionaPocaoArmario(_nome,_algoritmo,_sentenca,_cor = c_white,_sprite 
 
 		cooldown: 0
 	};
-	
 	
 	return _slot;
 }
@@ -270,10 +262,7 @@ function AssinaturaValor(_expressao)
 		return "undefined";
 	}
 	
-	
 	//INT
-	
-	
 	if(
 		_expressao.tipo == TipoExpressao.VALOR
 		&& _expressao.subtipo == TipoValor.INT
@@ -283,11 +272,7 @@ function AssinaturaValor(_expressao)
 			+ string(_expressao.valor);
 	}
 	
-	
-	
 	//VARIÁVEL
-	
-	
 	if(_expressao.tipo == TipoExpressao.VARIAVEL)
 	{
 		return AssinaturaVariavel(
@@ -410,87 +395,81 @@ function RemovePocaoArmario(_slot)
 	return _pocao;
 }
 
-// DESCARTA UMA POÇÃO DO ARMÁRIO
+//DESCARTA UMA POÇÃO DO ARMÁRIO
 function DescartaPocaoArmario(_slot)
 {
-    // REMOVE A POÇÃO DO ARMÁRIO
-    var _pocao = RemovePocaoArmario(_slot);
-
-    if (is_undefined(_pocao))
-    {
-        return undefined;
-    }
-
-    // IDENTIFICA A POÇÃO NA HOTBAR PELO ID
-    for (var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
-    {
-        var _pocao_hotbar =
-            global.DadosJogador.hotbar_pocoes[i];
-
-        if (is_undefined(_pocao_hotbar))
-        {
-            continue;
-        }
-
-        if (
-            variable_struct_exists(_pocao_hotbar, "id")
-            && variable_struct_exists(_pocao, "id")
-            && _pocao_hotbar.id == _pocao.id
-        )
-        {
-            global.DadosJogador.hotbar_pocoes[i] =
-                undefined;
-        }
-    }
-
-    return _pocao;
+	//REMOVE A POÇÃO DO ARMÁRIO
+	var _pocao = RemovePocaoArmario(_slot);
+	
+	if(is_undefined(_pocao))
+	{
+		return undefined;
+	}
+	
+	//IDENTIFICA A POÇÃO NA HOTBAR PELO ID
+	for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
+	{
+		var _pocao_hotbar = global.DadosJogador.hotbar_pocoes[i];
+		
+		if(is_undefined(_pocao_hotbar))
+		{
+			continue;
+		}
+		
+		if(
+			variable_struct_exists(_pocao_hotbar, "id")
+			&& variable_struct_exists(_pocao, "id")
+			&& _pocao_hotbar.id == _pocao.id
+		)
+		{
+			global.DadosJogador.hotbar_pocoes[i] =
+			undefined;
+		}
+	}
+	
+	return _pocao;
 }
 
-// DESCARTA UMA POÇÃO DA HOTBAR
+//DESCARTA UMA POÇÃO DA HOTBAR
 function DescartaPocaoHotbar(_slot)
 {
-    if (
-        _slot < 0
-        || _slot >= SLOTS_HOTBAR_POCOES
-    )
-    {
-        return undefined;
-    }
-
-    // RECUPERA A POÇÃO
-    var _pocao =
-        global.DadosJogador.hotbar_pocoes[_slot];
-
-    if (is_undefined(_pocao))
-    {
-        return undefined;
-    }
-
-    // LIBERA O SLOT DA HOTBAR
-    global.DadosJogador.hotbar_pocoes[_slot] =
-        undefined;
-
-    // GARANTE QUE NÃO EXISTA UMA CÓPIA NO ARMÁRIO
-    for (var i = 0; i < SLOTS_ARMARIO_POCOES; i++)
-    {
-        var _pocao_armario =
-            global.DadosJogador.armario_pocoes[i];
-
-        if (is_undefined(_pocao_armario))
-        {
-            continue;
-        }
-
-        if (
-            _pocao_armario.id == _pocao.id
-        )
-        {
-            global.DadosJogador.armario_pocoes[i] =
-                undefined;
-        }
-    }
-
-    return _pocao;
+	if(
+		_slot < 0
+		|| _slot >= SLOTS_HOTBAR_POCOES
+	)
+	{
+		return undefined;
+	}
+	
+	//RECUPERA A POÇÃO
+	var _pocao = global.DadosJogador.hotbar_pocoes[_slot];
+	
+	if(is_undefined(_pocao))
+	{
+		return undefined;
+	}
+	
+	//LIBERA O SLOT DA HOTBAR
+	global.DadosJogador.hotbar_pocoes[_slot] = undefined;
+	
+	//GARANTE QUE NÃO EXISTA UMA CÓPIA NO ARMÁRIO
+	for(var i = 0; i < SLOTS_ARMARIO_POCOES; i++)
+	{
+		var _pocao_armario = global.DadosJogador.armario_pocoes[i];
+		
+		if(is_undefined(_pocao_armario))
+		{
+			continue;
+		}
+		
+		if(_pocao_armario.id == _pocao.id)
+		{
+			global.DadosJogador.armario_pocoes[i] =
+			undefined;
+		}
+	}
+	
+	return _pocao;
 }
 
 function TrocaPocaoArmario(_slot_a, _slot_b)
@@ -570,7 +549,6 @@ function TrocaPocaoHotbar(_slot_a, _slot_b)
 		return false;
 	}
 	
-	
 	var _temp =
 		global.DadosJogador.hotbar_pocoes[_slot_a];
 	
@@ -612,17 +590,12 @@ function TransferePocaoArmarioParaHotbar(_slot_armario,_slot_hotbar)
 		return false;
 	}
 	
-	
 	var _pocao_hotbar =
 		global.DadosJogador.hotbar_pocoes[
 			_slot_hotbar
 		];
 	
-	
-	
 	//HOTBAR VAZIA
-	
-	
 	if(is_undefined(_pocao_hotbar))
 	{
 		global.DadosJogador.hotbar_pocoes[
@@ -638,12 +611,7 @@ function TransferePocaoArmarioParaHotbar(_slot_armario,_slot_hotbar)
 		return true;
 	}
 	
-	
-	
-	//HOTBAR OCUPADA
-	//→ TROCA
-	
-	
+	//HOTBAR OCUPADA -> TROCA
 	global.DadosJogador.hotbar_pocoes[
 		_slot_hotbar
 	] =
@@ -685,7 +653,6 @@ function DevolvePocaoHotbarPorClique(_slot_hotbar)
 		return false;
 	}
 	
-	
 	var _slot_armario =
 		PrimeiroSlotArmarioLivre();
 	
@@ -694,18 +661,15 @@ function DevolvePocaoHotbarPorClique(_slot_hotbar)
 		return false;
 	}
 	
-	
 	global.DadosJogador.armario_pocoes[
 		_slot_armario
 	] =
 		_pocao;
 	
-	
 	global.DadosJogador.hotbar_pocoes[
 		_slot_hotbar
 	] =
 		undefined;
-	
 	
 	return true;
 }
@@ -728,7 +692,6 @@ function TransferePocaoHotbarParaArmario(_slot_hotbar,_slot_armario)
 		return false;
 	}
 	
-	
 	var _pocao_hotbar =
 		global.DadosJogador.hotbar_pocoes[
 			_slot_hotbar
@@ -739,17 +702,12 @@ function TransferePocaoHotbarParaArmario(_slot_hotbar,_slot_armario)
 		return false;
 	}
 	
-	
 	var _pocao_armario =
 		global.DadosJogador.armario_pocoes[
 			_slot_armario
 		];
 	
-	
-	
 	//DESTINO VAZIO
-	
-	
 	if(is_undefined(_pocao_armario))
 	{
 		global.DadosJogador.armario_pocoes[
@@ -765,12 +723,7 @@ function TransferePocaoHotbarParaArmario(_slot_hotbar,_slot_armario)
 		return true;
 	}
 	
-	
-	
-	//DESTINO OCUPADO
-	//→ TROCA
-	
-	
+	//DESTINO OCUPADO -> TROCA
 	global.DadosJogador.armario_pocoes[
 		_slot_armario
 	] =
@@ -796,16 +749,13 @@ function TransferePocaoHotbarParaFimDoArmario(_slot_hotbar)
 		return false;
 	}
 	
-	
 	var _slot_armario =
 		PrimeiroSlotArmarioLivre();
-	
 	
 	if(_slot_armario == -1)
 	{
 		return false;
 	}
-	
 	
 	global.DadosJogador.armario_pocoes[
 		_slot_armario

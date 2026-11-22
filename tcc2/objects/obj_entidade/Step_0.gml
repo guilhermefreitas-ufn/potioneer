@@ -46,10 +46,10 @@ else //se não
 	
 	//Procura o índice da condição para remover
 	//Se foi encontrada (o índice será diferente de -1)
-	if (_indice != -1)
+	if(_indice != -1)
 	{
 		//remove ela
-	    array_delete(condicao, _indice, 1);
+		array_delete(condicao, _indice, 1);
 	}
 }
 
@@ -86,18 +86,18 @@ else
 	
 	//Procura o índice da condição para remover
 	//Se foi encontrada (o índice será diferente de -1)
-	if (_indice_ace != -1)
+	if(_indice_ace != -1)
 	{
 		//remove ela
-	    array_delete(condicao, _indice_ace, 1);
+		array_delete(condicao, _indice_ace, 1);
 	}
 	
 	//Procura o índice da condição para remover
 	//Se foi encontrada (o índice será diferente de -1)
-	if (_indice_par != -1)
+	if(_indice_par != -1)
 	{
 		//remove ela
-	    array_delete(condicao, _indice_par, 1);
+		array_delete(condicao, _indice_par, 1);
 	}
 }
 
@@ -121,9 +121,9 @@ else
 	var _indice = array_get_index(condicao, "Enfraquecido");
 	
 	//Se foi encontrada (o índice será diferente de -1)
-	if (_indice != -1)
+	if(_indice != -1)
 	{
 		//remove ela
-	    array_delete(condicao, _indice, 1);
+		array_delete(condicao, _indice, 1);
 	}
 }

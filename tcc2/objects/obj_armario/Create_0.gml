@@ -5,7 +5,7 @@ colunas = 5;
 slot_tam =
 	sprite_get_width(
 		spr_slot_bolsa_ph
-	);
+);
 
 entre_slots = 4;
 
@@ -15,8 +15,7 @@ espaco_borda = 6;
 
 espaco_nome = 20;
 
-fonte =
-	fnt_placeholder_pequena;
+fonte = fnt_placeholder_pequena;
 
 //SPRITES
 sprite_meu_slot = spr_slot_bolsa_ph;
@@ -51,23 +50,21 @@ PosicaoSlot = function(_slot)
 //SLOT SOB O MOUSE
 SlotSobreMouse = function(_mx, _my)
 {
-	for(
-		var i = 0;
-		i < SLOTS_ARMARIO_POCOES;
-		i++
-	)
+	for(var i = 0; i < SLOTS_ARMARIO_POCOES; i++)
 	{
 		var _pos =
 			PosicaoSlot(i);
 		
-		if(point_in_rectangle(
-			_mx,
-			_my,
-			_pos[0],
-			_pos[1],
-			_pos[0] + slot_tam,
-			_pos[1] + slot_tam
-		))
+		if(
+			point_in_rectangle(
+				_mx,
+				_my,
+				_pos[0],
+				_pos[1],
+				_pos[0] + slot_tam,
+				_pos[1] + slot_tam
+			)
+		)
 		{
 			return i;
 		}

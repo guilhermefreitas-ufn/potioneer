@@ -1,14 +1,14 @@
 //show_message("obj transicao criado");
 
-// Variáveis de controle de ESTADO
-// 0: NENHUM
-// 1: FECHANDO (Iris Out para foco)
-// 2: FOCO_SAIDA (Pausa no alvo de saída)
-// 3: FECHAMENTO_TOTAL (Iris Out total)
-// 4: TROCA_ROOM (room_goto)
-// 5: ABERTURA_INICIAL (Iris In do centro para foco)
-// 6: FOCO_ENTRADA (Pausa no alvo de entrada)
-// 7: ABRINDO (Iris In total)
+//Variáveis de controle de ESTADO
+//0: NENHUM
+//1: FECHANDO (Iris Out para foco)
+//2: FOCO_SAIDA (Pausa no alvo de saída)
+//3: FECHAMENTO_TOTAL (Iris Out total)
+//4: TROCA_ROOM (room_goto)
+//5: ABERTURA_INICIAL (Iris In do centro para foco)
+//6: FOCO_ENTRADA (Pausa no alvo de entrada)
+//7: ABRINDO (Iris In total)
 
 global.pause = true;
 

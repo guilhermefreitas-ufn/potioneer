@@ -49,8 +49,6 @@ global.Ingredientes =
 	CriarIngrediente(11,"Raiz",		"Uma raiz de planta muito barulhenta."		,spr_raiz_hd,			"alvo",			"target",	TipoIngrediente.ALVO),
 	CriarIngrediente(12,"Crina",	"Um punhado de crina de unicórnio."			,spr_crina_hd,			"aliado",		"ally",		TipoIngrediente.ALVO),
 	CriarIngrediente(13,"Acônito",	"Um belo ramo de acônito venenoso."			,spr_aconito_hd,		"inimigo",		"enemy",	TipoIngrediente.ALVO)
-	
-	//,CriarIngrediente(14, "Lua", "Uma mini lua perfeitamente mordida.",spr_ing_lua,	"enquanto",		"while",	TipoIngrediente.CONDICIONAL)
 ];
 
 global.ingredientes_finais = [
@@ -101,7 +99,7 @@ function VerificaIngrediente(_numero = 1)
 		{
 			var _item = global.Ingredientes[_numero].nome;
 			var _resultado = (ProcuraInventario(id,_numero) != -1) ? "tem "+_item : "não tem "+_item
-		
+			
 			show_debug_message("Bolsa "+_resultado);
 		}
 	}
@@ -115,7 +113,7 @@ function VerificaIngrediente(_numero = 1)
 		{
 			var _item = global.Ingredientes[_numero].nome;
 			var _resultado = (ProcuraInventario(id,_numero) != -1) ? "tem "+_item : "não tem "+_item
-		
+			
 			show_debug_message("Caldeirão "+_resultado);
 		}
 	}
@@ -196,7 +194,7 @@ function CriaPocoesTeste()
 	//enemy hp decreases enemy hp
 	var _esq =
 		CriarExpressaoVariavel(
-			2,  //hp
+			2, //hp
 			13, //enemy
 			-1,
 			-1
@@ -204,7 +202,7 @@ function CriaPocoesTeste()
 	
 	var _dir =
 		CriarExpressaoVariavel(
-			2,  //hp
+			2, //hp
 			13, //enemy
 			-1,
 			-1
@@ -219,7 +217,7 @@ function CriaPocoesTeste()
 	
 	var _variavel =
 		CriarExpressaoVariavel(
-			2,  //hp
+			2, //hp
 			13, //enemy
 			-1,
 			-1
@@ -227,7 +225,7 @@ function CriaPocoesTeste()
 	
 	var _valor =
 		CriarExpressaoVariavel(
-			2,  //hp
+			2, //hp
 			13, //enemy
 			-1,
 			-1
@@ -247,10 +245,7 @@ function CriaPocoesTeste()
 			_efeito
 		);
 	
-	if(
-		!PocaoExiste(_algoritmo)
-		&& !PocaoNomeExiste("Morte")
-	)
+	if(!PocaoExiste(_algoritmo) && !PocaoNomeExiste("Morte"))
 	{
 		AdicionaPocaoArmario(
 			"Morte",
@@ -582,52 +577,6 @@ function CriaPocoesTeste()
 	else
 	{
 		show_debug_message("Poções de teste já criadas! OU Interpretador não encontrado!");
-	}
-	
-	
-}
-
-function PegaRooms(_salas)
-{
-	var _rooms = [];
-	
-	if(!is_array(_salas)) { return; }
-	
-	for(var i = 0; i < array_length(_salas); i++)
-	{
-		if(_salas[i] == "armario")
-		{
-			array_push(_rooms, rm_armario);
-		}
-		if(_salas[i] == "inicio")
-		{
-			array_push(_rooms, rm_inicio);
-		}
-		if(_salas[i] == "inventarios")
-		{
-			array_push(_rooms, rm_inventarios);
-		}
-		if(_salas[i] == "masmorra")
-		{
-			array_push(_rooms, rm_masmorra);
-		}
-		if(_salas[i] == "menu")
-		{
-			array_push(_rooms, rm_menu);
-		}
-		if(_salas[i] == "tutorial")
-		{
-			array_push(_rooms, rm_tutorial);
-		}
-	}
-	
-	if(array_length(_rooms) > 0)
-	{
-		return _rooms;
-	}
-	else
-	{
-		show_debug_message("Nenhuma room encontrada!");
 	}
 }
 

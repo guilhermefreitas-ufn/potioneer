@@ -1,100 +1,100 @@
 function InicializaDadosJogador(_novo_jogo = false)
 {
-    // JÁ EXISTEM DADOS DO JOGADOR?
-    if (
-        !_novo_jogo
-        && variable_global_exists("DadosJogador")
-        && is_struct(global.DadosJogador)
-    )
-    {
-        var _dados = global.DadosJogador;
-
-        // ARMÁRIO DE POÇÕES
-        if (!variable_struct_exists(_dados, "armario_pocoes"))
-        {
-            _dados.armario_pocoes = array_create(
-                SLOTS_ARMARIO_POCOES,
-                undefined
-            );
-        }
-
-        // HOTBAR
-        if (!variable_struct_exists(_dados, "hotbar_pocoes"))
-        {
-            _dados.hotbar_pocoes = array_create(
-                SLOTS_HOTBAR_POCOES,
-                undefined
-            );
-        }
-
-        // ID DAS POÇÕES
-        if (!variable_struct_exists(_dados, "proximo_id_pocao"))
-        {
-            _dados.proximo_id_pocao = 0;
-        }
-
-        // BOLSA
-        if (!variable_struct_exists(_dados, "bolsa_inventario"))
-        {
-            _dados.bolsa_inventario = array_create(
-                SLOTS_BOLSA,
-                -1
-            );
-        }
-
-        if (!variable_struct_exists(_dados, "bolsa_quantidades"))
-        {
-            _dados.bolsa_quantidades = array_create(
-                SLOTS_BOLSA,
-                0
-            );
-        }
-
-        if (!variable_struct_exists(_dados, "bolsa_valores"))
-        {
-            _dados.bolsa_valores = array_create(
-                SLOTS_BOLSA,
-                undefined
-            );
-        }
-
-        return;
-    }
-
-    // CRIA OU REINICIALIZA TODOS OS DADOS
-    global.DadosJogador =
-    {
-        // ARMÁRIO DE POÇÕES
-        armario_pocoes: array_create(
-            SLOTS_ARMARIO_POCOES,
-            undefined
-        ),
-
-        // HOTBAR
-        hotbar_pocoes: array_create(
-            SLOTS_HOTBAR_POCOES,
-            undefined
-        ),
-
-        // ID DAS POÇÕES
-        proximo_id_pocao: 0,
-
-        // BOLSA
-        bolsa_inventario: array_create(
-            SLOTS_BOLSA,
-            -1
-        ),
-
-        bolsa_quantidades: array_create(
-            SLOTS_BOLSA,
-            0
-        ),
-
-        bolsa_valores: array_create(
-            SLOTS_BOLSA,
-            undefined
-        )
-    };
+	//JÁ EXISTEM DADOS DO JOGADOR?
+	if(
+		!_novo_jogo
+		&& variable_global_exists("DadosJogador")
+		&& is_struct(global.DadosJogador)
+	)
+	{
+		var _dados = global.DadosJogador;
+		
+		//ARMÁRIO DE POÇÕES
+		if(!variable_struct_exists(_dados, "armario_pocoes"))
+		{
+			_dados.armario_pocoes = array_create(
+				SLOTS_ARMARIO_POCOES,
+				undefined
+			);
+		}
+			
+		//HOTBAR
+		if(!variable_struct_exists(_dados, "hotbar_pocoes"))
+		{
+			_dados.hotbar_pocoes = array_create(
+				SLOTS_HOTBAR_POCOES,
+				undefined
+			);
+		}
+		
+		//ID DAS POÇÕES
+		if(!variable_struct_exists(_dados, "proximo_id_pocao"))
+		{
+			_dados.proximo_id_pocao = 0;
+		}
+		
+		//BOLSA
+		if(!variable_struct_exists(_dados, "bolsa_inventario"))
+		{
+			_dados.bolsa_inventario = array_create(
+				SLOTS_BOLSA,
+				-1
+			);
+		}
+		
+		if(!variable_struct_exists(_dados, "bolsa_quantidades"))
+		{
+			_dados.bolsa_quantidades = array_create(
+				SLOTS_BOLSA,
+				0
+			);
+		}
+		
+		if(!variable_struct_exists(_dados, "bolsa_valores"))
+		{
+			_dados.bolsa_valores = array_create(
+				SLOTS_BOLSA,
+				undefined
+			);
+		}
+		
+		return;
+	}
+	
+	//CRIA OU REINICIALIZA TODOS OS DADOS
+	global.DadosJogador =
+	{
+		//ARMÁRIO DE POÇÕES
+		armario_pocoes: array_create(
+			SLOTS_ARMARIO_POCOES,
+			undefined
+		),
+		
+		//HOTBAR
+		hotbar_pocoes: array_create(
+			SLOTS_HOTBAR_POCOES,
+			undefined
+		),
+		
+		//ID DAS POÇÕES
+		proximo_id_pocao: 0,
+		
+		//BOLSA
+		bolsa_inventario: array_create(
+			SLOTS_BOLSA,
+			-1
+		),
+		
+		bolsa_quantidades: array_create(
+			SLOTS_BOLSA,
+			0
+		),
+		
+		bolsa_valores: array_create(
+			SLOTS_BOLSA,
+			undefined
+		)
+	};
 }
 
 function SincronizaBolsaGlobal(_bolsa)
@@ -150,11 +150,7 @@ function AdicionaIngredienteGlobal(_tipo_item, _valor = undefined)
 		return true;
 	}
 	
-	
-	
 	//NÃO EXISTE PILHA COMPATÍVEL
-	
-	
 	for(var i = 0; i < SLOTS_BOLSA; i++)
 	{
 		if(global.DadosJogador.bolsa_inventario[i] == -1)
@@ -169,4 +165,3 @@ function AdicionaIngredienteGlobal(_tipo_item, _valor = undefined)
 	
 	return false;
 }
-

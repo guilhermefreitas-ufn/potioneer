@@ -4,5 +4,5 @@ tempo++;
 
 if(tempo >= duracao)
 {
-    instance_destroy();
+	instance_destroy();
 }

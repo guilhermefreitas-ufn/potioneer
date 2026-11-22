@@ -20,8 +20,6 @@ var _menos = keyboard_check_pressed(vk_subtract) || keyboard_check_pressed(ord("
 var _posso_clicar = false;
 #endregion
 
-
-
 if(!instance_exists(obj_interpretador)) { _posso_clicar = true; }
 
 if(instance_exists(obj_interpretador))
@@ -49,7 +47,7 @@ if(_6)
 if(_0)
 {
 	/*
-	int +4 + int +4 → junta
+	int +4 + int +4 -> junta
 	*/
 	if(instance_exists(obj_bolsa))
 	{
@@ -67,7 +65,7 @@ if(_0)
 if(_9)
 {
 	/*
-	int +4 + int -3 → separa
+	int +4 + int -3 -> separa
 	*/
 	if(instance_exists(obj_bolsa))
 	{
@@ -87,7 +85,7 @@ if(_posso_clicar)
 {
 	if(_enter)
 	{
-		PreencheBolsa();
+		//PreencheBolsa();
 	}
 	if(_backspace)
 	{
@@ -113,7 +111,7 @@ if(room == rm_inventarios)
 	//CRIANDO 5 POÇÕES TESTE
 	if(_m && CaldeiraoVazio())
 	{
-		CriaPocoesTeste();
+		//CriaPocoesTeste();
 	}
 	
 	//CLIQUE NOS BOTÕES
@@ -288,30 +286,30 @@ if(room == rm_armario || room == rm_inventarios)
 	//POSIÇÃO ESPECIAL NA SALA DE INVENTÁRIOS
 	if(room == rm_inventarios)
 	{
-	    _x =
-	        2 * botao_margem + botao_largura;
+	 _x =
+	 2 * botao_margem + botao_largura;
 
-	    _y =
-	        RES_H
-	        - botao_altura
-	        - botao_margem;
+	 _y =
+	 RES_H
+	 - botao_altura
+	 - botao_margem;
 		
 		//VERIFICA CLIQUE
 		if(
-		    device_mouse_check_button_pressed(0, mb_left)
-		    && point_in_rectangle(
-		        _mx,
-		        _my,
-		        _x,
-		        _y,
-		        _x + botao_largura,
-		        _y + botao_altura
-		    )
+		 device_mouse_check_button_pressed(0, mb_left)
+		 && point_in_rectangle(
+		 _mx,
+		 _my,
+		 _x,
+		 _y,
+		 _x + botao_largura,
+		 _y + botao_altura
+		 )
 		)
 		{
 			DevolveItens();
 			
-		    aplica_transicao(rm_masmorra);
+		 aplica_transicao(rm_masmorra);
 		}
 	}
 	
@@ -322,7 +320,7 @@ if(room == rm_armario || room == rm_inventarios)
 	//POSIÇÃO ESPECIAL NA SALA DE INVENTÁRIOS
 	if(room == rm_armario)
 	{
-	    _x =
+	 _x =
 			RES_W
 			- botao_largura * 2
 			- botao_margem * 2;
@@ -335,20 +333,20 @@ if(room == rm_armario || room == rm_inventarios)
 	
 	//VERIFICA CLIQUE
 	if(
-	    device_mouse_check_button_pressed(0, mb_left)
-	    && point_in_rectangle(
-	        _mx,
-	        _my,
-	        _x,
-	        _y,
-	        _x + botao_largura,
-	        _y + botao_altura
-	    )
+		device_mouse_check_button_pressed(0, mb_left)
+		&& point_in_rectangle(
+			_mx,
+			_my,
+			_x,
+			_y,
+			_x + botao_largura,
+			_y + botao_altura
+		)
 	)
 	{
 		DevolveItens();
 		
-	    aplica_transicao(rm_menu);
+		aplica_transicao(rm_menu);
 	}
 }
 

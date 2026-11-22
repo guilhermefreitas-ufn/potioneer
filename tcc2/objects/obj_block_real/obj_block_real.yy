@@ -11,7 +11,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Ing Antigos",
-    "path":"folders/Objects/Ing Antigos.yy",
+    "path":"folders/Objects/Testes/Ing Antigos.yy",
   },
   "parentObjectId":null,
   "persistent":false,

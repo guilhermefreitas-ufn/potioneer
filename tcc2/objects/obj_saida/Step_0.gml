@@ -35,11 +35,11 @@ if(_player)
 	}
 }
 
-if (_player && !instance_exists(obj_transicao) && _espaco)
+if(_player && !instance_exists(obj_transicao) && _espaco)
 {
-    //transicao_iniciada = true;
-
-    //room_goto(rm_inventarios);
+	//transicao_iniciada = true;
+	
+	//room_goto(rm_inventarios);
 	if(global.ing_finais_coletados < 5)
 	{
 		global.fase += 1;
@@ -55,18 +55,18 @@ if (_player && !instance_exists(obj_transicao) && _espaco)
 	}
 	else
 	{
-		// NIVEL 
+		//NIVEL 
 		global.fase = 0;
 		
-		// EVENTOS
+		//EVENTOS
 		global.eventos_progressao = EventosProgressao();
 		global.eventos_processados = ds_map_create();
 		
-		// INGREDIENTES FINAIS
-	    global.ing_finais_coletados = 0;
-
-	    // VERIFICAÇÃO DA SAÍDA
-	    global.qtd_ing_finais = 0;
+		//INGREDIENTES FINAIS
+		global.ing_finais_coletados = 0;
+		
+		//VERIFICAÇÃO DA SAÍDA
+		global.qtd_ing_finais = 0;
 	
 		//LISTA DE INGREDIENTES FINAIS
 		global.ingredientes_finais = [

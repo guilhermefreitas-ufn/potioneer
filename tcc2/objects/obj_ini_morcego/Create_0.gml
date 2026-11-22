@@ -8,7 +8,7 @@ hp_base		= 3;
 spd_base	= 3;
 atk_base	= 2;
 
-// APLICANDO A DIFICULDADE DA FASE
+//APLICANDO A DIFICULDADE DA FASE
 AplicarEscalonamentoFase();
 
 //testes

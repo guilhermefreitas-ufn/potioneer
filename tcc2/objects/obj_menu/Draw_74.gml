@@ -85,10 +85,10 @@ for(var i = 0; i < options_tam; i++)
 					//reseta tudo
 					IniciaNovoJogo();
 
-					// EXCLUI O SAVE ANTERIOR
-					if (file_exists("savedata.sav"))
+					//EXCLUI O SAVE ANTERIOR
+					if(file_exists("savedata.sav"))
 					{
-					    file_delete("savedata.sav");
+					 file_delete("savedata.sav");
 					}
 					
 					//aplica_transicao(rm_cutscenes);

@@ -1,5 +1,3 @@
-
-
 draw_set_font(fonte);
 
 var _mx = mouse_x;
@@ -11,20 +9,14 @@ var _slot_hover =
 		_my
 	);
 
-
-
 //SLOTS
 for(var i = 0; i < SLOTS_ARMARIO_POCOES; i++)
 {
-	var _pos =
-		PosicaoSlot(i);
+	var _pos = PosicaoSlot(i);
 	
+	var _cx = _pos[0] + slot_tam / 2;
 	
-	var _cx =
-		_pos[0] + slot_tam / 2;
-	
-	var _cy =
-		_pos[1] + slot_tam / 2;
+	var _cy = _pos[1] + slot_tam / 2;
 	
 	//SLOT
 	var _hover = (_slot_hover == i);
@@ -37,8 +29,7 @@ for(var i = 0; i < SLOTS_ARMARIO_POCOES; i++)
 	);
 	
 	//POÇÃO DO SLOT
-	var _pocao =
-		global.DadosJogador.armario_pocoes[i];
+	var _pocao = global.DadosJogador.armario_pocoes[i];
 	
 	
 	//slot vazio
@@ -83,14 +74,11 @@ for(var i = 0; i < SLOTS_ARMARIO_POCOES; i++)
 //NOME POR CIMA DOS SLOTS
 for(var i = 0; i < SLOTS_ARMARIO_POCOES; i++)
 {
-	var _pos =
-		PosicaoSlot(i);
+	var _pos = PosicaoSlot(i);
 	
-	var _cx =
-		_pos[0] + slot_tam / 2;
+	var _cx = _pos[0] + slot_tam / 2;
 	
-	var _cy =
-		_pos[1] + slot_tam / 2;
+	var _cy = _pos[1] + slot_tam / 2;
 		
 	var _pocao = global.DadosJogador.armario_pocoes[i];
 	

@@ -68,7 +68,6 @@ for(var i = 0; i < SLOTS_BOLSA; i++)
 			_nome += " " + string(valores[i]);
 		}
 		
-		
 		define_align();
 		draw_set_font(fonte);
 		
@@ -90,8 +89,8 @@ for(var i = 0; i < SLOTS_BOLSA; i++)
 		
 		//QUANTIDADE
 		draw_text_outline(
-			_xx,// - entre_slots * 2 + slot_tam,
-			_yy,// + slot_tam - espaco_borda * 2,
+			_xx,//- entre_slots * 2 + slot_tam,
+			_yy,//+ slot_tam - espaco_borda * 2,
 			string(quantidades[i]) + "x",
 			desc_cor,
 			c_black,

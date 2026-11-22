@@ -19,9 +19,9 @@ if(instance_exists(pai))
 
 if(irandom_range(1, 100) <= chance)
 {
-    instance_create_layer(x, y, layer, obj_efeito_bolha,
-    {
-        cor : cor,
-        pai : id
-    });
+	instance_create_layer(x, y, layer, obj_efeito_bolha,
+	{
+		cor : cor,
+		pai : id
+	});
 }

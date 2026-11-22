@@ -45,7 +45,7 @@ function ExecutaPocao(_numero)
 		);
 	
 	show_debug_message(
-	"SUCESSO: " + string(_resultado.sucesso)
+		"SUCESSO: " + string(_resultado.sucesso)
 	);
 
 	show_debug_message(

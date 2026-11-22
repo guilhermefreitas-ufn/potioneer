@@ -22,46 +22,48 @@ altura_slot = sprite_get_height(sprite_meu_slot) * escala_slot;
 
 //DIMENSÕES DA HOTBAR
 largura_hotbar =
-    espaco_borda * 2
-    + SLOTS_HOTBAR_POCOES * largura_slot
-    + (SLOTS_HOTBAR_POCOES - 1) * entre_slots;
+ espaco_borda * 2
+ + SLOTS_HOTBAR_POCOES * largura_slot
+ + (SLOTS_HOTBAR_POCOES - 1) * entre_slots;
 
 altura_hotbar =
-    espaco_borda * 2
-    + altura_slot
-    + espaco_nome;
+ espaco_borda * 2
+ + altura_slot
+ + espaco_nome;
 
 //POSIÇÃO DO SLOT NA GUI
 PosicaoSlot = function(_slot)
 {
-    var _x = (RES_W - largura_hotbar) / 2;
-    var _y = RES_H - altura_hotbar - margem_inferior;
-
-    return [
-        _x + espaco_borda
-            + _slot * (largura_slot + entre_slots),
-
-        _y + espaco_borda
-    ];
+	var _x = (RES_W - largura_hotbar) / 2;
+	var _y = RES_H - altura_hotbar - margem_inferior;
+	
+	return [
+		_x + espaco_borda
+		+ _slot * (largura_slot + entre_slots),
+		
+		_y + espaco_borda
+	];
 };
 
 //SLOT SOB O MOUSE
 SlotSobreMouse = function(_mx, _my)
 {
-    for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
-    {
-        var _pos = PosicaoSlot(i);
-
-        if(point_in_rectangle(
-            _mx, _my,
-            _pos[0], _pos[1],
-            _pos[0] + largura_slot,
-            _pos[1] + altura_slot
-        ))
-        {
-            return i;
-        }
-    }
-
-    return -1;
+	for(var i = 0; i < SLOTS_HOTBAR_POCOES; i++)
+	{
+		var _pos = PosicaoSlot(i);
+		
+		if(
+			point_in_rectangle(
+				_mx, _my,
+				_pos[0], _pos[1],
+				_pos[0] + largura_slot,
+				_pos[1] + altura_slot
+			)
+		)
+		{
+			return i;
+		}
+	}
+	
+	return -1;
 };

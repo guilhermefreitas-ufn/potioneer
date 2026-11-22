@@ -1,7 +1,7 @@
 //var _alpha = clamp(
-//    1 - tempo / duracao,
-//    0,
-//    1
+//1 - tempo / duracao,
+//0,
+//1
 //);
 
 //draw_set_font(fnt_placeholder_pequena);
@@ -10,27 +10,27 @@
 
 //draw_set_alpha(_alpha);
 
-//// SOMBRA
+////SOMBRA
 //draw_set_colour(c_black);
 
 //draw_text_ext(
-//    x + 1,
-//    y + 1,
-//    texto,
-//    -1,
-//    largura_maxima
+//x + 1,
+//y + 1,
+//texto,
+//-1,
+//largura_maxima
 //);
 
-//// TEXTO
+////TEXTO
 //draw_set_colour(cor);
 
 //draw_text_ext(
-//    x,
-//    y,
-//    texto,
-//    -1,
-//    largura_maxima
+//x,
+//y,
+//texto,
+//-1,
+//largura_maxima
 //);
 
-//// RESTAURA O ESTADO DE DESENHO
+////RESTAURA O ESTADO DE DESENHO
 //reseta_draw();

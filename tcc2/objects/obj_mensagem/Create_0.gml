@@ -1,23 +1,23 @@
-// TEXTO
+//TEXTO
 texto = "";
 
-// COR DA MENSAGEM
+//COR DA MENSAGEM
 cor = c_white;
 
-// CONFIGURAÇÃO DO TEXTO
+//CONFIGURAÇÃO DO TEXTO
 largura_maxima = 160;
 altura_texto = 0;
 
-// POSIÇÃO ORIGINAL DA MENSAGEM
+//POSIÇÃO ORIGINAL DA MENSAGEM
 origem_x = x;
 origem_y = y;
 
-// ANIMAÇÃO
+//ANIMAÇÃO
 tempo = 0;
 
 duracao = max(
-    1,
-    round(GAME_SPEED * 1.5)
+	1,
+	round(GAME_SPEED * 1.5)
 );
 
 vel_y = -0.4;

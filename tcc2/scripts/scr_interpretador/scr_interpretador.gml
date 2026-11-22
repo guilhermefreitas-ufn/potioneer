@@ -104,7 +104,6 @@ function MontaSentenca(_tokens)
 	//ADICIONANDO OS INGREDIENTES
 	for(var i = 1; i < _qtd_tokens; i++)
 	{
-		
 		//AINDA ESTAMOS NA CONDIÇÃO
 		if(_inicio_efeito == -1 || i < _inicio_efeito)
 		{

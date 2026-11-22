@@ -1,11 +1,4 @@
-//desenhando botão de "Como Jogar"
-//nas rooms: armário, inventários e masmorra
-var _rooms = PegaRooms(["inventarios", "armario", "masmorra"]);
-
-var _inventarios	= array_get_index(_rooms, rm_inventarios);
-var _masmorra		= array_get_index(_rooms, rm_masmorra);
-var _armario		= array_get_index(_rooms, rm_armario);
-
+//debug
 if(global.debug)
 {
 	//debug
@@ -19,50 +12,49 @@ if(global.debug)
 
 	for(var i = 0; i < array_length(global.DadosJogador.armario_pocoes); i++)
 	{
-	    var _pocao = global.DadosJogador.armario_pocoes[i];
+		var _pocao = global.DadosJogador.armario_pocoes[i];
 
-	    if(is_struct(_pocao))
-	    {
-	        draw_text(
-	            RES_W - 96,
-	            RES_H / 7 + i * 16,
-	            string(_pocao.nome)
-	        );
-	    }
-	    else
-	    {
-	        draw_text(
-	            RES_W - 96,
-	            RES_H / 7 + i * 16,
-	            "VAZIO"
-	        );
-	    }
+		if(is_struct(_pocao))
+		{
+			draw_text(
+				RES_W - 96,
+				RES_H / 7 + i * 16,
+				string(_pocao.nome)
+			);
+		}
+		else
+		{
+			draw_text(
+				RES_W - 96,
+				RES_H / 7 + i * 16,
+				"VAZIO"
+			);
+		}
 	}
-
 
 	//hotbar
 	draw_text(RES_W - 192, RES_H / 7 - 24, "HOTBAR:");
 
 	for(var i = 0; i < array_length(global.DadosJogador.hotbar_pocoes); i++)
 	{
-	    var _pocao = global.DadosJogador.hotbar_pocoes[i];
-
-	    if(is_struct(_pocao))
-	    {
-	        draw_text(
-	            RES_W - 192,
-	            RES_H / 7 + i * 16,
-	            string(_pocao.nome)
-	        );
-	    }
-	    else
-	    {
-	        draw_text(
-	            RES_W - 192,
-	            RES_H / 7 + i * 16,
-	            "VAZIO"
-	        );
-	    }
+		var _pocao = global.DadosJogador.hotbar_pocoes[i];
+		
+		if(is_struct(_pocao))
+		{
+			draw_text(
+				RES_W - 192,
+				RES_H / 7 + i * 16,
+				string(_pocao.nome)
+			);
+		}
+		else
+		{
+			draw_text(
+				RES_W - 192,
+				RES_H / 7 + i * 16,
+				"VAZIO"
+			);
+		}
 	}
 	
 	if(room == rm_inventarios)
@@ -369,7 +361,7 @@ if(room == rm_inventarios || room == rm_armario)
 	
 	if(room == rm_armario)
 	{
-	    _x3 =
+		_x3 =
 			RES_W
 			- botao_largura * 2
 			- botao_margem * 2;
@@ -491,4 +483,3 @@ if(room == rm_masmorra)
 	
 	reseta_draw();
 }
-

@@ -1,6 +1,6 @@
 if(!instance_exists(obj_player))
 {
-    exit;
+	exit;
 }
 
 //define limites
@@ -38,33 +38,33 @@ image_xscale = tam_x * escala_pulso;
 image_yscale = tam_y * escala_pulso;
 
 var _player = instance_find(
-    obj_player,
-    0
+	obj_player,
+	0
 );
 
 var _centro = _player.Centro();
 
-// VERIFICA A SOBREPOSIÇÃO DOS BBOX
-// Adiciona uma margem para facilitar a coleta.
+//VERIFICA A SOBREPOSIÇÃO DOS BBOX
+//Adiciona uma margem para facilitar a coleta.
 var _margem_coleta = 8;
 
 var _fora_do_alcance = (
-    bbox_right < _player.bbox_left - _margem_coleta
-    || bbox_left > _player.bbox_right + _margem_coleta
-    || bbox_bottom < _player.bbox_top - _margem_coleta
-    || bbox_top > _player.bbox_bottom + _margem_coleta
+	bbox_right < _player.bbox_left - _margem_coleta
+	|| bbox_left > _player.bbox_right + _margem_coleta
+	|| bbox_bottom < _player.bbox_top - _margem_coleta
+	|| bbox_top > _player.bbox_bottom + _margem_coleta
 );
 
 if(_fora_do_alcance)
 {
-    exit;
+	exit;
 }
 
-// MENSAGEM 
+//MENSAGEM 
 CriaMensagem(
 	x,
 	y,
-    "Ingrediente final encontrado!"
+	"Ingrediente final encontrado!"
 );
 
 //me removo da lista possivel
@@ -72,10 +72,10 @@ var _indice = array_get_index(global.ingredientes_finais,nome);
 	
 //Procura o índice do ingrediente para remover
 //Se foi encontrada (o índice será diferente de -1)
-if (_indice != -1)
+if(_indice != -1)
 {
 	//remove ele
-    array_delete(global.ingredientes_finais, _indice, 1);
+	array_delete(global.ingredientes_finais, _indice, 1);
 }
 
 global.ing_finais_coletados += 1;

@@ -29,4 +29,5 @@ sprite_flush_multi(_sprites);
 if(room == rm_masmorra)
 {
 	gpu_set_texfilter(true);
+	ResetarCooldownsPocoes();
 }
