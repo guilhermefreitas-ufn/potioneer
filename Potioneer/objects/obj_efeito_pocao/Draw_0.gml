@@ -38,31 +38,9 @@ switch (etapa)
 		break;
 	}
 	
-	
 	case "area":
 	{
-		var _fracao = clamp(
-			tempo_area / max(1, duracao_area),
-			0,
-			1
-		);
-		
-		var _alpha = ALPHA_AREA_EFEITO_POCAO * _fracao;
-		
-		draw_set_colour(cor_pocao);
-		draw_set_alpha(_alpha);
-		
-		draw_circle(
-			x,
-			y,
-			raio_efeito,
-			false //false = círculo preenchido
-		);
-		
-		//Restaura as configurações de desenho
-		draw_set_alpha(1);
-		draw_set_colour(c_white);
-		
+		//O visual da área agora é desenhado pelo sistema de partículas ("splash_pocao")
 		break;
 	}
 }

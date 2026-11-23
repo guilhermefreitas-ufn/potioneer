@@ -1,11 +1,9 @@
-
 inventario_hover = -1;
 slot_hover = -1;
 
 inventario_drag = -1;
 slot_drag = -1;
 item_drag = -1;
-
 
 //POÇÕES
 pocao_inventario_hover = noone;
@@ -62,7 +60,6 @@ get_slot_rect = function(_obj_inventario, _slot)
 
 	var _esquerda;
 	var _topo;
-
 
 	//CALDEIRÃO
 	if(_obj_inventario.caldeirao)
@@ -150,19 +147,19 @@ get_slot_pos = function(_obj_inventario, _slot)
 
 mouse_over = function()
 {
- //LIMPANDO HOVER
- slot_hover = -1;
- inventario_hover = -1;
+	//LIMPANDO HOVER
+	slot_hover = -1;
+	inventario_hover = -1;
 
- //COORDENADAS DO MOUSE NO MUNDO
- var _mx = mouse_x;
- var _my = mouse_y;
+	//COORDENADAS DO MOUSE NO MUNDO
+	var _mx = mouse_x;
+	var _my = mouse_y;
 
- //COORDENADAS DO MOUSE NA GUI
- var _mx_gui = device_mouse_x_to_gui(0);
- var _my_gui = device_mouse_y_to_gui(0);
+	//COORDENADAS DO MOUSE NA GUI
+	var _mx_gui = device_mouse_x_to_gui(0);
+	var _my_gui = device_mouse_y_to_gui(0);
 
- //INVENTÁRIOS COMUNS
+	//INVENTÁRIOS COMUNS
 	with(obj_inventario_pai)
 	{
 		//QUANTIDADE DE SLOTS
@@ -197,54 +194,54 @@ mouse_over = function()
 		}
 	}
 
- //LIMPANDO HOVER DAS POÇÕES
- pocao_inventario_hover = noone;
- pocao_slot_hover = -1;
+	//LIMPANDO HOVER DAS POÇÕES
+	pocao_inventario_hover = noone;
+	pocao_slot_hover = -1;
 
- //ARMÁRIO: COORDENADAS DO MUNDO
- if(instance_exists(obj_armario))
- {
- var _armario = instance_find(obj_armario, 0);
+	//ARMÁRIO: COORDENADAS DO MUNDO
+	if(instance_exists(obj_armario))
+	{
+		var _armario = instance_find(obj_armario, 0);
 
- var _slot_armario = _armario.SlotSobreMouse(
- _mx,
- _my
- );
+		var _slot_armario = _armario.SlotSobreMouse(
+			_mx,
+			_my
+		);
 
- if(_slot_armario != -1)
- {
- pocao_inventario_hover = _armario;
- pocao_slot_hover= _slot_armario;
- }
- }
+		if(_slot_armario != -1)
+		{
+			pocao_inventario_hover = _armario;
+			pocao_slot_hover = _slot_armario;
+		}
+	}
 
- //HOTBAR: COORDENADAS GUI
- if(instance_exists(obj_hotbar))
- {
- var _hotbar = instance_find(obj_hotbar, 0);
+	//HOTBAR: COORDENADAS GUI
+	if(instance_exists(obj_hotbar))
+	{
+		var _hotbar = instance_find(obj_hotbar, 0);
 
- var _slot_hotbar = _hotbar.SlotSobreMouse(
- _mx_gui,
- _my_gui
- );
+		var _slot_hotbar = _hotbar.SlotSobreMouse(
+			_mx_gui,
+			_my_gui
+		);
 
- if(_slot_hotbar != -1)
- {
- pocao_inventario_hover = _hotbar;
- pocao_slot_hover = _slot_hotbar;
- }
- }
+		if(_slot_hotbar != -1)
+		{
+			pocao_inventario_hover = _hotbar;
+			pocao_slot_hover = _slot_hotbar;
+		}
+	}
 };
 
 estado_click = function()
 {
 	mouse_over();
-	
+
 	//SOLTOU -> FOI UM CLICK
 	if(mouse_check_button_released(mb_left))
 	{
 		var _outro_inventario = noone;
-		
+
 		if(inventario_drag.caldeirao)
 		{
 			_outro_inventario = instance_find(obj_bolsa, 0);
@@ -253,8 +250,7 @@ estado_click = function()
 		{
 			_outro_inventario = instance_find(obj_caldeirao, 0);
 		}
-		
-		
+
 		if(_outro_inventario != noone)
 		{
 			//posição de origem
@@ -262,13 +258,13 @@ estado_click = function()
 				inventario_drag,
 				slot_drag
 			);
-			
+
 			//vamos descobrir onde o item realmente irá
 			//antes de executar a transferência
 			var _item = inventario_drag.inventario[slot_drag];
-			
+
 			var _slot_destino = -1;
-			
+
 			//BOLSA -> CALDEIRÃO
 			if(!inventario_drag.caldeirao && _outro_inventario.caldeirao)
 			{
@@ -282,7 +278,7 @@ estado_click = function()
 					}
 				}
 			}
-			
+
 			//CALDEIRÃO -> BOLSA
 			else if(inventario_drag.caldeirao && !_outro_inventario.caldeirao)
 			{
@@ -292,7 +288,7 @@ estado_click = function()
 					_item,
 					false
 				);
-				
+
 				//não encontrou -> primeiro slot vazio
 				if(_slot_destino == -1)
 				{
@@ -303,7 +299,7 @@ estado_click = function()
 					);
 				}
 			}
-			
+
 			//TEM DESTINO
 			if(_slot_destino != -1)
 			{
@@ -311,20 +307,20 @@ estado_click = function()
 					_outro_inventario,
 					_slot_destino
 				);
-				
+
 				//iniciando animação
 				click_animando = true;
-				
+
 				click_anim_item = _item;
-				
+
 				click_anim_x = _pos_origem[0];
 				click_anim_y = _pos_origem[1];
-				
+
 				click_anim_dest_x = _pos_destino[0];
 				click_anim_dest_y = _pos_destino[1];
-				
+
 				click_anim_tempo = 0;
-				
+
 				//executando a transferência imediatamente
 				TransfereInventario(
 					inventario_drag,
@@ -335,45 +331,45 @@ estado_click = function()
 				);
 			}
 		}
-		
+
 		//encerrando clique
 		inventario_drag = -1;
 		slot_drag = -1;
-		
+
 		estado = estado_livre;
-		
+
 		return;
 	}
-	
+
 	//VERIFICANDO SE VIROU DRAG
 	var _distancia = point_distance(
-	 mouse_inicio_x,
-	 mouse_inicio_y,
-	 device_mouse_x_to_gui(0),
-	 device_mouse_y_to_gui(0)
+		mouse_inicio_x,
+		mouse_inicio_y,
+		device_mouse_x_to_gui(0),
+		device_mouse_y_to_gui(0)
 	);
 
 	if(_distancia >= distancia_drag)
 	{
-	 item_drag = inventario_drag.inventario[slot_drag];
+		item_drag = inventario_drag.inventario[slot_drag];
 
-	 estado = estado_drag;
+		estado = estado_drag;
 	}
-}
+};
 
 estado_click_pocao = function()
 {
 	mouse_over();
-	
+
 	//SOLTOU -> FOI UM CLIQUE
 	if(mouse_check_button_released(mb_left))
 	{
 		var _armario =
 			instance_find(obj_armario, 0);
-		
+
 		var _hotbar =
 			instance_find(obj_hotbar, 0);
-		
+
 		//ARMÁRIO -> HOTBAR
 		if(pocao_inventario_drag == _armario)
 		{
@@ -381,8 +377,7 @@ estado_click_pocao = function()
 				AdicionaPocaoHotbarPorClique(
 					pocao_slot_drag
 				);
-			
-			
+
 			if(!_resultado)
 			{
 				show_debug_message(
@@ -390,7 +385,7 @@ estado_click_pocao = function()
 				);
 			}
 		}
-		
+
 		//HOTBAR -> ARMÁRIO
 		//Só permitir no arsenal
 		else if(pocao_inventario_drag == _hotbar
@@ -400,47 +395,47 @@ estado_click_pocao = function()
 				pocao_slot_drag
 			);
 		}
-		
+
 		//RESET
 		pocao_inventario_drag = noone;
 		pocao_slot_drag = -1;
 		pocao_drag = undefined;
-		
+
 		estado = estado_livre;
-		
+
 		return;
 	}
-	
+
 	//VERIFICANDO SE VIROU DRAG
 	var _distancia = point_distance(
-	 mouse_inicio_x,
-	 mouse_inicio_y,
-	 device_mouse_x_to_gui(0),
-	 device_mouse_y_to_gui(0)
+		mouse_inicio_x,
+		mouse_inicio_y,
+		device_mouse_x_to_gui(0),
+		device_mouse_y_to_gui(0)
 	);
 
 	if(_distancia >= distancia_drag)
 	{
-	 //SALVA A POÇÃO QUE ESTÁ SENDO ARRASTADA
-	 if(pocao_inventario_drag == instance_find(obj_armario, 0))
-	 {
-	 pocao_drag =
-	 global.DadosJogador.armario_pocoes[pocao_slot_drag];
-	 }
-	 else
-	 {
-	 pocao_drag =
-	 global.DadosJogador.hotbar_pocoes[pocao_slot_drag];
-	 }
+		//SALVA A POÇÃO QUE ESTÁ SENDO ARRASTADA
+		if(pocao_inventario_drag == instance_find(obj_armario, 0))
+		{
+			pocao_drag =
+				global.DadosJogador.armario_pocoes[pocao_slot_drag];
+		}
+		else
+		{
+			pocao_drag =
+				global.DadosJogador.hotbar_pocoes[pocao_slot_drag];
+		}
 
-	 estado = estado_drag_pocao;
+		estado = estado_drag_pocao;
 	}
 };
 
 estado_livre = function()
 {
 	mouse_over();
-	
+
 	if(
 		mouse_check_button_pressed(mb_left)
 		&& slot_hover != -1
@@ -449,15 +444,15 @@ estado_livre = function()
 	{
 		mouse_inicio_x = device_mouse_x_to_gui(0);
 		mouse_inicio_y = device_mouse_y_to_gui(0);
-	
+
 		inventario_drag = inventario_hover;
 		slot_drag = slot_hover;
-	
+
 		estado = estado_click;
-	
+
 		return;
 	}
-	
+
 	//POÇÃO
 	if(
 		mouse_check_button_pressed(mb_left)
@@ -465,6 +460,12 @@ estado_livre = function()
 		&& pocao_inventario_hover != noone
 	)
 	{
+		// Impede organizar/arrastar a hotbar durante a masmorra
+		if(room == rm_masmorra && pocao_inventario_hover.object_index == obj_hotbar)
+		{
+			return;
+		}
+
 		var _pocao;
 
 		//ARMÁRIO
@@ -472,41 +473,41 @@ estado_livre = function()
 		{
 			_pocao = global.DadosJogador.armario_pocoes[pocao_slot_hover];
 		}
-	
+
 		//HOTBAR
 		else
 		{
 			_pocao = global.DadosJogador.hotbar_pocoes[pocao_slot_hover];
 		}
-	
+
 		if(!is_undefined(_pocao))
 		{
 			mouse_inicio_x = device_mouse_x_to_gui(0);
 			mouse_inicio_y = device_mouse_y_to_gui(0);
-		
+
 			pocao_inventario_drag = pocao_inventario_hover;
-		
+
 			pocao_slot_drag = pocao_slot_hover;
-		
+
 			pocao_drag = _pocao;
-		
+
 			estado = estado_click_pocao;
-		
+
 			return;
 		}
 	}
-}
+};
 
 estado_drag = function()
 {
 	mouse_over();
-	
+
 	//continua arrastando
 	if(mouse_check_button(mb_left))
 	{
 		return;
 	}
-	
+
 	//SOLTOU O ITEM
 	if(slot_hover != -1)
 	{
@@ -527,200 +528,197 @@ estado_drag = function()
 			);
 		}
 	}
-	
+
 	//reset
 	item_drag = -1;
 	inventario_drag = -1;
 	slot_drag = -1;
-	
+
 	estado = estado_livre;
-}
+};
 
 estado_drag_pocao = function()
 {
- mouse_over();
+	mouse_over();
 
- //CONTINUA ARRASTANDO
- if(mouse_check_button(mb_left))
- {
- return;
- }
+	//CONTINUA ARRASTANDO
+	if(mouse_check_button(mb_left))
+	{
+		return;
+	}
 
- //SOLTOU
- if(mouse_check_button_released(mb_left))
- {
- var _armario = instance_find(obj_armario, 0);
+	//SOLTOU
+	if(mouse_check_button_released(mb_left))
+	{
+		var _armario = instance_find(obj_armario, 0);
 
- var _hotbar = instance_find(obj_hotbar, 0);
-			
+		var _hotbar = instance_find(obj_hotbar, 0);
+
 		//IDENTIFICA A ORIGEM DO ARRASTE
 		var _origem_armario = pocao_inventario_drag == _armario;
 
 		var _origem_hotbar = pocao_inventario_drag == _hotbar;
- 
- //VERIFICA SE SOLTOU SOBRE A LIXEIRA
- var _descartar = false;
- var _lixeira = noone;
 
- //SOMENTE POÇÕES ARRASTADAS DO ARMÁRIO
- if(
-		 room == rm_armario
-		 && (_origem_armario || _origem_hotbar)
-		 && instance_exists(obj_lixeira)
+		//VERIFICA SE SOLTOU SOBRE A LIXEIRA
+		var _descartar = false;
+		var _lixeira = noone;
+
+		//SOMENTE POÇÕES ARRASTADAS DO ARMÁRIO
+		if(
+			room == rm_armario
+			&& (_origem_armario || _origem_hotbar)
+			&& instance_exists(obj_lixeira)
 		)
- {
- _lixeira = instance_find(
- obj_lixeira,
- 0
- );
-
- if(_lixeira != noone)
- {
- _descartar = _lixeira.MouseSobre(
- mouse_x,
- mouse_y
- );
- }
- }
-
- //DESCARTA A POÇÃO
-		if(_descartar)
 		{
-		 var _pocao_descartada = undefined;
+			_lixeira = instance_find(
+				obj_lixeira,
+				0
+			);
 
-		 //DESCARTA A PARTIR DO ARMÁRIO
-		 if(_origem_armario)
-		 {
-		 _pocao_descartada =
-		 DescartaPocaoArmario(pocao_slot_drag);
-		 }
-
-		 //DESCARTA A PARTIR DA HOTBAR
-		 else if(_origem_hotbar)
-		 {
-		 _pocao_descartada =
-		 DescartaPocaoHotbar(pocao_slot_drag);
-		 }
-
-		 //MENSAGEM DE CONFIRMAÇÃO
-		 if(!is_undefined(_pocao_descartada))
-		 {
-		 CriaMensagem(
-		 _lixeira.x + _lixeira.largura / 2,
-		 _lixeira.y - 12,
-		 "\"" + _pocao_descartada.nome
-		 + "\" descartada!",
-		 c_orange,
-		 "UI"
-		 );
-				
-				obj_lixeira.image_index = 1;
-		 }
+			if(_lixeira != noone)
+			{
+				_descartar = _lixeira.MouseSobre(
+					mouse_x,
+					mouse_y
+				);
+			}
 		}
 
- //TRANSFERÊNCIAS NORMAIS
- else
- {
- //ORIGEM = ARMÁRIO
- if(
- pocao_inventario_drag == _armario
- )
- {
- //ARMÁRIO -> HOTBAR
- if(
- pocao_inventario_hover == _hotbar
- )
- {
- TransferePocaoArmarioParaHotbar(
- pocao_slot_drag,
- pocao_slot_hover
- );
- }
+		//DESCARTA A POÇÃO
+		if(_descartar)
+		{
+			var _pocao_descartada = undefined;
 
+			//DESCARTA A PARTIR DO ARMÁRIO
+			if(_origem_armario)
+			{
+				_pocao_descartada =
+					DescartaPocaoArmario(pocao_slot_drag);
+			}
 
- //ARMÁRIO -> ARMÁRIO
- else if(
- pocao_inventario_hover == _armario
- )
- {
- if(
- pocao_slot_hover!= pocao_slot_drag
- )
- {
- TrocaPocaoArmario(
- pocao_slot_drag,
- pocao_slot_hover
- );
- }
- }
- }
+			//DESCARTA A PARTIR DA HOTBAR
+			else if(_origem_hotbar)
+			{
+				_pocao_descartada =
+					DescartaPocaoHotbar(pocao_slot_drag);
+			}
 
+			//MENSAGEM DE CONFIRMAÇÃO
+			if(!is_undefined(_pocao_descartada))
+			{
+				CriaMensagem(
+					_lixeira.x,
+					_lixeira.y,
+					"\"" + _pocao_descartada.nome
+					+ "\" descartada!",
+					c_orange,
+					"UI"
+				);
 
- //ORIGEM = HOTBAR
- else if(
- pocao_inventario_drag == _hotbar
- )
- {
- //HOTBAR -> HOTBAR
- if(
- pocao_inventario_hover == _hotbar
- )
- {
- if(
- pocao_slot_hover!= pocao_slot_drag
- )
- {
- TrocaPocaoHotbar(
- pocao_slot_drag,
- pocao_slot_hover
- );
- }
- }
+				//obj_lixeira.image_index = 1;
 
+				criar_efeito(obj_lixeira.x, obj_lixeira.y, "explosao_fumaca", _pocao_descartada.cor, {
+					qtd: 50
+				});
+			}
+		}
 
- //HOTBAR -> ARMÁRIO
- //PERMITIDO SOMENTE NO ARMÁRIO
- else if(
- pocao_inventario_hover == _armario
- && room == rm_armario
- )
- {
- TransferePocaoHotbarParaArmario(
- pocao_slot_drag,
- pocao_slot_hover
- );
- }
+		//TRANSFERÊNCIAS NORMAIS
+		else
+		{
+			//ORIGEM = ARMÁRIO
+			if(
+				pocao_inventario_drag == _armario
+			)
+			{
+				//ARMÁRIO -> HOTBAR
+				if(
+					pocao_inventario_hover == _hotbar
+				)
+				{
+					TransferePocaoArmarioParaHotbar(
+						pocao_slot_drag,
+						pocao_slot_hover
+					);
+				}
 
+				//ARMÁRIO -> ARMÁRIO
+				else if(
+					pocao_inventario_hover == _armario
+				)
+				{
+					if(
+						pocao_slot_hover != pocao_slot_drag
+					)
+					{
+						TrocaPocaoArmario(
+							pocao_slot_drag,
+							pocao_slot_hover
+						);
+					}
+				}
+			}
 
- //HOTBAR -> ÁREA VAZIA DO ARMÁRIO
- //PERMITIDO SOMENTE NO ARMÁRIO
- else if(
- room == rm_armario
- && instance_exists(_armario)
- && _armario.AreaSobreMouse(
- mouse_x,
- mouse_y
- )
- )
- {
- TransferePocaoHotbarParaFimDoArmario(
- pocao_slot_drag
- );
- }
- }
- }
+			//ORIGEM = HOTBAR
+			else if(
+				pocao_inventario_drag == _hotbar
+			)
+			{
+				//HOTBAR -> HOTBAR
+				if(
+					pocao_inventario_hover == _hotbar
+					&& room != rm_masmorra
+				)
+				{
+					if(
+						pocao_slot_hover != pocao_slot_drag
+					)
+					{
+						TrocaPocaoHotbar(
+							pocao_slot_drag,
+							pocao_slot_hover
+						);
+					}
+				}
 
+				//HOTBAR -> ARMÁRIO
+				//PERMITIDO SOMENTE NO ARMÁRIO
+				else if(
+					pocao_inventario_hover == _armario
+					&& room == rm_armario
+				)
+				{
+					TransferePocaoHotbarParaArmario(
+						pocao_slot_drag,
+						pocao_slot_hover
+					);
+				}
 
- 
- //RESET
- 
+				//HOTBAR -> ÁREA VAZIA DO ARMÁRIO
+				//PERMITIDO SOMENTE NO ARMÁRIO
+				else if(
+					room == rm_armario
+					&& instance_exists(_armario)
+					&& _armario.AreaSobreMouse(
+						mouse_x,
+						mouse_y
+					)
+				)
+				{
+					TransferePocaoHotbarParaFimDoArmario(
+						pocao_slot_drag
+					);
+				}
+			}
+		}
 
- pocao_inventario_drag = noone;
- pocao_slot_drag = -1;
- pocao_drag = undefined;
+		//RESET
+		pocao_inventario_drag = noone;
+		pocao_slot_drag = -1;
+		pocao_drag = undefined;
 
- estado = estado_livre;
- }
+		estado = estado_livre;
+	}
 };
 
 MouseSobreItem = function()
@@ -730,6 +728,6 @@ MouseSobreItem = function()
 		&& slot_hover != -1
 		&& inventario_hover.inventario[slot_hover] != -1
 	);
-}
+};
 
 estado = estado_livre;

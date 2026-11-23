@@ -346,6 +346,8 @@ if(room == rm_armario || room == rm_inventarios)
 	{
 		DevolveItens();
 		
+		//room_goto(rm_menu);
+		
 		aplica_transicao(rm_menu);
 	}
 }

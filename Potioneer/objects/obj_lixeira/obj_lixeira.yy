@@ -32,9 +32,9 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_lixeira",
-    "path":"sprites/spr_lixeira/spr_lixeira.yy",
+    "name":"spr_placeholder_64",
+    "path":"sprites/spr_placeholder_64/spr_placeholder_64.yy",
   },
   "spriteMaskId":null,
-  "visible":false,
+  "visible":true,
 }

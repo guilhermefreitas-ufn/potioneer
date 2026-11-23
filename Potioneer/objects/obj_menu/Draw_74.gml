@@ -1,3 +1,36 @@
+var _dados  = video_draw();
+var _status = _dados[0];
+
+if (_status == 0)
+{
+	var _surf = _dados[1];
+
+	gpu_set_blendenable(false);
+	draw_surface_stretched(_surf, 0, 0, RES_W, RES_H);
+	gpu_set_blendenable(true);
+}
+
+var _estado = video_get_status();
+
+if (_estado == video_status_paused)
+{
+	if(timer_resume > 0)
+	{
+		timer_resume--;
+	}
+	else 
+	{
+		timer_resume = tempo_resume;
+	
+		video_resume();  
+	}
+}
+
+if(instance_exists(obj_tutorial))
+{
+	exit;
+}
+
 //desenhando meu título
 define_align();
 draw_set_font(fnt_grande_titulo);
@@ -133,7 +166,12 @@ for(var i = 0; i < options_tam; i++)
 				//show_message("\nMouse\nW, A, S, D\nReset: R\nPause: P\nESC");
 				//controla_overlay("tutorial",true);
 				
-				aplica_transicao(rm_tutorial);
+				//aplica_transicao(rm_tutorial);
+				
+				if(!instance_exists(obj_tutorial))
+				{
+					instance_create_layer(0,0,"UI",obj_tutorial);
+				}
 			}
 			//sair
 			else if(index == 3)

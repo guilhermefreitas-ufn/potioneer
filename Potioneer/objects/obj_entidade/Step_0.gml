@@ -1,8 +1,15 @@
+if(estado != "sofrendo")
+{
+    sofrendo_fx_feito = false;
+}
+
 if(global.pause)
 {
 	MudaEstado("parado");
 	exit;
 }
+
+
 
 if(estado == "movendo")
 {

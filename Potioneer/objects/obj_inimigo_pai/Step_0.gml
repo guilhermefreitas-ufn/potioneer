@@ -175,6 +175,12 @@ switch (estado)
 	}
 	case "sofrendo":
 	{
+		if(!sofrendo_fx_feito)
+        {
+            criar_efeito(x, y, "screenshake", c_white, { shake: 3.5, shake_dec_spd: 0.85 });
+            sofrendo_fx_feito = true;
+        }
+		
 		tempo_estado--;
 		
 		if(tempo_estado <= 0)

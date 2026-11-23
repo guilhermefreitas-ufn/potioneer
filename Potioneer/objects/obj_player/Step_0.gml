@@ -18,8 +18,11 @@ else
 
 if(global.pause) { exit; }
 
+rastro_fx.pausado = (estado != "movendo");
+
 //Iniciando Variáveis
-var _mouse_na_hotbar = MouseSobreSlotHotbar();
+var _mouse_na_hotbar = false;
+//var _mouse_na_hotbar = MouseSobreSlotHotbar();
 		
 var _mx = device_mouse_x_to_gui(0);
 var _my = device_mouse_y_to_gui(0);
@@ -88,6 +91,12 @@ switch (estado) //MÁQUINA DE ESTADOS
 	}
 	case "sofrendo":
 	{
+		if(!sofrendo_fx_feito)
+        {
+            criar_efeito(x, y, "screenshake", c_white, { shake: 10, shake_dec_spd: 0.85 });
+            sofrendo_fx_feito = true;
+        }
+		
 		tempo_estado--;
 		
 		if(tempo_estado <= 0)

@@ -35,7 +35,7 @@ global.Ingredientes =
 	CriarIngrediente(1, "Escama",	"Uma placa coberta por várias escamas."		,spr_escama_azul_hd,	"valor inteiro","int",		TipoIngrediente.PRIMITIVO),
 	
 	CriarIngrediente(2, "Fruta",	"Uma fruta que lembra um coração."			,spr_fruta_hd,			"saúde",		"hp",		TipoIngrediente.VARIAVEL),
-	CriarIngrediente(3, "Asa",		"Uma asa de ave rara eveloz."				,spr_asa_hd,			"velocidade",	"spd",		TipoIngrediente.VARIAVEL),
+	CriarIngrediente(3, "Asa",		"Uma asa de ave rara e veloz."				,spr_asa_hd,			"velocidade",	"spd",		TipoIngrediente.VARIAVEL),
 	CriarIngrediente(4, "Músculo",	"Um forte músculo sem pele."				,spr_musculo_hd,		"força",		"atk",		TipoIngrediente.VARIAVEL),
 	
 	CriarIngrediente(5, "Dente",	"Um dente perfeito para triturar."			,spr_dente_hd,			"diminui em",	"decreases",TipoIngrediente.OPERADOR_EFEITO),

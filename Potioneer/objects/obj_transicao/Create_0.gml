@@ -1,5 +1,6 @@
 //show_message("obj transicao criado");
-
+// Chame logo antes de iniciar a transição de saída do menu
+video_pause();
 //Variáveis de controle de ESTADO
 //0: NENHUM
 //1: FECHANDO (Iris Out para foco)

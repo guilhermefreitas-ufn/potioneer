@@ -67,6 +67,8 @@ switch(state)
 	
 	case 5: //ABERTURA_INICIAL (Setup na nova room e Inicia o crescimento do foco)
 	{
+		video_pause();
+		
 		//1. SETUP (RODA APENAS UMA VEZ AO ENTRAR NA ROOM)
 		if(!setup_done)
 		{

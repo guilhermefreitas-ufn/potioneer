@@ -30,7 +30,7 @@ index = -1;
 title_fnt = fnt_media_black;
 
 //primeira fase (Novo Jogo)
-primeira_room = rm_inventarios;
+primeira_room = rm_masmorra;
 
 //timer sem save
 timer_sem_save = GAME_SPEED * 3;
@@ -45,3 +45,11 @@ creditos_margem = RES_W / (creditos_tam + 1);
 creditos_x = RES_W / (creditos_tam + 1);
 creditos_y = RES_H - 48;
 creditos_fnt = fnt_placeholder_media;
+
+//video de fundo
+video_open("vid_bg_menu.mp4");
+video_enable_loop(true);
+video_set_volume(0); //silencia o áudio do MP4
+
+tempo_resume = GAME_SPEED * 2; //2 segundos
+timer_resume = tempo_resume;

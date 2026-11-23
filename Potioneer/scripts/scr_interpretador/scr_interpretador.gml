@@ -558,7 +558,7 @@ function AnalisaSintaxe(_tokens)
 	if(_primeiro.ingrediente.tipo != TipoIngrediente.CONDICIONAL)
 	{
 		_resultado.erro =
-			"Um algoritmo deve começar com uma condicional.";
+			"Uma poção deve começar com uma condicional.";
 		
 		_resultado.slot_erro = _primeiro.slot;
 		
@@ -601,7 +601,7 @@ function AnalisaSintaxe(_tokens)
 		var _extra = _tokens[_indice];
 		
 		_resultado.erro =
-			"O algoritmo possui ingredientes extras após o efeito.";
+			"A poçaõ possui ingredientes extras após o efeito.";
 		
 		_resultado.slot_erro = _extra.slot;
 		

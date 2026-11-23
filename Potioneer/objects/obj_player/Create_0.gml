@@ -6,6 +6,17 @@ event_inherited();
 //image_speed = 0;
 //image_index = 0;
 
+//var _cor_poeira = make_colour_rgb(153,116,73);
+var _cor_poeira = make_colour_rgb(121,119,134);
+
+rastro_fx = criar_efeito(x, y, "rastro_poeira", _cor_poeira, {
+    target: id,
+    offset_y: 0,
+    duracao: -1,
+    intervalo: 5,
+    pausado: true
+});
+
 nome = "Player";
 cor = c_black;
 

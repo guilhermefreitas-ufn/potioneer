@@ -135,6 +135,11 @@ AplicarImpacto = function()
 	etapa = "area";
 	
 	tempo_area = duracao_area;
+
+	criar_efeito(x, y, "splash_pocao", cor_pocao, {
+		raio: raio_efeito,
+		duracao: duracao_area
+	});
 	
 	//Procura entidades no ponto de impacto
 	var _contexto = CriaContextoAreaPocao(

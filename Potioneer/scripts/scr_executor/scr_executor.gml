@@ -1,5 +1,5 @@
 #macro MAX_HP 20
-#macro MAX_SPD 10
+#macro MAX_SPD 6
 
 function CriarContextoPocao(_entidades_target, _entidades_ally, _entidades_enemy)
 {
@@ -392,7 +392,7 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 			if(_entidade.hp > MAX_HP)
 			{
 				show_debug_message(
-					"LIMITE DE HP: a poção tentou ultrapassar a vida máxima de 20. Valor ajustado para 20."
+					"LIMITE DE HP: A poção tentou ultrapassar a saúde máxima de "+string(MAX_HP)+". Saúde ajustada para "+string(MAX_HP)+"."
 				);
 						
 				if(instance_exists(obj_player))
@@ -402,7 +402,7 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 					CriaMensagem(
 						_centro[0],
 						_centro[1],
-						"A poção tentou ultrapassar a saúde máxima de 20. Saúde ajustada para 20."
+						"A poção tentou ultrapassar a saúde máxima de "+string(MAX_HP)+". Saúde ajustada para "+string(MAX_HP)+"."
 					);
 				}
 			}
@@ -452,7 +452,7 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 			if(_entidade.spd > MAX_SPD)
 			{
 				show_debug_message(
-					"LIMITE DE SPD: a poção tentou ultrapassar a velocidade máxima de 10. Valor ajustado para 10."
+					"LIMITE DE SPD: A poção tentou ultrapassar a velocidade máxima de "+string(MAX_SPD)+". Velocidade ajustada para "+string(MAX_SPD)+"."
 				);
 				
 				if(instance_exists(obj_player))
@@ -462,7 +462,7 @@ function AplicaOperacao(_entidade, _variavel, _operador_numero, _valor)
 					CriaMensagem(
 						_centro[0],
 						_centro[1],
-						"A poção tentou ultrapassar a velocidade máxima de 10. Velocidade ajustada para 10."
+						"A poção tentou ultrapassar a velocidade máxima de "+string(MAX_SPD)+". Velocidade ajustada para "+string(MAX_SPD)+"."
 					);
 				}
 			}

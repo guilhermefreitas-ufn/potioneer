@@ -17,10 +17,10 @@
     {"$GMFolder":"","%Name":"Entidades","folderPath":"folders/Objects/Entidades.yy","name":"Entidades","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Aliados","folderPath":"folders/Objects/Entidades/Aliados.yy","name":"Aliados","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Inimigos","folderPath":"folders/Objects/Entidades/Inimigos.yy","name":"Inimigos","resourceType":"GMFolder","resourceVersion":"2.0",},
-    {"$GMFolder":"","%Name":"Ing Antigos","folderPath":"folders/Objects/Testes/Ing Antigos.yy","name":"Ing Antigos","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Inventários","folderPath":"folders/Objects/Inventários.yy","name":"Inventários","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Masmorra","folderPath":"folders/Objects/Masmorra.yy","name":"Masmorra","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Testes","folderPath":"folders/Objects/Testes.yy","name":"Testes","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Ing Antigos","folderPath":"folders/Objects/Testes/Ing Antigos.yy","name":"Ing Antigos","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Rooms","folderPath":"folders/Rooms.yy","name":"Rooms","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Scripts","folderPath":"folders/Scripts.yy","name":"Scripts","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Sprites","folderPath":"folders/Sprites.yy","name":"Sprites","resourceType":"GMFolder","resourceVersion":"2.0",},
@@ -42,7 +42,9 @@
   "ForcedPrefabProjectReferences":[
     {"link":"io.gamemaker.sdfshaders-1.0.0","name":"io.gamemaker.sdfshaders-1.0.0","path":"io.gamemaker.sdfshaders-1.0.0.yyp",},
   ],
-  "IncludedFiles":[],
+  "IncludedFiles":[
+    {"$GMIncludedFile":"","%Name":"vid_bg_menu.mp4","CopyToMask":-1,"filePath":"datafiles","name":"vid_bg_menu.mp4","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+  ],
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
@@ -70,6 +72,7 @@
     {"id":{"name":"obj_efeito_pocao","path":"objects/obj_efeito_pocao/obj_efeito_pocao.yy",},},
     {"id":{"name":"obj_entidade","path":"objects/obj_entidade/obj_entidade.yy",},},
     {"id":{"name":"obj_gerador_bolhas","path":"objects/obj_gerador_bolhas/obj_gerador_bolhas.yy",},},
+    {"id":{"name":"obj_gerenciador_efeitos","path":"objects/obj_gerenciador_efeitos/obj_gerenciador_efeitos.yy",},},
     {"id":{"name":"obj_gerenciador","path":"objects/obj_gerenciador/obj_gerenciador.yy",},},
     {"id":{"name":"obj_hotbar","path":"objects/obj_hotbar/obj_hotbar.yy",},},
     {"id":{"name":"obj_iluminacao","path":"objects/obj_iluminacao/obj_iluminacao.yy",},},
@@ -99,6 +102,7 @@
     {"id":{"name":"rm_menu","path":"rooms/rm_menu/rm_menu.yy",},},
     {"id":{"name":"rm_tutorial","path":"rooms/rm_tutorial/rm_tutorial.yy",},},
     {"id":{"name":"scr_dados_jogador","path":"scripts/scr_dados_jogador/scr_dados_jogador.yy",},},
+    {"id":{"name":"scr_efeitos","path":"scripts/scr_efeitos/scr_efeitos.yy",},},
     {"id":{"name":"scr_executor","path":"scripts/scr_executor/scr_executor.yy",},},
     {"id":{"name":"scr_ingredientes","path":"scripts/scr_ingredientes/scr_ingredientes.yy",},},
     {"id":{"name":"scr_interpretador","path":"scripts/scr_interpretador/scr_interpretador.yy",},},

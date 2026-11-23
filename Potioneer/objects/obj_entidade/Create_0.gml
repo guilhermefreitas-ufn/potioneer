@@ -2,6 +2,8 @@ atk = 1;
 hp = 1;
 spd = 1;
 
+sofrendo_fx_feito = false;
+
 max_hp = 0;
 max_spd = 0;
 max_atk = 0;

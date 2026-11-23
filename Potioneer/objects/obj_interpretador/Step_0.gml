@@ -110,6 +110,12 @@ if(personalizando_pocao)
 			);
 	
 			ConsomeCaldeirao(caldeirao);
+			
+			//Explosão de estrelas centralizada na boca do caldeirão
+		    criar_efeito(obj_caldeirao.x, obj_caldeirao.y, "explosao_estrelas", cor_nova_pocao, {
+		        qtd: 100,
+		        cores: [cor_nova_pocao]
+		    });
 	
 			personalizando_pocao = false;
 			nome_pocao = "";

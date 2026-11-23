@@ -140,6 +140,14 @@ CriarPocao = function()
 	{
 		mensagem = "Poção inválida!";
 		mensagem_timer = mensagem_duracao;
+		
+		//Explosão de fumaça centralizada na boca do caldeirão
+		criar_efeito(obj_caldeirao.x, obj_caldeirao.y, "explosao_fumaca", c_white, {
+		    qtd: 100
+		});
+		
+		criar_efeito(0,0,"screenshake",c_white, { shake: 5, shake_dec_spd: 0.85 })
+		
 		return;
 	}
 	

@@ -28,3 +28,19 @@ entre_slots = 4;
 //texto
 fonte = fnt_placeholder_media;
 cor_texto = c_white;
+
+var _cor_fogo = make_colour_rgb(252,37,0);
+
+//1. Fogo do fogão embaixo e centrado (contínuo)
+fx_fogo = criar_efeito(x,y, "fogo_fogao", [c_yellow, c_orange, c_red], {
+    bicos: 24,
+    raio_anel: 128 //Ajuste conforme a largura da base do caldeirão
+});
+
+var _cor_bolhas = make_colour_rgb(122, 205, 200);
+
+//2. Bolhas dentro/em cima da boca do caldeirão (contínuo)
+fx_bolhas = criar_efeito(x, y, "bolhas_panela", _cor_bolhas, {
+    raio: ((sprite_width) / 2) - 64,      //Ajuste conforme o raio interno do líquido
+    intervalo: 10
+});
